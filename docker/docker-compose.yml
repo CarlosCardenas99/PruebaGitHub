@@ -1,7 +1,7 @@
 version: "3"
 services:
-  minera-service:
-    image: minera-service
+  paltarumi-service:
+    image: paltarumi-service
     environment:
       ASPNETCORE_URLS: http://+:80
       DOTNET_USE_POLLING_FILE_WATCHER: 1
@@ -10,17 +10,17 @@ services:
       ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
       ASPNETCORE_ENVIRONMENT: Development
       DOTNET_RUNNING_IN_CONTAINER: "true"
-      DOTNET_VERSION: 5.0.15
-      ASPNET_VERSION: 5.0.15
+      DOTNET_VERSION: 6.0
+      ASPNET_VERSION: 6.0
       LOGGING__CONSOLE__FORMATTERNAME: Json
-      CONNECTIONSTRING: "Data Source=.;Initial Catalog=acopio;User ID=sa; Password=@SistemaAcopio1;"
+      CONNECTIONSTRING: "Data Source=192.168.0.2;Initial Catalog=AcopioQA;User ID=sa; Password=@SistemaAcopio1;"
     ports:
       - 8080:80
     build:
       context: ./
       dockerfile: Dockerfile
     networks:
-      - minera-red
+      - paltarumi-red
 networks:
-    minera-red:
-      name: minera-red
+    paltarumi-red:
+      name: paltarumi-red

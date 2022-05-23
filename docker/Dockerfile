@@ -1,5 +1,5 @@
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY ./ .
-ENV ASPNET_VERSION=5.0.15
-ENTRYPOINT ["dotnet", "ApiService.dll"]
+ENV ASPNET_VERSION=6.0
+ENTRYPOINT ["dotnet", "Paltarumi.Acopio.Apis.dll"]
