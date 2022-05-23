@@ -1,47 +1,21 @@
 USE AcopioQA
 GO
-
--- *************************************************************************************************************
--- Config - Correlativo
--- *************************************************************************************************************
-
-ALTER TABLE config.Correlativo  ADD  CONSTRAINT fk_config_Correlativo_codigoCorrelativoTipo FOREIGN KEY(codigoCorrelativoTipo) REFERENCES config.CorrelativoTipo (codigoCorrelativoTipo)
+/*
+ALTER TABLE config.ModuloUsuario  ADD  CONSTRAINT fk_config_ModuloUsuario_idModulo FOREIGN KEY(idModulo) REFERENCES config.Modulo (idModulo)
 GO
 
-
--- *************************************************************************************************************
--- Maestro - Transportista
--- *************************************************************************************************************
-
-ALTER TABLE maestro.Transportista  ADD  CONSTRAINT fk_maestro_Transportista_codigoTipoDocumento FOREIGN KEY(codigoTipoDocumento) REFERENCES maestro.TipoDocumento (codigoTipoDocumento)
+ALTER TABLE config.ModuloUsuario  ADD  CONSTRAINT fk_config_ModuloUsuario_idUsuario FOREIGN KEY(idUsuario) REFERENCES config.Usuario (idUsuario)
 GO
 
-ALTER TABLE maestro.Transportista  ADD  CONSTRAINT fk_maestro_Transportista_codigoUbigeo FOREIGN KEY(codigoUbigeo) REFERENCES maestro.Ubigeo (codigoUbigeo)
+ALTER TABLE config.ModuloUsuario  ADD  CONSTRAINT fk_config_ModuloUsuario_idEmpresa FOREIGN KEY(idEmpresa) REFERENCES config.Empresa (idEmpresa)
 GO
 
-
--- *************************************************************************************************************
--- Maestro - Conductor
--- *************************************************************************************************************
-
-ALTER TABLE maestro.Conductor  ADD  CONSTRAINT fk_maestro_Conductor_codigoTipoDocumento FOREIGN KEY(codigoTipoDocumento) REFERENCES maestro.TipoDocumento (codigoTipoDocumento)
+ALTER TABLE config.Usuario  ADD  CONSTRAINT fk_config_Usuario_idEmpresa FOREIGN KEY(idEmpresa) REFERENCES config.Empresa (idEmpresa)
 GO
 
-ALTER TABLE maestro.Conductor  ADD  CONSTRAINT fk_maestro_Conductor_codigoUbigeo FOREIGN KEY(codigoUbigeo) REFERENCES maestro.Ubigeo (codigoUbigeo)
+ALTER TABLE config.Usuario  ADD  CONSTRAINT fk_config_Usuario_idTipoDocumento FOREIGN KEY(idTipoDocumento) REFERENCES maestro.TipoDocumento (idTipoDocumento)
 GO
-
-
--- *************************************************************************************************************
--- Maestro - Vehiculo
--- *************************************************************************************************************
-
-ALTER TABLE maestro.Vehiculo  ADD  CONSTRAINT fk_maestro_Vehiculo_idTipoVehiculo FOREIGN KEY(idTipoVehiculo) REFERENCES balanza.maestro (idMaestro)
-GO
-
-ALTER TABLE maestro.Vehiculo  ADD  CONSTRAINT fk_maestro_Vehiculo_idVehiculoMarca FOREIGN KEY(idVehiculoMarca) REFERENCES balanza.maestro (idMaestro)
-GO
-
-
+*/
 -- *************************************************************************************************************
 -- Balanza - Lote
 -- *************************************************************************************************************

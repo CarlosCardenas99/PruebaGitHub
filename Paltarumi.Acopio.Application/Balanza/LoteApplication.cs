@@ -4,6 +4,7 @@ using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Balanza.Lote;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Lote;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Queries.Maestro.Lote;
 
 namespace Paltarumi.Acopio.Application.Balanza
 {
@@ -22,5 +23,14 @@ namespace Paltarumi.Acopio.Application.Balanza
 
         public async Task<ResponseDto> Delete(int id)
             => await _mediator.Send(new DeleteLoteCommand(id));
+
+        public async Task<ResponseDto<GetLoteDto>> Get(int id)
+            => await _mediator.Send(new GetLoteQuery(id));
+
+        public async Task<ResponseDto<IEnumerable<ListLoteDto>>> List()
+            => await _mediator.Send(new ListLoteQuery());
+
+        public async Task<ResponseDto<SearchResultDto<ListLoteDto>>> Search(SearchParamsDto<LoteFilterDto> searchParams)
+            => await _mediator.Send(new SearchLoteQuery(searchParams));
     }
 }

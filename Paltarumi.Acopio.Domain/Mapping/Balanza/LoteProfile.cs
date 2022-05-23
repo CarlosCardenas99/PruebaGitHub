@@ -20,6 +20,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.Lote, ListLoteDto>()
+                .ForMember(x => x.ProveedorRazonSocial, opt => opt.MapFrom(x => x.IdProveedorNavigation != null ? x.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ReverseMap();
         }
     }

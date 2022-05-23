@@ -4,5 +4,6 @@
     {
         public int IdLote { get; set; }
         public bool Activo { get; set; }
+        public string ProveedorRazonSocial { get; set; }
     }
 }

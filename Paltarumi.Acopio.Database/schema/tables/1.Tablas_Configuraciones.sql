@@ -18,33 +18,7 @@ CREATE TABLE config.Empresa(
 )
 GO
 
-ALTER TABLE config.Empresa ADD CONSTRAINT PK_config_Empresa_idEmpresa PRIMARY KEY (idEmpresa);
-GO
-
---------------------------------------------------------------------------------------------------------
-
-CREATE TABLE config.CorrelativoTipo(
-	codigoCorrelativoTipo char(2) NOT NULL,
-	nombre varchar(50) NOT NULL,
-	activo bit NOT NULL
-)
-GO
-
-ALTER TABLE config.CorrelativoTipo ADD CONSTRAINT PK_config_CorrelativoTipo_codigoCorrelativoTipo PRIMARY KEY (codigoCorrelativoTipo);
-GO
-
---------------------------------------------------------------------------------------------------------
-
-CREATE TABLE config.Correlativo(
-	idCorrelativo int IDENTITY(1,1) NOT NULL,
-	codigoCorrelativoTipo char(2) NOT NULL,
-	serie varchar(4) NOT NULL,
-	numero int NOT NULL,
-	activo bit NOT NULL
-)
-GO
-
-ALTER TABLE config.Correlativo ADD CONSTRAINT PK_config_Correlativo_idCorrelativo PRIMARY KEY (idCorrelativo);
+ALTER TABLE config.Empresa ADD CONSTRAINT PK_config_Empresa_id PRIMARY KEY (idEmpresa);
 GO
 
 --------------------------------------------------------------------------------------------------------
@@ -90,3 +64,26 @@ GO
 
 --------------------------------------------------------------------------------------------------------
 
+CREATE TABLE config.CorrelativoTipo(
+	codigoCorrelativoTipo char(2) NOT NULL,
+	nombre varchar(50) NOT NULL,
+	activo bit NOT NULL
+)
+GO
+
+ALTER TABLE config.CorrelativoTipo ADD CONSTRAINT PK_config_CorrelativoTipo_codigoCorrelativoTipo PRIMARY KEY (codigoCorrelativoTipo);
+GO
+
+--------------------------------------------------------------------------------------------------------
+
+CREATE TABLE config.Correlativo(
+	idCorrelativo int IDENTITY(1,1) NOT NULL,
+	codigoCorrelativoTipo char(2) NOT NULL,
+	serie varchar(4) NOT NULL,
+	numero int NOT NULL,
+	activo bit NOT NULL
+)
+GO
+
+ALTER TABLE config.Correlativo ADD CONSTRAINT PK_config_Correlativo_idCorrelativo PRIMARY KEY (idCorrelativo);
+GO

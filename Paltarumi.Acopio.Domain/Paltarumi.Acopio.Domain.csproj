@@ -10,7 +10,6 @@
     <Folder Include="Commands\Muestreo\" />
     <Folder Include="Dto\Muestreo\" />
     <Folder Include="Mapping\Muestreo\" />
-    <Folder Include="Queries\Balanza\" />
     <Folder Include="Queries\Muestreo\" />
     <Folder Include="Resources\Muestreo\" />
   </ItemGroup>

@@ -25,5 +25,17 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         [HttpDelete("{id}")]
         public async Task<ResponseDto> Delete(int id)
             => await _loteApplication.Delete(id);
+
+        [HttpGet("{id}")]
+        public async Task<ResponseDto<GetLoteDto>> Get(int id)
+            => await _loteApplication.Get(id);
+
+        [HttpGet("list")]
+        public async Task<ResponseDto<IEnumerable<ListLoteDto>>> List()
+            => await _loteApplication.List();
+
+        [HttpPost("search")]
+        public async Task<ResponseDto<SearchResultDto<ListLoteDto>>> Search(SearchParamsDto<LoteFilterDto> searchParams)
+            => await _loteApplication.Search(searchParams);
     }
 }

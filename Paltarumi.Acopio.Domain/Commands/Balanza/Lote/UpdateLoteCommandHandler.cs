@@ -10,8 +10,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
 {
     public class UpdateLoteCommandHandler : CommandHandlerBase<UpdateLoteCommand, GetLoteDto>
     {
-        public readonly IRepositoryBase<Entity.Lote> _loteRepository;
-        public readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepositoryBase<Entity.Lote> _loteRepository;
+        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
 
         public UpdateLoteCommandHandler(
             IUnitOfWork unitOfWork,

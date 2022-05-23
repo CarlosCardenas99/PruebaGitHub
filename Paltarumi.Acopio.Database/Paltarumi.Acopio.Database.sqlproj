@@ -71,21 +71,21 @@
     <Folder Include="schema\views" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="schema\tables\0.Init.sql" />
-    <Build Include="schema\tables\1.Tablas_Configuraciones.sql" />
-    <Build Include="schema\tables\2.Tablas_Maestro.sql" />
-    <Build Include="schema\tables\3.Tablas_Balanza.sql" />
-    <Build Include="schema\tables\4.Tablas_Muestreo.sql" />
-    <Build Include="schema\tables\50.Foreign_Key.sql" />
-    <Build Include="schema\tables\51.Unique_Key.sql" />
-    <Build Include="schema\tables\80.Data_Configuraciones.sql" />
-    <Build Include="schema\tables\81.Data_Maestro.sql" />
-    <Build Include="schema\tables\82.Data_balanza.sql" />
-    <Build Include="schema\tables\83.Data_Maestro_Ubigeo.sql" />
-    <Build Include="schema\tables\99.0.Execute.Framework.Comercial.sql" />
-    <Build Include="schema\tables\99.SystemDataType.sql" />
+    <None Include="schema\tables\50.Foreign_Key.sql" />
+    <None Include="schema\tables\0.Init.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="schema\tables\Acopio Execute.bat" />
+    <None Include="schema\tables\1.Tablas_Configuraciones.sql" />
+    <None Include="schema\tables\2.Tablas_Maestro.sql" />
+    <None Include="schema\tables\3.Tablas_Balanza.sql" />
+    <None Include="schema\tables\4.Tablas_Muestreo.sql" />
+    <None Include="schema\tables\80.Data_Maestro.sql" />
+    <None Include="schema\tables\81.Data_Maestro_Ubigeo.sql" />
+    <None Include="schema\tables\82.Data_balanza.sql" />
+    <None Include="schema\tables\99.0.Execute.Framework.Comercial.sql" />
+    <None Include="schema\tables\99.SystemDataType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="schema\tables\70.Data_Configuraciones.sql" />
   </ItemGroup>
 </Project>

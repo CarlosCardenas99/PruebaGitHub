@@ -24,7 +24,7 @@
 
         public virtual Maestro CodigoUnidadMedidaNavigation { get; set; } = null!;
         public virtual Conductor IdConductorNavigation { get; set; } = null!;
-        public virtual Lote IdLoteNavigation { get; set; } = null!;
+        public virtual Lote? IdLoteNavigation { get; set; } = null!;
         public virtual Transportistum IdTransportistaNavigation { get; set; } = null!;
         public virtual Vehiculo IdVehiculoNavigation { get; set; } = null!;
     }

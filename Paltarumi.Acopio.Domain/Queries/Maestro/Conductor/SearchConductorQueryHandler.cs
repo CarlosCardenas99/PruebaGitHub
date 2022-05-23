@@ -8,11 +8,11 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
-    public class SearchListConductorQueryHandler : SearchQueryHandlerBase<SearchConductorQuery, ConductorFilterDto, ListConductorDto>
+    public class SearchConductorQueryHandler : SearchQueryHandlerBase<SearchConductorQuery, ConductorFilterDto, ListConductorDto>
     {
         private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
 
-        public SearchListConductorQueryHandler(
+        public SearchConductorQueryHandler(
             IMapper mapper,
             IRepositoryBase<Entity.Conductor> conductorRepository
         ) : base(mapper)

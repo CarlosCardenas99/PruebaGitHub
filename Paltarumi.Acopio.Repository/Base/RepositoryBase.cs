@@ -141,7 +141,7 @@ namespace Paltarumi.Acopio.Repository.Base
         public async Task<IEnumerable<TEntity>> FindByAsNoTrackingAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeProperties)
             => await FindAllAsNoTracking(includeProperties).Filter(filter).ToListAsync();
 
-        public async Task<SearchResult<TEntity>> SearchByAsync(int page, int pageSize, IEnumerable<SortExpression<TEntity>> sortExpressions, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<SearchResult<TEntity>> SearchByAsync(int page, int pageSize, IEnumerable<SortExpression<TEntity>>? sortExpressions, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeProperties)
             => await SearchByAsync(false, page, pageSize, sortExpressions, filter, includeProperties);
 
         public async Task<SearchResult<TEntity>> SearchByAsNoTrackingAsync(int page, int pageSize, IEnumerable<SortExpression<TEntity>>? sortExpressions, Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeProperties)
