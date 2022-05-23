@@ -94,8 +94,8 @@ GO
 
 CREATE TABLE maestro.Vehiculo(
 	idVehiculo int IDENTITY(1,1) NOT NULL,
-	codigoTipoVehiculo int NOT NULL,
-	codigoMarca int NOT NULL,
+	idTipoVehiculo int NOT NULL,
+	idVehiculoMarca int NOT NULL,
 	placa varchar(20) NOT NULL,
 	activo bit NOT NULL)
 GO
