@@ -1,0 +1,26 @@
+version: "3"
+services:
+  minera-service:
+    image: minera-service
+    environment:
+      ASPNETCORE_URLS: http://+:80
+      DOTNET_USE_POLLING_FILE_WATCHER: 1
+      NUGET_PACKAGES: c:\.nuget\fallbackpackages2
+      NUGET_FALLBACK_PACKAGES: c:\.nuget\fallbackpackages;c:\.nuget\fallbackpackages2
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      ASPNETCORE_ENVIRONMENT: Development
+      DOTNET_RUNNING_IN_CONTAINER: "true"
+      DOTNET_VERSION: 5.0.15
+      ASPNET_VERSION: 5.0.15
+      LOGGING__CONSOLE__FORMATTERNAME: Json
+      CONNECTIONSTRING: "Data Source=.;Initial Catalog=acopio;User ID=sa; Password=@SistemaAcopio1;"
+    ports:
+      - 8080:80
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      - minera-red
+networks:
+    minera-red:
+      name: minera-red
