@@ -4,7 +4,7 @@
 	set USER=sa
 	set PWD=@SistemaAcopio1
 
-	set RUTA=C:\Users\usuario\Escritorio\Scripts\Scripts_DataBase\Script\
+	set RUTA=C:\Users\usuario\source\repos\Paltarumi.Acopio\Paltarumi.Acopio.Database\schema\tables\
 
 	
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%0.Init.sql
@@ -17,9 +17,9 @@
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%51.Unique_Key.sql
 
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%80.Data_Configuraciones.sql
-	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%81.Data_Maestro.sql	
-	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%82.Data_balanza.sql
-	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%83.Data_Maestro_Ubigeo.sql
+	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%81.Data_Maestro_Ubigeo.sql
+	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%82.Data_Balanza_Maestro.sql
+	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%83.Data_Maestro.sql
 	
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%99.SystemDataType.sql
 
