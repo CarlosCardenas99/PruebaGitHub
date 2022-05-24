@@ -27,6 +27,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
 
             response.UpdateData(loteDtos ?? new List<ListLoteDto>());
 
+
+
             return await Task.FromResult(response);
         }
     }
