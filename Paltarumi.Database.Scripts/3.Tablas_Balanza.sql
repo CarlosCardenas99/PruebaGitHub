@@ -27,15 +27,15 @@ CREATE TABLE balanza.Lote(
 	conductores varchar(200) NOT NULL,
 	fechaIngreso datetime NOT NULL,
 	horaIngreso varchar(5) NOT NULL,
-	fechaAcopio datetime NOT NULL,
-	horaAcopio varchar(5) NOT NULL,
+	fechaAcopio datetime NULL,--Modify NOT NULL
+	horaAcopio varchar(5) NULL,--Modify NOT NULL
 	idEstadoTipoMaterial int NOT NULL,--Modify codigoEstadoTipoMaterial
 	cantidadSacos varchar(15) NOT NULL,
 	tmh100 real NOT NULL,
 	tmhBase real NOT NULL,
 	tmh real NOT NULL,
-	humedad real NOT NULL,
-	tms real NOT NULL,
+	humedad real NULL,
+	tms real NULL,
 	codigoEstado int NOT NULL,
 	observacion varchar(200) NOT NULL,
 	activo bit NOT NULL
