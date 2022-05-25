@@ -27,7 +27,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             var conductorDto = _mapper?.Map<GetConductorDto>(conductor);
             if (conductorDto != null) response.UpdateData(conductorDto);
 
-            response.Data.RazonSocial = "XXX - Prueba la final";
+            response.Data.RazonSocial = "IDRISS - Prueba la final - 19:48";
 
             return await Task.FromResult(response);
         }
