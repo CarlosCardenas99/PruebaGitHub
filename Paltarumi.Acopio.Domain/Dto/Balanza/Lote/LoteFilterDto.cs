@@ -2,14 +2,12 @@
 {
     public class LoteFilterDto
     {
-        public int? IdLote { get; set; }
-        public int? IdConcesion { get; set; }
-        public int? IdProveedor { get; set; }
+        public DateTime? FechaDesde { get; set; }
+        public DateTime? FechaHasta { get; set; }
         public string? Codigo { get; set; }
+        public string? Proveedor { get; set; } // Ruc o Razón Social
+        public int? CodigoEstado { get; set; }
         public string? Vehiculos { get; set; }
-        public string? Transportistas { get; set; }
         public string? Tickets { get; set; }
-        public string? Conductores { get; set; }
-        public bool? Activo { get; set; }
     }
 }
