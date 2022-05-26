@@ -53,8 +53,8 @@ CREATE TABLE balanza.Ticket(
 	numero varchar(10) NOT NULL,	
 	fechaIngreso datetime NOT NULL,
 	horaIngreso varchar(5) NOT NULL,
-	fechaSalida datetime NOT NULL,
-	horaSalida varchar(5) NOT NULL,
+	fechaSalida datetime NULL,
+	horaSalida varchar(5) NULL,
 	pesoBruto real NOT NULL,
 	tara real NOT NULL,
 	pesoNeto real NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE balanza.Ticket(
 	idConductor int NOT NULL,
 	idVehiculo int NOT NULL,
 	--codigoTipoVehiculo int NOT NULL,--Delete
-	codigoUnidadMedida int NOT NULL,
+	idUnidadMedida int NOT NULL,--MODIFY codigoUnidadMedida
 	cantidadUnidadMedida int NOT NULL,
 	observacion varchar(200) NOT NULL,
 	activo bit NOT NULL)

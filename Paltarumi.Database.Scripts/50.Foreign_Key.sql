@@ -69,7 +69,7 @@ GO
 ALTER TABLE balanza.Ticket  ADD  CONSTRAINT fk_balanza_ticket_idVehiculo FOREIGN KEY(idVehiculo) REFERENCES maestro.Vehiculo (idVehiculo)
 GO
 
-ALTER TABLE balanza.Ticket  ADD  CONSTRAINT fk_balanza_ticket_codigoUnidadMedida FOREIGN KEY(codigoUnidadMedida) REFERENCES balanza.Maestro (idMaestro)
+ALTER TABLE balanza.Ticket  ADD  CONSTRAINT fk_balanza_ticket_idUnidadMedida FOREIGN KEY(idUnidadMedida) REFERENCES balanza.Maestro (idMaestro)
 GO
 
 ALTER TABLE balanza.Ticket  ADD  CONSTRAINT fk_balanza_ticket_idLote FOREIGN KEY(idLote) REFERENCES balanza.Lote (idLote)
