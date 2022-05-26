@@ -20,7 +20,7 @@
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%80.Data_Configuraciones.sql
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%81.Data_Balanza_Maestro.sql
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%82.Data_Maestro.sql
-	::sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%83.Data_Maestro_Ubigeo.sql
+	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%83.Data_Balanza.sql
 	
 	sqlcmd -S %SERVIDOR% -U %USER% -P %PWD% -i %RUTA%99.SystemDataType.sql
 
