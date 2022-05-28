@@ -13,7 +13,7 @@ namespace Paltarumi.Acopio.Repository.Extensions
     {
         public static IServiceCollection UseRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Environment.GetEnvironmentVariable("CONNECTIONSTRING"); //configuration.GetConnectionString("DefaultConnection");
 
             services.AddSqlServer<AcopioDbContext>(connectionString);
 

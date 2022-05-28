@@ -13,7 +13,7 @@ services:
       DOTNET_VERSION: 6.0
       ASPNET_VERSION: 6.0
       LOGGING__CONSOLE__FORMATTERNAME: Json
-      CONNECTIONSTRING: "Data Source=192.168.0.2;Initial Catalog=AcopioQA;User ID=sa; Password=@SistemaAcopio1;"
+      CONNECTIONSTRING: "Data Source=192.168.8.24;Initial Catalog=AcopioQA;User ID=sa; Password=@SistemaAcopio1;"
     ports:
       - 8080:80
     build:
