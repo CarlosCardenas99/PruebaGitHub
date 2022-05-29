@@ -1,7 +1,14 @@
-﻿namespace Paltarumi.Acopio.Domain.Dto.Balanza.Ticket
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Paltarumi.Acopio.Domain.Dto.Balanza.Ticket
 {
-    public class TicketDto
+    public class SearchTicketDto
     {
+        public int IdTicket { get; set; }
         public string Numero { get; set; } = null!;
         public DateTime FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
@@ -18,5 +25,8 @@
         public int idUnidadMedida { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
+        public string Conductor { get; set; }
+        public string Transportista { get; set; }
+        public string UnidadMedida { get; set; }
     }
 }
