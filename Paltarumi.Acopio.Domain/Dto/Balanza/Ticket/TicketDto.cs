@@ -15,7 +15,7 @@
         public int IdTransportista { get; set; }
         public int IdConductor { get; set; }
         public int IdVehiculo { get; set; }
-        public int CodigoUnidadMedida { get; set; }
+        public int idUnidadMedida { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
     }
