@@ -11,7 +11,7 @@ namespace Paltarumi.Acopio.Entity
         public DateTime FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
         public DateTime? FechaSalida { get; set; }
-        public DateTime? HoraSalida { get; set; }
+        public string? HoraSalida { get; set; }
         public float PesoBruto { get; set; }
         public float Tara { get; set; }
         public float PesoNeto { get; set; }

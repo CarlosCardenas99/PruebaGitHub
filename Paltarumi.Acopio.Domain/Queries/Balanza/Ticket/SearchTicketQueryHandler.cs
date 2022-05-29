@@ -38,19 +38,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 filter,
                 x => x.IdConductorNavigation,
                 x => x.IdTransportistaNavigation,
-                x => x.IdUnidadMedidaNavigation      
+                x => x.IdUnidadMedidaNavigation,
+                x => x.IdVehiculoNavigation,
+                x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
+                x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation 
             );
 
             var ticketDtos = _mapper?.Map<IEnumerable<SearchTicketDto>>(tickets.Items);
-
-            tickets.Items.ToList().ForEach(item =>
-            {
-                ticketDtos.Where(x => x.IdTicket == item.IdTicket).ToList().ForEach(t => { 
-                    t.Conductor = item.IdConductorNavigation.RazonSocial;
-                    t.Transportista = item.IdTransportistaNavigation.Numero + " - " + item.IdTransportistaNavigation.RazonSocial;
-                    t.UnidadMedida = item.IdUnidadMedidaNavigation.Descripcion;
-                });
-            });
 
             var searchResult = new SearchResultDto<SearchTicketDto>(
                 ticketDtos ?? new List<SearchTicketDto>(),

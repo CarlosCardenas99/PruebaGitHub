@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Application.Balanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
@@ -9,9 +10,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
     [Route("api/ticket")]
     public class TicketController
     {
-        private readonly TicketApplication _ticketApplication;
+        private readonly ITicketApplication _ticketApplication;
 
-        public TicketController(TicketApplication ticketApplication)
+        public TicketController(ITicketApplication ticketApplication)
             => _ticketApplication = ticketApplication;
 
         [HttpPost]

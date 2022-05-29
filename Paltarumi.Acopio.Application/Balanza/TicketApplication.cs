@@ -4,10 +4,11 @@ using Paltarumi.Acopio.Domain.Commands.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Queries.Balanza.Ticket;
+using Paltarumi.Acopio.Application.Abstractions.Balanza;
 
 namespace Paltarumi.Acopio.Application.Balanza
 {
-    public class TicketApplication : ApplicationBase
+    public class TicketApplication : ApplicationBase, ITicketApplication
     {
         public TicketApplication(IMediator mediator) : base(mediator)
         {

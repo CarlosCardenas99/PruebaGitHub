@@ -45,7 +45,6 @@ namespace Paltarumi.Acopio.Repository.Data
         {
 
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CheckList>(entity =>
@@ -753,7 +752,8 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("horaIngreso");
 
                 entity.Property(e => e.HoraSalida)
-                    .HasColumnType("datetime")
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
                     .HasColumnName("horaSalida");
 
                 entity.Property(e => e.IdConductor).HasColumnName("idConductor");
@@ -804,7 +804,7 @@ namespace Paltarumi.Acopio.Repository.Data
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdUnidadMedida)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_balanza_ticket_codigoUnidadMedida");
+                    .HasConstraintName("fk_balanza_ticket_idUnidadMedida");
 
                 entity.HasOne(d => d.IdVehiculoNavigation)
                     .WithMany(p => p.Tickets)
