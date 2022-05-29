@@ -2,6 +2,7 @@
 {
     public class SearchLoteDto
     {
+        public int IdLote { get; set; }
         public int CodigoEstado { get; set; }
         public string Vehiculos { get; set; } = null!;
         public int IdConcesion { get; set; }
