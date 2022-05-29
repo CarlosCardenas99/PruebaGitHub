@@ -31,6 +31,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
             if (filters?.Activo == true)
                 filter = filter.And(x => x.Activo == filters.Activo);
 
+            if (filters?.IdLote != null)
+                filter = filter.And(x => x.IdLote == filters.IdLote);
+
             var tickets = await _ticketRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
