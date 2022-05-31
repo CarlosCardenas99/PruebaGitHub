@@ -1,6 +1,5 @@
 using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Balanza.;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;

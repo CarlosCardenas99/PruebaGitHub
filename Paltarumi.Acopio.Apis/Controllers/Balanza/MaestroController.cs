@@ -30,9 +30,6 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetMaestroDto>> Get(int id)
             => await _maestroApplication.Get(id);
 
-        [HttpGet("list")]
-        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> List()
-            => await _maestroApplication.List();
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<MaestroFilterDto> searchParams)
