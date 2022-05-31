@@ -30,6 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Balanza\Maestro.Designer.cs">
+      <DependentUpon>Maestro.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Balanza\Ticket.Designer.cs">
       <DependentUpon>Ticket.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -53,6 +58,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Balanza\Maestro.resx">
+      <LastGenOutput>Maestro.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Ticket.resx">
       <LastGenOutput>Ticket.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
