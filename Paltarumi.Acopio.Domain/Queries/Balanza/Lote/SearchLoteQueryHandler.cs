@@ -59,14 +59,14 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
                 });
             }
 
-            if (filters?.CodigoEstado.HasValue == true)
-                filter = filter.And(x => x.CodigoEstado == filters.CodigoEstado);
+            if (filters?.idEstado.HasValue == true)
+                filter = filter.And(x => x.IdEstado == filters.idEstado);
 
             if (!string.IsNullOrEmpty(filters?.Vehiculos))
-                filter = filter.And(x => x.TicketsNavigation.Any(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculos)));
+                filter = filter.And(x => x.Tickets.Any(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculos)));
 
-            if (!string.IsNullOrEmpty(filters?.Tickets))
-                filter = filter.And(x => x.TicketsNavigation.Any(x => x.Numero.Contains(filters.Tickets)));
+            if (!string.IsNullOrEmpty(filters?.NumeroTickets))
+                filter = filter.And(x => x.Tickets.Any(x => x.Numero.Contains(filters.NumeroTickets)));
 
             var lotes = await _loteRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
@@ -76,13 +76,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation,
-                x => x.TicketsNavigation
+                x => x.Tickets
             );
 
             var tickets = new List<Entity.Ticket>();
 
             if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(x => tickets.AddRange(x.TicketsNavigation));
+                lotes.Items.ToList().ForEach(x => tickets.AddRange(x.Tickets));
 
             var vehículoIds = tickets.Select(x => x.IdVehiculo);
             var vehículos = await _vehiculoRepository.FindByAsNoTrackingAsync(x => vehículoIds.Contains(x.IdVehiculo));
@@ -90,7 +90,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
             if (lotes.Items != null)
                 lotes.Items.ToList().ForEach(item =>
                 {
-                    var ids = item.TicketsNavigation.Select(x => x.IdVehiculo);
+                    var ids = item.Tickets.Select(x => x.IdVehiculo);
                     var vehicles = vehículos.Where(x => ids.Contains(x.IdVehiculo)).Select(x => x.Placa);
                     item.Vehiculos = string.Join(",", vehicles);
                 });

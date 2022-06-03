@@ -45,6 +45,7 @@ namespace Paltarumi.Acopio.Repository.Data
         {
 
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CheckList>(entity =>
@@ -400,8 +401,6 @@ namespace Paltarumi.Acopio.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("codigo");
 
-                entity.Property(e => e.CodigoEstado).HasColumnName("codigoEstado");
-
                 entity.Property(e => e.Conductores)
                     .HasMaxLength(200)
                     .IsUnicode(false)
@@ -427,21 +426,27 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.Humedad).HasColumnName("humedad");
 
+                entity.Property(e => e.Humedad100).HasColumnName("humedad100");
+
+                entity.Property(e => e.HumedadBase).HasColumnName("humedadBase");
+
                 entity.Property(e => e.IdConcesion).HasColumnName("idConcesion");
+
+                entity.Property(e => e.IdEstado).HasColumnName("idEstado");
 
                 entity.Property(e => e.IdEstadoTipoMaterial).HasColumnName("idEstadoTipoMaterial");
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
+                entity.Property(e => e.NumeroTickets)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("numeroTickets");
+
                 entity.Property(e => e.Observacion)
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("observacion");
-
-                entity.Property(e => e.Tickets)
-                    .HasMaxLength(200)
-                    .IsUnicode(false)
-                    .HasColumnName("tickets");
 
                 entity.Property(e => e.Tmh).HasColumnName("tmh");
 
@@ -450,6 +455,10 @@ namespace Paltarumi.Acopio.Repository.Data
                 entity.Property(e => e.TmhBase).HasColumnName("tmhBase");
 
                 entity.Property(e => e.Tms).HasColumnName("tms");
+
+                entity.Property(e => e.Tms100).HasColumnName("tms100");
+
+                entity.Property(e => e.TmsBase).HasColumnName("tmsBase");
 
                 entity.Property(e => e.Transportistas)
                     .HasMaxLength(200)
@@ -758,6 +767,8 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdConductor).HasColumnName("idConductor");
 
+                entity.Property(e => e.IdEstadoTmh).HasColumnName("idEstadoTmh");
+
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
 
                 entity.Property(e => e.IdTransportista).HasColumnName("idTransportista");
@@ -778,7 +789,15 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.PesoBruto).HasColumnName("pesoBruto");
 
+                entity.Property(e => e.PesoBruto100).HasColumnName("pesoBruto100");
+
+                entity.Property(e => e.PesoBrutoBase).HasColumnName("pesoBrutoBase");
+
                 entity.Property(e => e.PesoNeto).HasColumnName("pesoNeto");
+
+                entity.Property(e => e.PesoNeto100).HasColumnName("pesoNeto100");
+
+                entity.Property(e => e.PesoNetoBase).HasColumnName("pesoNetoBase");
 
                 entity.Property(e => e.Tara).HasColumnName("tara");
 
@@ -789,7 +808,7 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasConstraintName("fk_balanza_ticket_idConductor");
 
                 entity.HasOne(d => d.IdLoteNavigation)
-                    .WithMany(p => p.TicketsNavigation)
+                    .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdLote)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_ticket_idLote");

@@ -28,7 +28,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
         public override async Task<ResponseDto<GetLoteDto>> HandleCommand(UpdateLoteCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteDto>();
-            var lote = await _loteRepository.GetByAsync(x => x.IdLote == request.UpdateDto.IdLote, x => x.TicketsNavigation);
+            var lote = await _loteRepository.GetByAsync(x => x.IdLote == request.UpdateDto.IdLote, x => x.Tickets);
 
             if (lote != null)
             {
@@ -36,7 +36,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
 
                 _mapper?.Map(request.UpdateDto, lote);
 
-                foreach (var ticket in (lote.TicketsNavigation ?? new List<Entity.Ticket>()))
+                foreach (var ticket in (lote.Tickets ?? new List<Entity.Ticket>()))
                 {
                     var ticketDto = request.UpdateDto?.TicketDetails?.FirstOrDefault(x => x.IdTicket == ticket.IdTicket);
                     if (ticketDto != null)
@@ -50,7 +50,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 #endregion
 
                 #region Add Non Existing
-                var ticketIds = lote.TicketsNavigation?.Select(x => x.IdTicket) ?? new List<int>();
+                var ticketIds = lote.Tickets?.Select(x => x.IdTicket) ?? new List<int>();
                 var newTicketDtos =
                     request.UpdateDto?.TicketDetails?.Where(x => !ticketIds.Contains(x.IdTicket)) ??
                     new List<UpdateTicketDto>();
@@ -63,13 +63,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                     t.IdLote = lote.IdLote;
                     t.IdLoteNavigation = null;
                     t.Activo = true;
-                    if (lote?.TicketsNavigation != null) lote.TicketsNavigation.Add(t);
+                    if (lote?.Tickets != null) lote.Tickets.Add(t);
                 });
 
                 await _ticketRepository.AddAsync(newTickets.ToArray());
 
-                lote.Tickets = string.Join(
-                    ",", lote.TicketsNavigation?.Select(x => x.Numero) ?? new List<string>()) ?? string.Empty;
+                lote.NumeroTickets = string.Join(
+                    ",", lote.Tickets?.Select(x => x.Numero) ?? new List<string>()) ?? string.Empty;
                 await _loteRepository.UpdateAsync(lote);
 
                 #endregion
@@ -78,7 +78,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 if (loteDto != null)
                 {
                     loteDto.TicketDetails =
-                        _mapper?.Map<List<GetTicketDto>>(lote?.TicketsNavigation) ?? new List<GetTicketDto>();
+                        _mapper?.Map<List<GetTicketDto>>(lote?.Tickets) ?? new List<GetTicketDto>();
 
                     response.UpdateData(loteDto);
                     response.AddOkResult(Resources.Common.UpdateSuccessMessage);
