@@ -21,6 +21,6 @@
         public float Tmh { get; set; }
         public float Humedad { get; set; }
         public float Tms { get; set; }
-        public string Tickets { get; set; } = null!;
+        public string NumeroTickets { get; set; } = null!;
     }
 }

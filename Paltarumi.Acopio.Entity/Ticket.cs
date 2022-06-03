@@ -12,8 +12,13 @@ namespace Paltarumi.Acopio.Entity
         public string HoraIngreso { get; set; } = null!;
         public DateTime? FechaSalida { get; set; }
         public string? HoraSalida { get; set; }
+        public int IdEstadoTmh { get; set; }
+        public float PesoBruto100 { get; set; }
+        public float PesoBrutoBase { get; set; }
         public float PesoBruto { get; set; }
         public float Tara { get; set; }
+        public float PesoNeto100 { get; set; }
+        public float PesoNetoBase { get; set; }
         public float PesoNeto { get; set; }
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
