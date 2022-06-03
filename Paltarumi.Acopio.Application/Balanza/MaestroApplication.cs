@@ -4,10 +4,11 @@ using Paltarumi.Acopio.Domain.Commands.Balanza.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
 using Paltarumi.Acopio.Domain.Queries.Balanza.Maestro;
+using Paltarumi.Acopio.Application.Abstractions.Balanza;
 
 namespace Paltarumi.Acopio.Application.Balanza
 {
-    public class MaestroApplication : ApplicationBase
+    public class MaestroApplication : ApplicationBase, IMaestroApplication
     {
         public MaestroApplication(IMediator mediator) : base(mediator)
         {

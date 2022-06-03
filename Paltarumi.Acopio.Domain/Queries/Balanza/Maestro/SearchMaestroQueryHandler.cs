@@ -38,8 +38,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
 
             var filters = request.SearchParams?.Filter;
 
-            if (filters?.Activo == true)
-                filter = filter.And(x => x.Activo == filters.Activo);
+            filter = filter.And(x => x.Activo == true);
 
             if (!String.IsNullOrEmpty(filters?.CodigoTabla))
                 filter = filter.And(x => x.CodigoTabla == filters.CodigoTabla);

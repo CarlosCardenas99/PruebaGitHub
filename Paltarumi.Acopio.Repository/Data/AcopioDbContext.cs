@@ -442,6 +442,10 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
+                entity.Property(e => e.IdUsuarioCreate).HasColumnName("idUsuarioCreate");
+
+                entity.Property(e => e.IdUsuarioUpdate).HasColumnName("idUsuarioUpdate");
+
                 entity.Property(e => e.NumeroTickets)
                     .HasMaxLength(200)
                     .IsUnicode(false)
@@ -484,8 +488,14 @@ namespace Paltarumi.Acopio.Repository.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_lote_idConcesion");
 
+                entity.HasOne(d => d.IdEstadoNavigation)
+                    .WithMany(p => p.LoteIdEstadoNavigations)
+                    .HasForeignKey(d => d.IdEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_balanza_lote_idEstado");
+
                 entity.HasOne(d => d.IdEstadoTipoMaterialNavigation)
-                    .WithMany(p => p.Lotes)
+                    .WithMany(p => p.LoteIdEstadoTipoMaterialNavigations)
                     .HasForeignKey(d => d.IdEstadoTipoMaterial)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_lote_idEstadoTipoMaterial");
