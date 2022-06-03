@@ -44,7 +44,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
-                x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation 
+                x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
+                x => x.IdEstadoTmhNavigation
             );
 
             var ticketDtos = _mapper?.Map<IEnumerable<SearchTicketDto>>(tickets.Items);
