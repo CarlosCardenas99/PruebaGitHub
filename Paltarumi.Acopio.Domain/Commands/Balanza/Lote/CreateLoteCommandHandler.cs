@@ -38,12 +38,12 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 var code = codeResponse?.Data ?? string.Empty;
 
                 lote.Codigo = code;
-                lote.TicketsNavigation =
+                lote.Tickets =
                     _mapper?.Map<List<Entity.Ticket>>(request.CreateDto.TicketDetails) ?? new List<Entity.Ticket>();
 
                 lote.Activo = true;
-                lote.TicketsNavigation.ToList().ForEach(t => { t.Activo = true; });
-                lote.Tickets = string.Join(",", lote.TicketsNavigation.Select(x => x.Numero));
+                lote.Tickets.ToList().ForEach(t => { t.Activo = true; });
+                lote.NumeroTickets = string.Join(",", lote.Tickets.Select(x => x.Numero));
 
                 await _loteRepository.AddAsync(lote);
 
@@ -51,7 +51,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 if (loteDto != null)
                 {
                     loteDto.TicketDetails =
-                        _mapper?.Map<List<GetTicketDto>>(lote.TicketsNavigation) ?? new List<GetTicketDto>();
+                        _mapper?.Map<List<GetTicketDto>>(lote.Tickets) ?? new List<GetTicketDto>();
 
                     response.UpdateData(loteDto);
                 }

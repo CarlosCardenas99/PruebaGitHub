@@ -5,6 +5,7 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
+using Paltarumi.Acopio.Entity.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
 {
@@ -26,15 +27,27 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
 
             Expression<Func<Entity.Maestro, bool>> filter = x => true;
 
+            List<SortExpression<Entity.Maestro>> listSortExpression = new List<SortExpression<Entity.Maestro>>();
+            /*
+            Expression<Func<Entity.Maestro, object>> sortFuntion = x => x.CodigoItem;
+            SortExpression<Entity.Maestro> sortExpression = new SortExpression<Entity.Maestro>();
+            sortExpression.Property = sortFuntion;
+            sortExpression.Direction = SortDirection.Desc;
+            listSortExpression.Add(sortExpression);
+            */
+
             var filters = request.SearchParams?.Filter;
 
             if (filters?.Activo == true)
                 filter = filter.And(x => x.Activo == filters.Activo);
 
+            if (!String.IsNullOrEmpty(filters?.CodigoTabla))
+                filter = filter.And(x => x.CodigoTabla == filters.CodigoTabla);
+
             var maestros = await _maestroRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
-                null,
+                listSortExpression,
                 filter
             );
 

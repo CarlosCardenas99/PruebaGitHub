@@ -23,12 +23,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
         protected override async Task<ResponseDto<GetLoteDto>> HandleQuery(GetLoteQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteDto>();
-            var lote = await _loteRepository.GetByAsync(x => x.IdLote == request.Id, x => x.TicketsNavigation);
+            var lote = await _loteRepository.GetByAsync(x => x.IdLote == request.Id, x => x.Tickets);
             var loteDto = _mapper?.Map<GetLoteDto>(lote);
 
             if (lote != null && loteDto != null)
             {
-                loteDto.TicketDetails = _mapper?.Map<IEnumerable<GetTicketDto>>(lote.TicketsNavigation);
+                loteDto.TicketDetails = _mapper?.Map<IEnumerable<GetTicketDto>>(lote.Tickets);
                 response.UpdateData(loteDto);
             }
 
