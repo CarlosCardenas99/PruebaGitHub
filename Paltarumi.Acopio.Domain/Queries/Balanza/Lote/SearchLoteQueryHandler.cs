@@ -76,7 +76,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation,
-                x => x.Tickets
+                x => x.Tickets,
+                x => x.IdEstadoNavigation
             );
 
             var tickets = new List<Entity.Ticket>();

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Paltarumi.Acopio.Application.Balanza;
+using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
 
@@ -9,9 +9,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
     [Route("api/maestro")]
     public class MaestroController
     {
-        private readonly MaestroApplication _maestroApplication;
+        private readonly IMaestroApplication _maestroApplication;
 
-        public MaestroController(MaestroApplication maestroApplication)
+        public MaestroController(IMaestroApplication maestroApplication)
             => _maestroApplication = maestroApplication;
 
         [HttpPost]
