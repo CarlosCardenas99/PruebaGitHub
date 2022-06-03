@@ -622,6 +622,12 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
+                entity.Property(e => e.CodigoUbigeo)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoUbigeo")
+                    .IsFixedLength();
+
                 entity.Property(e => e.Direccion)
                     .HasMaxLength(200)
                     .IsUnicode(false)
