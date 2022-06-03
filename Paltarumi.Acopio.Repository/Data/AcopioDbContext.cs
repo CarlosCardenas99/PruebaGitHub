@@ -837,6 +837,12 @@ namespace Paltarumi.Acopio.Repository.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_ticket_idConductor");
 
+                entity.HasOne(d => d.IdEstadoTmhNavigation)
+                    .WithMany(p => p.TicketIdEstadoTmhNavigations)
+                    .HasForeignKey(d => d.IdEstadoTmh)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_balanza_ticket_idEstadoTmh");
+
                 entity.HasOne(d => d.IdLoteNavigation)
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdLote)
@@ -850,7 +856,7 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasConstraintName("fk_balanza_ticket_idTransportista");
 
                 entity.HasOne(d => d.IdUnidadMedidaNavigation)
-                    .WithMany(p => p.Tickets)
+                    .WithMany(p => p.TicketIdUnidadMedidaNavigations)
                     .HasForeignKey(d => d.IdUnidadMedida)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_ticket_idUnidadMedida");

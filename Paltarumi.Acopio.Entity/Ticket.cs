@@ -35,6 +35,7 @@ namespace Paltarumi.Acopio.Entity
         public bool Activo { get; set; }
 
         public virtual Conductor IdConductorNavigation { get; set; } = null!;
+        public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
         public virtual Lote IdLoteNavigation { get; set; } = null!;
         public virtual Transportistum IdTransportistaNavigation { get; set; } = null!;
         public virtual Maestro IdUnidadMedidaNavigation { get; set; } = null!;

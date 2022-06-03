@@ -9,7 +9,8 @@ namespace Paltarumi.Acopio.Entity
         {
             LoteIdEstadoNavigations = new HashSet<Lote>();
             LoteIdEstadoTipoMaterialNavigations = new HashSet<Lote>();
-            Tickets = new HashSet<Ticket>();
+            TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
+            TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
             VehiculoIdTipoVehiculoNavigations = new HashSet<Vehiculo>();
             VehiculoIdVehiculoMarcaNavigations = new HashSet<Vehiculo>();
         }
@@ -22,7 +23,8 @@ namespace Paltarumi.Acopio.Entity
 
         public virtual ICollection<Lote> LoteIdEstadoNavigations { get; set; }
         public virtual ICollection<Lote> LoteIdEstadoTipoMaterialNavigations { get; set; }
-        public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
+        public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }
         public virtual ICollection<Vehiculo> VehiculoIdTipoVehiculoNavigations { get; set; }
         public virtual ICollection<Vehiculo> VehiculoIdVehiculoMarcaNavigations { get; set; }
     }
