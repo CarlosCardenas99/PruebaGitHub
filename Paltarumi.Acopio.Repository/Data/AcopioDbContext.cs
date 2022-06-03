@@ -442,10 +442,6 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
-                entity.Property(e => e.IdUsuarioCreate).HasColumnName("idUsuarioCreate");
-
-                entity.Property(e => e.IdUsuarioUpdate).HasColumnName("idUsuarioUpdate");
-
                 entity.Property(e => e.NumeroTickets)
                     .HasMaxLength(200)
                     .IsUnicode(false)
