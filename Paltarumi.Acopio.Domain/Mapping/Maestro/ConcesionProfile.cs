@@ -21,6 +21,9 @@ namespace Paltarumi.Acopio.Domain.Mapping.Maestro
 
             CreateMap<Entity.Concesion, SearchConcesionDto>()
                 .ReverseMap();
+
+            CreateMap<Entity.Concesion, ListConcesionDto>()
+                .ReverseMap();
         }
     }
 }

@@ -39,5 +39,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         [HttpGet("codigounico/{codigoUnico}")]
         public async Task<ResponseDto<GetConcesionDto>> Get(string codigoUnico)
             => await _concesionApplication.Get(codigoUnico);
+
+        [HttpPost("list")]
+        public async Task<ResponseDto<IEnumerable<ListConcesionDto>>> List(ListConcesionFilterDto filter)
+            => await _concesionApplication.List(filter);
     }
 }
