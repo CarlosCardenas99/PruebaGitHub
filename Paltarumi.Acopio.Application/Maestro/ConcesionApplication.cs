@@ -32,5 +32,8 @@ namespace Paltarumi.Acopio.Application.Maestro
 
         public async Task<ResponseDto<GetConcesionDto>> Get(string codigoUnico)
             => await _mediator.Send(new GetConcesionQueryCodUnico(codigoUnico));
+
+        public async Task<ResponseDto<IEnumerable<ListConcesionDto>>> List(ListConcesionFilterDto filter)
+            => await _mediator.Send(new ListConcesionQuery(filter));
     }
 }
