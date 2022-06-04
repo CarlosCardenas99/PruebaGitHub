@@ -32,6 +32,7 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<ModuloUsuario> ModuloUsuarios { get; set; } = null!;
         public virtual DbSet<Muestreo> Muestreos { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
+        public virtual DbSet<ProveedorConcesion> ProveedorConcesions { get; set; } = null!;
         public virtual DbSet<Recodificacion> Recodificacions { get; set; } = null!;
         public virtual DbSet<SystemDataType> SystemDataTypes { get; set; } = null!;
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
@@ -652,6 +653,35 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasMaxLength(12)
                     .IsUnicode(false)
                     .HasColumnName("telefono");
+            });
+
+            modelBuilder.Entity<ProveedorConcesion>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("ProveedorConcesion", "maestro");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.IdConcesion).HasColumnName("idConcesion");
+
+                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
+
+                entity.Property(e => e.IdProveedorConcesion)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("idProveedorConcesion");
+
+                entity.HasOne(d => d.IdConcesionNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdConcesion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_maestro_ProveedorConcesion_idConcesion");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.IdProveedor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_maestro_ProveedorConcesionr_idProveedor");
             });
 
             modelBuilder.Entity<Recodificacion>(entity =>
