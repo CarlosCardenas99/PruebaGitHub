@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Entity
         public Proveedor()
         {
             Lotes = new HashSet<Lote>();
+            ProveedorConcesions = new HashSet<ProveedorConcesion>();
         }
 
         public int IdProveedor { get; set; }
@@ -20,5 +21,6 @@ namespace Paltarumi.Acopio.Entity
         public bool Activo { get; set; }
 
         public virtual ICollection<Lote> Lotes { get; set; }
+        public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }
     }
 }

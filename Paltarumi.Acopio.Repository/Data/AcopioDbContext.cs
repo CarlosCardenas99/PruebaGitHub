@@ -657,9 +657,15 @@ namespace Paltarumi.Acopio.Repository.Data
 
             modelBuilder.Entity<ProveedorConcesion>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.IdProveedorConcesion)
+                    .HasName("PK_maestro_ProveedorConcesion_idProveedorConcesion");
 
                 entity.ToTable("ProveedorConcesion", "maestro");
+
+                entity.HasIndex(e => new { e.IdProveedor, e.IdConcesion }, "UC_maestro_ProveedorConcesion_idProveedor_idConcesion")
+                    .IsUnique();
+
+                entity.Property(e => e.IdProveedorConcesion).HasColumnName("idProveedorConcesion");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
@@ -667,18 +673,14 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
-                entity.Property(e => e.IdProveedorConcesion)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("idProveedorConcesion");
-
                 entity.HasOne(d => d.IdConcesionNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProveedorConcesions)
                     .HasForeignKey(d => d.IdConcesion)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_maestro_ProveedorConcesion_idConcesion");
 
                 entity.HasOne(d => d.IdProveedorNavigation)
-                    .WithMany()
+                    .WithMany(p => p.ProveedorConcesions)
                     .HasForeignKey(d => d.IdProveedor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_maestro_ProveedorConcesionr_idProveedor");
