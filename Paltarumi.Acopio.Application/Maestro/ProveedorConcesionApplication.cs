@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto> Delete(int id)
             => await _mediator.Send(new DeleteProveedorConcesionCommand(id));
 
-        public async Task<ResponseDto<IEnumerable<GetProveedorConcesionDto>>> List(int idProveedor)
+        public async Task<ResponseDto<IEnumerable<ListProveedorConcesionDto>>> List(int idProveedor)
             => await _mediator.Send(new ListProveedorConcesionQuery(idProveedor));
 
         public async Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<ProveedorConcesionFilterDto> searchParams)

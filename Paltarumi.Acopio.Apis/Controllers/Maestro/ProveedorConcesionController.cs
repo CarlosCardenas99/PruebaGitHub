@@ -27,7 +27,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
             => await _proveedorconcesionApplication.Delete(id);
 
         [HttpGet("list/{idProveedor}")]
-        public async Task<ResponseDto<IEnumerable<GetProveedorConcesionDto>>> List(int idProveedor)
+        public async Task<ResponseDto<IEnumerable<ListProveedorConcesionDto>>> List(int idProveedor)
             => await _proveedorconcesionApplication.List(idProveedor);
 
         [HttpPost("search")]

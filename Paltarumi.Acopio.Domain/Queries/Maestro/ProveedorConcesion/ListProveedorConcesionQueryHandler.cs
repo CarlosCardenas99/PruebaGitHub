@@ -6,7 +6,7 @@ using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 {
-    public class ListProveedorConcesionQueryHandler : QueryHandlerBase<ListProveedorConcesionQuery, IEnumerable<GetProveedorConcesionDto>>
+    public class ListProveedorConcesionQueryHandler : QueryHandlerBase<ListProveedorConcesionQuery, IEnumerable<ListProveedorConcesionDto>>
     {
         private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
@@ -19,16 +19,16 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
             _proveedorconcesionRepository = proveedorconcesionRepository;
         }
 
-        protected override async Task<ResponseDto<IEnumerable<GetProveedorConcesionDto>>> HandleQuery(ListProveedorConcesionQuery request, CancellationToken cancellationToken)
+        protected override async Task<ResponseDto<IEnumerable<ListProveedorConcesionDto>>> HandleQuery(ListProveedorConcesionQuery request, CancellationToken cancellationToken)
         {
-            var response = new ResponseDto<IEnumerable<GetProveedorConcesionDto>>();
+            var response = new ResponseDto<IEnumerable<ListProveedorConcesionDto>>();
 
             var proveedorconcesion = await _proveedorconcesionRepository.FindByAsync(
                 x => x.IdProveedorConcesion == request.IdProveedor,
                 x => x.IdConcesionNavigation
             );
 
-            var proveedorconcesionDto = _mapper?.Map<List<GetProveedorConcesionDto>>(proveedorconcesion.ToList());
+            var proveedorconcesionDto = _mapper?.Map<List<ListProveedorConcesionDto>>(proveedorconcesion.ToList());
 
             if (proveedorconcesion != null && proveedorconcesionDto != null)
             {
