@@ -36,7 +36,6 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                 if (result.response.responseCode == 0 )
                 {
                     proveedor = mapperCreateProveedorDto(result.sunatVo);
-                    proveedor.Activo = true;
                     await _proveedorRepository.AddAsync(proveedor);
                     await _proveedorRepository.SaveAsync();
                     proveedorDto = _mapper?.Map<GetProveedorDto>(proveedor);
@@ -64,9 +63,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             proveedor.RazonSocial = sunatVo.razonSocial;
             proveedor.CodigoUbigeo = sunatVo.ubigeo;
             proveedor.Direccion = sunatVo.direccion;
-            proveedor.Activo = true;
             proveedor.Email = String.Empty;
             proveedor.Telefono = String.Empty;
+            proveedor.Activo = true;
             return proveedor;
         }
     }
