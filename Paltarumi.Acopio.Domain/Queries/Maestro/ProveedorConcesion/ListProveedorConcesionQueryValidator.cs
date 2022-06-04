@@ -5,11 +5,11 @@ using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 {
-    public class GetProveedorConcesionQueryValidator : QueryValidatorBase<GetProveedorConcesionQuery>
+    public class ListProveedorConcesionQueryValidator : QueryValidatorBase<ListProveedorConcesionQuery>
     {
         private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
-        public GetProveedorConcesionQueryValidator(IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository)
+        public ListProveedorConcesionQueryValidator(IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;
 
@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
                 });
         }
 
-        protected async Task<bool> ValidateExistenceAsync(GetProveedorConcesionQuery command, int id, ValidationContext<GetProveedorConcesionQuery> context, CancellationToken cancellationToken)
+        protected async Task<bool> ValidateExistenceAsync(ListProveedorConcesionQuery command, int id, ValidationContext<ListProveedorConcesionQuery> context, CancellationToken cancellationToken)
         {
             var exists = await _proveedorconcesionRepository.FindAll().Where(x => x.IdProveedorConcesion == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.GetRecordNotFound);

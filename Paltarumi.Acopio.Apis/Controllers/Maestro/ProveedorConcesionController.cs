@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Maestro.ProveedorConcesion;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.ProveedorConcesion;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {
@@ -26,10 +26,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto> Delete(int id)
             => await _proveedorconcesionApplication.Delete(id);
 
-        [HttpGet("{idProveedor}")]
-        public async Task<ResponseDto<List<GetProveedorConcesionDto>>> Get(int idProveedor)
-            => await _proveedorconcesionApplication.Get(idProveedor);
-
+        [HttpGet("list/{idProveedor}")]
+        public async Task<ResponseDto<IEnumerable<GetProveedorConcesionDto>>> List(int idProveedor)
+            => await _proveedorconcesionApplication.List(idProveedor);
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<ProveedorConcesionFilterDto> searchParams)

@@ -3,9 +3,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 {
-    public class GetProveedorConcesionQuery : QueryBase<List<GetProveedorConcesionDto>>
+    public class ListProveedorConcesionQuery : QueryBase<IEnumerable<GetProveedorConcesionDto>>
     {
-        public GetProveedorConcesionQuery(int idProveedor) => IdProveedor = idProveedor;
+        public ListProveedorConcesionQuery(int idProveedor) => IdProveedor = idProveedor;
         public int IdProveedor { get; set; }
     }
 }
