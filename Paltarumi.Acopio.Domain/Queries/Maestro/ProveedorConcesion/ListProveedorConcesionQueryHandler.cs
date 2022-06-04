@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
             var response = new ResponseDto<IEnumerable<ListProveedorConcesionDto>>();
 
             var proveedorconcesion = await _proveedorconcesionRepository.FindByAsync(
-                x => x.IdProveedorConcesion == request.IdProveedor,
+                x => x.IdProveedor == request.IdProveedor,
                 x => x.IdConcesionNavigation
             );
 
