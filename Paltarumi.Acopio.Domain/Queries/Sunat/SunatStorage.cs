@@ -1,293 +1,225 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Paltarumi.Acopio.Domain.Queries.Sunat
 {
+    public class SunatService
+    {
+        public string? Code { get; set; }
+        public string? Url { get; set; }
+        public string? PathRuc { get; set; }
+        public string? PathDni { get; set; }
+        public string? Token { get; set; }
+    }
+
+
     public class SunatStorage
     {
-        public SunatConsultaRucDto consultaRuc(string ruc)
+        public List<SunatService> SunatServicesRuc = new List<SunatService>
         {
-            SunatVa sunatVa = new SunatVa();
-            SunatConsultaRucDto response = new SunatConsultaRucDto();
-            string URL;
-            EmpresaApiEn empresa;
-
-            try
-            {
-                string token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNyZWF0aXZlLnN0b3JlLnRpZ3JlZG9yYWRvQGdtYWlsLmNvbSJ9.9oLsNwlFccNP160Ox8kXRPriBbdnShX3Gj1h2ATmNKE";
-                // Dim token As String = UserLoggin.token01
-                URL = $"https://dniruc.apisperu.com/api/v1/ruc/{ruc}?token={token}";
-
-                string json_de_respuesta = sendJsonGET(URL, token);
-                if (json_de_respuesta.Contains("html"))
-                {
-                    response.response = new Response(-1, "Error en la consulta");
-                    return response;
-                }
-                if (json_de_respuesta.Contains("false"))
-                {
-                    var status = JsonConvert.DeserializeObject<ResponseErrorSunat>(json_de_respuesta);
-                    response.response = new Response(-1, status.message);
-                    return response;
-                }
-                var r = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
-                var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
-                empresa = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
-
-                response.sunatVo = new SunatConsultaRucVo();
-
-                response.sunatVo.ruc = empresa.ruc;
-                response.sunatVo.razonSocial = empresa.razonSocial;
-                response.sunatVo.direccion = empresa.direccion;
-                response.sunatVo.departamento = empresa.departamento;
-                response.sunatVo.provincia = empresa.provincia;
-                response.sunatVo.distrito = empresa.distrito;
-                response.sunatVo.ubigeo = empresa.ubigeo;
-
-                response.response = new Response();
-                return response;
+            new SunatService {
+                Code = "dniruc",
+                Url = "https://dniruc.apisperu.com/api/v1",
+                PathRuc = "/ruc/{ruc}?token={token}",
+                PathDni = "/dni/{dni}?token={token}",
+                Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNyZWF0aXZlLnN0b3JlLnRpZ3JlZG9yYWRvQGdtYWlsLmNvbSJ9.9oLsNwlFccNP160Ox8kXRPriBbdnShX3Gj1h2ATmNKE"
+            },
+            new SunatService {
+                Code = "apiperu",
+                Url = "https://apiperu.dev/api",
+                PathRuc = "/ruc/{ruc}",
+                PathDni = "/dni/{dni}",
+                Token = "961ecd96a2e13e7b523267f28b29cffbdbd4b147904a39520fd3374cd68b7774"
+            },
+            new SunatService {
+                Code = "optimizeperu",
+                Url = "https://dni.optimizeperu.com/api",
+                PathRuc = "/company/{ruc}",
+                PathDni = "/persons/{dni}",
+                Token = ""
             }
-            catch (Exception ex)
-            {
-                response = consultaRucLaravel(ruc);
-            }
+        };
 
-            return response;
-        }
-
-        public SunatConsultaRucDto consultaRucLaravel(string ruc)
+        public SunatConsultaRucDto ConsultaRuc(string ruc)
         {
-            SunatConsultaRucDto response = new SunatConsultaRucDto();
-            string URL;
-            EmpresaApiLaravelEn empresa;
+            var response = new SunatConsultaRucDto();
 
-            try
-            {
-                string token = "961ecd96a2e13e7b523267f28b29cffbdbd4b147904a39520fd3374cd68b7774";
-                // Dim token As String = UserLoggin.token02
-                URL = $"https://apiperu.dev/api/ruc/{ruc}";
-
-                string json_de_respuesta = sendJsonGET(URL, token);
-
-                var r = JsonConvert.DeserializeObject<EmpresaApiLaravelEn>(json_de_respuesta);
-                var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
-                empresa = JsonConvert.DeserializeObject<EmpresaApiLaravelEn>(json_de_respuesta);
-
-                if (empresa.success)
-                {
-                    response.sunatVo = new SunatConsultaRucVo();
-                    response.sunatVo.ruc = empresa.data.ruc;
-                    response.sunatVo.razonSocial = empresa.data.nombre_o_razon_social;
-                    response.sunatVo.direccion = empresa.data.direccion_completa;
-                    response.sunatVo.ubigeo = String.Empty;
-                }
-                else
-                    response = consultaRucOptimize(ruc);
-
-                response.response = new Response();
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response = consultaRucOptimize(ruc);
-            }
-
-            return response;
-        }
-
-        public SunatConsultaRucDto consultaRucOptimize(string ruc)
-        {
-            SunatConsultaRucDto response = new SunatConsultaRucDto();
-            string URL;
-            EmpresaApiOptimizeEn empresa;
-
-            try
-            {
-                URL = $"https://dni.optimizeperu.com/api/company/{ruc}";
-
-                string json_de_respuesta = sendJsonGET(URL, string.Empty);
-
-                var r = JsonConvert.DeserializeObject<EmpresaApiOptimizeEn>(json_de_respuesta);
-                var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
-                empresa = JsonConvert.DeserializeObject<EmpresaApiOptimizeEn>(json_de_respuesta);
-
-                response.sunatVo = new SunatConsultaRucVo();
-                response.sunatVo.ruc = empresa.ruc;
-                response.sunatVo.razonSocial = empresa.nombre_comercial;
-                response.sunatVo.direccion = "-";
-
-                response.response = new Response();
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response.response = new Response();
-                response.response.responseCode = -1;
-                response.response.responseMessage = ex.Message;
-            }
-
-            return response;
-        }
-
-        public SunatConsultaRucDto consultaDni(string dni)
-        {
-            SunatConsultaRucDto response = new SunatConsultaRucDto();
-            string URL;
-            PersonaApiEn persona;
-
-            try
-            {
-                string token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNyZWF0aXZlLnN0b3JlLnRpZ3JlZG9yYWRvQGdtYWlsLmNvbSJ9.9oLsNwlFccNP160Ox8kXRPriBbdnShX3Gj1h2ATmNKE";
-                // Dim token As String = UserLoggin.token01
-                URL = $"https://dniruc.apisperu.com/api/v1/dni/{dni}?token={token}";
-
-                string json_de_respuesta = sendJsonGET(URL, token);
-
-                var r = JsonConvert.DeserializeObject<PersonaApiEn>(json_de_respuesta);
-                var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
-                persona = JsonConvert.DeserializeObject<PersonaApiEn>(json_de_respuesta);
-
-                response.sunatVo = new SunatConsultaRucVo();
-                response.sunatVo.ruc = persona.dni;
-                response.sunatVo.razonSocial = string.Format("{0} {1} {2}", persona.apellidoPaterno, persona.apellidoMaterno, persona.nombres);
-                response.sunatVo.direccion = string.Empty;
-
-                if (response.sunatVo.razonSocial.Trim() == string.Empty)
-                    response = consultaDniLaravel(dni);
-                else
-                    response.response = new Response();
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response = consultaDniLaravel(dni);
-            }
-
-            return response;
-        }
-
-        public SunatConsultaRucDto consultaDniLaravel(string dni)
-        {
-            SunatConsultaRucDto response = new SunatConsultaRucDto();
-            string URL;
-            PersonaApiLaravelEn persona;
-
-            try
-            {
-                string token = "961ecd96a2e13e7b523267f28b29cffbdbd4b147904a39520fd3374cd68b7774";
-                // Dim token As String = UserLoggin.token02
-
-                URL = $"https://apiperu.dev/api/dni/{dni}";
-
-                string json_de_respuesta = sendJsonGET(URL, token);
-
-                var r = JsonConvert.DeserializeObject<PersonaApiLaravelEn>(json_de_respuesta);
-                var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
-                persona = JsonConvert.DeserializeObject<PersonaApiLaravelEn>(json_de_respuesta);
-
-                if (persona.success)
-                {
-                    response.sunatVo = new SunatConsultaRucVo();
-                    response.sunatVo.ruc = persona.data.numero;
-                    response.sunatVo.razonSocial = persona.data.nombre_completo;
-                    response.sunatVo.direccion = "-";
-
-                    response.response = new Response();
-                }
-                else
-                    response = consultaDniOptimize(dni);
-
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response = consultaDniOptimize(dni);
-            }
-
-            return response;
-        }
-
-        public SunatConsultaRucDto consultaDniOptimize(string dni)
-        {
-            SunatConsultaRucDto response = new SunatConsultaRucDto();
-            string URL;
-            PersonaApiOptimizeEn persona;
-
-            try
-            {
-                URL = $"https://dni.optimizeperu.com/api/persons/{dni}";
-
-                string json_de_respuesta = sendJsonGET(URL, string.Empty);
-
-                var r = JsonConvert.DeserializeObject<PersonaApiOptimizeEn>(json_de_respuesta);
-                var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
-                persona = JsonConvert.DeserializeObject<PersonaApiOptimizeEn>(json_de_respuesta);
-
-                response.sunatVo = new SunatConsultaRucVo();
-                response.sunatVo.ruc = persona.dni;
-                response.sunatVo.razonSocial = string.Format("{0} {1} {2}", persona.first_name, persona.last_name, persona.name);
-                response.sunatVo.direccion = string.Empty;
-
-                response.response = new Response();
-                return response;
-            }
-            catch (Exception ex)
-            {
-                response.response = new Response();
-                response.response.responseCode = -1;
-                response.response.responseMessage = ex.Message;
-            }
-
-            return response;
-        }
-
-        public string sendJsonGET(string ruta, string token)
-        {
-            using (WebClient wc = new WebClient())
+            foreach (var sunatServicesRuc in SunatServicesRuc)
             {
                 try
                 {
-                    wc.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8");
+                    var url = $"{sunatServicesRuc?.Url}{ sunatServicesRuc?.PathRuc}";
 
-                    if (token != string.Empty)
-                        wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + token);
+                    url = url?.Replace("{ruc}", ruc);
+                    url = url?.Replace("{token}", sunatServicesRuc?.Token);
 
-                    var respuesta = wc.DownloadString(ruta);
-                    return respuesta;
+                    var json_de_respuesta = sendJsonGET(url, sunatServicesRuc?.Token);
+
+                    if (json_de_respuesta.Contains("html"))
+                    {
+                        response.response = new Response(-1, "Error en la consulta");
+                        continue;
+                    }
+
+                    if (json_de_respuesta.Contains("false"))
+                    {
+                        var status = JsonConvert.DeserializeObject<ResponseErrorSunat>(json_de_respuesta);
+                        response.response = new Response(-1, status?.message);
+                        continue;
+                    }
+
+                    var r = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
+                    var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
+                    var empresa = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
+
+                    if (empresa == null)
+                    {
+                        response.response = new Response(-1, "Error en la consulta");
+                        continue;
+                    }
+
+                    response.sunatVo = new SunatConsultaRucVo
+                    {
+                        ruc = empresa.ruc,
+                        razonSocial = empresa.razonSocial,
+                        direccion = empresa.direccion,
+                        departamento = empresa.departamento,
+                        provincia = empresa.provincia,
+                        distrito = empresa.distrito,
+                        ubigeo = empresa.ubigeo
+                    };
+
+                    response.response = new Response();
+
+                    return response;
+
                 }
-                catch (WebException x)
+                catch (Exception)
                 {
-                    return new StreamReader(x.Response.GetResponseStream()).ReadToEnd();
+                    continue;
                 }
+            }
+
+            response.response = new Response(-1, "Error en la consulta");
+
+            return response;
+        }
+
+        public SunatConsultaRucDto ConsultaDni(string dni)
+        {
+            var response = new SunatConsultaRucDto();
+
+            foreach (var sunatServicesRuc in SunatServicesRuc)
+            {
+                try
+                {
+                    var url = $"{sunatServicesRuc?.Url}{ sunatServicesRuc?.PathDni}";
+
+                    url = url?.Replace("{dni}", dni);
+                    url = url?.Replace("{token}", sunatServicesRuc?.Token);
+
+                    var json_de_respuesta = sendJsonGET(url, sunatServicesRuc?.Token);
+
+                    if (json_de_respuesta.Contains("html"))
+                    {
+                        response.response = new Response(-1, "Error en la consulta");
+                        continue;
+                    }
+
+                    if (json_de_respuesta.Contains("false"))
+                    {
+                        var status = JsonConvert.DeserializeObject<ResponseErrorSunat>(json_de_respuesta);
+                        response.response = new Response(-1, status?.message);
+                        continue;
+                    }
+
+                    var r = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
+                    var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
+                    var persona = JsonConvert.DeserializeObject<PersonaApiEn>(json_de_respuesta);
+
+                    if (persona == null)
+                    {
+                        response.response = new Response(-1, "Error en la consulta");
+                        continue;
+                    }
+
+                    response.sunatVo = sunatServicesRuc?.Code switch
+                    {
+                        "dniruc" => new SunatConsultaRucVo
+                        {
+                            ruc = persona.dni,
+                            razonSocial = string.Format("{0} {1} {2}", persona.apellidoPaterno, persona.apellidoMaterno, persona.nombres),
+                            direccion = string.Empty
+                        },
+                        "apiperu" => new SunatConsultaRucVo
+                        {
+                            ruc = persona.data.numero,
+                            razonSocial = persona.data.nombre_completo,
+                            direccion = "-"
+                        },
+                        "optimizeperu" => new SunatConsultaRucVo
+                        {
+                            ruc = persona.dni,
+                            razonSocial = string.Format("{0} {1} {2}", persona.first_name, persona.last_name, persona.name),
+                            direccion = string.Empty
+                        },
+                        _ => new SunatConsultaRucVo()
+                    };
+
+                    if (response.sunatVo.razonSocial.Trim() == string.Empty)
+                        continue;
+
+                    return response;
+
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+
+            response.response = new Response(-1, "Error en la consulta");
+
+            return response;
+        }
+
+        public string sendJsonGET(string? ruta, string? token)
+        {
+            using WebClient wc = new();
+
+            try
+            {
+                wc.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8");
+
+                if (token != string.Empty)
+                    wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + token);
+
+                var respuesta = wc.DownloadString(ruta);
+                return respuesta;
+            }
+            catch (WebException x)
+            {
+                return new StreamReader(x.Response.GetResponseStream()).ReadToEnd();
             }
         }
 
         public string sendJsonPOST(string ruta, string token, string json)
         {
-            using (WebClient wc = new WebClient())
+            using WebClient wc = new();
+
+            try
             {
-                try
-                {
-                    wc.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8");
-                    // wc.Headers.Add(HttpRequestHeader.Authorization, "Token token=" & token)
-                    wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + token);
-                    var respuesta = wc.UploadString(ruta, "POST", json);
-                    return respuesta;
-                }
-                catch (WebException x)
-                {
-                    return new StreamReader(x.Response.GetResponseStream()).ReadToEnd();
-                }
+                wc.Headers.Add(HttpRequestHeader.ContentType, "application/json; charset=utf-8");
+                wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + token);
+
+                var respuesta = wc.UploadString(ruta, "POST", json);
+                return respuesta;
+            }
+            catch (WebException ex)
+            {
+                return new StreamReader(ex?.Response.GetResponseStream()).ReadToEnd();
             }
         }
-
-
     }
 
     public class ResponseErrorSunat
@@ -326,43 +258,6 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
         public string capital { get; set; }
     }
 
-    class EmpresaApiLaravelEn
-    {
-        public bool success { get; set; }
-        public EmpresaApiLaravelDataEn data { get; set; }
-    }
-
-    class EmpresaApiLaravelDataEn
-    {
-        public string direccion { get; set; }
-        public string direccion_completa { get; set; }
-        public string ruc { get; set; }
-        public string nombre_o_razon_social { get; set; }
-        public string estado { get; set; }
-        public string condicion { get; set; }
-        public List<string> ubigeo { get; set; }
-        public int origen { get; set; }
-    }
-
-    class EmpresaApiOptimizeEn
-    {
-        public string ruc { get; set; }
-        public string razon_social { get; set; }
-        public string actividad_economica { get; set; }
-        public string fecha_actividad { get; set; }
-        public string tipo { get; set; }
-        public string nombre_comercial { get; set; }
-        public string fecha_inscripcion { get; set; }
-        public string sistema_emision { get; set; }
-        public string sistema_contabilidad { get; set; }
-        public string actividad_exterior { get; set; }
-        public string emision_electronica { get; set; }
-        public string fecha_inscripcion_ple { get; set; }
-        public string fecha_baja { get; set; }
-        public string empleados { get; set; }
-        public string sucursales { get; set; }
-    }
-
     class PersonaApiEn
     {
         public string dni { get; set; }
@@ -370,11 +265,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
         public string apellidoPaterno { get; set; }
         public string apellidoMaterno { get; set; }
         public string codVerifica { get; set; }
-    }
-
-    class PersonaApiLaravelEn
-    {
         public bool success { get; set; }
+        public string name { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string cui { get; set; }
         public PersonaApiLaravelDataEn data { get; set; }
     }
 
@@ -390,33 +285,27 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
         public string sexo { get; set; }
     }
 
-    class PersonaApiOptimizeEn
-    {
-        public string dni { get; set; }
-        public string name { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string cui { get; set; }
-    }
     public class SunatConsultaRucDto
     {
         public Response response { get; set; }
         public SunatConsultaRucVo sunatVo { get; set; }
     }
+
     public class Response
     {
-        public int responseCode { get; set; }
-        public string responseMessage { get; set; }
+        public int? responseCode { get; set; }
+        public string? responseMessage { get; set; }
+
         public Response()
         {
-            this.responseCode = 0;
-            this.responseMessage = "OK";
+            responseCode = 0;
+            responseMessage = "OK";
         }
 
-        public Response(int responseCode, string message)
+        public Response(int? responseCode, string? responseMessage)
         {
             this.responseCode = responseCode;
-            this.responseMessage = message;
+            this.responseMessage = responseMessage;
         }
     }
 
@@ -429,53 +318,5 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
         public string provincia { get; set; }
         public string distrito { get; set; }
         public string ubigeo { get; set; }
-    }
-    public class SunatVa
-    {
-        public Response validarDni(string dni)
-        {
-            if ( dni.All(char.IsNumber))
-                return responseValidator(-2, "dni formato incorrecto");
-            else if (dni.Length != 8)
-                return responseValidator(-3, "dni cantidad incorrecta");
-
-            return new Response();
-        }
-
-        public Response validarRuc(string ruc)
-        {
-            if (ruc.All(char.IsNumber))
-                return responseValidator(-1, "ruc Formato Incorrecto");
-            else if (ruc.Length != 11)
-                return responseValidator(-2, "ruc Cantidad Incorrecta");
-            else
-            {
-                var Factores = new[] { 5, 4, 3, 2, 7, 6, 5, 4, 3, 2 };
-                var Resultado = 0;
-                for (var i = 0; i <= 9; i++)
-                {
-                    var Valor = Int32.Parse(ruc.Substring(i, 1));
-                    Factores[i] = Valor * Factores[i];
-                }
-
-                Resultado = 11 - (Factores.Sum() % 11);
-                Resultado = Resultado == 10 ? 0: ( Resultado == 11 ? 1: Resultado);
-
-                //if (Resultado > 11) Resultado = Strings.Right(Resultado, 1);
-
-                //if (Resultado != Strings.Right(ruc, 1)) return responseValidator(-3, "ruc Numero Incorrecto");
-            }
-
-            return new Response();
-        }
-
-
-        private Response responseValidator(int code, string message)
-        {
-            Response response = new Response();
-            response.responseCode = code;
-            response.responseMessage = message;
-            return response;
-        }
     }
 }

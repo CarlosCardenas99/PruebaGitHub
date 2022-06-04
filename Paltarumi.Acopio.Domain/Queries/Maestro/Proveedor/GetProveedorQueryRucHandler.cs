@@ -32,7 +32,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             else
             {
                 SunatStorage sunat = new SunatStorage();
-                var result = sunat.consultaRuc(request.Ruc);
+                var result = sunat.ConsultaRuc(request.Ruc);
                 if (result.response.responseCode == 0 )
                 {
                     proveedor = mapperCreateProveedorDto(result.sunatVo);
