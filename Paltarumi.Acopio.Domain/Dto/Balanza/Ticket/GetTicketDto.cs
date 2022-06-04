@@ -3,7 +3,6 @@
     public class GetTicketDto : TicketDto
     {
         public int IdTicket { get; set; }
-        public int IdLote { get; set; }
         public bool Activo { get; set; }
     }
 }

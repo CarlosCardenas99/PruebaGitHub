@@ -8,7 +8,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetProveedorConcesionDto>> Create(CreateProveedorConcesionDto createDto);
         Task<ResponseDto<GetProveedorConcesionDto>> Update(UpdateProveedorConcesionDto updateDto);
         Task<ResponseDto> Delete(int id);
-        Task<ResponseDto<IEnumerable<GetProveedorConcesionDto>>> List(int idProveedor);
+        Task<ResponseDto<IEnumerable<ListProveedorConcesionDto>>> List(int idProveedor);
         Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<ProveedorConcesionFilterDto> searchParams);
     }
 }

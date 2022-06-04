@@ -16,7 +16,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Maestro
             CreateMap<Entity.ProveedorConcesion, UpdateProveedorConcesionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.ProveedorConcesion, GetProveedorConcesionDto>()
+            CreateMap<Entity.ProveedorConcesion, ListProveedorConcesionDto>()
                 .ForMember(x => x.Concesion, opt => opt.MapFrom(x => x.IdConcesionNavigation != null ? x.IdConcesionNavigation.CodigoUnico + " - " + x.IdConcesionNavigation.Nombre : string.Empty))
                 .ReverseMap();
 

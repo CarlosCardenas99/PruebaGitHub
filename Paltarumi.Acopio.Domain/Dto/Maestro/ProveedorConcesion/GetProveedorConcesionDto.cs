@@ -1,8 +1,8 @@
 namespace Paltarumi.Acopio.Domain.Dto.Maestro.ProveedorConcesion
 {
-    public class GetProveedorConcesionDto
+    public class GetProveedorConcesionDto: ProveedorConcesionDto
     {
-        public int? IdConcesion { get; set; }
-        public string? Concesion { get; set; }
+        public int? IdProveedorConcesion { get; set; }
+        public bool Activo { get; set; }
     }
 }
