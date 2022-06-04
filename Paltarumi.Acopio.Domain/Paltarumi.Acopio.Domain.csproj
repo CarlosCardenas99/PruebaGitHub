@@ -51,6 +51,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Common.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Maestro\Ubigeo.Designer.cs">
+      <DependentUpon>Ubigeo.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Maestro\Concesion.Designer.cs">
       <DependentUpon>Concesion.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -84,6 +89,10 @@
     <EmbeddedResource Update="Resources\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Ubigeo.resx">
+      <LastGenOutput>Ubigeo.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Maestro\Concesion.resx">
       <LastGenOutput>Concesion.Designer.cs</LastGenOutput>
