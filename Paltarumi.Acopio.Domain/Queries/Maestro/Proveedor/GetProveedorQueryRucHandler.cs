@@ -61,7 +61,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             Entity.Proveedor proveedor = new Entity.Proveedor();
             proveedor.Ruc = sunatVo.ruc;
             proveedor.RazonSocial = sunatVo.razonSocial;
-            proveedor.CodigoUbigeo = sunatVo.ubigeo;
+            proveedor.CodigoUbigeo = null;
             proveedor.Direccion = sunatVo.direccion;
             proveedor.Email = String.Empty;
             proveedor.Telefono = String.Empty;
