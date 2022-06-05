@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Entity
 {
-    public partial class Transportistum
+    public partial class Transporte
     {
-        public Transportistum()
+        public Transporte()
         {
             Tickets = new HashSet<Ticket>();
         }
 
-        public int IdTransportista { get; set; }
+        public int IdTransporte { get; set; }
         public string CodigoTipoDocumento { get; set; } = null!;
         public string Numero { get; set; } = null!;
         public string RazonSocial { get; set; } = null!;

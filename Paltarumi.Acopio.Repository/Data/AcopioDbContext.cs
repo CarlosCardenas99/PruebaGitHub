@@ -37,7 +37,7 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<SystemDataType> SystemDataTypes { get; set; } = null!;
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; } = null!;
-        public virtual DbSet<Transportistum> Transportista { get; set; } = null!;
+        public virtual DbSet<Transporte> Transportes { get; set; } = null!;
         public virtual DbSet<Ubigeo> Ubigeos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Vehiculo> Vehiculos { get; set; } = null!;
@@ -653,6 +653,11 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasMaxLength(12)
                     .IsUnicode(false)
                     .HasColumnName("telefono");
+
+                entity.HasOne(d => d.CodigoUbigeoNavigation)
+                    .WithMany(p => p.Proveedors)
+                    .HasForeignKey(d => d.CodigoUbigeo)
+                    .HasConstraintName("fk_maestro_Proveedor_codigoUbigeo");
             });
 
             modelBuilder.Entity<ProveedorConcesion>(entity =>
@@ -831,7 +836,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
 
-                entity.Property(e => e.IdTransportista).HasColumnName("idTransportista");
+                entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
 
                 entity.Property(e => e.IdUnidadMedida).HasColumnName("idUnidadMedida");
 
@@ -887,11 +892,11 @@ namespace Paltarumi.Acopio.Repository.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_ticket_idLote");
 
-                entity.HasOne(d => d.IdTransportistaNavigation)
+                entity.HasOne(d => d.IdTransporteNavigation)
                     .WithMany(p => p.Tickets)
-                    .HasForeignKey(d => d.IdTransportista)
+                    .HasForeignKey(d => d.IdTransporte)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_balanza_ticket_idTransportista");
+                    .HasConstraintName("fk_balanza_ticket_idTransporte");
 
                 entity.HasOne(d => d.IdUnidadMedidaNavigation)
                     .WithMany(p => p.TicketIdUnidadMedidaNavigations)
@@ -932,14 +937,14 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("nombreCorto");
             });
 
-            modelBuilder.Entity<Transportistum>(entity =>
+            modelBuilder.Entity<Transporte>(entity =>
             {
-                entity.HasKey(e => e.IdTransportista)
-                    .HasName("PK_maestro_Transportista_idTransportista");
+                entity.HasKey(e => e.IdTransporte)
+                    .HasName("PK_maestro_Transporte_idTransporte");
 
-                entity.ToTable("Transportista", "maestro");
+                entity.ToTable("Transporte", "maestro");
 
-                entity.Property(e => e.IdTransportista).HasColumnName("idTransportista");
+                entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
@@ -981,15 +986,15 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("telefono");
 
                 entity.HasOne(d => d.CodigoTipoDocumentoNavigation)
-                    .WithMany(p => p.Transportista)
+                    .WithMany(p => p.Transportes)
                     .HasForeignKey(d => d.CodigoTipoDocumento)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_maestro_Transportista_codigoTipoDocumento");
+                    .HasConstraintName("fk_maestro_Transporte_codigoTipoDocumento");
 
                 entity.HasOne(d => d.CodigoUbigeoNavigation)
-                    .WithMany(p => p.Transportista)
+                    .WithMany(p => p.Transportes)
                     .HasForeignKey(d => d.CodigoUbigeo)
-                    .HasConstraintName("fk_maestro_Transportista_codigoUbigeo");
+                    .HasConstraintName("fk_maestro_Transporte_codigoUbigeo");
             });
 
             modelBuilder.Entity<Ubigeo>(entity =>
