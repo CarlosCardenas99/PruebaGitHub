@@ -132,6 +132,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>El registro fue eliminado correctamente</value>
   </data>
+  <data name="DuplicateRecord" xml:space="preserve">
+    <value>El registro fue creado anteriormente</value>
+  </data>
   <data name="FieldMaxLength" xml:space="preserve">
     <value>El campo {0} debe tener como máximo {1} caracteres</value>
     <comment>0: Field, 1: Caracteres</comment>
