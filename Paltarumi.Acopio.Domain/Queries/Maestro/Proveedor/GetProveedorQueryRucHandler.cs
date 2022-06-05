@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
         protected override async Task<ResponseDto<GetProveedorDto>> HandleQuery(GetProveedorQueryRuc request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetProveedorDto>();
-            var proveedor = await _proveedorRepository.GetByAsync(x => x.Ruc == request.Ruc);
+            var proveedor = await _proveedorRepository.GetByAsync(x => x.Ruc == request.Ruc && x.Activo == true);
             var proveedorDto = _mapper?.Map<GetProveedorDto>(proveedor);
 
             if (proveedor != null && proveedorDto != null)

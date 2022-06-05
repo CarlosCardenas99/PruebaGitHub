@@ -168,7 +168,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
 
                     if (response.sunatVo.razonSocial.Trim() == string.Empty)
                         continue;
-
+                    response.response = new Response();
                     return response;
 
                 }

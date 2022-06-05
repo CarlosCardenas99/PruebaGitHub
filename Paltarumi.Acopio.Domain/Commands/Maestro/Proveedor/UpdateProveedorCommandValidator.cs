@@ -30,6 +30,10 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Proveedor
         {
             var exists = await _repositoryBase.FindAll().Where(x => x.IdProveedor == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
+
+            var existsRuc = await _repositoryBase.FindAll().Where(x => x.IdProveedor != command.UpdateDto.IdProveedor && x.Ruc == command.UpdateDto.Ruc && x.Activo == true).AnyAsync(cancellationToken);
+            if (existsRuc) return CustomValidationMessage(context, Resources.Common.DuplicateRucRecord);
+
             return true;
         }
     }

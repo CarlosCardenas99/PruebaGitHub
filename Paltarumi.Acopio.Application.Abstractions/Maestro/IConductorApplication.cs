@@ -9,6 +9,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetConductorDto>> Update(UpdateConductorDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetConductorDto>> Get(int id);
+        Task<ResponseDto<GetConductorDto>> Get(string dni);
         Task<ResponseDto<IEnumerable<ListConductorDto>>> List();
         Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams);
     }

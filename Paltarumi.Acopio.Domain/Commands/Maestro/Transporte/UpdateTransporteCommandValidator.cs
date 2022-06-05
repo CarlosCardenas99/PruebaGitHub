@@ -30,6 +30,10 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
         {
             var exists = await _repositoryBase.FindAll().Where(x => x.IdTransporte == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
+
+            var existsRuc = await _repositoryBase.FindAll().Where(x => x.IdTransporte != command.UpdateDto.IdTransporte && x.Ruc == command.UpdateDto.Ruc && x.Activo == true).AnyAsync(cancellationToken);
+            if (existsRuc) return CustomValidationMessage(context, Resources.Common.DuplicateRucRecord);
+
             return true;
         }
     }
