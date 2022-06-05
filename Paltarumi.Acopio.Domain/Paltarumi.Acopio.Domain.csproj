@@ -51,6 +51,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Common.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Maestro\TipoDocumento.Designer.cs">
+      <DependentUpon>TipoDocumento.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Maestro\Vehiculo.Designer.cs">
       <DependentUpon>Vehiculo.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -104,6 +109,10 @@
     <EmbeddedResource Update="Resources\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\TipoDocumento.resx">
+      <LastGenOutput>TipoDocumento.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Maestro\Vehiculo.resx">
       <LastGenOutput>Vehiculo.Designer.cs</LastGenOutput>
