@@ -43,7 +43,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 
                 if (result != null && result?.response.responseCode == 0)
                 {
-                    conductor = mapperCreateConductorDto(result.sunatVo);
+                    conductor = mapperCreateConductorDto(result.sunatVo, request.Filter.CodigoTipoDocumento);
                     await _conductorRepository.AddAsync(conductor);
                     await _conductorRepository.SaveAsync();
                     conductorDto = _mapper?.Map<GetConductorDto>(conductor);
@@ -64,13 +64,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             return await Task.FromResult(response);
         }
 
-        private Entity.Conductor? mapperCreateConductorDto(SunatConsultaRucVo sunatVo)
+        private Entity.Conductor? mapperCreateConductorDto(SunatConsultaRucVo sunatVo, string codigoTipoDocumento)
         {
             Entity.Conductor conductor = new Entity.Conductor();
             conductor.IdConductor = 0;
             conductor.Numero = sunatVo.ruc;
             conductor.RazonSocial = sunatVo.razonSocial;
-            conductor.CodigoTipoDocumento = Constants.TipoDocumento.DNI;
+            conductor.CodigoTipoDocumento = codigoTipoDocumento;
             conductor.CodigoUbigeo = null;
             conductor.Licencia = String.Empty;
             conductor.Domicilio = String.Empty;
