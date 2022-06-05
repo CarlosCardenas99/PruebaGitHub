@@ -10,13 +10,15 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
     public class GetTransporteQueryRucHandler : QueryHandlerBase<GetTransporteQueryRuc, GetTransporteDto>
     {
         private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
-
+        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
         public GetTransporteQueryRucHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Transporte> transporteRepository
+            IRepositoryBase<Entity.Transporte> transporteRepository,
+            IRepositoryBase<Entity.Ubigeo> ubigeoRepository
         ) : base(mapper)
         {
             _transporteRepository = transporteRepository;
+            _ubigeoRepository = ubigeoRepository;
         }
 
         protected override async Task<ResponseDto<GetTransporteDto>> HandleQuery(GetTransporteQueryRuc request, CancellationToken cancellationToken)
@@ -35,7 +37,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                 var result = sunat.ConsultaRuc(request.Ruc);
                 if (result.response.responseCode == 0 )
                 {
-                    transporte = mapperCreateTransporteDto(result.sunatVo);
+                    var ubigeo = await _ubigeoRepository.GetByAsync(x =>
+                       x.Departamento.ToLower().Equals(result.sunatVo.departamento.ToLower()) &&
+                       x.Provincia.ToLower().Equals(result.sunatVo.provincia.ToLower()) &&
+                       x.Distrito.ToLower().Equals(result.sunatVo.distrito.ToLower())
+                    );
+                    if (ubigeo == null) ubigeo = new Entity.Ubigeo();
+                    transporte = mapperCreateTransporteDto(result.sunatVo, ubigeo);
                     await _transporteRepository.AddAsync(transporte);
                     await _transporteRepository.SaveAsync();
                     transporteDto = _mapper?.Map<GetTransporteDto>(transporte);
@@ -56,12 +64,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             return await Task.FromResult(response);
         }
 
-        private Entity.Transporte mapperCreateTransporteDto(SunatConsultaRucVo sunatVo)
+        private Entity.Transporte mapperCreateTransporteDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo ubigeo)
         {
             Entity.Transporte transporte = new Entity.Transporte();
             transporte.Ruc = sunatVo.ruc;
             transporte.RazonSocial = sunatVo.razonSocial;
-            transporte.CodigoUbigeo = null;
+            transporte.CodigoUbigeo = ubigeo.CodigoUbigeo;
             transporte.Direccion = sunatVo.direccion;
             transporte.Email = String.Empty;
             transporte.Telefono = String.Empty;

@@ -10,13 +10,15 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
     public class GetProveedorQueryRucHandler : QueryHandlerBase<GetProveedorQueryRuc, GetProveedorDto>
     {
         private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
-
+        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
         public GetProveedorQueryRucHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Proveedor> proveedorRepository
+            IRepositoryBase<Entity.Proveedor> proveedorRepository,
+            IRepositoryBase<Entity.Ubigeo> ubigeoRepository
         ) : base(mapper)
         {
             _proveedorRepository = proveedorRepository;
+            _ubigeoRepository = ubigeoRepository;
         }
 
         protected override async Task<ResponseDto<GetProveedorDto>> HandleQuery(GetProveedorQueryRuc request, CancellationToken cancellationToken)
@@ -35,7 +37,14 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                 var result = sunat.ConsultaRuc(request.Ruc);
                 if (result.response.responseCode == 0 )
                 {
-                    proveedor = mapperCreateProveedorDto(result.sunatVo);
+
+                    var ubigeo = await _ubigeoRepository.GetByAsync(x =>
+                        x.Departamento.ToLower().Equals(result.sunatVo.departamento.ToLower()) &&
+                        x.Provincia.ToLower().Equals(result.sunatVo.provincia.ToLower()) &&
+                        x.Distrito.ToLower().Equals(result.sunatVo.distrito.ToLower())
+                    );
+                    if (ubigeo == null) ubigeo = new Entity.Ubigeo();
+                    proveedor = mapperCreateProveedorDto(result.sunatVo, ubigeo);
                     await _proveedorRepository.AddAsync(proveedor);
                     await _proveedorRepository.SaveAsync();
                     proveedorDto = _mapper?.Map<GetProveedorDto>(proveedor);
@@ -56,12 +65,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             return await Task.FromResult(response);
         }
 
-        private Entity.Proveedor mapperCreateProveedorDto(SunatConsultaRucVo sunatVo)
+        private Entity.Proveedor mapperCreateProveedorDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo? ubigeo)
         {
             Entity.Proveedor proveedor = new Entity.Proveedor();
             proveedor.Ruc = sunatVo.ruc;
             proveedor.RazonSocial = sunatVo.razonSocial;
-            proveedor.CodigoUbigeo = null;
+            proveedor.CodigoUbigeo = ubigeo?.CodigoUbigeo ?? null;
             proveedor.Direccion = sunatVo.direccion;
             proveedor.Email = String.Empty;
             proveedor.Telefono = String.Empty;
