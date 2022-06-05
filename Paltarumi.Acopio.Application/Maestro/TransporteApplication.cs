@@ -4,6 +4,7 @@ using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Maestro.Transporte;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Queries.Maestro.Transporte;
 
 namespace Paltarumi.Acopio.Application.Maestro
@@ -27,6 +28,8 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetTransporteDto>> Get(int id)
             => await _mediator.Send(new GetTransporteQuery(id));
 
+        public async Task<ResponseDto<GetTransporteDto>> Get(string ruc)
+            => await _mediator.Send(new GetTransporteQueryRuc(ruc));
         public async Task<ResponseDto<IEnumerable<ListTransporteDto>>> List()
             => await _mediator.Send(new ListTransporteQuery());
 

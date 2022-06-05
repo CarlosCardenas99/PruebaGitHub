@@ -34,6 +34,11 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<IEnumerable<ListTransporteDto>>> List()
             => await _transporteApplication.List();
 
+        [HttpGet("ruc/{ruc}")]
+        public async Task<ResponseDto<GetTransporteDto>> Get(string ruc)
+            => await _transporteApplication.Get(ruc);
+
+
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchTransporteDto>>> Search(SearchParamsDto<TransporteFilterDto> searchParams)
             => await _transporteApplication.Search(searchParams);
