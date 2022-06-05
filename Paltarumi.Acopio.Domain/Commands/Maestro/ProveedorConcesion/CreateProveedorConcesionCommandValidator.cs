@@ -23,7 +23,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ProveedorConcesion
         }
         protected async Task<bool> ValidateExistenceAsync(CreateProveedorConcesionCommand command, CreateProveedorConcesionDto createDto, ValidationContext<CreateProveedorConcesionCommand> context, CancellationToken cancellationToken)
         {
-            var exists = await _repositoryBase.FindAll().Where(x => x.IdProveedor == createDto.IdProveedor  || x.IdConcesion == createDto.IdConcesion).AnyAsync(cancellationToken);
+            var exists = await _repositoryBase.FindAll().Where(x => x.IdProveedor == createDto.IdProveedor && x.IdConcesion == createDto.IdConcesion).AnyAsync(cancellationToken);
             if (exists) return CustomValidationMessage(context, Resources.Common.DuplicateRecord);
             return true;
         }
