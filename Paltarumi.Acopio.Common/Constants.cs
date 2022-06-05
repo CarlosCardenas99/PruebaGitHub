@@ -11,5 +11,16 @@
             public const string LOTE = "50";
             public const string TICKET = "51";
         }
+
+        public class Maestro
+        {
+            public struct UnidadMedida
+            {
+                public const int UNIDAD_DE_MEDIDA = 5;
+                public const int GRANEL = 6;
+                public const int SACOS = 7;
+                public const int BIG_BAG = 8;
+            }
+        }
     }
 }
