@@ -1,4 +1,4 @@
-﻿namespace Paltarumi.Acopio.Domain.Dto.Maestro.Conductor
+namespace Paltarumi.Acopio.Domain.Dto.Maestro.Conductor
 {
     public class GetConductorDto : ConductorDto
     {

@@ -30,9 +30,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<GetTransporteDto>> Get(int id)
             => await _transporteApplication.Get(id);
 
-        //[HttpGet("list")]
-        //public async Task<ResponseDto<IEnumerable<ListTransporteDto>>> List()
-        //    => await _transporteApplication.List();
+        [HttpGet("list")]
+        public async Task<ResponseDto<IEnumerable<ListTransporteDto>>> List()
+            => await _transporteApplication.List();
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchTransporteDto>>> Search(SearchParamsDto<TransporteFilterDto> searchParams)

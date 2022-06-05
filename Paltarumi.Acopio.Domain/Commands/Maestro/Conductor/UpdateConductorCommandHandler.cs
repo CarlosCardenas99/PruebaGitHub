@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;

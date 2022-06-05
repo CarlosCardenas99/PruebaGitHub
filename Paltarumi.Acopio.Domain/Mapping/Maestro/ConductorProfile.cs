@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Domain.Mapping.Maestro
@@ -8,15 +8,19 @@ namespace Paltarumi.Acopio.Domain.Mapping.Maestro
         public ConductorProfile()
         {
             CreateMap<Entity.Conductor, ConductorDto>()
-                    .ReverseMap();
+                .ReverseMap();
+
             CreateMap<Entity.Conductor, CreateConductorDto>()
-                    .ReverseMap();
+                .ReverseMap();
+
             CreateMap<Entity.Conductor, UpdateConductorDto>()
-                    .ReverseMap();
+                .ReverseMap();
+
             CreateMap<Entity.Conductor, GetConductorDto>()
-                    .ReverseMap();
-            CreateMap<Entity.Conductor, ListConductorDto>()
-                    .ReverseMap();
+                .ReverseMap();
+
+            CreateMap<Entity.Conductor, SearchConductorDto>()
+                .ReverseMap();
         }
     }
 }

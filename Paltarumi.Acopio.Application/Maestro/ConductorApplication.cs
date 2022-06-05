@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Maestro.Conductor;
@@ -30,7 +30,7 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<IEnumerable<ListConductorDto>>> List()
             => await _mediator.Send(new ListConductorQuery());
 
-        public async Task<ResponseDto<SearchResultDto<ListConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)
             => await _mediator.Send(new SearchConductorQuery(searchParams));
     }
 }

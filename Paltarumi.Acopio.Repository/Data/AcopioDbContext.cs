@@ -948,48 +948,36 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.CodigoTipoDocumento)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("codigoTipoDocumento")
-                    .IsFixedLength();
-
                 entity.Property(e => e.CodigoUbigeo)
                     .HasMaxLength(6)
                     .IsUnicode(false)
                     .HasColumnName("codigoUbigeo")
                     .IsFixedLength();
 
-                entity.Property(e => e.Domicilio)
+                entity.Property(e => e.Direccion)
                     .HasMaxLength(200)
                     .IsUnicode(false)
-                    .HasColumnName("domicilio");
+                    .HasColumnName("direccion");
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("email");
 
-                entity.Property(e => e.Numero)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .HasColumnName("numero");
-
                 entity.Property(e => e.RazonSocial)
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("razonSocial");
 
+                entity.Property(e => e.Ruc)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("ruc");
+
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(12)
                     .IsUnicode(false)
                     .HasColumnName("telefono");
-
-                entity.HasOne(d => d.CodigoTipoDocumentoNavigation)
-                    .WithMany(p => p.Transportes)
-                    .HasForeignKey(d => d.CodigoTipoDocumento)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_maestro_Transporte_codigoTipoDocumento");
 
                 entity.HasOne(d => d.CodigoUbigeoNavigation)
                     .WithMany(p => p.Transportes)

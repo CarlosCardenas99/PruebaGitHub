@@ -27,8 +27,8 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetTransporteDto>> Get(int id)
             => await _mediator.Send(new GetTransporteQuery(id));
 
-        //public async Task<ResponseDto<IEnumerable<ListTransporteDto>>> List()
-        //    => await _mediator.Send(new ListTransporteQuery());
+        public async Task<ResponseDto<IEnumerable<ListTransporteDto>>> List()
+            => await _mediator.Send(new ListTransporteQuery());
 
         public async Task<ResponseDto<SearchResultDto<SearchTransporteDto>>> Search(SearchParamsDto<TransporteFilterDto> searchParams)
             => await _mediator.Send(new SearchTransporteQuery(searchParams));
