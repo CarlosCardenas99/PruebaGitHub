@@ -115,6 +115,15 @@ namespace Paltarumi.Acopio.Domain.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El Ruc ya fue registrado.
+        /// </summary>
+        internal static string DuplicateRucRecord {
+            get {
+                return ResourceManager.GetString("DuplicateRucRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El campo {0} debe tener como máximo {1} caracteres.
         /// </summary>
         internal static string FieldMaxLength {

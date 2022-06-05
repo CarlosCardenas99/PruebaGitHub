@@ -33,6 +33,10 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListConductorDto>>> List()
             => await _conductorApplication.List();
+        
+        [HttpGet("dni/{dni}")]
+        public async Task<ResponseDto<GetConductorDto>> Get(string dni)
+            => await _conductorApplication.Get(dni);
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)

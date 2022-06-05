@@ -2,6 +2,12 @@
 {
     public class Constants
     {
+        public struct TipoDocumento
+        {
+            public const string DNI = "1";
+            public const string RUC = "6";
+        }
+
         public struct CodigoCorrelativoTipo
         {
             public const string FACTURA = "01";

@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
         protected override async Task<ResponseDto<GetTransporteDto>> HandleQuery(GetTransporteQueryRuc request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetTransporteDto>();
-            var transporte = await _transporteRepository.GetByAsync(x => x.Ruc == request.Ruc);
+            var transporte = await _transporteRepository.GetByAsync(x => x.Ruc == request.Ruc && x.Activo == true);
             var transporteDto = _mapper?.Map<GetTransporteDto>(transporte);
 
             if (transporte != null && transporteDto != null)

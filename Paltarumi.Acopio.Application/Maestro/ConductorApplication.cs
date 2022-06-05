@@ -27,6 +27,8 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetConductorDto>> Get(int id)
             => await _mediator.Send(new GetConductorQuery(id));
 
+        public async Task<ResponseDto<GetConductorDto>> Get(string dni)
+            => await _mediator.Send(new GetConductorQueryDni(dni));
         public async Task<ResponseDto<IEnumerable<ListConductorDto>>> List()
             => await _mediator.Send(new ListConductorQuery());
 
