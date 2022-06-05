@@ -43,7 +43,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
             var idVehiculos = request.CreateDto?.TicketDetails?.Select(x => x.IdVehiculo) ?? new List<int>();
             var vehiculos = await _vehiculoRepository.FindByAsNoTrackingAsync(x => idVehiculos.Contains(x.IdVehiculo));
 
-            var idTransportistas = request.CreateDto?.TicketDetails?.Select(x => x.IdTransportista) ?? new List<int>();
+            var idTransportistas = request.CreateDto?.TicketDetails?.Select(x => x.IdTransporte) ?? new List<int>();
             var transportistas = await _transporteRepository.FindByAsNoTrackingAsync(x => idTransportistas.Contains(x.IdTransporte));
 
             var idConductores = request.CreateDto?.TicketDetails?.Select(x => x.IdConductor) ?? new List<int>();
@@ -55,12 +55,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 var codeResponse = await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1"));
                 var code = codeResponse?.Data ?? string.Empty;
 
+                lote.CreateDate = DateTime.Now;
                 lote.Codigo = code;
                 lote.Tickets =
-                    _mapper?.Map<List<Entity.Ticket>>(request.CreateDto.TicketDetails) ?? new List<Entity.Ticket>();
-
+                    _mapper?.Map<List<Entity.Ticket>>(request.CreateDto?.TicketDetails) ?? new List<Entity.Ticket>();
+ 
                 lote.Activo = true;
-                lote.Tickets.ToList().ForEach(t => { t.Activo = true; });
+                lote.Tickets.ToList().ForEach(t => { t.Activo = true; t.CreateDate = DateTime.Now; });
 
                 lote.Vehiculos = string.Join(",", vehiculos.Select(x => x.Placa));
                 lote.Transportistas = string.Join(",", transportistas.Select(x => x.RazonSocial));
@@ -80,6 +81,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 lote.NumeroTickets = string.Join(",", lote.Tickets.Select(x => x.Numero));
 
                 await _loteRepository.AddAsync(lote);
+                await _loteRepository.SaveAsync();
 
                 var loteDto = _mapper?.Map<GetLoteDto>(lote);
                 if (loteDto != null)
