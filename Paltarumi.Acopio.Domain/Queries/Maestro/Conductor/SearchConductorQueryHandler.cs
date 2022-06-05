@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 using Paltarumi.Acopio.Domain.Queries.Base;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
-    public class SearchConductorQueryHandler : SearchQueryHandlerBase<SearchConductorQuery, ConductorFilterDto, ListConductorDto>
+    public class SearchConductorQueryHandler : SearchQueryHandlerBase<SearchConductorQuery, ConductorFilterDto, SearchConductorDto>
     {
         private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
 
@@ -20,9 +20,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             _conductorRepository = conductorRepository;
         }
 
-        protected override async Task<ResponseDto<SearchResultDto<ListConductorDto>>> HandleQuery(SearchConductorQuery request, CancellationToken cancellationToken)
+        protected override async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> HandleQuery(SearchConductorQuery request, CancellationToken cancellationToken)
         {
-            var response = new ResponseDto<SearchResultDto<ListConductorDto>>();
+            var response = new ResponseDto<SearchResultDto<SearchConductorDto>>();
 
             Expression<Func<Entity.Conductor, bool>> filter = x => true;
 
@@ -31,33 +31,21 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             if (filters?.IdConductor.HasValue == true)
                 filter = filter.And(x => x.IdConductor == filters.IdConductor.Value);
 
-            if (!string.IsNullOrEmpty(filters?.RazonSocial))
-                filter = filter.And(x => x.RazonSocial.Contains(filters.RazonSocial));
-
-            if (filters?.CodigosTipoDocumento != null && filters.CodigosTipoDocumento.Any())
-                filter = filter.And(x => filters.CodigosTipoDocumento.Contains(x.CodigoTipoDocumento));
-
-            if (!string.IsNullOrEmpty(filters?.Numero))
-                filter = filter.And(x => x.Numero.Contains(filters.Numero));
-
-            if (!string.IsNullOrEmpty(filters?.Licencia))
-                filter = filter.And(x => x.Licencia.Contains(filters.Licencia));
-
             if (filters?.Activo.HasValue == true)
                 filter = filter.And(x => x.Activo == filters.Activo.Value);
 
-            var condutors = await _conductorRepository.SearchByAsNoTrackingAsync(
+            var conductors = await _conductorRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
                 filter
             );
 
-            var condutorDtos = _mapper?.Map<IEnumerable<ListConductorDto>>(condutors.Items);
+            var conductorDtos = _mapper?.Map<IEnumerable<SearchConductorDto>>(conductors.Items);
 
-            var searchResult = new SearchResultDto<ListConductorDto>(
-                condutorDtos ?? new List<ListConductorDto>(),
-                condutors.Total,
+            var searchResult = new SearchResultDto<SearchConductorDto>(
+                conductorDtos ?? new List<SearchConductorDto>(),
+                conductors.Total,
                 request.SearchParams
             );
 

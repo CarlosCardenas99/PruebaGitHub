@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;

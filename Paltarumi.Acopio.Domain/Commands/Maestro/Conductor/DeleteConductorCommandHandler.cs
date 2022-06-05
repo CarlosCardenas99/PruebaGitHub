@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
@@ -23,13 +23,16 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
         public override async Task<ResponseDto> HandleCommand(DeleteConductorCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto();
-
             var conductor = await _conductorRepository.GetByAsync(x => x.IdConductor == request.Id);
-            if (conductor != null) await _conductorRepository.DeleteAsync(conductor);
 
-            response.AddOkResult(Resources.Common.DeleteSuccessMessage);
+            if (conductor != null)
+            {
+                conductor.Activo = false;
+                await _conductorRepository.UpdateAsync(conductor);
+                response.AddOkResult(Resources.Common.DeleteSuccessMessage);
+            }
 
-            return await Task.FromResult(response);
+            return response;
         }
     }
 }
