@@ -34,5 +34,8 @@ namespace Paltarumi.Acopio.Application.Maestro
 
         public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)
             => await _mediator.Send(new SearchConductorQuery(searchParams));
+
+        public async Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter)
+            => await _mediator.Send(new GetConductorByDocumentQuery(filter));
     }
 }
