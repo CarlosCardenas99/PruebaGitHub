@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -20,12 +20,15 @@
     <PackageReference Include="FluentValidation" Version="11.0.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Scrutor" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paltarumi.Acopio.Common\Paltarumi.Acopio.Common.csproj" />
+    <ProjectReference Include="..\Paltarumi.Acopio.EmailClient\Paltarumi.Acopio.EmailClient.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Repository.Abstractions\Paltarumi.Acopio.Repository.Abstractions.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Repository\Paltarumi.Acopio.Repository.csproj" />
   </ItemGroup>
@@ -126,6 +129,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Conductor.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Security\User.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>User.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -204,6 +212,10 @@
     <EmbeddedResource Update="Resources\Maestro\Conductor.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Conductor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Security\User.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>User.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
