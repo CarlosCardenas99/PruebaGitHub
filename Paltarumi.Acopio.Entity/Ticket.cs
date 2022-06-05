@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Entity
         public float PesoNeto { get; set; }
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
-        public int IdTransportista { get; set; }
+        public int IdTransporte { get; set; }
         public int IdConductor { get; set; }
         public int IdVehiculo { get; set; }
         public int IdUnidadMedida { get; set; }
@@ -37,7 +37,7 @@ namespace Paltarumi.Acopio.Entity
         public virtual Conductor IdConductorNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
         public virtual Lote IdLoteNavigation { get; set; } = null!;
-        public virtual Transportistum IdTransportistaNavigation { get; set; } = null!;
+        public virtual Transporte IdTransporteNavigation { get; set; } = null!;
         public virtual Maestro IdUnidadMedidaNavigation { get; set; } = null!;
         public virtual Vehiculo IdVehiculoNavigation { get; set; } = null!;
     }

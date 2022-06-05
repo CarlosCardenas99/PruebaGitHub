@@ -40,7 +40,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 null,
                 filter,
                 x => x.IdConductorNavigation,
-                x => x.IdTransportistaNavigation,
+                x => x.IdTransporteNavigation,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,

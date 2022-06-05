@@ -20,6 +20,7 @@ namespace Paltarumi.Acopio.Entity
         public string Email { get; set; } = null!;
         public bool Activo { get; set; }
 
+        public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
         public virtual ICollection<Lote> Lotes { get; set; }
         public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }
     }
