@@ -12,9 +12,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 
         public ListProveedorConcesionQueryHandler(
             IMapper mapper,
-            ListProveedorConcesionQueryValidator validator,
             IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository
-        ) : base(mapper, validator)
+        ) : base(mapper)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;
         }
