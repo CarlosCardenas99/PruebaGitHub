@@ -61,7 +61,11 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                     _mapper?.Map<List<Entity.Ticket>>(request.CreateDto?.TicketDetails) ?? new List<Entity.Ticket>();
  
                 lote.Activo = true;
-                lote.Tickets.ToList().ForEach(t => { t.Activo = true; t.CreateDate = DateTime.Now; });
+                lote.Tickets.ToList().ForEach(async t => { 
+                    t.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET , "1")))?.Data ?? string.Empty;
+                    t.Activo = true; 
+                    t.CreateDate = DateTime.Now; 
+                });
 
                 lote.Vehiculos = string.Join(",", vehiculos.Select(x => x.Placa));
                 lote.Transportistas = string.Join(",", transportistas.Select(x => x.RazonSocial));
