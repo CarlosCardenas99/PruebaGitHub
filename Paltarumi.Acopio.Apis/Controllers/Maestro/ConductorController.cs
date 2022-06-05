@@ -34,9 +34,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<IEnumerable<ListConductorDto>>> List()
             => await _conductorApplication.List();
         
-        [HttpGet("dni/{dni}")]
-        public async Task<ResponseDto<GetConductorDto>> Get(string dni)
-            => await _conductorApplication.Get(dni);
+        [HttpPost("findbydocument")]
+        public async Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter)
+            => await _conductorApplication.GetByDocument(filter);
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)
