@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
-    public class SearchTicketQueryHandler: SearchQueryHandlerBase<SearchTicketQuery, TicketFilterDto, SearchTicketDto>
+    public class SearchTicketQueryHandler : SearchQueryHandlerBase<SearchTicketQuery, TicketFilterDto, SearchTicketDto>
     {
         private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
 

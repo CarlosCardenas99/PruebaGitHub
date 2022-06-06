@@ -1,7 +1,7 @@
 
 namespace Paltarumi.Acopio.Domain.Dto.Maestro.Conductor
 {
-    public class ListConductorDto: ConductorDto
+    public class ListConductorDto : ConductorDto
     {
     }
 }

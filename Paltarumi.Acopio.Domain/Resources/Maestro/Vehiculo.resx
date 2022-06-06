@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DescripcionTipoVehiculo" xml:space="preserve">
+    <value>Descripcion del tipo de vehículo</value>
+  </data>
+  <data name="DescripcionVehiculoMarca" xml:space="preserve">
+    <value>Descripcion de la marca del vehículo</value>
+  </data>
   <data name="IdVehiculo" xml:space="preserve">
     <value>IdVehiculo</value>
+  </data>
+  <data name="Placa" xml:space="preserve">
+    <value>Placa</value>
   </data>
 </root>

@@ -1,7 +1,7 @@
 
 namespace Paltarumi.Acopio.Domain.Dto.Maestro.Transporte
 {
-    public class ListTransporteDto: TransporteDto
+    public class ListTransporteDto : TransporteDto
     {
     }
 }

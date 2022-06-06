@@ -1,10 +1,10 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Queries.Base;
-using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Common;
+using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Domain.Queries.Sunat;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
@@ -67,7 +67,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             conductor.CodigoUbigeo = null;
             conductor.Licencia = String.Empty;
             conductor.Domicilio = String.Empty;
-            conductor.Email  = String.Empty;
+            conductor.Email = String.Empty;
             conductor.Telefono = String.Empty;
             conductor.Activo = true;
             return conductor;

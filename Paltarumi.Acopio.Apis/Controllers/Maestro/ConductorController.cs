@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {
@@ -33,7 +33,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListConductorDto>>> List()
             => await _conductorApplication.List();
-        
+
         [HttpPost("findbydocument")]
         public async Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter)
             => await _conductorApplication.GetByDocument(filter);

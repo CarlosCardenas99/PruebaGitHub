@@ -1,9 +1,9 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Queries.Base;
-using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Domain.Queries.Sunat;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             {
                 SunatStorage sunat = new SunatStorage();
                 var result = sunat.ConsultaRuc(request.Ruc);
-                if (result.response.responseCode == 0 )
+                if (result.response.responseCode == 0)
                 {
 
                     var ubigeo = await _ubigeoRepository.GetByAsync(x =>

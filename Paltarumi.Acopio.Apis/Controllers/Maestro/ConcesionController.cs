@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Paltarumi.Acopio.Application.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {
     [ApiController]
     [Route("api/concesion")]
-    public class ConcesionController: IConcesionApplication
+    public class ConcesionController : IConcesionApplication
     {
         private readonly IConcesionApplication _concesionApplication;
 
@@ -35,7 +34,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<ConcesionFilterDto> searchParams)
             => await _concesionApplication.Search(searchParams);
-        
+
         [HttpGet("codigounico/{codigoUnico}")]
         public async Task<ResponseDto<GetConcesionDto>> Get(string codigoUnico)
             => await _concesionApplication.Get(codigoUnico);

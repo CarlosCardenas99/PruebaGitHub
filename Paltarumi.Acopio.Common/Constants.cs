@@ -20,6 +20,12 @@
 
         public class Maestro
         {
+            public struct CodigoTabla
+            {
+                public const string VEHICULO_MARCA = "05";
+                public const string VEHICULO_TIPO = "06";
+            }
+
             public struct UnidadMedida
             {
                 public const int UNIDAD_DE_MEDIDA = 5;

@@ -1,10 +1,10 @@
 ﻿using MediatR;
+using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Balanza.Ticket;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Balanza.Ticket;
-using Paltarumi.Acopio.Application.Abstractions.Balanza;
 
 namespace Paltarumi.Acopio.Application.Balanza
 {

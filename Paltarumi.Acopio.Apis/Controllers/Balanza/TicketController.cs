@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
-using Paltarumi.Acopio.Application.Balanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
 

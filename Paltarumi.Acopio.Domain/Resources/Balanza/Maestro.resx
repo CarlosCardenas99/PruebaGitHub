@@ -120,4 +120,10 @@
   <data name="IdMaestro" xml:space="preserve">
     <value>IdMaestro</value>
   </data>
+  <data name="TipoVehiculoNotFound" xml:space="preserve">
+    <value>El tipo de vehículo no fue encontrado</value>
+  </data>
+  <data name="VehiculoMarcaNotFound" xml:space="preserve">
+    <value>La marca de vehículo no fue encontrada</value>
+  </data>
 </root>
