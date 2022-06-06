@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
-    public class SearchProveedorQuery : SearchQueryBase<ProveedorFilterDto, SearchProveedorDto>
+    public class SearchProveedorQuery : SearchQueryBase<SearchProveedorFilterDto, SearchProveedorDto>
     {
-        public SearchProveedorQuery(SearchParamsDto<ProveedorFilterDto> searchParams) : base(searchParams)
+        public SearchProveedorQuery(SearchParamsDto<SearchProveedorFilterDto> searchParams) : base(searchParams)
         {
 
         }

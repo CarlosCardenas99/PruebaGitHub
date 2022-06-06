@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
 {
-    public class SearchMaestroQuery : SearchQueryBase<MaestroFilterDto, SearchMaestroDto>
+    public class SearchMaestroQuery : SearchQueryBase<SearchMaestroFilterDto, SearchMaestroDto>
     {
-        public SearchMaestroQuery(SearchParamsDto<MaestroFilterDto> searchParams) : base(searchParams)
+        public SearchMaestroQuery(SearchParamsDto<SearchMaestroFilterDto> searchParams) : base(searchParams)
         {
 
         }

@@ -39,7 +39,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
             => await _conductorApplication.GetByDocument(filter);
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<SearchConductorFilterDto> searchParams)
             => await _conductorApplication.Search(searchParams);
     }
 }

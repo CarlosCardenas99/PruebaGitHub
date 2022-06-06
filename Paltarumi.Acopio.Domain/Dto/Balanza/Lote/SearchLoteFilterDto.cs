@@ -1,6 +1,6 @@
 ﻿namespace Paltarumi.Acopio.Domain.Dto.Balanza.Lote
 {
-    public class LoteFilterDto
+    public class SearchLoteFilterDto
     {
         public DateTime? FechaDesde { get; set; }
         public DateTime? FechaHasta { get; set; }

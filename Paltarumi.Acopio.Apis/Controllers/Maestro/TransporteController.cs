@@ -40,7 +40,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchTransporteDto>>> Search(SearchParamsDto<TransporteFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchTransporteDto>>> Search(SearchParamsDto<SearchTransporteFilterDto> searchParams)
             => await _transporteApplication.Search(searchParams);
     }
 }

@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
-    public class SearchProveedorQueryHandler : SearchQueryHandlerBase<SearchProveedorQuery, ProveedorFilterDto, SearchProveedorDto>
+    public class SearchProveedorQueryHandler : SearchQueryHandlerBase<SearchProveedorQuery, SearchProveedorFilterDto, SearchProveedorDto>
     {
         private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
 

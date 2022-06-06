@@ -32,7 +32,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
 
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<MaestroFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams)
             => await _maestroApplication.Search(searchParams);
     }
 }

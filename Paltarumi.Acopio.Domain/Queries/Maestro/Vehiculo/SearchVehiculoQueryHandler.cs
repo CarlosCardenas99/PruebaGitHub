@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {
-    public class SearchVehiculoQueryHandler : SearchQueryHandlerBase<SearchVehiculoQuery, VehiculoFilterDto, SearchVehiculoDto>
+    public class SearchVehiculoQueryHandler : SearchQueryHandlerBase<SearchVehiculoQuery, SearchVehiculoFilterDto, SearchVehiculoDto>
     {
         private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
 

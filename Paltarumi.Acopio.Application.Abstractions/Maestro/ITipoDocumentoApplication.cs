@@ -7,6 +7,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
     {
         Task<ResponseDto<GetTipoDocumentoDto>> Get(string id);
         Task<ResponseDto<IEnumerable<ListTipoDocumentoDto>>> List();
-        Task<ResponseDto<SearchResultDto<SearchTipoDocumentoDto>>> Search(SearchParamsDto<TipoDocumentoFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchTipoDocumentoDto>>> Search(SearchParamsDto<SearchTipoDocumentoFilterDto> searchParams);
     }
 }

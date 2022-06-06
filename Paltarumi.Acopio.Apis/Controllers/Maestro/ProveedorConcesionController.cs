@@ -31,7 +31,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
             => await _proveedorconcesionApplication.List(idProveedor);
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<ProveedorConcesionFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<SearchProveedorConcesionFilterDto> searchParams)
             => await _proveedorconcesionApplication.Search(searchParams);
     }
 }

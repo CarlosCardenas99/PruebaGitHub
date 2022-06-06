@@ -9,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
 {
-    public class SearchMaestroQueryHandler : SearchQueryHandlerBase<SearchMaestroQuery, MaestroFilterDto, SearchMaestroDto>
+    public class SearchMaestroQueryHandler : SearchQueryHandlerBase<SearchMaestroQuery, SearchMaestroFilterDto, SearchMaestroDto>
     {
         private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
 

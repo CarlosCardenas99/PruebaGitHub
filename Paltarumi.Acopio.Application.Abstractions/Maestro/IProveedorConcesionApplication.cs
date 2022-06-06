@@ -9,6 +9,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetProveedorConcesionDto>> Update(UpdateProveedorConcesionDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<IEnumerable<ListProveedorConcesionDto>>> List(int idProveedor);
-        Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<ProveedorConcesionFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<SearchProveedorConcesionFilterDto> searchParams);
     }
 }

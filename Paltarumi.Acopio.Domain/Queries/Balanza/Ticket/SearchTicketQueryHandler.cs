@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
-    public class SearchTicketQueryHandler : SearchQueryHandlerBase<SearchTicketQuery, TicketFilterDto, SearchTicketDto>
+    public class SearchTicketQueryHandler : SearchQueryHandlerBase<SearchTicketQuery, SearchTicketFilterDto, SearchTicketDto>
     {
         private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
 

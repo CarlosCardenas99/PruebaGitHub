@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
             => await _vehiculoApplication.List();
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<VehiculoFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<SearchVehiculoFilterDto> searchParams)
             => await _vehiculoApplication.Search(searchParams);
     }
 }

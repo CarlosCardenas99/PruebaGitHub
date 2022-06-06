@@ -10,6 +10,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetProveedorDto>> Get(int id);
         Task<ResponseDto<GetProveedorDto>> Get(string ruc);
-        Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<ProveedorFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<SearchProveedorFilterDto> searchParams);
     }
 }

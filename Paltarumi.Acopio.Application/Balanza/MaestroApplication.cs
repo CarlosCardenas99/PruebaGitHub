@@ -27,7 +27,7 @@ namespace Paltarumi.Acopio.Application.Balanza
         public async Task<ResponseDto<GetMaestroDto>> Get(int id)
             => await _mediator.Send(new GetMaestroQuery(id));
 
-        public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<MaestroFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams)
             => await _mediator.Send(new SearchMaestroQuery(searchParams));
     }
 }

@@ -32,7 +32,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<ConcesionFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<SearchConcesionFilterDto> searchParams)
             => await _concesionApplication.Search(searchParams);
 
         [HttpGet("codigounico/{codigoUnico}")]

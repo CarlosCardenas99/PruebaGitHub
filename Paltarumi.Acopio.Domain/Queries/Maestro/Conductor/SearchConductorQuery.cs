@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
-    public class SearchConductorQuery : SearchQueryBase<ConductorFilterDto, SearchConductorDto>
+    public class SearchConductorQuery : SearchQueryBase<SearchConductorFilterDto, SearchConductorDto>
     {
-        public SearchConductorQuery(SearchParamsDto<ConductorFilterDto> searchParams) : base(searchParams)
+        public SearchConductorQuery(SearchParamsDto<SearchConductorFilterDto> searchParams) : base(searchParams)
         {
 
         }

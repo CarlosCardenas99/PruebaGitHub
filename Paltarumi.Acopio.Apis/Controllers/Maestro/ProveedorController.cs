@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
             => await _proveedorApplication.Get(ruc);
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<ProveedorFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<SearchProveedorFilterDto> searchParams)
             => await _proveedorApplication.Search(searchParams);
     }
 }

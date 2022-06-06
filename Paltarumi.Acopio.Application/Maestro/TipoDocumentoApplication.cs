@@ -20,7 +20,7 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<IEnumerable<ListTipoDocumentoDto>>> List()
             => await _mediator.Send(new ListTipoDocumentoQuery());
 
-        public async Task<ResponseDto<SearchResultDto<SearchTipoDocumentoDto>>> Search(SearchParamsDto<TipoDocumentoFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchTipoDocumentoDto>>> Search(SearchParamsDto<SearchTipoDocumentoFilterDto> searchParams)
             => await _mediator.Send(new SearchTipoDocumentoQuery(searchParams));
     }
 }

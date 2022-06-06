@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 {
-    public class SearchConcesionQuery : SearchQueryBase<ConcesionFilterDto, SearchConcesionDto>
+    public class SearchConcesionQuery : SearchQueryBase<SearchConcesionFilterDto, SearchConcesionDto>
     {
-        public SearchConcesionQuery(SearchParamsDto<ConcesionFilterDto> searchParams) : base(searchParams)
+        public SearchConcesionQuery(SearchParamsDto<SearchConcesionFilterDto> searchParams) : base(searchParams)
         {
 
         }

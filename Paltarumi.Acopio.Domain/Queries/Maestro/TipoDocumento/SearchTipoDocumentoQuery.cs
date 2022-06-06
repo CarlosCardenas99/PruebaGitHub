@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.TipoDocumento
 {
-    public class SearchTipoDocumentoQuery : SearchQueryBase<TipoDocumentoFilterDto, SearchTipoDocumentoDto>
+    public class SearchTipoDocumentoQuery : SearchQueryBase<SearchTipoDocumentoFilterDto, SearchTipoDocumentoDto>
     {
-        public SearchTipoDocumentoQuery(SearchParamsDto<TipoDocumentoFilterDto> searchParams) : base(searchParams)
+        public SearchTipoDocumentoQuery(SearchParamsDto<SearchTipoDocumentoFilterDto> searchParams) : base(searchParams)
         {
 
         }

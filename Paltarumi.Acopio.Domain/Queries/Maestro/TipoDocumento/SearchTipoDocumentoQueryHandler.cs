@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.TipoDocumento
 {
-    public class SearchTipoDocumentoQueryHandler : SearchQueryHandlerBase<SearchTipoDocumentoQuery, TipoDocumentoFilterDto, SearchTipoDocumentoDto>
+    public class SearchTipoDocumentoQueryHandler : SearchQueryHandlerBase<SearchTipoDocumentoQuery, SearchTipoDocumentoFilterDto, SearchTipoDocumentoDto>
     {
         private readonly IRepositoryBase<Entity.TipoDocumento> _tipodocumentoRepository;
 

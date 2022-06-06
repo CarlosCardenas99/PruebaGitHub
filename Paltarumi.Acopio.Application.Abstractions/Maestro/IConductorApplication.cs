@@ -12,6 +12,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetConductorDto>> Get(string dni);
         Task<ResponseDto<IEnumerable<ListConductorDto>>> List();
         Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter);
-        Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<SearchConductorFilterDto> searchParams);
     }
 }

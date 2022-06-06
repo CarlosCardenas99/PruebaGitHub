@@ -30,7 +30,7 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<IEnumerable<ListVehiculoDto>>> List()
             => await _mediator.Send(new ListVehiculoQuery());
 
-        public async Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<VehiculoFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<SearchVehiculoFilterDto> searchParams)
             => await _mediator.Send(new SearchVehiculoQuery(searchParams));
     }
 }

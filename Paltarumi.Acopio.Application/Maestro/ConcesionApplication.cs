@@ -27,7 +27,7 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetConcesionDto>> Get(int id)
             => await _mediator.Send(new GetConcesionQuery(id));
 
-        public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<ConcesionFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<SearchConcesionFilterDto> searchParams)
             => await _mediator.Send(new SearchConcesionQuery(searchParams));
 
         public async Task<ResponseDto<GetConcesionDto>> Get(string codigoUnico)

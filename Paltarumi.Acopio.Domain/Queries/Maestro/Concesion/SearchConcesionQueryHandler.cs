@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 {
-    public class SearchConcesionQueryHandler : SearchQueryHandlerBase<SearchConcesionQuery, ConcesionFilterDto, SearchConcesionDto>
+    public class SearchConcesionQueryHandler : SearchQueryHandlerBase<SearchConcesionQuery, SearchConcesionFilterDto, SearchConcesionDto>
     {
         private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
 

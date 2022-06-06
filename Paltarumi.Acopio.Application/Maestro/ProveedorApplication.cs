@@ -27,7 +27,7 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetProveedorDto>> Get(int id)
             => await _mediator.Send(new GetProveedorQuery(id));
 
-        public async Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<ProveedorFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<SearchProveedorFilterDto> searchParams)
             => await _mediator.Send(new SearchProveedorQuery(searchParams));
 
         public async Task<ResponseDto<GetProveedorDto>> Get(string ruc)

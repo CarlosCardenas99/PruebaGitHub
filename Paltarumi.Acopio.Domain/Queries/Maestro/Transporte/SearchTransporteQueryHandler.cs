@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Transporte
 {
-    public class SearchTransporteQueryHandler : SearchQueryHandlerBase<SearchTransporteQuery, TransporteFilterDto, SearchTransporteDto>
+    public class SearchTransporteQueryHandler : SearchQueryHandlerBase<SearchTransporteQuery, SearchTransporteFilterDto, SearchTransporteDto>
     {
         private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
 

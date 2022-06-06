@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
-    public class SearchTicketQuery : SearchQueryBase<TicketFilterDto, SearchTicketDto>
+    public class SearchTicketQuery : SearchQueryBase<SearchTicketFilterDto, SearchTicketDto>
     {
-        public SearchTicketQuery(SearchParamsDto<TicketFilterDto> searchParams) : base(searchParams)
+        public SearchTicketQuery(SearchParamsDto<SearchTicketFilterDto> searchParams) : base(searchParams)
         {
 
         }

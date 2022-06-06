@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
 {
-    public class SearchLoteQueryHandler : SearchQueryHandlerBase<SearchLoteQuery, LoteFilterDto, SearchLoteDto>
+    public class SearchLoteQueryHandler : SearchQueryHandlerBase<SearchLoteQuery, SearchLoteFilterDto, SearchLoteDto>
     {
         private readonly IRepositoryBase<Entity.Lote> _loteRepository;
         private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;

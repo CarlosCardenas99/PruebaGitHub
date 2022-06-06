@@ -10,6 +10,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetVehiculoDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListVehiculoDto>>> List();
-        Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<VehiculoFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<SearchVehiculoFilterDto> searchParams);
     }
 }

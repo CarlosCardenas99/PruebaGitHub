@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
-    public class SearchConductorQueryHandler : SearchQueryHandlerBase<SearchConductorQuery, ConductorFilterDto, SearchConductorDto>
+    public class SearchConductorQueryHandler : SearchQueryHandlerBase<SearchConductorQuery, SearchConductorFilterDto, SearchConductorDto>
     {
         private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
 

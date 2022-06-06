@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {
-    public class SearchVehiculoQuery : SearchQueryBase<VehiculoFilterDto, SearchVehiculoDto>
+    public class SearchVehiculoQuery : SearchQueryBase<SearchVehiculoFilterDto, SearchVehiculoDto>
     {
-        public SearchVehiculoQuery(SearchParamsDto<VehiculoFilterDto> searchParams) : base(searchParams)
+        public SearchVehiculoQuery(SearchParamsDto<SearchVehiculoFilterDto> searchParams) : base(searchParams)
         {
 
         }
