@@ -1,6 +1,4 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
-
+﻿
 namespace Paltarumi.Acopio.Domain.Dto.Balanza.Ticket
 {
     public class ListTicketDto: TicketDto
