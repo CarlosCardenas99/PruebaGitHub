@@ -90,7 +90,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
 
                 if (loteDto != null)
                 {
-                    loteDto.TicketDetails = _mapper?.Map<List<GetTicketDto>>(lote.Tickets) ?? new List<GetTicketDto>();
+                    loteDto.TicketDetails = _mapper?.Map<List<ListTicketDto>>(lote.Tickets) ?? new List<ListTicketDto>();
 
                     response.UpdateData(loteDto);
                 }

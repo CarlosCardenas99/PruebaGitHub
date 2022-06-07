@@ -13,14 +13,16 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
     public class GetLoteQueryHandler : QueryHandlerBase<GetLoteQuery, GetLoteDto>
     {
         private readonly IRepositoryBase<Entity.Lote> _loteRepository;
-
+        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
         public GetLoteQueryHandler(
             IMapper mapper,
             GetLoteQueryValidator validator,
-            IRepositoryBase<Entity.Lote> loteRepository
+            IRepositoryBase<Entity.Lote> loteRepository,
+            IRepositoryBase<Entity.Ticket> ticketRepository
         ) : base(mapper, validator)
         {
             _loteRepository = loteRepository;
+            _ticketRepository = ticketRepository;   
         }
 
         protected override async Task<ResponseDto<GetLoteDto>> HandleQuery(GetLoteQuery request, CancellationToken cancellationToken)
@@ -42,7 +44,18 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
                 loteDto.Concesion = _mapper?.Map<ConcesionDto>(lote.IdConcesionNavigation) ?? null;
                 loteDto.Proveedor = _mapper?.Map<ProveedorDto>(lote.IdProveedorNavigation) ?? null;
                 loteDto.EstadoTipoMaterial = _mapper?.Map<MaestroDto>(lote.IdEstadoTipoMaterialNavigation);
-                loteDto.TicketDetails = _mapper?.Map<IEnumerable<GetTicketDto>>(lote.Tickets);
+
+                var idTickets = lote.Tickets.Select(x => x.IdTicket);
+                var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
+                    x => idTickets.Contains(x.IdTicket),
+                    x => x.IdConductorNavigation,
+                    x => x.IdTransporteNavigation,
+                    x => x.IdEstadoTmhNavigation,
+                    x => x.IdUnidadMedidaNavigation,
+                    x => x.IdVehiculoNavigation
+                    );
+                loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
+
                 response.UpdateData(loteDto);
             }
 
