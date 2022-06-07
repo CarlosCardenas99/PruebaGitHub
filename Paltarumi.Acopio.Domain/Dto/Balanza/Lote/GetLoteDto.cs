@@ -32,6 +32,6 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.Lote
         public int? IdUsuarioUpdate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public bool Activo { get; set; }
-        public IEnumerable<GetTicketDto>? TicketDetails { get; set; }
+        public IEnumerable<ListTicketDto>? TicketDetails { get; set; }
     }
 }
