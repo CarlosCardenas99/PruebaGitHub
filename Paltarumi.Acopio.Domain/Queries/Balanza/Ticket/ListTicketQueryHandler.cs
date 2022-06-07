@@ -10,39 +10,34 @@ using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
-    public class GetTicketQueryHandler : QueryHandlerBase<GetTicketQuery, GetTicketDto>
+    public class ListTicketQueryHandler : QueryHandlerBase<ListTicketQuery, IEnumerable<ListTicketDto>>
     {
         private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
 
-        public GetTicketQueryHandler(
+        public ListTicketQueryHandler(
             IMapper mapper,
-            GetTicketQueryValidator validator,
             IRepositoryBase<Entity.Ticket> ticketRepository
-        ) : base(mapper, validator)
+        ) : base(mapper)
         {
             _ticketRepository = ticketRepository;
         }
 
-        protected override async Task<ResponseDto<GetTicketDto>> HandleQuery(GetTicketQuery request, CancellationToken cancellationToken)
+        protected override async Task<ResponseDto<IEnumerable<ListTicketDto>>> HandleQuery(ListTicketQuery request, CancellationToken cancellationToken)
         {
-            var response = new ResponseDto<GetTicketDto>();
-            var ticket = await _ticketRepository.GetByAsync(
-                x => x.IdTicket == request.Id,
+            var response = new ResponseDto<IEnumerable<ListTicketDto>>();
+            var tickets = await _ticketRepository.FindByAsync(
+                x => x.IdLote == request.IdLote,
                 x => x.IdConductorNavigation,
                 x => x.IdTransporteNavigation,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation
                 );
-            var ticketDto = _mapper?.Map<GetTicketDto>(ticket);
+            var ticketDto = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
-            if (ticket != null && ticketDto != null)
+            if (tickets != null && ticketDto != null)
             {
-                ticketDto.Conductor = _mapper?.Map<ConductorDto>(ticket.IdConductorNavigation);
-                ticketDto.Transporte = _mapper?.Map<TransporteDto>(ticket.IdTransporteNavigation);
-                ticketDto.EstadoTmh = _mapper?.Map<MaestroDto>(ticket.IdEstadoTmhNavigation);
-                ticketDto.UnidadMedida = _mapper?.Map<MaestroDto>(ticket.IdUnidadMedidaNavigation);
-                ticketDto.Vehiculo = _mapper?.Map<VehiculoDto>(ticket.IdVehiculoNavigation);
+
                 response.UpdateData(ticketDto);
             }
 

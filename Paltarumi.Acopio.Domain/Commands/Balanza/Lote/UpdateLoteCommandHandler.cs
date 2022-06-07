@@ -77,8 +77,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 var loteDto = _mapper?.Map<GetLoteDto>(lote);
                 if (loteDto != null)
                 {
-                    loteDto.TicketDetails =
-                        _mapper?.Map<List<GetTicketDto>>(lote?.Tickets) ?? new List<GetTicketDto>();
+                    //loteDto.TicketDetails =
+                    //    _mapper?.Map<List<GetTicketDto>>(lote?.Tickets) ?? new List<GetTicketDto>();
 
                     response.UpdateData(loteDto);
                     response.AddOkResult(Resources.Common.UpdateSuccessMessage);
