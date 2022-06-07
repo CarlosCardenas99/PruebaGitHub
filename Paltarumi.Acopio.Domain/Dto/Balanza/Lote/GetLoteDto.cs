@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.Lote
     public class GetLoteDto
     {
         public int IdLote { get; set; }
+        public string? Codigo { get; set; }
         public DateTime? FechaIngreso { get; set; }
         public string? HoraIngreso { get; set; }
         public DateTime? FechaAcopio { get; set; }
