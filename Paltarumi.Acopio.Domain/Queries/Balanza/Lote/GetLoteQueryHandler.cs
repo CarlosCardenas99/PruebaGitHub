@@ -40,10 +40,10 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
 
             if (lote != null && loteDto != null)
             {
-                loteDto.Estado = _mapper?.Map<MaestroDto>(lote.IdEstadoNavigation) ?? null;
-                loteDto.Concesion = _mapper?.Map<ConcesionDto>(lote.IdConcesionNavigation) ?? null;
-                loteDto.Proveedor = _mapper?.Map<ProveedorDto>(lote.IdProveedorNavigation) ?? null;
-                loteDto.EstadoTipoMaterial = _mapper?.Map<MaestroDto>(lote.IdEstadoTipoMaterialNavigation);
+                loteDto.Estado = _mapper?.Map<GetMaestroDto>(lote.IdEstadoNavigation) ?? null;
+                loteDto.Concesion = _mapper?.Map<GetConcesionDto>(lote.IdConcesionNavigation) ?? null;
+                loteDto.Proveedor = _mapper?.Map<GetProveedorDto>(lote.IdProveedorNavigation) ?? null;
+                loteDto.EstadoTipoMaterial = _mapper?.Map<GetMaestroDto>(lote.IdEstadoTipoMaterialNavigation);
 
                 var idTickets = lote.Tickets.Select(x => x.IdTicket);
                 var tickets = await _ticketRepository.FindByAsNoTrackingAsync(

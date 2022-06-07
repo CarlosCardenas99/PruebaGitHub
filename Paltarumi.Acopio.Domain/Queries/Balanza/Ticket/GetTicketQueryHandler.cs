@@ -38,11 +38,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 
             if (ticket != null && ticketDto != null)
             {
-                ticketDto.Conductor = _mapper?.Map<ConductorDto>(ticket.IdConductorNavigation);
-                ticketDto.Transporte = _mapper?.Map<TransporteDto>(ticket.IdTransporteNavigation);
-                ticketDto.EstadoTmh = _mapper?.Map<MaestroDto>(ticket.IdEstadoTmhNavigation);
-                ticketDto.UnidadMedida = _mapper?.Map<MaestroDto>(ticket.IdUnidadMedidaNavigation);
-                ticketDto.Vehiculo = _mapper?.Map<VehiculoDto>(ticket.IdVehiculoNavigation);
+                ticketDto.Conductor = _mapper?.Map<GetConductorDto>(ticket.IdConductorNavigation);
+                ticketDto.Transporte = _mapper?.Map<GetTransporteDto>(ticket.IdTransporteNavigation);
+                ticketDto.EstadoTmh = _mapper?.Map<GetMaestroDto>(ticket.IdEstadoTmhNavigation);
+                ticketDto.UnidadMedida = _mapper?.Map<GetMaestroDto>(ticket.IdUnidadMedidaNavigation);
+                ticketDto.Vehiculo = _mapper?.Map<GetVehiculoDto>(ticket.IdVehiculoNavigation);
                 response.UpdateData(ticketDto);
             }
 

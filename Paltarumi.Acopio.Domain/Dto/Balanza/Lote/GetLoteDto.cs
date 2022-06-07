@@ -22,10 +22,10 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.Lote
         public float Tms100 { get; set; }
         public float TmsBase { get; set; }
         public float? Tms { get; set; }
-        public ConcesionDto Concesion { get; set; }
-        public MaestroDto EstadoTipoMaterial { get; set; }
-        public ProveedorDto Proveedor { get; set; }
-        public MaestroDto Estado { get; set; }
+        public GetConcesionDto Concesion { get; set; }
+        public GetMaestroDto EstadoTipoMaterial { get; set; }
+        public GetProveedorDto Proveedor { get; set; }
+        public GetMaestroDto Estado { get; set; }
         public string? Observacion { get; set; }
         public int? IdUsuarioCreate { get; set; }
         public DateTime? CreateDate { get; set; }
