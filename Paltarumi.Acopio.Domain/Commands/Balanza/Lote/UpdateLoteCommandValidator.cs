@@ -22,6 +22,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                             .WithCustomValidationMessage();
                     });
                 RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.Lote.Codigo, 4, 10);
+
                 //RequiredField(x => x.UpdateDto.FechaIngreso, Resources.Balanza.Lote.FechaIngreso);
                 //RequiredField(x => x.UpdateDto.HoraIngreso, Resources.Balanza.Lote.HoraIngreso);
             });
