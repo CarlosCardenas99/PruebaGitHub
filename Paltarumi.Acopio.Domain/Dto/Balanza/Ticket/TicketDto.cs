@@ -24,9 +24,5 @@
         public int IdUnidadMedida { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
-        public int IdUsuarioCreate { get; set; }
-        public DateTime CreateDate { get; set; }
-        public int? IdUsuarioUpdate { get; set; }
-        public DateTime? UpdateDate { get; set; }
     }
 }
