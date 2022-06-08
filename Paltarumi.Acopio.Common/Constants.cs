@@ -27,7 +27,7 @@
 
             public struct CodigoTabla
             {
-                public const string ESTADO_LOTE = "05";
+                public const string ESTADO_LOTE = "03";
                 public const string VEHICULO_MARCA = "05";
                 public const string VEHICULO_TIPO = "06";
             }
