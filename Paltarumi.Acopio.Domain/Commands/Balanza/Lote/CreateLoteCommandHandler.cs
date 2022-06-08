@@ -15,6 +15,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
     public class CreateLoteCommandHandler : CommandHandlerBase<CreateLoteCommand, GetLoteDto>
     {
         private readonly IRepositoryBase<Entity.Lote> _loteRepository;
+        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
         private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
         private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
         private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
@@ -25,15 +26,17 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
             IMediator mediator,
             CreateLoteCommandValidator validator,
             IRepositoryBase<Entity.Lote> loteRepository,
+            IRepositoryBase<Entity.Maestro> maestroRepository,
             IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
             IRepositoryBase<Entity.Transporte> transporteRepository,
             IRepositoryBase<Entity.Conductor> conductorRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _loteRepository = loteRepository;
+            _maestroRepository = maestroRepository;
             _vehiculoRepository = vehiculoRepository;
             _transporteRepository = transporteRepository;
             _conductorRepository = conductorRepository;
-            _loteRepository = loteRepository;
         }
 
         public override async Task<ResponseDto<GetLoteDto>> HandleCommand(CreateLoteCommand request, CancellationToken cancellationToken)
@@ -61,12 +64,17 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 lote.Codigo = code;
 
                 lote.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
-                lote.Tickets.ToList().ForEach(async t =>
+
+                foreach(var ticket in lote.Tickets)
                 {
-                    t.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
-                    t.Activo = true;
-                    t.CreateDate = DateTime.Now;
-                });
+                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
+                    ticket.Activo = true;
+                }
+
+                var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
+                    x.CodigoTabla == Constants.Maestro.CodigoTabla.ESTADO_LOTE && 
+                    x.CodigoItem == Constants.Maestro.EstadoLote.EN_ESPERA
+                 );
 
                 lote.Enable();
                 lote.UpdateCreation();
@@ -82,6 +90,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 lote.UpdateTms100();
                 lote.UpdateTmsBase();
                 lote.UpdateNumeroTickets();
+                lote.IdEstado = estadoLote.IdMaestro;
 
                 await _loteRepository.AddAsync(lote);
                 await _loteRepository.SaveAsync();

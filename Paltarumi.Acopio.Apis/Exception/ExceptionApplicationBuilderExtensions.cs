@@ -18,7 +18,7 @@ namespace Paltarumi.Acopio.Apis.Exception
                     if (contextFeature == null)
                         return;
 
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.ContentType = "application/json";
 
                     var errorResponse = new ResponseDto<ErrorResponseDto>(new ErrorResponseDto()

@@ -798,10 +798,6 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.CantidadUnidadMedida).HasColumnName("cantidadUnidadMedida");
 
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("createDate");
-
                 entity.Property(e => e.FechaIngreso)
                     .HasColumnType("datetime")
                     .HasColumnName("fechaIngreso");
@@ -842,10 +838,6 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdUnidadMedida).HasColumnName("idUnidadMedida");
 
-                entity.Property(e => e.IdUsuarioCreate).HasColumnName("idUsuarioCreate");
-
-                entity.Property(e => e.IdUsuarioUpdate).HasColumnName("idUsuarioUpdate");
-
                 entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
 
                 entity.Property(e => e.Numero)
@@ -871,10 +863,6 @@ namespace Paltarumi.Acopio.Repository.Data
                 entity.Property(e => e.PesoNetoBase).HasColumnName("pesoNetoBase");
 
                 entity.Property(e => e.Tara).HasColumnName("tara");
-
-                entity.Property(e => e.UpdateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("updateDate");
 
                 entity.HasOne(d => d.IdConductorNavigation)
                     .WithMany(p => p.Tickets)

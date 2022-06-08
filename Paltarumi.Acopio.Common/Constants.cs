@@ -20,8 +20,14 @@
 
         public class Maestro
         {
+            public struct EstadoLote
+            {
+                public const string EN_ESPERA = "01";
+            }
+
             public struct CodigoTabla
             {
+                public const string ESTADO_LOTE = "05";
                 public const string VEHICULO_MARCA = "05";
                 public const string VEHICULO_TIPO = "06";
             }

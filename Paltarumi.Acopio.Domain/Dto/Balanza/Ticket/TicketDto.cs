@@ -21,6 +21,7 @@
         public int IdTransporte { get; set; }
         public int IdConductor { get; set; }
         public int IdVehiculo { get; set; }
+        public int IdTipoMineral { get; set; }
         public int IdUnidadMedida { get; set; }
         public int IdTipoMaterial { get; set; }
         public int CantidadUnidadMedida { get; set; }
