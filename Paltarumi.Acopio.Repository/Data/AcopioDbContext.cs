@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Repository.Data
@@ -795,10 +798,6 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.CantidadUnidadMedida).HasColumnName("cantidadUnidadMedida");
 
-                entity.Property(e => e.CreateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("createDate");
-
                 entity.Property(e => e.FechaIngreso)
                     .HasColumnType("datetime")
                     .HasColumnName("fechaIngreso");
@@ -833,13 +832,11 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
 
+                entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
+
                 entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
 
                 entity.Property(e => e.IdUnidadMedida).HasColumnName("idUnidadMedida");
-
-                entity.Property(e => e.IdUsuarioCreate).HasColumnName("idUsuarioCreate");
-
-                entity.Property(e => e.IdUsuarioUpdate).HasColumnName("idUsuarioUpdate");
 
                 entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
 
@@ -867,10 +864,6 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.Tara).HasColumnName("tara");
 
-                entity.Property(e => e.UpdateDate)
-                    .HasColumnType("datetime")
-                    .HasColumnName("updateDate");
-
                 entity.HasOne(d => d.IdConductorNavigation)
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdConductor)
@@ -888,6 +881,12 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasForeignKey(d => d.IdLote)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_ticket_idLote");
+
+                entity.HasOne(d => d.IdTipoMineralNavigation)
+                    .WithMany(p => p.TicketIdTipoMineralNavigations)
+                    .HasForeignKey(d => d.IdTipoMineral)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_balanza_ticket_idTipoMineral");
 
                 entity.HasOne(d => d.IdTransporteNavigation)
                     .WithMany(p => p.Tickets)

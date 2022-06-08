@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Maestro
     {
@@ -7,6 +10,7 @@
             LoteIdEstadoNavigations = new HashSet<Lote>();
             LoteIdEstadoTipoMaterialNavigations = new HashSet<Lote>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
+            TicketIdTipoMineralNavigations = new HashSet<Ticket>();
             TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
             VehiculoIdTipoVehiculoNavigations = new HashSet<Vehiculo>();
             VehiculoIdVehiculoMarcaNavigations = new HashSet<Vehiculo>();
@@ -21,6 +25,7 @@
         public virtual ICollection<Lote> LoteIdEstadoNavigations { get; set; }
         public virtual ICollection<Lote> LoteIdEstadoTipoMaterialNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
+        public virtual ICollection<Ticket> TicketIdTipoMineralNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }
         public virtual ICollection<Vehiculo> VehiculoIdTipoVehiculoNavigations { get; set; }
         public virtual ICollection<Vehiculo> VehiculoIdVehiculoMarcaNavigations { get; set; }
