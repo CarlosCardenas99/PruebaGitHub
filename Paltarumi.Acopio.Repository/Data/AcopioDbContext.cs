@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Repository.Data
@@ -833,6 +836,8 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
 
+                entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
+
                 entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
 
                 entity.Property(e => e.IdUnidadMedida).HasColumnName("idUnidadMedida");
@@ -888,6 +893,12 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasForeignKey(d => d.IdLote)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_ticket_idLote");
+
+                entity.HasOne(d => d.IdTipoMineralNavigation)
+                    .WithMany(p => p.TicketIdTipoMineralNavigations)
+                    .HasForeignKey(d => d.IdTipoMineral)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_balanza_ticket_idTipoMineral");
 
                 entity.HasOne(d => d.IdTransporteNavigation)
                     .WithMany(p => p.Tickets)

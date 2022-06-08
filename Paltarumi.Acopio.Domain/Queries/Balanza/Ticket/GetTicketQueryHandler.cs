@@ -32,7 +32,10 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 x => x.IdTransporteNavigation,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdUnidadMedidaNavigation,
-                x => x.IdVehiculoNavigation
+                x => x.IdVehiculoNavigation,
+                x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
+                x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
+                x => x.IdTipoMineralNavigation
                 );
             var ticketDto = _mapper?.Map<GetTicketDto>(ticket);
 
@@ -43,6 +46,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 ticketDto.EstadoTmh = _mapper?.Map<GetMaestroDto>(ticket.IdEstadoTmhNavigation);
                 ticketDto.UnidadMedida = _mapper?.Map<GetMaestroDto>(ticket.IdUnidadMedidaNavigation);
                 ticketDto.Vehiculo = _mapper?.Map<GetVehiculoDto>(ticket.IdVehiculoNavigation);
+                ticketDto.Vehiculo.Marca = _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdVehiculoMarcaNavigation);
+                ticketDto.Vehiculo.TipoVehiculo = _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdTipoVehiculoNavigation);
+                ticketDto.TipoMineral = _mapper?.Map<GetMaestroDto>(ticket.IdTipoMineralNavigation);
                 response.UpdateData(ticketDto);
             }
 
