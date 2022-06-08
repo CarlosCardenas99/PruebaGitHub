@@ -22,6 +22,7 @@
         public int IdConductor { get; set; }
         public int IdVehiculo { get; set; }
         public int IdUnidadMedida { get; set; }
+        public int IdTipoMaterial { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
         public int IdUsuarioCreate { get; set; }

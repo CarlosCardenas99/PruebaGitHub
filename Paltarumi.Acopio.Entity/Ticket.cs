@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Ticket
     {
@@ -22,6 +25,7 @@
         public int IdTransporte { get; set; }
         public int IdConductor { get; set; }
         public int IdVehiculo { get; set; }
+        public int IdTipoMineral { get; set; }
         public int IdUnidadMedida { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
@@ -34,6 +38,7 @@
         public virtual Conductor IdConductorNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
         public virtual Lote IdLoteNavigation { get; set; } = null!;
+        public virtual Maestro IdTipoMineralNavigation { get; set; } = null!;
         public virtual Transporte IdTransporteNavigation { get; set; } = null!;
         public virtual Maestro IdUnidadMedidaNavigation { get; set; } = null!;
         public virtual Vehiculo IdVehiculoNavigation { get; set; } = null!;
