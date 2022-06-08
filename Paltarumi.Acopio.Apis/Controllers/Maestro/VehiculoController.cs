@@ -30,6 +30,10 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<GetVehiculoDto>> Get(int id)
             => await _vehiculoApplication.Get(id);
 
+        [HttpGet("findbyplaca/{placa}")]
+        public async Task<ResponseDto<GetVehiculoDto>> GetByPlaca(string placa)
+            => await _vehiculoApplication.GetByPlaca(placa);
+
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListVehiculoDto>>> List()
             => await _vehiculoApplication.List();

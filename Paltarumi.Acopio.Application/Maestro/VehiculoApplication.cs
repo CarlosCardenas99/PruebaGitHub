@@ -27,6 +27,9 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetVehiculoDto>> Get(int id)
             => await _mediator.Send(new GetVehiculoQuery(id));
 
+        public async Task<ResponseDto<GetVehiculoDto>> GetByPlaca(string placa)
+            => await _mediator.Send(new GetVehiculoByPlacaQuery(placa));
+
         public async Task<ResponseDto<IEnumerable<ListVehiculoDto>>> List()
             => await _mediator.Send(new ListVehiculoQuery());
 
