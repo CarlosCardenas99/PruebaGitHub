@@ -1,6 +1,7 @@
 using Paltarumi.Acopio.Apis.Documentation;
 using Paltarumi.Acopio.Apis.Endpoints;
 using Paltarumi.Acopio.Apis.Exception;
+using Paltarumi.Acopio.Apis.Security;
 using Paltarumi.Acopio.Application.Extensions;
 using Paltarumi.Acopio.Domain.Extensions;
 using Paltarumi.Acopio.Repository.Extensions;
@@ -28,6 +29,9 @@ builder.Services.UseDomainServices();
 // Application Services
 builder.Services.UseApplicationServices();
 
+// Security
+builder.Services.UseSecurity(configuration);
+
 #endregion
 
 #region App
@@ -51,6 +55,10 @@ app.MapControllers();
 
 // RootApiEndpoint
 app.UseRootApiEndpoint(configuration);
+
+// Security
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.Run();
 

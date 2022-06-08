@@ -1,11 +1,18 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
+﻿using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
 
 namespace Paltarumi.Acopio.Domain.Dto.Balanza.Lote
 {
-    public class GetLoteDto : LoteDto
+    public class GetLoteDto: LoteDto
     {
         public int IdLote { get; set; }
+        public GetConcesionDto Concesion { get; set; }
+        public GetMaestroDto EstadoTipoMaterial { get; set; }
+        public GetProveedorDto Proveedor { get; set; }
+        public GetMaestroDto Estado { get; set; }
         public bool Activo { get; set; }
-        public IEnumerable<GetTicketDto>? TicketDetails { get; set; }
+        public IEnumerable<ListTicketDto>? TicketDetails { get; set; }
     }
 }

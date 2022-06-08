@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 using Paltarumi.Acopio.Domain.Queries.Base;
@@ -23,11 +23,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
         {
             var response = new ResponseDto<GetConductorDto>();
             var conductor = await _conductorRepository.GetByAsync(x => x.IdConductor == request.Id);
-
             var conductorDto = _mapper?.Map<GetConductorDto>(conductor);
-            if (conductorDto != null) response.UpdateData(conductorDto);
 
-            response.Data.RazonSocial = "COCO - Prueba la final - 07:18";
+            if (conductor != null && conductorDto != null)
+            {
+                response.UpdateData(conductorDto);
+            }
 
             return await Task.FromResult(response);
         }

@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Common
 {
     public class CreateCodeCommandHandler : CommandHandlerBase<CreateCodeCommand, string>
     {
+
         private readonly IRepositoryBase<Entity.Correlativo> _correlativoRepository;
 
         public CreateCodeCommandHandler(
@@ -21,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Common
         {
             var response = new ResponseDto<string>();
 
-            var correlativo = await _correlativoRepository.GetByAsNoTrackingAsync(x =>
+            var correlativo = await _correlativoRepository.GetByAsync(x =>
                 x.CodigoCorrelativoTipo == request.CodigoCorrelativoTipo && x.Serie == request.Serie
             );
 
@@ -32,6 +33,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Common
                 var numero = $"{correlativo.Numero}";
 
                 await _correlativoRepository.UpdateAsync(correlativo);
+                await _correlativoRepository.SaveAsync();
 
                 response.UpdateData(numero);
             }

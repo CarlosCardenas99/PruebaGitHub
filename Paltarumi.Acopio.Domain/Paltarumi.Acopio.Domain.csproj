@@ -20,6 +20,7 @@
     <PackageReference Include="FluentValidation" Version="11.0.1" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Scrutor" Version="4.1.0" />
   </ItemGroup>
 
@@ -30,6 +31,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Balanza\Maestro.Designer.cs">
+      <DependentUpon>Maestro.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Balanza\Ticket.Designer.cs">
+      <DependentUpon>Ticket.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Balanza\Lote.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -40,6 +51,41 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Common.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Maestro\TipoDocumento.Designer.cs">
+      <DependentUpon>TipoDocumento.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\Vehiculo.Designer.cs">
+      <DependentUpon>Vehiculo.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\Transporte.Designer.cs">
+      <DependentUpon>Transporte.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\ProveedorConcesion.Designer.cs">
+      <DependentUpon>ProveedorConcesion.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\Ubigeo.Designer.cs">
+      <DependentUpon>Ubigeo.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\Concesion.Designer.cs">
+      <DependentUpon>Concesion.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\Proveedor.Designer.cs">
+      <DependentUpon>Proveedor.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Maestro\Conductor.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -48,6 +94,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Balanza\Maestro.resx">
+      <LastGenOutput>Maestro.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Balanza\Ticket.resx">
+      <LastGenOutput>Ticket.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Lote.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Lote.Designer.cs</LastGenOutput>
@@ -55,6 +109,34 @@
     <EmbeddedResource Update="Resources\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\TipoDocumento.resx">
+      <LastGenOutput>TipoDocumento.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Vehiculo.resx">
+      <LastGenOutput>Vehiculo.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Transporte.resx">
+      <LastGenOutput>Transporte.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\ProveedorConcesion.resx">
+      <LastGenOutput>ProveedorConcesion.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Ubigeo.resx">
+      <LastGenOutput>Ubigeo.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Concesion.resx">
+      <LastGenOutput>Concesion.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Proveedor.resx">
+      <LastGenOutput>Proveedor.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Maestro\Conductor.resx">
       <Generator>ResXFileCodeGenerator</Generator>

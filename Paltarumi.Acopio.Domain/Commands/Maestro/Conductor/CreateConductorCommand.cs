@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Domain.Commands.Base;
+using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor

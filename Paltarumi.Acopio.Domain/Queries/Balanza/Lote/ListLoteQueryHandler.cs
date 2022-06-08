@@ -25,6 +25,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Lote
             var lotes = await _loteRepository.FindAll().ToListAsync(cancellationToken);
             var loteDtos = _mapper?.Map<IEnumerable<ListLoteDto>>(lotes);
 
+
             response.UpdateData(loteDtos ?? new List<ListLoteDto>());
 
 

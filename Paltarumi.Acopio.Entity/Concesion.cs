@@ -1,10 +1,14 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Concesion
     {
         public Concesion()
         {
             Lotes = new HashSet<Lote>();
+            ProveedorConcesions = new HashSet<ProveedorConcesion>();
         }
 
         public int IdConcesion { get; set; }
@@ -14,5 +18,6 @@
         public bool Activo { get; set; }
 
         public virtual ICollection<Lote> Lotes { get; set; }
+        public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }
     }
 }

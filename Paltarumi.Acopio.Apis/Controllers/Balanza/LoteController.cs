@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
             => await _loteApplication.List();
 
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<ListLoteDto>>> Search(SearchParamsDto<LoteFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchLoteDto>>> Search(SearchParamsDto<SearchLoteFilterDto> searchParams)
             => await _loteApplication.Search(searchParams);
     }
 }

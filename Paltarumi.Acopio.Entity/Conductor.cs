@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Conductor
     {
@@ -18,6 +21,8 @@
         public string Email { get; set; } = null!;
         public bool Activo { get; set; }
 
+        public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
+        public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

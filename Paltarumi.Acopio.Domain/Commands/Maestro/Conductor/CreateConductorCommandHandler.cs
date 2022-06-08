@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
@@ -31,6 +31,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
             if (conductor != null)
             {
                 conductor.Activo = true;
+
 
                 await _conductorRepository.AddAsync(conductor);
                 await _conductorRepository.SaveAsync();

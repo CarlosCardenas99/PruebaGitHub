@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 
-namespace Paltarumi.Acopio.Apis.Controllers.Balanza
+namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {
     [ApiController]
     [Route("api/conductor")]
@@ -34,8 +34,12 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<IEnumerable<ListConductorDto>>> List()
             => await _conductorApplication.List();
 
+        [HttpPost("findbydocument")]
+        public async Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter)
+            => await _conductorApplication.GetByDocument(filter);
+
         [HttpPost("search")]
-        public async Task<ResponseDto<SearchResultDto<ListConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<SearchConductorFilterDto> searchParams)
             => await _conductorApplication.Search(searchParams);
     }
 }

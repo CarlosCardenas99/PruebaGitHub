@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Application.Abstractions.Maestro
@@ -9,7 +9,9 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetConductorDto>> Update(UpdateConductorDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetConductorDto>> Get(int id);
+        Task<ResponseDto<GetConductorDto>> Get(string dni);
         Task<ResponseDto<IEnumerable<ListConductorDto>>> List();
-        Task<ResponseDto<SearchResultDto<ListConductorDto>>> Search(SearchParamsDto<ConductorFilterDto> searchParams);
+        Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter);
+        Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<SearchConductorFilterDto> searchParams);
     }
 }
