@@ -33,30 +33,47 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             }
             else
             {
-                SunatStorage sunat = new SunatStorage();
+                var sunat = new SunatStorage();
                 var result = sunat.ConsultaRuc(request.Ruc);
+
                 if (result.response.responseCode == 0)
                 {
+                    var departamento = result.sunatVo.departamento ?? string.Empty;
+                    var provincia = result.sunatVo.provincia ?? string.Empty;
+                    var distrito = result.sunatVo.distrito ?? string.Empty;
+
                     var ubigeo = await _ubigeoRepository.GetByAsync(x =>
-                       x.Departamento.ToLower().Equals(result.sunatVo.departamento.ToLower()) &&
-                       x.Provincia.ToLower().Equals(result.sunatVo.provincia.ToLower()) &&
-                       x.Distrito.ToLower().Equals(result.sunatVo.distrito.ToLower())
+                       string.Equals(x.Departamento.ToLower(), departamento.ToLower()) &&
+                       string.Equals(x.Provincia.ToLower(), provincia.ToLower()) &&
+                       string.Equals(x.Distrito.ToLower(), distrito.ToLower())
                     );
+
                     if (ubigeo == null) ubigeo = new Entity.Ubigeo();
+
                     transporte = mapperCreateTransporteDto(result.sunatVo, ubigeo);
+
+                    transporte.Direccion ??= string.Empty;
+                    transporte.Telefono ??= string.Empty;
+                    transporte.Email ??= string.Empty;
+
                     await _transporteRepository.AddAsync(transporte);
                     await _transporteRepository.SaveAsync();
+
                     transporteDto = _mapper?.Map<GetTransporteDto>(transporte);
+
                     response.UpdateData(transporteDto);
                 }
                 else
                 {
-                    List<ApplicationMessageDto> lisMsg = new List<ApplicationMessageDto>();
-                    ApplicationMessageDto msg = new ApplicationMessageDto();
+                    var lisMsg = new List<ApplicationMessageDto>();
+                    var msg = new ApplicationMessageDto();
+
                     msg.MessageType = ApplicationMessageType.Error;
                     msg.Message = result.response.responseMessage;
                     msg.Key = "Error";
+
                     lisMsg.Add(msg);
+
                     response.Messages = lisMsg;
                 }
             }
@@ -64,17 +81,16 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             return await Task.FromResult(response);
         }
 
-        private Entity.Transporte mapperCreateTransporteDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo ubigeo)
-        {
-            Entity.Transporte transporte = new Entity.Transporte();
-            transporte.Ruc = sunatVo.ruc;
-            transporte.RazonSocial = sunatVo.razonSocial;
-            transporte.CodigoUbigeo = ubigeo.CodigoUbigeo;
-            transporte.Direccion = sunatVo.direccion;
-            transporte.Email = String.Empty;
-            transporte.Telefono = String.Empty;
-            transporte.Activo = true;
-            return transporte;
-        }
+        private Entity.Transporte mapperCreateTransporteDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo ubigeo) 
+            => new Entity.Transporte
+            {
+                Ruc = sunatVo.ruc,
+                RazonSocial = sunatVo.razonSocial,
+                CodigoUbigeo = ubigeo.CodigoUbigeo,
+                Direccion = sunatVo.direccion,
+                Email = string.Empty,
+                Telefono = string.Empty,
+                Activo = true
+            };
     }
 }
