@@ -32,7 +32,6 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
             {
                 ticket.Activo = true;
 
-
                 await _ticketRepository.AddAsync(ticket);
                 await _ticketRepository.SaveAsync();
             }
