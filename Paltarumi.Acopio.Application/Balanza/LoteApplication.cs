@@ -14,7 +14,6 @@ namespace Paltarumi.Acopio.Application.Balanza
         {
 
         }
-
         public async Task<ResponseDto<GetLoteDto>> Create(CreateLoteDto createDto)
             => await _mediator.Send(new CreateLoteCommand(createDto));
 
