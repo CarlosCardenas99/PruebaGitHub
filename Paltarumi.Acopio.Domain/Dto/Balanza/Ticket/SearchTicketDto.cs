@@ -3,7 +3,7 @@
     public class SearchTicketDto
     {
         public int? IdTicket { get; set; }
-        public string Numero { get; set; }
+        public string Numero { get; set; } = null!;
         public DateTime? FechaIngreso { get; set; }
         public string HoraIngreso { get; set; }
         public DateTime? FechaSalida { get; set; }
