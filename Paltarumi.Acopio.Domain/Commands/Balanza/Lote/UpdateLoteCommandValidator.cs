@@ -21,7 +21,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                             .MustAsync(ValidateExistenceAsync)
                             .WithCustomValidationMessage();
                     });
-                RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.Lote.Codigo, 4, 10);
+                //RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.Lote.Codigo, 4, 10);
             });
         }
 
