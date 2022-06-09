@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.Ticket
     public class GetTicketDto : TicketDto
     {
         public int IdTicket { get; set; }
+        public string Numero { get; set; } = null!;
         public GetTransporteDto? Transporte { get; set; }
         public GetConductorDto? Conductor { get; set; }
         public GetVehiculoDto? Vehiculo { get; set; }

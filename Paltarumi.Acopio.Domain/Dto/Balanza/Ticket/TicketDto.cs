@@ -3,7 +3,6 @@
     public class TicketDto
     {
         public int IdLote { get; set; }
-        public string Numero { get; set; } = null!;
         public DateTime FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
         public DateTime? FechaSalida { get; set; }
@@ -26,9 +25,5 @@
         public int IdTipoMaterial { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
-        public int IdUsuarioCreate { get; set; }
-        public DateTime CreateDate { get; set; }
-        public int? IdUsuarioUpdate { get; set; }
-        public DateTime? UpdateDate { get; set; }
     }
 }
