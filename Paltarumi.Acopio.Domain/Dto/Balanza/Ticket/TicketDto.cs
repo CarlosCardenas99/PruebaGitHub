@@ -3,7 +3,6 @@
     public class TicketDto
     {
         public int IdLote { get; set; }
-        public string Numero { get; set; } = null!;
         public DateTime FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
         public DateTime? FechaSalida { get; set; }
