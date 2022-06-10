@@ -42,6 +42,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                     var provincia = result.sunatVo.provincia ?? string.Empty;
                     var distrito = result.sunatVo.distrito ?? string.Empty;
 
+
                     var ubigeo = await _ubigeoRepository.GetByAsync(x =>
                        string.Equals(x.Departamento.ToLower(), departamento.ToLower()) &&
                        string.Equals(x.Provincia.ToLower(), provincia.ToLower()) &&

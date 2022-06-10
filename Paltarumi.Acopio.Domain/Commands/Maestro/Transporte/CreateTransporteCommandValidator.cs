@@ -25,6 +25,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
         {
             var exists = await _repositoryBase.FindAll().Where(x => x.Ruc == createDto.Ruc && x.Activo == true).AnyAsync(cancellationToken);
             if (exists) return CustomValidationMessage(context, Resources.Common.DuplicateRucRecord);
+
             return true;
         }
     }
