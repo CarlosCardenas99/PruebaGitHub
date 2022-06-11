@@ -41,8 +41,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources\Balanza\LeyesReferenciales.Designer.cs">
-      <DependentUpon>LeyesReferenciales.resx</DependentUpon>
+    <Compile Update="Resources\Balanza\LeyReferencial.Designer.cs">
+      <DependentUpon>LeyReferencial.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -112,8 +112,8 @@
       <LastGenOutput>LoteCodigo.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Balanza\LeyesReferenciales.resx">
-      <LastGenOutput>LeyesReferenciales.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\Balanza\LeyReferencial.resx">
+      <LastGenOutput>LeyReferencial.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Ticket.resx">

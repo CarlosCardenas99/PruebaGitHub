@@ -10,6 +10,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Balanza
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetLoteCodigoDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListLoteCodigoDto>>> List();
-        Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<LoteCodigoFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<SearchLoteCodigoFilterDto> searchParams);
     }
 }

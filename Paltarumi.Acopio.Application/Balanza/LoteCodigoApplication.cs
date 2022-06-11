@@ -30,7 +30,7 @@ namespace Paltarumi.Acopio.Application.Balanza
         public async Task<ResponseDto<IEnumerable<ListLoteCodigoDto>>> List()
             => await _mediator.Send(new ListLoteCodigoQuery());
 
-        public async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<LoteCodigoFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<SearchLoteCodigoFilterDto> searchParams)
             => await _mediator.Send(new SearchLoteCodigoQuery(searchParams));
     }
 }

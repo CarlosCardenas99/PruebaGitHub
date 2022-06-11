@@ -4,9 +4,9 @@ using Paltarumi.Acopio.Domain.Queries.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
 {
-    public class SearchLoteCodigoQuery : SearchQueryBase<LoteCodigoFilterDto, SearchLoteCodigoDto>
+    public class SearchLoteCodigoQuery : SearchQueryBase<SearchLoteCodigoFilterDto, SearchLoteCodigoDto>
     {
-        public SearchLoteCodigoQuery(SearchParamsDto<LoteCodigoFilterDto> searchParams) : base(searchParams)
+        public SearchLoteCodigoQuery(SearchParamsDto<SearchLoteCodigoFilterDto> searchParams) : base(searchParams)
         {
 
         }
