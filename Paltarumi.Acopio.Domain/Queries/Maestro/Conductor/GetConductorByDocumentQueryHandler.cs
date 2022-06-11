@@ -54,7 +54,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
                     List<ApplicationMessageDto> lisMsg = new List<ApplicationMessageDto>();
                     ApplicationMessageDto msg = new ApplicationMessageDto();
                     msg.MessageType = ApplicationMessageType.Error;
-                    msg.Message = result.response.responseMessage;
+                    msg.Message = result?.response.responseMessage;
                     msg.Key = "Error";
                     lisMsg.Add(msg);
                     response.Messages = lisMsg;

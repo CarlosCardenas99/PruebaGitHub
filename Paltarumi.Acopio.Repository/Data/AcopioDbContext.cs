@@ -28,6 +28,7 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<JapBlackList> JapBlackLists { get; set; } = null!;
         public virtual DbSet<LeyReferencial> LeyReferencials { get; set; } = null!;
         public virtual DbSet<Lote> Lotes { get; set; } = null!;
+        public virtual DbSet<LoteCheckList> LoteCheckLists { get; set; } = null!;
         public virtual DbSet<LoteCodigo> LoteCodigos { get; set; } = null!;
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
@@ -45,6 +46,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,69 +56,28 @@ namespace Paltarumi.Acopio.Repository.Data
             modelBuilder.Entity<CheckList>(entity =>
             {
                 entity.HasKey(e => e.IdCheckList)
-                    .HasName("PK_balanza_CheckList_idCheckList");
+                    .HasName("PK_maestro_CheckList_idCheckList");
 
-                entity.ToTable("CheckList", "balanza");
+                entity.ToTable("CheckList", "maestro");
 
                 entity.Property(e => e.IdCheckList).HasColumnName("idCheckList");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.Adjunto)
-                    .HasMaxLength(400)
+                entity.Property(e => e.Concepto)
+                    .HasMaxLength(200)
                     .IsUnicode(false)
-                    .HasColumnName("adjunto");
+                    .HasColumnName("concepto");
 
-                entity.Property(e => e.IdCheckListConcepto).HasColumnName("idCheckListConcepto");
+                entity.Property(e => e.IdModulo).HasColumnName("idModulo");
 
-                entity.Property(e => e.IdEstadoChecklist).HasColumnName("idEstadoChecklist");
+                entity.Property(e => e.Mandatorio).HasColumnName("mandatorio");
 
-                entity.Property(e => e.IdLote).HasColumnName("idLote");
-
-                entity.Property(e => e.IdModuloOrigen).HasColumnName("idModuloOrigen");
-
-                entity.Property(e => e.NumeroDocumento)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("numeroDocumento");
-
-                entity.Property(e => e.ObservacionBalanza)
-                    .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("observacionBalanza");
-
-                entity.Property(e => e.ObservacionComercial)
-                    .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("observacionComercial");
-
-                entity.Property(e => e.VbComercial).HasColumnName("vbComercial");
-
-                entity.Property(e => e.Verificar).HasColumnName("verificar");
-
-                entity.HasOne(d => d.IdCheckListConceptoNavigation)
-                    .WithMany(p => p.CheckListIdCheckListConceptoNavigations)
-                    .HasForeignKey(d => d.IdCheckListConcepto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_balanza_CheckList_idCheckListConcepto");
-
-                entity.HasOne(d => d.IdEstadoChecklistNavigation)
-                    .WithMany(p => p.CheckListIdEstadoChecklistNavigations)
-                    .HasForeignKey(d => d.IdEstadoChecklist)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_balanza_CheckList_idEstadoChecklist");
-
-                entity.HasOne(d => d.IdLoteNavigation)
+                entity.HasOne(d => d.IdModuloNavigation)
                     .WithMany(p => p.CheckLists)
-                    .HasForeignKey(d => d.IdLote)
+                    .HasForeignKey(d => d.IdModulo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_balanza_CheckList_idLote");
-
-                entity.HasOne(d => d.IdModuloOrigenNavigation)
-                    .WithMany(p => p.CheckListIdModuloOrigenNavigations)
-                    .HasForeignKey(d => d.IdModuloOrigen)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_balanza_CheckList_idModuloOrigen");
+                    .HasConstraintName("FK_maestro_CheckList_idModulo");
             });
 
             modelBuilder.Entity<Concesion>(entity =>
@@ -626,6 +587,59 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasForeignKey(d => d.IdProveedor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_lote_idProveedor");
+            });
+
+            modelBuilder.Entity<LoteCheckList>(entity =>
+            {
+                entity.HasKey(e => e.IdLoteCheckList)
+                    .HasName("PK_balanza_LoteCheckList_idLoteCheckList");
+
+                entity.ToTable("LoteCheckList", "balanza");
+
+                entity.Property(e => e.IdLoteCheckList).HasColumnName("idLoteCheckList");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.Adjunto)
+                    .HasMaxLength(400)
+                    .IsUnicode(false)
+                    .HasColumnName("adjunto");
+
+                entity.Property(e => e.Habilitado).HasColumnName("habilitado");
+
+                entity.Property(e => e.IdCheckList).HasColumnName("idCheckList");
+
+                entity.Property(e => e.IdCheckListEstado).HasColumnName("idCheckListEstado");
+
+                entity.Property(e => e.IdLote).HasColumnName("idLote");
+
+                entity.Property(e => e.NumeroDocumento)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("numeroDocumento");
+
+                entity.Property(e => e.Observacion)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("observacion");
+
+                entity.HasOne(d => d.IdCheckListNavigation)
+                    .WithMany(p => p.LoteCheckLists)
+                    .HasForeignKey(d => d.IdCheckList)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_balanza_LoteCheckList_idCheckList");
+
+                entity.HasOne(d => d.IdCheckListEstadoNavigation)
+                    .WithMany(p => p.LoteCheckLists)
+                    .HasForeignKey(d => d.IdCheckListEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_balanza_LoteCheckList_idChecklistEstado");
+
+                entity.HasOne(d => d.IdLoteNavigation)
+                    .WithMany(p => p.LoteCheckLists)
+                    .HasForeignKey(d => d.IdLote)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_balanza_LoteCheckList_idLote");
             });
 
             modelBuilder.Entity<LoteCodigo>(entity =>

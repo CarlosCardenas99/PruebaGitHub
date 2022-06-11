@@ -33,8 +33,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
 
             if (leyreferencial != null && leyreferencialDto != null)
             {
-                leyreferencialDto.DuenoMuestra = leyreferencial.IdDuenoMuestraNavigation == null ? null : _mapper.Map<GetDuenoMuestraDto>(leyreferencial.IdDuenoMuestraNavigation);
-                leyreferencialDto.TipoMineral = leyreferencial.IdTipoMineralNavigation == null ? null : _mapper.Map<GetMaestroDto>(leyreferencial.IdTipoMineralNavigation);
+                leyreferencialDto.DuenoMuestra = leyreferencial.IdDuenoMuestraNavigation == null ? null : _mapper?.Map<GetDuenoMuestraDto>(leyreferencial.IdDuenoMuestraNavigation);
+                leyreferencialDto.TipoMineral = leyreferencial.IdTipoMineralNavigation == null ? null : _mapper?.Map<GetMaestroDto>(leyreferencial.IdTipoMineralNavigation);
                 response.UpdateData(leyreferencialDto);
             }
 
