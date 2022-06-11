@@ -10,6 +10,7 @@ namespace Paltarumi.Acopio.Entity
             Conductors = new HashSet<Conductor>();
             Proveedors = new HashSet<Proveedor>();
             Transportes = new HashSet<Transporte>();
+            Transportista = new HashSet<Transportistum>();
         }
 
         public string CodigoUbigeo { get; set; } = null!;
@@ -21,5 +22,6 @@ namespace Paltarumi.Acopio.Entity
         public virtual ICollection<Conductor> Conductors { get; set; }
         public virtual ICollection<Proveedor> Proveedors { get; set; }
         public virtual ICollection<Transporte> Transportes { get; set; }
+        public virtual ICollection<Transportistum> Transportista { get; set; }
     }
 }

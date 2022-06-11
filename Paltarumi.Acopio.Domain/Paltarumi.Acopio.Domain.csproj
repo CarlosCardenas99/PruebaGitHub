@@ -31,6 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Balanza\Recodificacion.Designer.cs">
+      <DependentUpon>Recodificacion.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Balanza\Maestro.Designer.cs">
       <DependentUpon>Maestro.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -114,6 +119,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Balanza\Recodificacion.resx">
+      <LastGenOutput>Recodificacion.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Maestro.resx">
       <LastGenOutput>Maestro.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
