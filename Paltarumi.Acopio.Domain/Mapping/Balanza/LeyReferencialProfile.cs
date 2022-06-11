@@ -20,6 +20,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.LeyReferencial, SearchLeyReferencialDto>()
+                .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdDuenoMuestraNavigation.IdProveedorNavigation != null ? x.IdDuenoMuestraNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ForMember(x => x.DuenoMuestra, opt => opt.MapFrom(x => x.IdDuenoMuestraNavigation != null ? x.IdDuenoMuestraNavigation.Nombres : string.Empty))
                 .ForMember(x => x.TipoMineral, opt => opt.MapFrom(x => x.IdTipoMineralNavigation != null ? x.IdTipoMineralNavigation.Descripcion : string.Empty))
                 .ReverseMap();
