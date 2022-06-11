@@ -10,6 +10,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetDuenoMuestraDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListDuenoMuestraDto>>> List();
+        Task<ResponseDto<GetDuenoMuestraDto>> GetByDocument(GetDuenoMuestraByDocumentFilterDto filter);
         Task<ResponseDto<SearchResultDto<SearchDuenoMuestraDto>>> Search(SearchParamsDto<SearchDuenoMuestraFilterDto> searchParams);
     }
 }

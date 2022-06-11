@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Entity
     {
         public Lote()
         {
+            CheckLists = new HashSet<CheckList>();
             Tickets = new HashSet<Ticket>();
         }
 
@@ -45,6 +46,7 @@ namespace Paltarumi.Acopio.Entity
         public virtual Maestro IdEstadoNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTipoMaterialNavigation { get; set; } = null!;
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
+        public virtual ICollection<CheckList> CheckLists { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

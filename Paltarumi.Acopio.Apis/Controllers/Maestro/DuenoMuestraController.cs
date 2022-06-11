@@ -34,6 +34,10 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<IEnumerable<ListDuenoMuestraDto>>> List()
             => await _duenomuestraApplication.List();
 
+        [HttpPost("findbydocument")]
+        public async Task<ResponseDto<GetDuenoMuestraDto>> GetByDocument(GetDuenoMuestraByDocumentFilterDto filter)
+            => await _duenomuestraApplication.GetByDocument(filter);
+
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchDuenoMuestraDto>>> Search(SearchParamsDto<SearchDuenoMuestraFilterDto> searchParams)
             => await _duenomuestraApplication.Search(searchParams);
