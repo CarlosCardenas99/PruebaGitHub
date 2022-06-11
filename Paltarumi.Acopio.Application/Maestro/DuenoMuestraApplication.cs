@@ -32,5 +32,8 @@ namespace Paltarumi.Acopio.Application.Maestro
 
         public async Task<ResponseDto<SearchResultDto<SearchDuenoMuestraDto>>> Search(SearchParamsDto<SearchDuenoMuestraFilterDto> searchParams)
             => await _mediator.Send(new SearchDuenoMuestraQuery(searchParams));
+
+        public async Task<ResponseDto<GetDuenoMuestraDto>> GetByDocument(GetDuenoMuestraByDocumentFilterDto filter)
+            => await _mediator.Send(new GetDuenoMuestraByDocumentQuery(filter));
     }
 }
