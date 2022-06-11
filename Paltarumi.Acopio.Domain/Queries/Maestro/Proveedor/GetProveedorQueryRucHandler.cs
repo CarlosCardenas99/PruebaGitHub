@@ -48,7 +48,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                     await _proveedorRepository.AddAsync(proveedor);
                     await _proveedorRepository.SaveAsync();
                     proveedorDto = _mapper?.Map<GetProveedorDto>(proveedor);
-                    response.UpdateData(proveedorDto);
+                    if( proveedorDto != null ) response.UpdateData(proveedorDto);
                 }
                 else
                 {

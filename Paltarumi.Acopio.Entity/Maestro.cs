@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Entity
     {
         public Maestro()
         {
+            LeyReferencials = new HashSet<LeyReferencial>();
             LoteIdEstadoNavigations = new HashSet<Lote>();
             LoteIdEstadoTipoMaterialNavigations = new HashSet<Lote>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
@@ -22,6 +23,7 @@ namespace Paltarumi.Acopio.Entity
         public string Descripcion { get; set; } = null!;
         public bool Activo { get; set; }
 
+        public virtual ICollection<LeyReferencial> LeyReferencials { get; set; }
         public virtual ICollection<Lote> LoteIdEstadoNavigations { get; set; }
         public virtual ICollection<Lote> LoteIdEstadoTipoMaterialNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }

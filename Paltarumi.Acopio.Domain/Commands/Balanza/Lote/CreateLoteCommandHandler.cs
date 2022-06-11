@@ -90,7 +90,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Lote
                 lote.UpdateTms100();
                 lote.UpdateTmsBase();
                 lote.UpdateNumeroTickets();
-                lote.IdEstado = estadoLote.IdMaestro;
+                if ( estadoLote != null ) lote.IdEstado = estadoLote.IdMaestro;
 
                 await _loteRepository.AddAsync(lote);
                 await _loteRepository.SaveAsync();

@@ -28,17 +28,33 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
 
             var filters = request.SearchParams?.Filter;
 
-            if (filters?.IdLeyReferencial.HasValue == true)
-                filter = filter.And(x => x.IdLeyReferencial == filters.IdLeyReferencial.Value);
+            if (filters?.FechaDesde.HasValue == true || filters?.FechaHasta.HasValue == true)
+            {
+                if (filters?.FechaDesde.HasValue == true)
+                {
+                    var fechaDesde = filters.FechaDesde.Value.Date;
+                    filter = filter.And(x => (x.FechaRecepcion >= fechaDesde || x.FechaRecepcion >= fechaDesde));
+                }
 
-            if (filters?.Activo.HasValue == true)
-                filter = filter.And(x => x.Activo == filters.Activo.Value);
+                if (filters?.FechaHasta.HasValue == true)
+                {
+                    var fechaDesde = filters.FechaHasta.Value.Date.AddDays(1);
+                    filter = filter.And(x => (x.FechaRecepcion < fechaDesde || x.FechaRecepcion < fechaDesde));
+                }
+            }
+            filter = filter.And(x => x.Activo == true);
+
+            if ( !string.IsNullOrEmpty(filters?.Dueno) )
+                filter = filter.And(x => x.IdDuenoMuestraNavigation.RazonSocial.Contains(filters.Dueno));
 
             var leyreferencials = await _leyreferencialRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
-                filter
+                filter,
+                x => x.IdDuenoMuestraNavigation,
+                x => x.IdProveedorNavigation,
+                x => x.IdTipoMineralNavigation
             );
 
             var leyreferencialDtos = _mapper?.Map<IEnumerable<SearchLeyReferencialDto>>(leyreferencials.Items);
