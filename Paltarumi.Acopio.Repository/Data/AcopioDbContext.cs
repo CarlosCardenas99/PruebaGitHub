@@ -27,6 +27,7 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<JapBlackList> JapBlackLists { get; set; } = null!;
         public virtual DbSet<LeyesReferenciale> LeyesReferenciales { get; set; } = null!;
         public virtual DbSet<Lote> Lotes { get; set; } = null!;
+        public virtual DbSet<LoteCodigo> LoteCodigos { get; set; } = null!;
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<ModuloUsuario> ModuloUsuarios { get; set; } = null!;
@@ -49,6 +50,8 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("Modern_Spanish_CI_AS");
+
             modelBuilder.Entity<CheckList>(entity =>
             {
                 entity.HasKey(e => e.IdCheckList)
@@ -506,6 +509,36 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasForeignKey(d => d.IdProveedor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_lote_idProveedor");
+            });
+
+            modelBuilder.Entity<LoteCodigo>(entity =>
+            {
+                entity.HasKey(e => e.IdLoteCodigo)
+                    .HasName("PK_balanza_LoteCodigo_idLoteCodigo");
+
+                entity.ToTable("LoteCodigo", "balanza");
+
+                entity.Property(e => e.IdLoteCodigo).HasColumnName("idLoteCodigo");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.Fecha)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fecha");
+
+                entity.Property(e => e.IdEstado).HasColumnName("idEstado");
+
+                entity.Property(e => e.IdLote).HasColumnName("idLote");
+
+                entity.Property(e => e.LoteCodigo1)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("loteCodigo");
+
+                entity.Property(e => e.LoteCodigoHash)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("loteCodigoHash");
             });
 
             modelBuilder.Entity<Maestro>(entity =>
