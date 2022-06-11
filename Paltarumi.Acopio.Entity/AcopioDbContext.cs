@@ -25,7 +25,7 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
         public virtual DbSet<Humedad> Humedads { get; set; } = null!;
         public virtual DbSet<JapBlackList> JapBlackLists { get; set; } = null!;
-        public virtual DbSet<LeyesReferenciale> LeyesReferenciales { get; set; } = null!;
+        public virtual DbSet<LeyReferencial> LeyReferencials { get; set; } = null!;
         public virtual DbSet<Lote> Lotes { get; set; } = null!;
         public virtual DbSet<LoteCodigo> LoteCodigos { get; set; } = null!;
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
@@ -34,7 +34,6 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<Muestreo> Muestreos { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
         public virtual DbSet<ProveedorConcesion> ProveedorConcesions { get; set; } = null!;
-        public virtual DbSet<Recodificacion> Recodificacions { get; set; } = null!;
         public virtual DbSet<SystemDataType> SystemDataTypes { get; set; } = null!;
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; } = null!;
@@ -45,7 +44,11 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=192.168.0.2;Initial Catalog=AcopioQA;User ID=sa;Password=@SistemaAcopio1;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -351,14 +354,14 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("objectType");
             });
 
-            modelBuilder.Entity<LeyesReferenciale>(entity =>
+            modelBuilder.Entity<LeyReferencial>(entity =>
             {
-                entity.HasKey(e => e.IdLeyesReferenciales)
-                    .HasName("PK_balanza_LeyesReferenciales_idLeyesReferenciales");
+                entity.HasKey(e => e.IdLeyReferencial)
+                    .HasName("PK_balanza_LeyReferencial_idLeyReferencial");
 
-                entity.ToTable("LeyesReferenciales", "balanza");
+                entity.ToTable("LeyReferencial", "balanza");
 
-                entity.Property(e => e.IdLeyesReferenciales).HasColumnName("idLeyesReferenciales");
+                entity.Property(e => e.IdLeyReferencial).HasColumnName("idLeyReferencial");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
@@ -722,39 +725,6 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasForeignKey(d => d.IdProveedor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_maestro_ProveedorConcesionr_idProveedor");
-            });
-
-            modelBuilder.Entity<Recodificacion>(entity =>
-            {
-                entity.HasKey(e => e.IdRecodificacion)
-                    .HasName("PK_balanza_Recodificacion_idRecodificacion");
-
-                entity.ToTable("Recodificacion", "balanza");
-
-                entity.Property(e => e.IdRecodificacion).HasColumnName("idRecodificacion");
-
-                entity.Property(e => e.Activo).HasColumnName("activo");
-
-                entity.Property(e => e.Codigo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("codigo");
-
-                entity.Property(e => e.CodigoLaboratorio)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("codigoLaboratorio");
-
-                entity.Property(e => e.FechaRecodificacion)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechaRecodificacion");
-
-                entity.Property(e => e.HoraRecodificacion)
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasColumnName("horaRecodificacion");
-
-                entity.Property(e => e.IdLote).HasColumnName("idLote");
             });
 
             modelBuilder.Entity<SystemDataType>(entity =>
