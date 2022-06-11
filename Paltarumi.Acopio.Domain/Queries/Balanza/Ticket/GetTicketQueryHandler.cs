@@ -46,8 +46,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 ticketDto.EstadoTmh = _mapper?.Map<GetMaestroDto>(ticket.IdEstadoTmhNavigation);
                 ticketDto.UnidadMedida = _mapper?.Map<GetMaestroDto>(ticket.IdUnidadMedidaNavigation);
                 ticketDto.Vehiculo = _mapper?.Map<GetVehiculoDto>(ticket.IdVehiculoNavigation);
-                ticketDto.Vehiculo.Marca = _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdVehiculoMarcaNavigation);
-                ticketDto.Vehiculo.TipoVehiculo = _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdTipoVehiculoNavigation);
+                if ( ticketDto.Vehiculo != null ) ticketDto.Vehiculo.Marca = ticket.IdVehiculoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdVehiculoMarcaNavigation);
+                if ( ticketDto.Vehiculo != null) ticketDto.Vehiculo.TipoVehiculo = ticket.IdVehiculoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdTipoVehiculoNavigation);
                 ticketDto.TipoMineral = _mapper?.Map<GetMaestroDto>(ticket.IdTipoMineralNavigation);
                 response.UpdateData(ticketDto);
             }

@@ -8,10 +8,10 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.Lote
     public class GetLoteDto: LoteDto
     {
         public int IdLote { get; set; }
-        public GetConcesionDto Concesion { get; set; }
-        public GetMaestroDto EstadoTipoMaterial { get; set; }
-        public GetProveedorDto Proveedor { get; set; }
-        public GetMaestroDto Estado { get; set; }
+        public GetConcesionDto? Concesion { get; set; }
+        public GetMaestroDto? EstadoTipoMaterial { get; set; }
+        public GetProveedorDto? Proveedor { get; set; }
+        public GetMaestroDto? Estado { get; set; }
         public bool Activo { get; set; }
         public IEnumerable<ListTicketDto>? TicketDetails { get; set; }
     }

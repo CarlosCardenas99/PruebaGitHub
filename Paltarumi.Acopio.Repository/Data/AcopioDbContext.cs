@@ -22,10 +22,11 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<Conductor> Conductors { get; set; } = null!;
         public virtual DbSet<Correlativo> Correlativos { get; set; } = null!;
         public virtual DbSet<CorrelativoTipo> CorrelativoTipos { get; set; } = null!;
+        public virtual DbSet<DuenoMuestra> DuenoMuestras { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
         public virtual DbSet<Humedad> Humedads { get; set; } = null!;
         public virtual DbSet<JapBlackList> JapBlackLists { get; set; } = null!;
-        public virtual DbSet<LeyesReferenciale> LeyesReferenciales { get; set; } = null!;
+        public virtual DbSet<LeyReferencial> LeyReferencials { get; set; } = null!;
         public virtual DbSet<Lote> Lotes { get; set; } = null!;
         public virtual DbSet<LoteCodigo> LoteCodigos { get; set; } = null!;
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
@@ -34,7 +35,6 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<Muestreo> Muestreos { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
         public virtual DbSet<ProveedorConcesion> ProveedorConcesions { get; set; } = null!;
-        public virtual DbSet<Recodificacion> Recodificacions { get; set; } = null!;
         public virtual DbSet<SystemDataType> SystemDataTypes { get; set; } = null!;
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; } = null!;
@@ -227,6 +227,56 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("nombre");
             });
 
+            modelBuilder.Entity<DuenoMuestra>(entity =>
+            {
+                entity.HasKey(e => e.IdDuenoMuestra)
+                    .HasName("PK_maestro_DuenoMuestra_idDuenoMuestra");
+
+                entity.ToTable("DuenoMuestra", "maestro");
+
+                entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CodigoUbigeo)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoUbigeo")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Direccion)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("direccion");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
+
+                entity.Property(e => e.RazonSocial)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("razonSocial");
+
+                entity.Property(e => e.Ruc)
+                    .HasMaxLength(11)
+                    .IsUnicode(false)
+                    .HasColumnName("ruc");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(12)
+                    .IsUnicode(false)
+                    .HasColumnName("telefono");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany(p => p.DuenoMuestras)
+                    .HasForeignKey(d => d.IdProveedor)
+                    .HasConstraintName("FK_maestro_DuenoMuestra_idProveedor");
+            });
+
             modelBuilder.Entity<Empresa>(entity =>
             {
                 entity.HasKey(e => e.IdEmpresa)
@@ -351,34 +401,62 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("objectType");
             });
 
-            modelBuilder.Entity<LeyesReferenciale>(entity =>
+            modelBuilder.Entity<LeyReferencial>(entity =>
             {
-                entity.HasKey(e => e.IdLeyesReferenciales)
-                    .HasName("PK_balanza_LeyesReferenciales_idLeyesReferenciales");
+                entity.HasKey(e => e.IdLeyReferencial)
+                    .HasName("PK_balanza_LeyReferencial_idLeyReferencial");
 
-                entity.ToTable("LeyesReferenciales", "balanza");
+                entity.ToTable("LeyReferencial", "balanza");
 
-                entity.Property(e => e.IdLeyesReferenciales).HasColumnName("idLeyesReferenciales");
+                entity.Property(e => e.IdLeyReferencial).HasColumnName("idLeyReferencial");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.Codigo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("codigo");
-
                 entity.Property(e => e.CodigoLaboratorio).HasColumnName("codigoLaboratorio");
 
-                entity.Property(e => e.CodigoMuestra)
+                entity.Property(e => e.CodigoMuestraProveedor)
                     .HasMaxLength(100)
                     .IsUnicode(false)
-                    .HasColumnName("codigoMuestra");
+                    .HasColumnName("codigoMuestraProveedor");
+
+                entity.Property(e => e.CodigoPlanta)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoPlanta");
+
+                entity.Property(e => e.Consumos).HasColumnName("consumos");
 
                 entity.Property(e => e.FechaRecepcion)
                     .HasColumnType("datetime")
                     .HasColumnName("fechaRecepcion");
 
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
+
+                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
+
+                entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
+
+                entity.Property(e => e.LeyAg).HasColumnName("leyAg");
+
+                entity.Property(e => e.LeyAu).HasColumnName("leyAu");
+
+                entity.Property(e => e.PorcentajeRecuperacion).HasColumnName("porcentajeRecuperacion");
+
+                entity.HasOne(d => d.IdDuenoMuestraNavigation)
+                    .WithMany(p => p.LeyReferencials)
+                    .HasForeignKey(d => d.IdDuenoMuestra)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_balanza_LeyReferencial_idDuenoMuestra");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany(p => p.LeyReferencials)
+                    .HasForeignKey(d => d.IdProveedor)
+                    .HasConstraintName("FK_balanza_LeyReferencial_idProveedor");
+
+                entity.HasOne(d => d.IdTipoMineralNavigation)
+                    .WithMany(p => p.LeyReferencials)
+                    .HasForeignKey(d => d.IdTipoMineral)
+                    .HasConstraintName("FK_balanza_LeyReferencial_idTipoMineral");
             });
 
             modelBuilder.Entity<Lote>(entity =>
@@ -722,39 +800,6 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasForeignKey(d => d.IdProveedor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_maestro_ProveedorConcesionr_idProveedor");
-            });
-
-            modelBuilder.Entity<Recodificacion>(entity =>
-            {
-                entity.HasKey(e => e.IdRecodificacion)
-                    .HasName("PK_balanza_Recodificacion_idRecodificacion");
-
-                entity.ToTable("Recodificacion", "balanza");
-
-                entity.Property(e => e.IdRecodificacion).HasColumnName("idRecodificacion");
-
-                entity.Property(e => e.Activo).HasColumnName("activo");
-
-                entity.Property(e => e.Codigo)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("codigo");
-
-                entity.Property(e => e.CodigoLaboratorio)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("codigoLaboratorio");
-
-                entity.Property(e => e.FechaRecodificacion)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechaRecodificacion");
-
-                entity.Property(e => e.HoraRecodificacion)
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasColumnName("horaRecodificacion");
-
-                entity.Property(e => e.IdLote).HasColumnName("idLote");
             });
 
             modelBuilder.Entity<SystemDataType>(entity =>

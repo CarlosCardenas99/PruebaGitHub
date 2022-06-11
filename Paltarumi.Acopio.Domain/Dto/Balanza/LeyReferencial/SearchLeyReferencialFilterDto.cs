@@ -2,7 +2,8 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial
 {
     public class SearchLeyReferencialFilterDto
     {
-        public int? IdLeyReferencial { get; set; }
-        public bool? Activo { get; set; }
+        public DateTime? FechaDesde { get; set; }
+        public DateTime? FechaHasta { get; set; }
+        public string? Dueno { get; set; }
     }
 }
