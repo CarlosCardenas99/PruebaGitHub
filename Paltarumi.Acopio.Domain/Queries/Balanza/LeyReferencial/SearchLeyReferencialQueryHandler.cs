@@ -45,7 +45,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
             filter = filter.And(x => x.Activo == true);
 
             if ( !string.IsNullOrEmpty(filters?.Dueno) )
-                filter = filter.And(x => x.IdDuenoMuestraNavigation.RazonSocial.Contains(filters.Dueno));
+                filter = filter.And(x => x.IdDuenoMuestraNavigation.Nombres.Contains(filters.Dueno));
 
             var leyreferencials = await _leyreferencialRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
@@ -53,7 +53,6 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
                 null,
                 filter,
                 x => x.IdDuenoMuestraNavigation,
-                x => x.IdProveedorNavigation,
                 x => x.IdTipoMineralNavigation
             );
 

@@ -12,8 +12,9 @@ namespace Paltarumi.Acopio.Entity
 
         public int IdDuenoMuestra { get; set; }
         public int? IdProveedor { get; set; }
-        public string Ruc { get; set; } = null!;
-        public string RazonSocial { get; set; } = null!;
+        public string CodigoTipoDocumento { get; set; } = null!;
+        public string Numero { get; set; } = null!;
+        public string Nombres { get; set; } = null!;
         public string? CodigoUbigeo { get; set; }
         public string Direccion { get; set; } = null!;
         public string Telefono { get; set; } = null!;
