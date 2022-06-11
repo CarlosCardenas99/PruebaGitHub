@@ -17,7 +17,7 @@ namespace Paltarumi.Acopio.Entity.Extensions
             => lote.Transportistas = string.Join(",", transportistas.Select(x => x.RazonSocial));
 
         public static void UpdateConductores(this Lote lote, IEnumerable<Conductor> conductores)
-            => lote.Conductores = string.Join(",", conductores.Select(x => x.RazonSocial));
+            => lote.Conductores = string.Join(",", conductores.Select(x => x.Nombres));
 
         public static void UpdateCantidadSacos(this Lote lote)
             => lote.CantidadSacos = lote?.Tickets?.Count(x => x.IdUnidadMedida == Constants.Maestro.UnidadMedida.SACOS).ToString() ?? String.Empty;

@@ -145,15 +145,15 @@ namespace Paltarumi.Acopio.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("licencia");
 
+                entity.Property(e => e.Nombres)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("nombres");
+
                 entity.Property(e => e.Numero)
                     .HasMaxLength(30)
                     .IsUnicode(false)
                     .HasColumnName("numero");
-
-                entity.Property(e => e.RazonSocial)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("razonSocial");
 
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(12)
@@ -238,6 +238,12 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
+                entity.Property(e => e.CodigoTipoDocumento)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoTipoDocumento")
+                    .IsFixedLength();
+
                 entity.Property(e => e.CodigoUbigeo)
                     .HasMaxLength(6)
                     .IsUnicode(false)
@@ -256,15 +262,15 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
-                entity.Property(e => e.RazonSocial)
+                entity.Property(e => e.Nombres)
                     .HasMaxLength(100)
                     .IsUnicode(false)
-                    .HasColumnName("razonSocial");
+                    .HasColumnName("nombres");
 
-                entity.Property(e => e.Ruc)
-                    .HasMaxLength(11)
+                entity.Property(e => e.Numero)
+                    .HasMaxLength(30)
                     .IsUnicode(false)
-                    .HasColumnName("ruc");
+                    .HasColumnName("numero");
 
                 entity.Property(e => e.Telefono)
                     .HasMaxLength(12)
@@ -412,7 +418,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.CodigoLaboratorio).HasColumnName("codigoLaboratorio");
+                entity.Property(e => e.CodigoHash).HasColumnName("codigoHash");
 
                 entity.Property(e => e.CodigoMuestraProveedor)
                     .HasMaxLength(100)
@@ -424,7 +430,13 @@ namespace Paltarumi.Acopio.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("codigoPlanta");
 
-                entity.Property(e => e.Consumos).HasColumnName("consumos");
+                entity.Property(e => e.EnsayoConsumo).HasColumnName("ensayoConsumo");
+
+                entity.Property(e => e.EnsayoLeyAg).HasColumnName("ensayoLeyAg");
+
+                entity.Property(e => e.EnsayoLeyAu).HasColumnName("ensayoLeyAu");
+
+                entity.Property(e => e.EnsayoPorcentajeRecuperacion).HasColumnName("ensayoPorcentajeRecuperacion");
 
                 entity.Property(e => e.FechaRecepcion)
                     .HasColumnType("datetime")
@@ -432,26 +444,13 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
-                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
-
                 entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
-
-                entity.Property(e => e.LeyAg).HasColumnName("leyAg");
-
-                entity.Property(e => e.LeyAu).HasColumnName("leyAu");
-
-                entity.Property(e => e.PorcentajeRecuperacion).HasColumnName("porcentajeRecuperacion");
 
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
                     .WithMany(p => p.LeyReferencials)
                     .HasForeignKey(d => d.IdDuenoMuestra)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_balanza_LeyReferencial_idDuenoMuestra");
-
-                entity.HasOne(d => d.IdProveedorNavigation)
-                    .WithMany(p => p.LeyReferencials)
-                    .HasForeignKey(d => d.IdProveedor)
-                    .HasConstraintName("FK_balanza_LeyReferencial_idProveedor");
 
                 entity.HasOne(d => d.IdTipoMineralNavigation)
                     .WithMany(p => p.LeyReferencials)

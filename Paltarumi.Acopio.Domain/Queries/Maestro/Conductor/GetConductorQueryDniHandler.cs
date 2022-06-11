@@ -62,7 +62,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             Entity.Conductor conductor = new Entity.Conductor();
             conductor.IdConductor = 0;
             conductor.Numero = sunatVo.ruc;
-            conductor.RazonSocial = sunatVo.razonSocial;
+            conductor.Nombres = sunatVo.razonSocial;
             conductor.CodigoTipoDocumento = Constants.TipoDocumento.DNI;
             conductor.CodigoUbigeo = null;
             conductor.Licencia = String.Empty;
