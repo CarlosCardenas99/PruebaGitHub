@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Entity
         public TipoDocumento()
         {
             Conductors = new HashSet<Conductor>();
+            Transportista = new HashSet<Transportistum>();
         }
 
         public string CodigoTipoDocumento { get; set; } = null!;
@@ -16,5 +17,6 @@ namespace Paltarumi.Acopio.Entity
         public bool Activo { get; set; }
 
         public virtual ICollection<Conductor> Conductors { get; set; }
+        public virtual ICollection<Transportistum> Transportista { get; set; }
     }
 }
