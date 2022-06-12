@@ -69,18 +69,23 @@ namespace Paltarumi.Acopio.Domain.Commands.Security.User
 
         public async Task SendCreationEmail(CreateUserCommand request)
         {
-            var emailBody = Resources.Security.User.CreateUserEmailBody;
+            var sendMail = _configuration.GetValue<bool>("SignInOptions:SendMailOnSignUp");
 
-            emailBody = emailBody.Replace("{APLICACION}", _configuration.GetValue<string>("ApiOptions:Name"));
-            emailBody = emailBody.Replace("{USER}", request.CreateDto.UserName);
-            emailBody = emailBody.Replace("{PASSWORD}", request.CreateDto.Password);
+            if(sendMail)
+            {
+                var emailBody = Resources.Security.User.CreateUserEmailBody;
 
-            await _emailClient.SendEmailAsync(
-                request.CreateDto?.Email ?? string.Empty,
-                Resources.Security.User.CreateUserEmailSubject,
-                emailBody,
-                true
-            );
+                emailBody = emailBody.Replace("{APLICACION}", _configuration.GetValue<string>("ApiOptions:Name"));
+                emailBody = emailBody.Replace("{USER}", request.CreateDto.UserName);
+                emailBody = emailBody.Replace("{PASSWORD}", request.CreateDto.Password);
+
+                await _emailClient.SendEmailAsync(
+                    request.CreateDto?.Email ?? string.Empty,
+                    Resources.Security.User.CreateUserEmailSubject,
+                    emailBody,
+                    true
+                );
+            }
         }
     }
 }
