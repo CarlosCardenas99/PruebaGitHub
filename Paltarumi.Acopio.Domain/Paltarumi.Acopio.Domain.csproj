@@ -24,6 +24,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Scrutor" Version="4.1.0" />
+    <PackageReference Include="Telerik.Reporting.Trial" Version="16.1.22.511" />
   </ItemGroup>
 
   <ItemGroup>

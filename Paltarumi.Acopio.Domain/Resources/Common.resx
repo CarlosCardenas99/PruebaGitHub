@@ -171,6 +171,12 @@
   <data name="PageSizeFieldMinValue" xml:space="preserve">
     <value>El tamaño de página debe ser mayor a 0</value>
   </data>
+  <data name="ReportExportError" xml:space="preserve">
+    <value>Ocurrió un error exportando el reporte</value>
+  </data>
+  <data name="ReportFileDoesNotExist" xml:space="preserve">
+    <value>El archivo de reporte no fue encontrado</value>
+  </data>
   <data name="SearchInformationRequired" xml:space="preserve">
     <value>Los parámetros de la búsqueda son requeridos</value>
   </data>

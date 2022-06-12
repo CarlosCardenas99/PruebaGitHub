@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Paltarumi.Acopio.Apis.Controllers.Base;
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Lote;
 using Paltarumi.Acopio.Domain.Dto.Base;
@@ -7,11 +8,11 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
 {
     [ApiController]
     [Route("api/lote")]
-    public class LoteController
+    public class LoteController : ApiControllerBase
     {
         private readonly ILoteApplication _loteApplication;
 
-        public LoteController(ILoteApplication loteApplication)
+        public LoteController(IServiceProvider serviceProvider, ILoteApplication loteApplication) : base(serviceProvider)
             => _loteApplication = loteApplication;
 
         [HttpPost]
@@ -37,5 +38,12 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchLoteDto>>> Search(SearchParamsDto<SearchLoteFilterDto> searchParams)
             => await _loteApplication.Search(searchParams);
+
+        [HttpGet("report/{id}")]
+        public async Task<FileResult> ExportReport(int id)
+            => await DownloadFile(
+                await _loteApplication.ExportReport(GetSettingFilePath("ReportOptions:BalanzaFolder", "LoteReport.trdp"), id),
+                "LoteReport.pdf"
+            );
     }
 }

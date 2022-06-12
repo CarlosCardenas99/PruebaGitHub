@@ -31,5 +31,8 @@ namespace Paltarumi.Acopio.Application.Balanza
 
         public async Task<ResponseDto<SearchResultDto<SearchLoteDto>>> Search(SearchParamsDto<SearchLoteFilterDto> searchParams)
             => await _mediator.Send(new SearchLoteQuery(searchParams));
+
+        public async Task<ResponseDto<byte[]>> ExportReport(string reportPath, int id)
+            => await _mediator.Send(new ExportLoteReportCommand(reportPath, id));
     }
 }

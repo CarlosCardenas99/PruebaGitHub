@@ -11,5 +11,6 @@ namespace Paltarumi.Acopio.Application.Abstractions.Balanza
         Task<ResponseDto<GetLoteDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListLoteDto>>> List();
         Task<ResponseDto<SearchResultDto<SearchLoteDto>>> Search(SearchParamsDto<SearchLoteFilterDto> searchParams);
+        Task<ResponseDto<byte[]>> ExportReport(string reportPath, int id);
     }
 }
