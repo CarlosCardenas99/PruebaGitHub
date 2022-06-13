@@ -28,8 +28,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 
             var filters = request.SearchParams?.Filter;
 
-            if (filters?.IdItemCheck.HasValue == true)
-                filter = filter.And(x => x.IdItemCheck == filters.IdItemCheck.Value);
+            if (!String.IsNullOrEmpty(filters?.concepto))
+                filter = filter.And(x => x.Concepto.Contains(filters.concepto) );
 
             if (filters?.Activo.HasValue == true)
                 filter = filter.And(x => x.Activo == filters.Activo.Value);

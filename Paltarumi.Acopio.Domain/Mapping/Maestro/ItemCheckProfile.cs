@@ -19,6 +19,9 @@ namespace Paltarumi.Acopio.Domain.Mapping.Maestro
             CreateMap<Entity.ItemCheck, GetItemCheckDto>()
                 .ReverseMap();
 
+            CreateMap<Entity.ItemCheck, ListItemCheckDto>()
+                .ReverseMap();
+
             CreateMap<Entity.ItemCheck, SearchItemCheckDto>()
                 .ReverseMap();
         }
