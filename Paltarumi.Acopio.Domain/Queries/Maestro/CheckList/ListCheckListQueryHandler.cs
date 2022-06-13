@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
         protected override async Task<ResponseDto<IEnumerable<ListCheckListDto>>> HandleQuery(ListCheckListQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<IEnumerable<ListCheckListDto>>();
-            var list = await _repository.FindByAsync(x => x.IdModulo== request.IdModulo && x.Activo==true);
+            var list = await _repository.FindAll().ToListAsync(cancellationToken);
             var listDtos = _mapper?.Map<IEnumerable<ListCheckListDto>>(list);
 
             response.UpdateData(listDtos ?? new List<ListCheckListDto>());

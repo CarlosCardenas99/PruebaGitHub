@@ -5,7 +5,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
     public class ListTicketQuery : QueryBase<IEnumerable<ListTicketDto>>
     {
-        public ListTicketQuery(int idLote) => IdLote = idLote;
-        public int IdLote { get; set; }
+        public ListTicketQuery(int idLoteBalanza) => IdLoteBalanza = idLoteBalanza;
+        public int IdLoteBalanza { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class SearchTicketFilterDto
     {
-        public int IdLote { get; set; }
+        public int IdLoteBalanza { get; set; }
         public bool Activo { get; set; }
     }
 }

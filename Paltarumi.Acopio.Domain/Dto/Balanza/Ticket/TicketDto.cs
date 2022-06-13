@@ -2,7 +2,8 @@
 {
     public class TicketDto
     {
-        public int IdLote { get; set; }
+        public int IdLoteBalanza { get; set; }
+        public string Numero { get; set; } = null!;
         public DateTime FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
         public DateTime? FechaSalida { get; set; }
@@ -22,7 +23,6 @@
         public int IdVehiculo { get; set; }
         public int IdTipoMineral { get; set; }
         public int IdUnidadMedida { get; set; }
-        public int IdTipoMaterial { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
     }

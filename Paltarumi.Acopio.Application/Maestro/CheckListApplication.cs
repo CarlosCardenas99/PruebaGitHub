@@ -27,8 +27,8 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetCheckListDto>> Get(int id)
             => await _mediator.Send(new GetCheckListQuery(id));
 
-        public async Task<ResponseDto<IEnumerable<ListCheckListDto>>> List(int idModulo)
-            => await _mediator.Send(new ListCheckListQuery(idModulo));
+        public async Task<ResponseDto<IEnumerable<ListCheckListDto>>> List()
+            => await _mediator.Send(new ListCheckListQuery());
 
         public async Task<ResponseDto<SearchResultDto<SearchCheckListDto>>> Search(SearchParamsDto<SearchCheckListFilterDto> searchParams)
             => await _mediator.Send(new SearchCheckListQuery(searchParams));

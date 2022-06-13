@@ -37,6 +37,7 @@ namespace Paltarumi.Acopio.Entity
         public float? Tms { get; set; }
         public int IdEstado { get; set; }
         public string Observacion { get; set; } = null!;
+        public int PorcentajeCheckList { get; set; }
         public int IdUsuarioCreate { get; set; }
         public DateTime CreateDate { get; set; }
         public int? IdUsuarioUpdate { get; set; }

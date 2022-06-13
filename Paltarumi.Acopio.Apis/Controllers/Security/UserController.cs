@@ -9,17 +9,17 @@ namespace Paltarumi.Acopio.Apis.Controllers.Security
     [Route("api/user")]
     public class UserController
     {
-        private readonly IUserApplication _loteApplication;
+        private readonly IUserApplication _loteBalanzaApplication;
 
-        public UserController(IUserApplication loteApplication)
-            => _loteApplication = loteApplication;
+        public UserController(IUserApplication loteBalanzaApplication)
+            => _loteBalanzaApplication = loteBalanzaApplication;
 
         [HttpPost]
         public async Task<ResponseDto<GetUserDto>> Create(CreateUserDto createDto)
-            => await _loteApplication.Create(createDto);
+            => await _loteBalanzaApplication.Create(createDto);
 
         [HttpPost("login")]
         public async Task<ResponseDto> Login(LoginDto loginDto)
-            => await _loteApplication.Login(loginDto);
+            => await _loteBalanzaApplication.Login(loginDto);
     }
 }
