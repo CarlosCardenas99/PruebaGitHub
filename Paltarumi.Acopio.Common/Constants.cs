@@ -23,7 +23,13 @@
             public const string LOTE = "50";
             public const string TICKET = "51";
         }
-
+        public class Config
+        {
+            public struct Modulo
+            {
+                public const int Balanza = 1;
+            }
+        }
         public class Maestro
         {
             public const string TABLA_CODIGO_ITEM = "00";

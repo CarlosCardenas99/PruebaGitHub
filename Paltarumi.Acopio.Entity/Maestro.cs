@@ -7,7 +7,8 @@ namespace Paltarumi.Acopio.Entity
     {
         public Maestro()
         {
-            CheckLists = new HashSet<CheckList>();
+            CheckListIdCheckListEstadoBalanzaNavigations = new HashSet<CheckList>();
+            CheckListIdCheckListEstadoComercialNavigations = new HashSet<CheckList>();
             LeyReferencials = new HashSet<LeyReferencial>();
             LoteBalanzaIdEstadoNavigations = new HashSet<LoteBalanza>();
             LoteBalanzaIdEstadoTipoMaterialNavigations = new HashSet<LoteBalanza>();
@@ -24,7 +25,8 @@ namespace Paltarumi.Acopio.Entity
         public string Descripcion { get; set; } = null!;
         public bool Activo { get; set; }
 
-        public virtual ICollection<CheckList> CheckLists { get; set; }
+        public virtual ICollection<CheckList> CheckListIdCheckListEstadoBalanzaNavigations { get; set; }
+        public virtual ICollection<CheckList> CheckListIdCheckListEstadoComercialNavigations { get; set; }
         public virtual ICollection<LeyReferencial> LeyReferencials { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoNavigations { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoTipoMaterialNavigations { get; set; }
