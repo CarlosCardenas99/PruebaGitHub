@@ -37,7 +37,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         protected bool ValidateFileExistence(ExportLoteBalanzaReportCommand command, string reportPath, ValidationContext<ExportLoteBalanzaReportCommand> context)
         {
             var exists = File.Exists(reportPath);
-            if (!exists) throw new Exception(Resources.Common.ReportFileDoesNotExist);
+            if (!exists) throw new Exception($"{Resources.Common.ReportFileDoesNotExist}: {reportPath}");
             return true;
         }
     }
