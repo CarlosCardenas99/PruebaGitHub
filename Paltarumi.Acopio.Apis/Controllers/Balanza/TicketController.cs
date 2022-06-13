@@ -30,9 +30,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetTicketDto>> Get(int id)
             => await _ticketApplication.Get(id);
 
-        [HttpGet("list/{idLote}")]
-        public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLote)
-    => await _ticketApplication.List(idLote);
+        [HttpGet("list/{idLoteBalanza}")]
+        public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLoteBalanza)
+    => await _ticketApplication.List(idLoteBalanza);
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchTicketDto>>> Search(SearchParamsDto<SearchTicketFilterDto> searchParams)

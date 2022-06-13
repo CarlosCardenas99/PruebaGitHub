@@ -6,7 +6,7 @@ namespace Paltarumi.Acopio.Entity
     public partial class Ticket
     {
         public int IdTicket { get; set; }
-        public int IdLote { get; set; }
+        public int IdLoteBalanza { get; set; }
         public string Numero { get; set; } = null!;
         public DateTime FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
@@ -33,7 +33,7 @@ namespace Paltarumi.Acopio.Entity
 
         public virtual Conductor IdConductorNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
-        public virtual Lote IdLoteNavigation { get; set; } = null!;
+        public virtual LoteBalanza IdLoteBalanzaNavigation { get; set; } = null!;
         public virtual Maestro IdTipoMineralNavigation { get; set; } = null!;
         public virtual Transporte IdTransporteNavigation { get; set; } = null!;
         public virtual Maestro IdUnidadMedidaNavigation { get; set; } = null!;

@@ -30,9 +30,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<GetCheckListDto>> Get(int id)
             => await _checklistApplication.Get(id);
 
-        [HttpGet("list/{idModulo}")]
-        public async Task<ResponseDto<IEnumerable<ListCheckListDto>>> List(int idModulo)
-            => await _checklistApplication.List(idModulo);
+        [HttpGet("list")]
+        public async Task<ResponseDto<IEnumerable<ListCheckListDto>>> List()
+            => await _checklistApplication.List();
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchCheckListDto>>> Search(SearchParamsDto<SearchCheckListFilterDto> searchParams)

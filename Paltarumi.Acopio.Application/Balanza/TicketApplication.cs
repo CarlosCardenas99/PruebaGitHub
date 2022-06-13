@@ -26,8 +26,8 @@ namespace Paltarumi.Acopio.Application.Balanza
 
         public async Task<ResponseDto<GetTicketDto>> Get(int id)
             => await _mediator.Send(new GetTicketQuery(id));
-        public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLote)
-            => await _mediator.Send(new ListTicketQuery(idLote));
+        public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLoteBalanza)
+            => await _mediator.Send(new ListTicketQuery(idLoteBalanza));
 
         public async Task<ResponseDto<SearchResultDto<SearchTicketDto>>> Search(SearchParamsDto<SearchTicketFilterDto> searchParams)
             => await _mediator.Send(new SearchTicketQuery(searchParams));

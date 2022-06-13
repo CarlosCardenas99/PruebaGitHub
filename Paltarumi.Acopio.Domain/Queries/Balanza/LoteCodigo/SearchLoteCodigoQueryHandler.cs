@@ -28,24 +28,43 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
 
             var filters = request.SearchParams?.Filter;
 
-            if (filters?.IdLoteCodigo.HasValue == true)
-                filter = filter.And(x => x.IdLoteCodigo == filters.IdLoteCodigo.Value);
+            if (filters?.FechaDesde.HasValue == true || filters?.FechaHasta.HasValue == true)
+            {
+                if (filters?.FechaDesde.HasValue == true)
+                {
+                    var fechaDesde = filters.FechaDesde.Value.Date;
+                    filter = filter.And(x => (x.FechaRecepcion >= fechaDesde));
+                }
 
-            if (filters?.Activo.HasValue == true)
-                filter = filter.And(x => x.Activo == filters.Activo.Value);
+                if (filters?.FechaHasta.HasValue == true)
+                {
+                    var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    filter = filter.And(x => (x.FechaRecepcion < fechaHasta));
+                }
+            }
 
-            var lotecodigos = await _lotecodigoRepository.SearchByAsNoTrackingAsync(
+            if (!string.IsNullOrEmpty(filters?.Codigo))
+                filter = filter.And(x => x.IdLoteBalanzaNavigation.Codigo.Contains(filters.Codigo));
+
+            if (!string.IsNullOrEmpty(filters?.Proveedor))
+            {
+                filter = filter.And(x =>
+                (x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(filters.Proveedor) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(filters.Proveedor)));
+            }
+
+            var lotes = await _lotecodigoRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
-                filter
+                filter,
+                x => x.IdLoteBalanzaNavigation.IdProveedorNavigation
             );
 
-            var lotecodigoDtos = _mapper?.Map<IEnumerable<SearchLoteCodigoDto>>(lotecodigos.Items);
+            var loteDtos = _mapper?.Map<IEnumerable<SearchLoteCodigoDto>>(lotes.Items);
 
             var searchResult = new SearchResultDto<SearchLoteCodigoDto>(
-                lotecodigoDtos ?? new List<SearchLoteCodigoDto>(),
-                lotecodigos.Total,
+                loteDtos ?? new List<SearchLoteCodigoDto>(),
+                lotes.Total,
                 request.SearchParams
             );
 

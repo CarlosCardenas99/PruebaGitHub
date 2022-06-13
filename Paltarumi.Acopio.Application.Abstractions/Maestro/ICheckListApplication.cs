@@ -9,7 +9,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetCheckListDto>> Update(UpdateCheckListDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetCheckListDto>> Get(int id);
-        Task<ResponseDto<IEnumerable<ListCheckListDto>>> List(int idModulo);
+        Task<ResponseDto<IEnumerable<ListCheckListDto>>> List();
         Task<ResponseDto<SearchResultDto<SearchCheckListDto>>> Search(SearchParamsDto<SearchCheckListFilterDto> searchParams);
     }
 }
