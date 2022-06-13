@@ -9,11 +9,13 @@ using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Entity.Extensions;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using RandomStringCreator;
 
 namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class CreateLoteBalanzaCommandHandler : CommandHandlerBase<CreateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
+        private readonly IRepositoryBase<Entity.LoteCodigo> _loteCodigoRepository;
         private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
         private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
@@ -25,6 +27,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             IMapper mapper,
             IMediator mediator,
             CreateLoteBalanzaCommandValidator validator,
+            IRepositoryBase<Entity.LoteCodigo> loteCodigoRepository,
             IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
             IRepositoryBase<Entity.Maestro> maestroRepository,
             IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
@@ -32,6 +35,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             IRepositoryBase<Entity.Conductor> conductorRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _loteCodigoRepository = loteCodigoRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
             _maestroRepository = maestroRepository;
             _vehiculoRepository = vehiculoRepository;
@@ -94,6 +98,23 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
+
+                var codigo = new StringCreator("0123456789").Get(8);
+                var bytes = System.Text.Encoding.UTF8.GetBytes(codigo);
+
+                var loteCodigo = new Entity.LoteCodigo
+                {
+                    IdLoteBalanza = loteBalanza.IdLoteBalanza,
+                    CreateDate = DateTime.Now,
+                    FechaRecepcion = DateTime.Now,
+                    Codigo = codigo,
+                    CodigoHash = Convert.ToBase64String(bytes),
+                    IdEstado = 1,
+                    Activo = true
+                };
+
+                await _loteCodigoRepository.AddAsync(loteCodigo);
+                await _loteCodigoRepository.SaveAsync();
 
                 var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);
 
