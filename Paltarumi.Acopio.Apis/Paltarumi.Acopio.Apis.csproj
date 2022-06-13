@@ -27,4 +27,10 @@
     <Folder Include="Report\Balanza\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Report\Balanza\LoteReport.trdp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
