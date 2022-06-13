@@ -4,6 +4,8 @@ using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.ItemCheck;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
+using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 {
@@ -21,6 +23,14 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 
         protected override async Task<ResponseDto<IEnumerable<ListItemCheckDto>>> HandleQuery(ListItemCheckQuery request, CancellationToken cancellationToken)
         {
+            //var response = new ResponseDto<IEnumerable<ListItemCheckDto>>();
+            //var list = await _repository.FindAll().ToListAsync(cancellationToken);
+            //var listDtos = _mapper?.Map<IEnumerable<ListItemCheckDto>>(list);
+
+            //response.UpdateData(listDtos ?? new List<ListItemCheckDto>());
+
+            //return await Task.FromResult(response);
+
             var response = new ResponseDto<IEnumerable<ListItemCheckDto>>();
             var list = await _repository.FindByAsync(x => x.IdModulo == request.IdModulo && x.Activo == true);
             var listDtos = _mapper?.Map<IEnumerable<ListItemCheckDto>>(list);
