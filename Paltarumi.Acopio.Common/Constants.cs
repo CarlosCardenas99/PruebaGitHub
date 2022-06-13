@@ -27,6 +27,12 @@
         public class Maestro
         {
             public const string TABLA_CODIGO_ITEM = "00";
+
+            public struct EstadoCheckList
+            {
+                public const int Revisado = 1;
+            }
+
             public struct EstadoLote
             {
                 public const string EN_ESPERA = "01";

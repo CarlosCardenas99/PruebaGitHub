@@ -41,7 +41,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var tickets = await _ticketRepository.FindByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
-            var ticketDetails = request.UpdateDto?.TicketDetails?.Where(x => x.Activo);
+            var ticketDetails = request.UpdateDto?.TicketDetails?.Where(x => x.Activo).ToList();
 
             var idVehiculos = ticketDetails?.Select(x => x.IdVehiculo) ?? new List<int>();
             var vehiculos = await _vehiculoRepository.FindByAsNoTrackingAsync(x => idVehiculos.Contains(x.IdVehiculo));
@@ -55,6 +55,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             if (loteBalanza != null)
             {
                 _mapper?.Map(request.UpdateDto, loteBalanza);
+
+                var tickesTmp = loteBalanza.Tickets;
 
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
 
@@ -71,7 +73,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateTmsBase();
                 loteBalanza.UpdateNumeroTickets();
 
-                loteBalanza.Tickets = null;
+                loteBalanza.Tickets = tickesTmp;
 
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);
 
@@ -96,7 +98,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 var ticketIds = tickets?.Select(x => x.IdTicket) ?? new List<int>();
 
                 var newTicketDtos =
-                    request.UpdateDto?.TicketDetails?.Where(x => !ticketIds.Contains(x.IdTicket)) ??
+                    request.UpdateDto?.TicketDetails?.Where(x => !ticketIds.Contains(x.IdTicket)).ToList() ??
                     new List<UpdateTicketDto>();
 
                 var newTickets = _mapper?.Map<IEnumerable<Entity.Ticket>>(newTicketDtos) ??
@@ -117,7 +119,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 if (loteDto != null)
                 {
                     loteDto.TicketDetails =
-                        _mapper?.Map<List<ListTicketDto>>(loteBalanza?.Tickets) ?? new List<ListTicketDto>();
+                        _mapper?.Map<IEnumerable<ListTicketDto>>(loteBalanza?.Tickets) ?? new List<ListTicketDto>();
 
                     response.UpdateData(loteDto);
                     response.AddOkResult(Resources.Common.UpdateSuccessMessage);

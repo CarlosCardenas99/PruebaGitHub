@@ -23,6 +23,10 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto)
             => await _loteBalanzaApplication.Update(updateDto);
 
+        [HttpPut("updatechecklist")]
+        public async Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto)
+            => await _loteBalanzaApplication.UpdateLoteBalanzaCheckList(updateDto);
+
         [HttpDelete("{id}")]
         public async Task<ResponseDto> Delete(int id)
             => await _loteBalanzaApplication.Delete(id);

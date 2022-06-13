@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Balanza
     {
         Task<ResponseDto<GetLoteBalanzaDto>> Create(CreateLoteBalanzaDto createDto);
         Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto);
+        Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetLoteBalanzaDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List();
