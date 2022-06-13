@@ -20,7 +20,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
 
                     RuleFor(x => x.CreateDto.IdTipoVehiculo)
                         .MustAsync(ValidateMaestroExistenceAsync)
-                        .WithMessage(Resources.Balanza.Maestro.TipoVehiculoNotFound)
+                        .WithMessage(Resources.Maestro.Maestro.TipoVehiculoNotFound)
                         .DependentRules(() =>
                         {
                             RuleFor(x => x.CreateDto).Must((command, dto, context) =>
@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
 
                     RuleFor(x => x.CreateDto.IdVehiculoMarca)
                         .MustAsync(ValidateMaestroExistenceAsync)
-                        .WithMessage(Resources.Balanza.Maestro.VehiculoMarcaNotFound)
+                        .WithMessage(Resources.Maestro.Maestro.VehiculoMarcaNotFound)
                         .DependentRules(() =>
                         {
                             RuleFor(x => x.CreateDto).Must((command, dto, context) =>

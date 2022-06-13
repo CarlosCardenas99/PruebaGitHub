@@ -1,6 +1,6 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class DeleteMaestroCommand : CommandBase
     {

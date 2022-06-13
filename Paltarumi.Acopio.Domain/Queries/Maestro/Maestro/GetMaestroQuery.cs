@@ -1,7 +1,7 @@
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Queries.Base;
 
-namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class GetMaestroQuery : QueryBase<GetMaestroDto>
     {

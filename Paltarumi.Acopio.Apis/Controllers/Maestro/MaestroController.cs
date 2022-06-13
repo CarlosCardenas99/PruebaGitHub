@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Paltarumi.Acopio.Application.Abstractions.Balanza;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Application.Abstractions.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
 
-namespace Paltarumi.Acopio.Apis.Controllers.Balanza
+namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {
     [ApiController]
     [Route("api/maestro")]
@@ -30,6 +30,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetMaestroDto>> Get(int id)
             => await _maestroApplication.Get(id);
 
+        [HttpGet("list")]
+        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> List()
+            => await _maestroApplication.List();
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams)

@@ -1,4 +1,4 @@
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 
 namespace Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo
 {

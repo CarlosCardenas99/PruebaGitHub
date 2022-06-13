@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class UpdateMaestroCommandValidator : CommandValidatorBase<UpdateMaestroCommand>
     {
@@ -14,15 +14,15 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
 
             RequiredInformation(x => x.UpdateDto).DependentRules(() =>
             {
-                RequiredField(x => x.UpdateDto.IdMaestro, Resources.Balanza.Maestro.IdMaestro)
+                RequiredField(x => x.UpdateDto.IdMaestro, Resources.Maestro.Maestro.IdMaestro)
                     .DependentRules(() =>
                     {
                         RuleFor(x => x.UpdateDto.IdMaestro)
                             .MustAsync(ValidateExistenceAsync)
                             .WithCustomValidationMessage();
                     });
-                //RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.Maestro.Codigo, 5, 10);
-                //RequiredField(x => x.UpdateDto.FechaIngreso, Resources.Balanza.Maestro.FechaIngreso);
+                //RequiredString(x => x.UpdateDto.Codigo, Resources.Maestro.Maestro.Codigo, 5, 10);
+                //RequiredField(x => x.UpdateDto.FechaIngreso, Resources.Maestro.Maestro.FechaIngreso);
             });
         }
 

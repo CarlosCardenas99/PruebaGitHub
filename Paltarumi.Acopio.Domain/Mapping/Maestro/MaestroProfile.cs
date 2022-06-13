@@ -1,7 +1,7 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 
-namespace Paltarumi.Acopio.Domain.Mapping.Balanza
+namespace Paltarumi.Acopio.Domain.Mapping.Maestro
 {
     public class MaestroProfile : Profile
     {
@@ -20,6 +20,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.Maestro, SearchMaestroDto>()
+                //.ForMember(x => x.Descripcion, opt => opt.MapFrom(x => x.Tickets != null ? string.Join(",", x.Tickets.Select(x => x.Numero)) : string.Empty))
                 .ReverseMap();
         }
     }

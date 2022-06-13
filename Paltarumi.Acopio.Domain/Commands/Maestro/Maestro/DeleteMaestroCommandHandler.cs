@@ -4,7 +4,7 @@ using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class DeleteMaestroCommandHandler : CommandHandlerBase<DeleteMaestroCommand>
     {

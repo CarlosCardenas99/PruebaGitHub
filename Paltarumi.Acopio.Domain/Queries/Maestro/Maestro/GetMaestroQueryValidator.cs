@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
-namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class GetMaestroQueryValidator : QueryValidatorBase<GetMaestroQuery>
     {
@@ -13,7 +13,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
         {
             _maestroRepository = maestroRepository;
 
-            RequiredField(x => x.Id, Resources.Balanza.Maestro.IdMaestro)
+            RequiredField(x => x.Id, Resources.Maestro.Maestro.IdMaestro)
                 .DependentRules(() =>
                 {
                     RuleFor(x => x.Id)

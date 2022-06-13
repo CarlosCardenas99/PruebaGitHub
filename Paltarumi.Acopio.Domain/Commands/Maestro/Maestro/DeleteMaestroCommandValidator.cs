@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class DeleteMaestroCommandValidator : CommandValidatorBase<DeleteMaestroCommand>
     {
@@ -12,7 +12,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
         {
             _repositoryBase = repositoryBase;
 
-            RequiredField(x => x.Id, Resources.Balanza.Maestro.IdMaestro)
+            RequiredField(x => x.Id, Resources.Maestro.Maestro.IdMaestro)
                 .DependentRules(() =>
                 {
                     RuleFor(x => x.Id)

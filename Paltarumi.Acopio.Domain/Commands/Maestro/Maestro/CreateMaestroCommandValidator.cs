@@ -1,6 +1,6 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class CreateMaestroCommandValidator : CommandValidatorBase<CreateMaestroCommand>
     {
@@ -8,8 +8,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
         {
             RequiredInformation(x => x.CreateDto).DependentRules(() =>
             {
-                //RequiredString(x => x.CreateDto.Codigo, Resources.Balanza.Maestro.Codigo, 5, 10);
-                //RequiredField(x => x.CreateDto.FechaIngreso, Resources.Balanza.Maestro.FechaIngreso);
+                //RequiredString(x => x.CreateDto.Codigo, Resources.Maestro.Maestro.Codigo, 5, 10);
+                //RequiredField(x => x.CreateDto.FechaIngreso, Resources.Maestro.Maestro.FechaIngreso);
             });
         }
     }

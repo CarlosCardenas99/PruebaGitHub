@@ -51,11 +51,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources\Balanza\Maestro.Designer.cs">
-      <DependentUpon>Maestro.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Resources\Balanza\LoteCodigo.Designer.cs">
       <DependentUpon>LoteCodigo.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -83,6 +78,11 @@
     </Compile>
     <Compile Update="Resources\Maestro\CheckList.Designer.cs">
       <DependentUpon>CheckList.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Maestro\Maestro.Designer.cs">
+      <DependentUpon>Maestro.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -151,10 +151,6 @@
       <LastGenOutput>Recodificacion.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Balanza\Maestro.resx">
-      <LastGenOutput>Maestro.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\LoteCodigo.resx">
       <LastGenOutput>LoteCodigo.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -177,6 +173,10 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Maestro\CheckList.resx">
       <LastGenOutput>CheckList.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Maestro\Maestro.resx">
+      <LastGenOutput>Maestro.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Maestro\TipoDocumento.resx">
