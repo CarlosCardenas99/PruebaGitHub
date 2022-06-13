@@ -1,6 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
 using Paltarumi.Acopio.Domain.Queries.Base;

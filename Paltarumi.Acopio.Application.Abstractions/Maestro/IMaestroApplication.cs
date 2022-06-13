@@ -1,7 +1,7 @@
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 
-namespace Paltarumi.Acopio.Application.Abstractions.Balanza
+namespace Paltarumi.Acopio.Application.Abstractions.Maestro
 {
     public interface IMaestroApplication
     {
@@ -9,6 +9,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Balanza
         Task<ResponseDto<GetMaestroDto>> Update(UpdateMaestroDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetMaestroDto>> Get(int id);
+        Task<ResponseDto<IEnumerable<ListMaestroDto>>> List();
         Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams);
     }
 }

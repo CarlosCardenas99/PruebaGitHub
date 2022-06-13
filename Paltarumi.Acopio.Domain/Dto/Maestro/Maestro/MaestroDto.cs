@@ -1,4 +1,5 @@
-﻿namespace Paltarumi.Acopio.Domain.Dto.Balanza.Maestro
+
+namespace Paltarumi.Acopio.Domain.Dto.Maestro.Maestro
 {
     public class MaestroDto
     {

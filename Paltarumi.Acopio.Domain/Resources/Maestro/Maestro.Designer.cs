@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Paltarumi.Acopio.Domain.Resources.Balanza {
+namespace Paltarumi.Acopio.Domain.Resources.Maestro {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Paltarumi.Acopio.Domain.Resources.Balanza {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paltarumi.Acopio.Domain.Resources.Balanza.Maestro", typeof(Maestro).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paltarumi.Acopio.Domain.Resources.Maestro.Maestro", typeof(Maestro).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

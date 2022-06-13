@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+﻿using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;

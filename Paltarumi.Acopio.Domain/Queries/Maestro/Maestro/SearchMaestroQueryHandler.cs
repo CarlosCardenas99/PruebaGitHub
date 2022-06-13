@@ -1,13 +1,12 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Queries.Base;
-using Paltarumi.Acopio.Entity.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
 
-namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class SearchMaestroQueryHandler : SearchQueryHandlerBase<SearchMaestroQuery, SearchMaestroFilterDto, SearchMaestroDto>
     {
@@ -27,26 +26,18 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Maestro
 
             Expression<Func<Entity.Maestro, bool>> filter = x => true;
 
-            List<SortExpression<Entity.Maestro>> listSortExpression = new List<SortExpression<Entity.Maestro>>();
-            /*
-            Expression<Func<Entity.Maestro, object>> sortFuntion = x => x.CodigoItem;
-            SortExpression<Entity.Maestro> sortExpression = new SortExpression<Entity.Maestro>();
-            sortExpression.Property = sortFuntion;
-            sortExpression.Direction = SortDirection.Desc;
-            listSortExpression.Add(sortExpression);
-            */
-
             var filters = request.SearchParams?.Filter;
 
-            filter = filter.And(x => x.Activo == true);
+            if (!string.IsNullOrEmpty(filters?.Descripcion))
+                filter = filter.And(x => x.Descripcion.Contains(filters.Descripcion));
 
-            if (!String.IsNullOrEmpty(filters?.CodigoTabla))
-                filter = filter.And(x => x.CodigoTabla == filters.CodigoTabla);
+            if (filters?.Activo.HasValue == true)
+                filter = filter.And(x => x.Activo == filters.Activo.Value);
 
             var maestros = await _maestroRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
-                listSortExpression,
+                null,
                 filter
             );
 

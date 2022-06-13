@@ -1,7 +1,7 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.Maestro
+namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class CreateMaestroCommand : CommandBase<GetMaestroDto>
     {
