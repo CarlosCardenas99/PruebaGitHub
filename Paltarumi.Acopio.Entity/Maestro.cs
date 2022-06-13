@@ -7,10 +7,10 @@ namespace Paltarumi.Acopio.Entity
     {
         public Maestro()
         {
+            CheckLists = new HashSet<CheckList>();
             LeyReferencials = new HashSet<LeyReferencial>();
-            LoteCheckLists = new HashSet<LoteCheckList>();
-            LoteIdEstadoNavigations = new HashSet<Lote>();
-            LoteIdEstadoTipoMaterialNavigations = new HashSet<Lote>();
+            LoteBalanzaIdEstadoNavigations = new HashSet<LoteBalanza>();
+            LoteBalanzaIdEstadoTipoMaterialNavigations = new HashSet<LoteBalanza>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
             TicketIdTipoMineralNavigations = new HashSet<Ticket>();
             TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
@@ -24,10 +24,10 @@ namespace Paltarumi.Acopio.Entity
         public string Descripcion { get; set; } = null!;
         public bool Activo { get; set; }
 
+        public virtual ICollection<CheckList> CheckLists { get; set; }
         public virtual ICollection<LeyReferencial> LeyReferencials { get; set; }
-        public virtual ICollection<LoteCheckList> LoteCheckLists { get; set; }
-        public virtual ICollection<Lote> LoteIdEstadoNavigations { get; set; }
-        public virtual ICollection<Lote> LoteIdEstadoTipoMaterialNavigations { get; set; }
+        public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoNavigations { get; set; }
+        public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoTipoMaterialNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdTipoMineralNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }

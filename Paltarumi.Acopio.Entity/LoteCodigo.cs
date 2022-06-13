@@ -6,11 +6,15 @@ namespace Paltarumi.Acopio.Entity
     public partial class LoteCodigo
     {
         public int IdLoteCodigo { get; set; }
-        public int IdLote { get; set; }
-        public DateTime Fecha { get; set; }
-        public string LoteCodigo1 { get; set; } = null!;
-        public string LoteCodigoHash { get; set; } = null!;
+        public int IdLoteBalanza { get; set; }
+        public DateTime FechaRecepcion { get; set; }
+        public string Codigo { get; set; } = null!;
+        public string CodigoHash { get; set; } = null!;
         public int IdEstado { get; set; }
+        public int IdUsuarioCreate { get; set; }
+        public DateTime CreateDate { get; set; }
         public bool Activo { get; set; }
+
+        public virtual LoteBalanza IdLoteBalanzaNavigation { get; set; } = null!;
     }
 }
