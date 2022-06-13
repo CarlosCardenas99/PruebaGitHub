@@ -2,6 +2,12 @@
 {
     public class Constants
     {
+        public struct LoteCodigo
+        {
+            public const string Caracteres = "0123456789";
+            public const int NumeroCaracters = 8;
+        }
+
         public struct TipoDocumento
         {
             public const string DNI = "1";

@@ -99,7 +99,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
 
-                var codigo = new StringCreator("0123456789").Get(8);
+                var codigo = new StringCreator(Constants.LoteCodigo.Caracteres).Get(Constants.LoteCodigo.NumeroCaracters);
                 var bytes = System.Text.Encoding.UTF8.GetBytes(codigo);
 
                 var loteCodigo = new Entity.LoteCodigo
