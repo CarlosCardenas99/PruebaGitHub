@@ -61,38 +61,29 @@ namespace Paltarumi.Acopio.Domain.Resources.Balanza {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Código.
-        /// </summary>
-        internal static string Codigo {
-            get {
-                return ResourceManager.GetString("Codigo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Fecha de Ingreso.
-        /// </summary>
-        internal static string FechaIngreso {
-            get {
-                return ResourceManager.GetString("FechaIngreso", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Hora de Ingreso.
-        /// </summary>
-        internal static string HoraIngreso {
-            get {
-                return ResourceManager.GetString("HoraIngreso", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Id del Lote Balanza.
+        ///   Busca una cadena traducida similar a IdLoteBalanza.
         /// </summary>
         internal static string IdLoteBalanza {
             get {
                 return ResourceManager.GetString("IdLoteBalanza", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El tipo de vehículo no fue encontrado.
+        /// </summary>
+        internal static string TipoVehiculoNotFound {
+            get {
+                return ResourceManager.GetString("TipoVehiculoNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La marca de vehículo no fue encontrada.
+        /// </summary>
+        internal static string VehiculoMarcaNotFound {
+            get {
+                return ResourceManager.GetString("VehiculoMarcaNotFound", resourceCulture);
             }
         }
     }

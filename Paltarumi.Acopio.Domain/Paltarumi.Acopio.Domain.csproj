@@ -40,6 +40,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Balanza\LoteBalanza.Designer.cs">
+      <DependentUpon>LoteBalanza.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Balanza\Recodificacion.Designer.cs">
       <DependentUpon>Recodificacion.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -64,11 +69,6 @@
       <DependentUpon>Ticket.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources\Balanza\LoteBalanza.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>LoteBalanza.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Common.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -147,6 +147,10 @@
       <LastGenOutput>LoteCheckList.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Balanza\LoteBalanza.resx">
+      <LastGenOutput>LoteBalanza.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Recodificacion.resx">
       <LastGenOutput>Recodificacion.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -166,10 +170,6 @@
     <EmbeddedResource Update="Resources\Balanza\Ticket.resx">
       <LastGenOutput>Ticket.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Balanza\LoteBalanza.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LoteBalanza.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
