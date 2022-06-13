@@ -40,6 +40,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Update="Resources\Balanza\LoteBalanza.Designer.cs">
+      <DependentUpon>LoteBalanza.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Balanza\Recodificacion.Designer.cs">
       <DependentUpon>Recodificacion.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -135,6 +140,10 @@
   <ItemGroup>
     <EmbeddedResource Update="Resources\Balanza\LoteCheckList.resx">
       <LastGenOutput>LoteCheckList.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Balanza\LoteBalanza.resx">
+      <LastGenOutput>LoteBalanza.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Recodificacion.resx">
