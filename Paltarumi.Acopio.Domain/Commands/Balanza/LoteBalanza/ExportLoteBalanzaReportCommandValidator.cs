@@ -30,14 +30,14 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         protected async Task<bool> ValidateExistenceAsync(ExportLoteBalanzaReportCommand command, int idLoteBalanza, ValidationContext<ExportLoteBalanzaReportCommand> context, CancellationToken cancellationToken)
         {
             var exists = await _repositoryBase.FindAll().Where(x => x.IdLoteBalanza == idLoteBalanza).AnyAsync(cancellationToken);
-            if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
+            if (!exists) throw new Exception(Resources.Common.UpdateRecordNotFound);
             return true;
         }
 
         protected bool ValidateFileExistence(ExportLoteBalanzaReportCommand command, string reportPath, ValidationContext<ExportLoteBalanzaReportCommand> context)
         {
             var exists = File.Exists(reportPath);
-            if (!exists) return CustomValidationMessage(context, Resources.Common.ReportFileDoesNotExist);
+            if (!exists) throw new Exception(Resources.Common.ReportFileDoesNotExist);
             return true;
         }
     }

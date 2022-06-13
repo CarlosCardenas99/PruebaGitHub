@@ -48,15 +48,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             var instanceReportSource = new InstanceReportSource { ReportDocument = report };
             var result = reportProcessor.RenderReport("PDF", instanceReportSource, new Hashtable());
 
-            if (result.HasErrors)
-            {
-                result.Errors.ToList().ForEach(error =>
-                {
-                    response.AddErrorResult(error);
-                });
-
-                return response;
-            }
+            if (result.HasErrors) throw result.Errors.First();
 
             response.UpdateData(result.DocumentBytes);
 
