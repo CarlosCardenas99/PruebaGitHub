@@ -15,6 +15,9 @@ namespace Paltarumi.Acopio.Domain.Mapping.Config
 
             CreateMap<Entity.Modulo, SearchModuloDto>()
                 .ReverseMap();
+
+            CreateMap<Entity.Modulo, ListModuloDto>()
+                .ReverseMap();
         }
     }
 }

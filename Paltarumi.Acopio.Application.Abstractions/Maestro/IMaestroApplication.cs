@@ -9,7 +9,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetMaestroDto>> Update(UpdateMaestroDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetMaestroDto>> Get(int id);
-        Task<ResponseDto<IEnumerable<ListMaestroDto>>> List();
+        Task<ResponseDto<IEnumerable<ListMaestroDto>>> List(string codigoTabla);
         Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams);
     }
 }

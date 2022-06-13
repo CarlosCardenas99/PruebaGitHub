@@ -26,6 +26,7 @@
 
         public class Maestro
         {
+            public const string TABLA_CODIGO_ITEM = "00";
             public struct EstadoLote
             {
                 public const string EN_ESPERA = "01";

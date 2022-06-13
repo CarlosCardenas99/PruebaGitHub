@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Config.Modulo
         protected override async Task<ResponseDto<IEnumerable<ListModuloDto>>> HandleQuery(ListModuloQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<IEnumerable<ListModuloDto>>();
-            var list = await _repository.FindAll().ToListAsync(cancellationToken);
+            var list = await _repository.FindByAsync(x => x.Activo == true);
             var listDtos = _mapper?.Map<IEnumerable<ListModuloDto>>(list);
 
             response.UpdateData(listDtos ?? new List<ListModuloDto>());

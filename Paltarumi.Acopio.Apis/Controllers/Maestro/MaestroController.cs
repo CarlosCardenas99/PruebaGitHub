@@ -30,9 +30,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<GetMaestroDto>> Get(int id)
             => await _maestroApplication.Get(id);
 
-        [HttpGet("list")]
-        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> List()
-            => await _maestroApplication.List();
+        [HttpGet("list/{codigoTabla}")]
+        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> List(string codigoTabla)
+            => await _maestroApplication.List(codigoTabla);
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams)

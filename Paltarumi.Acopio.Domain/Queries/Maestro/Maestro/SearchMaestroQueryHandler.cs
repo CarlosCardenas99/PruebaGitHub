@@ -1,4 +1,5 @@
 using AutoMapper;
+using Paltarumi.Acopio.Common;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Queries.Base;
@@ -33,6 +34,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 
             if (filters?.Activo.HasValue == true)
                 filter = filter.And(x => x.Activo == filters.Activo.Value);
+
+            filter = filter.And(x => x.CodigoItem.Equals(Constants.Maestro.TABLA_CODIGO_ITEM));
 
             var maestros = await _maestroRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,

@@ -27,8 +27,8 @@ namespace Paltarumi.Acopio.Application.Maestro
         public async Task<ResponseDto<GetMaestroDto>> Get(int id)
             => await _mediator.Send(new GetMaestroQuery(id));
 
-        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> List()
-            => await _mediator.Send(new ListMaestroQuery());
+        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> List(string codigoTabla)
+            => await _mediator.Send(new ListMaestroQuery(codigoTabla));
 
         public async Task<ResponseDto<SearchResultDto<SearchMaestroDto>>> Search(SearchParamsDto<SearchMaestroFilterDto> searchParams)
             => await _mediator.Send(new SearchMaestroQuery(searchParams));
