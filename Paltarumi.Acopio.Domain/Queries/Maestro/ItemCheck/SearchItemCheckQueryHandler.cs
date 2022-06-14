@@ -38,7 +38,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
-                filter
+                filter,
+                x => x.IdModuloNavigation
             );
 
             var itemcheckDtos = _mapper?.Map<IEnumerable<SearchItemCheckDto>>(itemchecks.Items);
