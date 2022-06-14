@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
             CreateMap<Entity.LoteCodigo, SearchLoteCodigoDto>()
                  .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
                  .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
-
+                 .ForMember(x => x.Estado, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.IdEstadoNavigation.Descripcion : string.Empty))
                 .ReverseMap();
         }
     }

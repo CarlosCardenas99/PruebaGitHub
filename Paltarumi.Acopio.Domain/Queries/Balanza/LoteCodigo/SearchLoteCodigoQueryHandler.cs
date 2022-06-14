@@ -57,7 +57,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
                 filter,
-                 x => x.IdLoteBalanzaNavigation,
+                x => x.IdLoteBalanzaNavigation,
+                x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,
                 x => x.IdLoteBalanzaNavigation.IdProveedorNavigation
             );
 
