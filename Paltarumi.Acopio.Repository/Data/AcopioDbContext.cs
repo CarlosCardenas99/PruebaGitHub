@@ -46,7 +46,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -734,9 +734,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdModulo).HasColumnName("idModulo");
 
-                entity.Property(e => e.Activo)
-                    .HasColumnName("activo")
-                    .HasDefaultValueSql("((1))");
+                entity.Property(e => e.Activo).HasColumnName("activo");
 
                 entity.Property(e => e.Nivel).HasColumnName("nivel");
 

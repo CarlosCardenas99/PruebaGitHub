@@ -21,6 +21,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
 
             CreateMap<Entity.LoteCodigo, SearchLoteCodigoDto>()
                  .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
+                 .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
 
                 .ReverseMap();
         }
