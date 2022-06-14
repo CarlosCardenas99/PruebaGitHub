@@ -4,6 +4,7 @@ using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza;
 
 namespace Paltarumi.Acopio.Application.Balanza
@@ -31,6 +32,9 @@ namespace Paltarumi.Acopio.Application.Balanza
 
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
             => await _mediator.Send(new SearchLoteBalanzaQuery(searchParams));
+
+        public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaChecklistDto>>> SearchWithCheckList(SearchParamsDto<SearchLoteBalanzaChecklistFilterDto> searchParams)
+            => await _mediator.Send(new SearchLoteBalanzaCheckListQuery(searchParams));
 
         public async Task<ResponseDto<byte[]>> ExportReport(string reportPath, int id)
             => await _mediator.Send(new ExportLoteBalanzaReportCommand(reportPath, id));

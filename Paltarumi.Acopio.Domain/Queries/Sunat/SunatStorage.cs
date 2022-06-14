@@ -68,6 +68,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
                         continue;
                     }
 
+                    //************************************************************************************
+
                     var r = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
                     var json_r_in = JsonConvert.SerializeObject(r, Formatting.Indented);
                     var empresa = JsonConvert.DeserializeObject<EmpresaApiEn>(json_de_respuesta);
@@ -78,17 +80,39 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
                         continue;
                     }
 
-                    response.sunatVo = new SunatConsultaRucVo
+                    response.sunatVo = sunatServicesRuc?.Code switch
                     {
-                        ruc = empresa.ruc,
-                        razonSocial = empresa.razonSocial,
-                        direccion = empresa.direccion,
-                        departamento = empresa.departamento,
-                        provincia = empresa.provincia,
-                        distrito = empresa.distrito,
-                        ubigeo = empresa.ubigeo
+                        "dniruc" => new SunatConsultaRucVo
+                        {
+                            ruc = empresa.ruc,
+                            razonSocial = empresa.razonSocial,
+                            direccion = empresa.direccion,
+                            departamento = empresa.departamento,
+                            provincia = empresa.provincia,
+                            distrito = empresa.distrito,
+                        },
+                        "apiperu" => new SunatConsultaRucVo
+                        {
+                            ruc = empresa.data.ruc,
+                            razonSocial = empresa.data.nombre_o_razon_social,
+                            direccion = empresa.data.direccion_completa,
+                            departamento = empresa.data.departamento,
+                            provincia = empresa.data.provincia,
+                            distrito = empresa.data.distrito,
+                        },
+                        "optimizeperu" => new SunatConsultaRucVo
+                        {
+                            ruc = empresa.ruc,
+                            razonSocial = empresa.razonSocial,
+                            direccion = empresa.direccion,
+                            departamento = empresa.departamento,
+                            provincia = empresa.provincia,
+                            distrito = empresa.distrito,
+                        },
+                        _ => new SunatConsultaRucVo()
                     };
 
+                    //************************************************************************************
                     response.response = new Response();
 
                     return response;
@@ -256,6 +280,18 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
         public string profesion { get; set; }
         public string ubigeo { get; set; }
         public string capital { get; set; }
+        public EmpresaApiLaravelDataEn data { get; set; }
+    }
+
+    class EmpresaApiLaravelDataEn
+    {
+        public string direccion_completa { get; set; }
+        public string ruc { get; set; }
+        public string nombre_o_razon_social { get; set; }
+        public string estado { get; set; }
+        public string departamento { get; set; }
+        public string provincia { get; set; }
+        public string distrito { get; set; }
     }
 
     class PersonaApiEn
