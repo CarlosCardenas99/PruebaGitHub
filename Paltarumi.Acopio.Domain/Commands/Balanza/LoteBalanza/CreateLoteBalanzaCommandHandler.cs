@@ -84,8 +84,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 }
 
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                    x.CodigoTabla == Constants.Maestro.CodigoTabla.ESTADO_LOTE &&
-                    x.CodigoItem == Constants.Maestro.EstadoLote.EN_ESPERA
+                    x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_ESTADO &&
+                    x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
                  );
 
                 loteBalanza.Enable();

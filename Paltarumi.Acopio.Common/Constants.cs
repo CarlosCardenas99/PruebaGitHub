@@ -39,16 +39,25 @@
                 public const int Revisado = 1;
             }
 
-            public struct EstadoLote
+            public struct LoteEstado
             {
                 public const string EN_ESPERA = "01";
             }
 
             public struct CodigoTabla
             {
-                public const string ESTADO_LOTE = "03";
-                public const string VEHICULO_MARCA = "05";
-                public const string VEHICULO_TIPO = "06";
+                public const string MODULOS = "01";
+                public const string TIPO_RECODIFICACION = "02";
+                public const string TIPO_MATERIAL = "03";
+                public const string TIPO_MINERAL = "04";
+                public const string LOTE_UNIDAD_MEDIDA = "05";
+                public const string VEHICULO_MARCA = "06";
+                public const string VEHICULO_TIPO = "07";
+                public const string CHECKLIST_CONCEPTO = "08";
+                public const string LOTE_ESTADO = "70";
+                public const string CHECKLIST_ESTADO = "71";
+                public const string TMH_ESTADO = "72";
+                public const string LOTE_CODIGO_ESTADO = "73";
             }
 
             public struct UnidadMedida
