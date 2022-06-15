@@ -71,7 +71,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
             duenoMuestra.Numero = sunatVo.ruc;
             duenoMuestra.Nombres = sunatVo.razonSocial;
             duenoMuestra.CodigoTipoDocumento = codigoTipoDocumento;
-            duenoMuestra.CodigoUbigeo = null;
+            //duenoMuestra.CodigoUbigeo = null;
             duenoMuestra.Email = String.Empty;
             duenoMuestra.Telefono = String.Empty;
             duenoMuestra.Direccion = sunatVo.direccion ?? string.Empty;

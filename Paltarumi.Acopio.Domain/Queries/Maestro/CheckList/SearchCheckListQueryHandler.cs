@@ -36,17 +36,21 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
                 if (filters?.FechaDesde.HasValue == true)
                 {
                     var fechaDesde = filters.FechaDesde.Value.Date;
-                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde));
+                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde || x.IdLoteBalanzaNavigation.FechaAcopio >= fechaDesde));
                 }
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
-                    var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
-                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaAcopio < fechaHasta));
+                    var fechahasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaIngreso < fechahasta || x.IdLoteBalanzaNavigation.FechaAcopio < fechahasta));
                 }
             }
             if (!string.IsNullOrEmpty(filters?.Codigo))
                 filter = filter.And(x => x.IdLoteBalanzaNavigation.Codigo.Contains(filters.Codigo));
+
+
+            /* if ( !string.IsNullOrEmpty(filters?.Proveedor) )
+                filter = filter.And(x => x.IdDuenoMuestraNavigation.Nombres.Contains(filters.Dueno));*/
 
             if (!string.IsNullOrEmpty(filters?.Proveedor))
             {
@@ -63,8 +67,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
                 filter,
-                x =>x.IdLoteBalanzaNavigation.IdProveedorNavigation,
-                x =>x.IdLoteBalanzaNavigation
+                x => x.IdLoteBalanzaNavigation,
+                x => x.IdLoteBalanzaNavigation.IdProveedorNavigation
+
             );
 
             var checklistDtos = _mapper?.Map<IEnumerable<SearchCheckListDto>>(checklists.Items);

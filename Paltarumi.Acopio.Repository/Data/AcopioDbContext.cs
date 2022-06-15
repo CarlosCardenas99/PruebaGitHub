@@ -45,7 +45,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+       
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -280,12 +280,6 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasColumnName("codigoTipoDocumento")
                     .IsFixedLength();
 
-                entity.Property(e => e.CodigoUbigeo)
-                    .HasMaxLength(6)
-                    .IsUnicode(false)
-                    .HasColumnName("codigoUbigeo")
-                    .IsFixedLength();
-
                 entity.Property(e => e.Direccion)
                     .HasMaxLength(200)
                     .IsUnicode(false)
@@ -295,8 +289,6 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("email");
-
-                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
                 entity.Property(e => e.Nombres)
                     .HasMaxLength(100)
@@ -312,11 +304,6 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasMaxLength(12)
                     .IsUnicode(false)
                     .HasColumnName("telefono");
-
-                entity.HasOne(d => d.IdProveedorNavigation)
-                    .WithMany(p => p.DuenoMuestras)
-                    .HasForeignKey(d => d.IdProveedor)
-                    .HasConstraintName("FK_maestro_DuenoMuestra_idProveedor");
             });
 
             modelBuilder.Entity<Empresa>(entity =>
@@ -614,7 +601,7 @@ namespace Paltarumi.Acopio.Repository.Data
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
                 entity.Property(e => e.CodigoHash)
-                    .HasMaxLength(256)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("codigoHash");
 

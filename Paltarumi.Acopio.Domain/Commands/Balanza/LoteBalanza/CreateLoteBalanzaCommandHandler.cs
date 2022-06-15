@@ -65,7 +65,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             var idConductores = ticketDetails?.Select(x => x.IdConductor) ?? new List<int>();
             var conductores = await _conductorRepository.FindByAsNoTrackingAsync(x => idConductores.Contains(x.IdConductor));
 
-            var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto?.IdProveedor);
+            var duenoMuestra = await GetOrCreateDuenoMuestra(loteBalanza.IdProveedor);
 
             if (loteBalanza != null && _mediator != null)
             {
@@ -119,16 +119,16 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                     FechaRecepcion = DateTime.Now,
                     HoraRecepcion = DateTime.Now.ToString("HH:mm"),
                     CodigoPlanta = loteBalanza.Codigo,
-                    CodigoMuestra =String.Empty,
-                    CodigoHash= Convert.ToBase64String(bytes),
-                    EnsayoLeyAu=false,
-                    EnsayoLeyAg=false,
-                    EnsayoPorcentajeRecuperacion=false,
-                    EnsayoConsumo=false,
-                    IdEstado=1,
-                    IdUsuarioCreate=1,
-                    CreateDate= DateTime.Now,
-                    Activo=true
+                    CodigoMuestra = String.Empty,
+                    CodigoHash = Convert.ToBase64String(bytes),
+                    EnsayoLeyAu = false,
+                    EnsayoLeyAg = false,
+                    EnsayoPorcentajeRecuperacion = false,
+                    EnsayoConsumo = false,
+                    IdEstado = 1,
+                    IdUsuarioCreate = 1,
+                    CreateDate = DateTime.Now,
+                    Activo = true
                 };
 
                 await _loteCodigoRepository.AddAsync(loteCodigo);
@@ -152,22 +152,24 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         private async Task<Entity.DuenoMuestra> GetOrCreateDuenoMuestra(int? idProveedor)
         {
             var duenoMuestra = default(Entity.DuenoMuestra);
+            var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
 
-            if (idProveedor.HasValue == true)
-                duenoMuestra = await _duenoMuestraRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
+            if (proveedor != null)
+                duenoMuestra = await _duenoMuestraRepository.GetByAsNoTrackingAsync(x => x.Numero == proveedor.Ruc &&
+                                                                                    x.CodigoTipoDocumento == Constants.TipoDocumento.RUC);
 
-            if(duenoMuestra != null)
+            if (duenoMuestra != null)
                 return duenoMuestra;
 
-            var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
+            //var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
 
             duenoMuestra = new Entity.DuenoMuestra
             {
-                IdProveedor = idProveedor,
+                //IdProveedor = idProveedor,
                 CodigoTipoDocumento = Constants.TipoDocumento.RUC,
                 Numero = proveedor?.Ruc ?? string.Empty,
                 Nombres = proveedor?.RazonSocial ?? string.Empty,
-                CodigoUbigeo = proveedor?.CodigoUbigeo ?? string.Empty,
+                //CodigoUbigeo = proveedor?.CodigoUbigeo ?? string.Empty,
                 Direccion = proveedor?.Direccion ?? string.Empty,
                 Telefono = proveedor?.Telefono ?? string.Empty,
                 Email = proveedor?.Email ?? string.Empty,
