@@ -7,7 +7,7 @@ namespace Paltarumi.Acopio.Entity
     {
         public DuenoMuestra()
         {
-            LeyReferencials = new HashSet<LeyReferencial>();
+            LoteCodigos = new HashSet<LoteCodigo>();
         }
 
         public int IdDuenoMuestra { get; set; }
@@ -22,6 +22,6 @@ namespace Paltarumi.Acopio.Entity
         public bool Activo { get; set; }
 
         public virtual Proveedor? IdProveedorNavigation { get; set; }
-        public virtual ICollection<LeyReferencial> LeyReferencials { get; set; }
+        public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
     }
 }

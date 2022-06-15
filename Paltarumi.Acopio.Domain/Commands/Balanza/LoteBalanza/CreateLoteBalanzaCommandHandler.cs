@@ -107,7 +107,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                     IdLoteBalanza = loteBalanza.IdLoteBalanza,
                     CreateDate = DateTime.Now,
                     FechaRecepcion = DateTime.Now,
-                    Codigo = codigo,
+                    CodigoPlanta = codigo,
                     CodigoHash = Convert.ToBase64String(bytes),
                     IdEstado = 1,
                     Activo = true

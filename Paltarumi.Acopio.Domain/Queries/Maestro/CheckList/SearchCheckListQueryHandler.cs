@@ -28,17 +28,40 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
 
             var filters = request.SearchParams?.Filter;
 
-            if (filters?.IdCheckList.HasValue == true)
-                filter = filter.And(x => x.IdCheckList == filters.IdCheckList.Value);
+            if (filters?.FechaDesde.HasValue == true || filters?.FechaHasta.HasValue == true)
+            {
+                if (filters?.FechaDesde.HasValue == true)
+                {
+                    var fechaDesde = filters.FechaDesde.Value.Date;
+                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde || x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde));
+                }
 
-            if (filters?.Activo.HasValue == true)
-                filter = filter.And(x => x.Activo == filters.Activo.Value);
+                if (filters?.FechaHasta.HasValue == true)
+                {
+                    var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaAcopio < fechaHasta || x.IdLoteBalanzaNavigation.FechaAcopio < fechaHasta));
+                }
+            }
+            if (!string.IsNullOrEmpty(filters?.Codigo))
+                filter = filter.And(x => x.IdLoteBalanzaNavigation.Codigo.Contains(filters.Codigo));
+
+            if (!string.IsNullOrEmpty(filters?.Proveedor))
+            {
+                var proveedores = filters.Proveedor.Split(" ");
+                proveedores.ToList().ForEach(p =>
+                {
+                    filter = filter.And(x =>
+                    (x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(p) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(p)));
+                });
+            }
 
             var checklists = await _checklistRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
-                filter
+                filter,
+                x =>x.IdLoteBalanzaNavigation.IdProveedorNavigation,
+                x =>x.IdLoteBalanzaNavigation
             );
 
             var checklistDtos = _mapper?.Map<IEnumerable<SearchCheckListDto>>(checklists.Items);
