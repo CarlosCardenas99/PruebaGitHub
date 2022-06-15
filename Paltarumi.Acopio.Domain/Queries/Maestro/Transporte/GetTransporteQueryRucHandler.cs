@@ -42,7 +42,6 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                     var provincia = result.sunatVo.provincia ?? string.Empty;
                     var distrito = result.sunatVo.distrito ?? string.Empty;
 
-
                     var ubigeo = await _ubigeoRepository.GetByAsync(x =>
                        string.Equals(x.Departamento.ToLower(), departamento.ToLower()) &&
                        string.Equals(x.Provincia.ToLower(), provincia.ToLower()) &&
@@ -62,7 +61,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 
                     transporteDto = _mapper?.Map<GetTransporteDto>(transporte);
 
-                    response.UpdateData(transporteDto);
+                    if (transporteDto != null) response.UpdateData(transporteDto);
                 }
                 else
                 {
