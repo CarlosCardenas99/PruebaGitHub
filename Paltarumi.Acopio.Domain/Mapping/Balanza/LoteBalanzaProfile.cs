@@ -19,6 +19,9 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
             CreateMap<Entity.LoteBalanza, GetLoteBalanzaDto>()
                 .ReverseMap();
 
+            CreateMap<Entity.LoteBalanza, GetLoteBalanzaCodigoDto>()
+                .ReverseMap();
+
             CreateMap<Entity.LoteBalanza, GetLoteBalanzaCheckListDto>()
                 .ReverseMap();
 

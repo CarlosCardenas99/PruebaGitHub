@@ -11,13 +11,16 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
     public class SearchCheckListQueryHandler : SearchQueryHandlerBase<SearchCheckListQuery, SearchCheckListFilterDto, SearchCheckListDto>
     {
         private readonly IRepositoryBase<Entity.CheckList> _checklistRepository;
+        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
 
         public SearchCheckListQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.CheckList> checklistRepository
+            IRepositoryBase<Entity.CheckList> checklistRepository,
+            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository
         ) : base(mapper)
         {
             _checklistRepository = checklistRepository;
+            _loteBalanzaRepository = loteBalanzaRepository;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchCheckListDto>>> HandleQuery(SearchCheckListQuery request, CancellationToken cancellationToken)
@@ -33,13 +36,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
                 if (filters?.FechaDesde.HasValue == true)
                 {
                     var fechaDesde = filters.FechaDesde.Value.Date;
-                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde || x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde));
+                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaIngreso >= fechaDesde));
                 }
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
                     var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
-                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaAcopio < fechaHasta || x.IdLoteBalanzaNavigation.FechaAcopio < fechaHasta));
+                    filter = filter.And(x => (x.IdLoteBalanzaNavigation.FechaAcopio < fechaHasta));
                 }
             }
             if (!string.IsNullOrEmpty(filters?.Codigo))
