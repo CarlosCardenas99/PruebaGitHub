@@ -37,17 +37,29 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
                 var result = sunat.ConsultaRuc(request.Ruc);
                 if (result.response.responseCode == 0)
                 {
+                    var departamento = result.sunatVo.departamento ?? string.Empty;
+                    var provincia = result.sunatVo.provincia ?? string.Empty;
+                    var distrito = result.sunatVo.distrito ?? string.Empty;
 
                     var ubigeo = await _ubigeoRepository.GetByAsync(x =>
-                        x.Departamento.ToLower().Equals(result.sunatVo.departamento.ToLower()) &&
-                        x.Provincia.ToLower().Equals(result.sunatVo.provincia.ToLower()) &&
-                        x.Distrito.ToLower().Equals(result.sunatVo.distrito.ToLower())
+                       string.Equals(x.Departamento.ToLower(), departamento.ToLower()) &&
+                       string.Equals(x.Provincia.ToLower(), provincia.ToLower()) &&
+                       string.Equals(x.Distrito.ToLower(), distrito.ToLower())
                     );
+
                     if (ubigeo == null) ubigeo = new Entity.Ubigeo();
+
                     proveedor = mapperCreateProveedorDto(result.sunatVo, ubigeo);
+
+                    proveedor.Direccion ??= string.Empty;
+                    proveedor.Telefono ??= string.Empty;
+                    proveedor.Email ??= string.Empty;
+
                     await _proveedorRepository.AddAsync(proveedor);
                     await _proveedorRepository.SaveAsync();
+
                     proveedorDto = _mapper?.Map<GetProveedorDto>(proveedor);
+
                     if( proveedorDto != null ) response.UpdateData(proveedorDto);
                 }
                 else
@@ -66,16 +78,15 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
         }
 
         private Entity.Proveedor mapperCreateProveedorDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo? ubigeo)
-        {
-            Entity.Proveedor proveedor = new Entity.Proveedor();
-            proveedor.Ruc = sunatVo.ruc;
-            proveedor.RazonSocial = sunatVo.razonSocial;
-            proveedor.CodigoUbigeo = ubigeo?.CodigoUbigeo ?? null;
-            proveedor.Direccion = sunatVo.direccion;
-            proveedor.Email = String.Empty;
-            proveedor.Telefono = String.Empty;
-            proveedor.Activo = true;
-            return proveedor;
-        }
+            => new Entity.Proveedor
+            {
+                Ruc = sunatVo.ruc,
+                RazonSocial = sunatVo.razonSocial,
+                CodigoUbigeo = ubigeo?.CodigoUbigeo ?? null,
+                Direccion = sunatVo.direccion,
+                Email = String.Empty,
+                Telefono = String.Empty,
+                Activo = true
+            };
     }
 }
