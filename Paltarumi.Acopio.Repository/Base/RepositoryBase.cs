@@ -2,6 +2,7 @@
 using Paltarumi.Acopio.Entity.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
+using Paltarumi.Acopio.Repository.Security;
 using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Repository.Base
@@ -9,9 +10,13 @@ namespace Paltarumi.Acopio.Repository.Base
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
         protected readonly DbContext _dbContext;
+        protected readonly IUserIdentity _userIdentity;
 
-        public RepositoryBase(DbContext dbContext)
-            => _dbContext = dbContext;
+        public RepositoryBase(DbContext dbContext, IUserIdentity userIdentity)
+        {
+            _dbContext = dbContext;
+            _userIdentity = userIdentity;
+        }
 
         public async Task<TEntity?> AddAsync(TEntity entity)
         {

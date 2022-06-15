@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Paltarumi.Acopio.Repository.Data;
+using Paltarumi.Acopio.Repository.Security;
+using System.Text;
 
 namespace Paltarumi.Acopio.Apis.Security
 {
@@ -8,10 +12,12 @@ namespace Paltarumi.Acopio.Apis.Security
     {
         public static IServiceCollection UseSecurity(this IServiceCollection services, IConfiguration configuration)
         {
+            #region SecurityDbContext
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-
             services.AddSqlServer<SecurityDbContext>(connectionString, b => b.MigrationsAssembly("Paltarumi.Acopio.Apis"));
+            #endregion
 
+            #region IdentityOptions
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
@@ -30,7 +36,9 @@ namespace Paltarumi.Acopio.Apis.Security
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(configuration.GetValue<int>("SignInOptions:LockoutDefaultTimeSpanInMinutes"));
                 }
             });
+            #endregion
 
+            #region ApplicationCookie
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
@@ -42,7 +50,9 @@ namespace Paltarumi.Acopio.Apis.Security
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+            #endregion
 
+            #region Identity
             services
                 .AddIdentity<Entity.ApplicationUser, Entity.ApplicationRole>(config =>
                 {
@@ -51,6 +61,33 @@ namespace Paltarumi.Acopio.Apis.Security
                 })
                 .AddEntityFrameworkStores<SecurityDbContext>()
                 .AddDefaultTokenProviders();
+            #endregion
+
+            #region Authentication
+            var validIssuer = configuration.GetValue<string>("SecurityOptions:Issuer");
+            var validAudience = configuration.GetValue<string>("SecurityOptions:Audience");
+            var securityKey = configuration.GetValue<string>("SecurityOptions:SecurityKey");
+
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = validAudience,
+                        ValidIssuer = validIssuer,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(securityKey))
+                    };
+                });
+            #endregion
+
+            #region UserIdentity
+            services.AddScoped<IUserIdentity, UserIdentity>();
+            #endregion
 
             return services;
         }

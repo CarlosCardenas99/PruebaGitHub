@@ -2,6 +2,15 @@
 {
     public class Constants
     {
+
+        public struct Security
+        {
+            public struct User
+            {
+                public const string Admin = "admin";
+            }
+        }
+
         public struct LoteCodigo
         {
             public const string Caracteres = "0123456789";

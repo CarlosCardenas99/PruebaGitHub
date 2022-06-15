@@ -197,6 +197,9 @@
   <data name="Login2FARequired" xml:space="preserve">
     <value>Se requiere autencticación en dos pasos</value>
   </data>
+  <data name="LoginAccessTokenError" xml:space="preserve">
+    <value>Ocurrió un error generando el token</value>
+  </data>
   <data name="LoginEmailNotConfirmed" xml:space="preserve">
     <value>El correo no ha sido confirmado</value>
   </data>
