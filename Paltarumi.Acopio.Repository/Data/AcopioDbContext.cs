@@ -45,7 +45,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -614,7 +614,7 @@ namespace Paltarumi.Acopio.Repository.Data
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
                 entity.Property(e => e.CodigoHash)
-                    .HasMaxLength(10)
+                    .HasMaxLength(256)
                     .IsUnicode(false)
                     .HasColumnName("codigoHash");
 
