@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using MediatR;
+using Paltarumi.Acopio.Common;
 using Paltarumi.Acopio.Domain.Commands.Base;
+using Paltarumi.Acopio.Domain.Commands.Common;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
@@ -20,13 +23,14 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         public UpdateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IMediator mediator,
             UpdateLoteBalanzaCommandValidator validator,
             IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
             IRepositoryBase<Entity.Ticket> ticketRepository,
             IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
             IRepositoryBase<Entity.Transporte> transporteRepository,
             IRepositoryBase<Entity.Conductor> conductorRepository
-        ) : base(unitOfWork, mapper, validator)
+        ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
             _ticketRepository = ticketRepository;
@@ -104,12 +108,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 var newTickets = _mapper?.Map<IEnumerable<Entity.Ticket>>(newTicketDtos) ??
                     new List<Entity.Ticket>();
 
-                newTickets.ToList().ForEach(t =>
+                foreach(var newTicket in newTickets)
                 {
-                    t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
-                    t.IdLoteBalanzaNavigation = null;
-                    t.Activo = true;
-                });
+                    newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
+                    newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
+                    newTicket.IdLoteBalanzaNavigation = null;
+                    newTicket.Activo = true;
+                };
 
                 await _ticketRepository.AddAsync(newTickets.ToArray());
 
