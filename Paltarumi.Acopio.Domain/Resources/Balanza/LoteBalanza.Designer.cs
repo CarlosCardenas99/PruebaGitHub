@@ -61,6 +61,15 @@ namespace Paltarumi.Acopio.Domain.Resources.Balanza {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Codigo de lote no encontrada.
+        /// </summary>
+        internal static string Codigo {
+            get {
+                return ResourceManager.GetString("Codigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a IdLoteBalanza.
         /// </summary>
         internal static string IdLoteBalanza {

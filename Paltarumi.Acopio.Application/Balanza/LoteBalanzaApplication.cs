@@ -27,6 +27,11 @@ namespace Paltarumi.Acopio.Application.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
             => await _mediator.Send(new GetLoteBalanzaQuery(id));
 
+        public async Task<ResponseDto<GetLoteBalanzaCodigoDto>> GetbyCodigo(string codigo)
+            => await _mediator.Send(new GetLoteBalanzaByCodigoQuery(codigo));
+
+
+
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()
             => await _mediator.Send(new ListLoteBalanzaQuery());
 
@@ -41,5 +46,7 @@ namespace Paltarumi.Acopio.Application.Balanza
 
         public async Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto)
             => await _mediator.Send(new UpdateLoteBalanzaCheckListCommand(updateDto));
+
+        
     }
 }

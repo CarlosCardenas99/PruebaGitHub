@@ -35,6 +35,13 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
             => await _loteBalanzaApplication.Get(id);
 
+        //------------------------------------------------------------------
+        [HttpGet("bycodigo/{codigo}")]
+        public async Task<ResponseDto<GetLoteBalanzaCodigoDto>> GetbyCodigo(string codigo)
+            => await _loteBalanzaApplication.GetbyCodigo(codigo);
+
+        //----------------------------------------------------------
+
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()
             => await _loteBalanzaApplication.List();
