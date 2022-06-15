@@ -21,6 +21,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
         private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
         private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenoMuestraRepository;
+        private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
@@ -32,7 +34,9 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             IRepositoryBase<Entity.Maestro> maestroRepository,
             IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
             IRepositoryBase<Entity.Transporte> transporteRepository,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepositoryBase<Entity.Conductor> conductorRepository,
+            IRepositoryBase<Entity.DuenoMuestra> duenoMuestraRepository,
+            IRepositoryBase<Entity.Proveedor> proveedorRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteCodigoRepository = loteCodigoRepository;
@@ -41,6 +45,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             _vehiculoRepository = vehiculoRepository;
             _transporteRepository = transporteRepository;
             _conductorRepository = conductorRepository;
+            _duenoMuestraRepository = duenoMuestraRepository;
+            _proveedorRepository = proveedorRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -59,6 +65,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             var idConductores = ticketDetails?.Select(x => x.IdConductor) ?? new List<int>();
             var conductores = await _conductorRepository.FindByAsNoTrackingAsync(x => idConductores.Contains(x.IdConductor));
 
+            var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto?.IdProveedor);
+
             if (loteBalanza != null && _mediator != null)
             {
                 // Actualizar la serie harcoded
@@ -69,14 +77,14 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
 
-                foreach(var ticket in loteBalanza.Tickets)
+                foreach (var ticket in loteBalanza.Tickets)
                 {
                     ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
                     ticket.Activo = true;
                 }
 
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                    x.CodigoTabla == Constants.Maestro.CodigoTabla.ESTADO_LOTE && 
+                    x.CodigoTabla == Constants.Maestro.CodigoTabla.ESTADO_LOTE &&
                     x.CodigoItem == Constants.Maestro.EstadoLote.EN_ESPERA
                  );
 
@@ -94,7 +102,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateTms100();
                 loteBalanza.UpdateTmsBase();
                 loteBalanza.UpdateNumeroTickets();
-                if ( estadoLote != null ) loteBalanza.IdEstado = estadoLote.IdMaestro;
+                if (estadoLote != null) loteBalanza.IdEstado = estadoLote.IdMaestro;
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
@@ -104,13 +112,23 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
                 var loteCodigo = new Entity.LoteCodigo
                 {
+                    //IdLoteCodigo
                     IdLoteBalanza = loteBalanza.IdLoteBalanza,
-                    CreateDate = DateTime.Now,
+                    IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
+                    IdTipoLoteCodigo = 1,
                     FechaRecepcion = DateTime.Now,
-                    CodigoPlanta = codigo,
-                    CodigoHash = Convert.ToBase64String(bytes),
-                    IdEstado = 1,
-                    Activo = true
+                    HoraRecepcion = DateTime.Now.ToString("HH:mm"),
+                    CodigoPlanta = loteBalanza.Codigo,
+                    CodigoMuestra =String.Empty,
+                    CodigoHash= Convert.ToBase64String(bytes),
+                    EnsayoLeyAu=false,
+                    EnsayoLeyAg=false,
+                    EnsayoPorcentajeRecuperacion=false,
+                    EnsayoConsumo=false,
+                    IdEstado=1,
+                    IdUsuarioCreate=1,
+                    CreateDate= DateTime.Now,
+                    Activo=true
                 };
 
                 await _loteCodigoRepository.AddAsync(loteCodigo);
@@ -129,6 +147,37 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             }
 
             return response;
+        }
+
+        private async Task<Entity.DuenoMuestra> GetOrCreateDuenoMuestra(int? idProveedor)
+        {
+            var duenoMuestra = default(Entity.DuenoMuestra);
+
+            if (idProveedor.HasValue == true)
+                duenoMuestra = await _duenoMuestraRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
+
+            if(duenoMuestra != null)
+                return duenoMuestra;
+
+            var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
+
+            duenoMuestra = new Entity.DuenoMuestra
+            {
+                IdProveedor = idProveedor,
+                CodigoTipoDocumento = Constants.TipoDocumento.RUC,
+                Numero = proveedor?.Ruc ?? string.Empty,
+                Nombres = proveedor?.RazonSocial ?? string.Empty,
+                CodigoUbigeo = proveedor?.CodigoUbigeo ?? string.Empty,
+                Direccion = proveedor?.Direccion ?? string.Empty,
+                Telefono = proveedor?.Telefono ?? string.Empty,
+                Email = proveedor?.Email ?? string.Empty,
+                Activo = true
+            };
+
+            await _duenoMuestraRepository.AddAsync(duenoMuestra);
+            await _duenoMuestraRepository.SaveAsync();
+
+            return duenoMuestra;
         }
     }
 }

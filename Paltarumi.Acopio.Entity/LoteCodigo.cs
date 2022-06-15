@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Entity
         public bool Activo { get; set; }
 
         public virtual DuenoMuestra IdDuenoMuestraNavigation { get; set; } = null!;
-        public virtual LoteBalanza IdLoteBalanzaNavigation { get; set; } = null!;
+        public virtual LoteBalanza? IdLoteBalanzaNavigation { get; set; }
         public virtual Maestro IdTipoLoteCodigoNavigation { get; set; } = null!;
     }
 }
