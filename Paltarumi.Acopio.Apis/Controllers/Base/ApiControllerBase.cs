@@ -52,5 +52,20 @@ namespace Paltarumi.Acopio.Apis.Controllers.Base
             response.UpdateData(Encoding.UTF8.GetBytes(reponseDto?.Data ?? string.Empty));
             return await DownloadFile(response, fileName);
         }
+
+        protected async Task<FileStreamResult> ViewFile(ResponseDto<byte[]> reponseDto, string fileName)
+        {
+            byte[] bytes = reponseDto?.Data ?? new byte[0];
+            var memoryStream = new MemoryStream(bytes);
+            try
+            {
+                return await Task.FromResult(new FileStreamResult(memoryStream, "application/pdf"));
+            }
+            catch
+            {
+                memoryStream.Dispose();
+                throw;
+            }
+        }
     }
 }

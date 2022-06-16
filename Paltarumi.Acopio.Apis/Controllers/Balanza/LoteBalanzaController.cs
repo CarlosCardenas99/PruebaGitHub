@@ -54,9 +54,16 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaChecklistDto>>> SearchWithCheckList(SearchParamsDto<SearchLoteBalanzaChecklistFilterDto> searchParams)
             => await _loteBalanzaApplication.SearchWithCheckList(searchParams);
 
-        [HttpGet("report/{id}")]
+        [HttpGet("download-report/{id}")]
         public async Task<FileResult> ExportReport(int id)
             => await DownloadFile(
+                await _loteBalanzaApplication.ExportReport(GetSettingFilePath("ReportOptions:BalanzaFolder", "LoteReport.trdp"), id),
+                "LoteReport.pdf"
+            );
+
+        [HttpGet("view-report/{id}")]
+        public async Task<IActionResult> ViewReport(int id)
+            => await ViewFile(
                 await _loteBalanzaApplication.ExportReport(GetSettingFilePath("ReportOptions:BalanzaFolder", "LoteReport.trdp"), id),
                 "LoteReport.pdf"
             );
