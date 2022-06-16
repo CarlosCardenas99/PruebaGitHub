@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 {
     public class GetConcesionQueryValidator : QueryValidatorBase<GetConcesionQuery>
     {
-        private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
+        private readonly IRepository<Entity.Concesion> _concesionRepository;
 
-        public GetConcesionQueryValidator(IRepositoryBase<Entity.Concesion> concesionRepository)
+        public GetConcesionQueryValidator(IRepository<Entity.Concesion> concesionRepository)
         {
             _concesionRepository = concesionRepository;
 

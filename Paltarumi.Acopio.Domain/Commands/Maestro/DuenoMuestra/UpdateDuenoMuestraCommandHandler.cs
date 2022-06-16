@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.DuenoMuestra
 {
     public class UpdateDuenoMuestraCommandHandler : CommandHandlerBase<UpdateDuenoMuestraCommand, GetDuenoMuestraDto>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenomuestraRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenomuestraRepository;
 
         public UpdateDuenoMuestraCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateDuenoMuestraCommandValidator validator,
-            IRepositoryBase<Entity.DuenoMuestra> duenomuestraRepository
+            IRepository<Entity.DuenoMuestra> duenomuestraRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _duenomuestraRepository = duenomuestraRepository;

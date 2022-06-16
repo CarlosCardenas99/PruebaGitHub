@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Transporte
 {
     public class ListTransporteQueryHandler : QueryHandlerBase<ListTransporteQuery, IEnumerable<ListTransporteDto>>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _repository;
+        private readonly IRepository<Entity.Transporte> _repository;
 
         public ListTransporteQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Transporte> repository
+            IRepository<Entity.Transporte> repository
         ) : base(mapper)
         {
             _repository = repository;

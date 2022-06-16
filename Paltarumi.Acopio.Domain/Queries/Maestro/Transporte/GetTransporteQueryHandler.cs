@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Transporte
 {
     public class GetTransporteQueryHandler : QueryHandlerBase<GetTransporteQuery, GetTransporteDto>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
 
         public GetTransporteQueryHandler(
             IMapper mapper,
             GetTransporteQueryValidator validator,
-            IRepositoryBase<Entity.Transporte> transporteRepository
+            IRepository<Entity.Transporte> transporteRepository
         ) : base(mapper, validator)
         {
             _transporteRepository = transporteRepository;

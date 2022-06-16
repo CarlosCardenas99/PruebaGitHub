@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ProveedorConcesion
 {
     public class DeleteProveedorConcesionCommandValidator : CommandValidatorBase<DeleteProveedorConcesionCommand>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _repositoryBase;
-        public DeleteProveedorConcesionCommandValidator(IRepositoryBase<Entity.ProveedorConcesion> repositoryBase)
+        private readonly IRepository<Entity.ProveedorConcesion> _repositoryBase;
+        public DeleteProveedorConcesionCommandValidator(IRepository<Entity.ProveedorConcesion> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

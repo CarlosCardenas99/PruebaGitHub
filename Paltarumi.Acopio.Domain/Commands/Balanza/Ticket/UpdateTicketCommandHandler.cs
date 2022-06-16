@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
 {
     public class UpdateTicketCommandHandler : CommandHandlerBase<UpdateTicketCommand, GetTicketDto>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public UpdateTicketCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateTicketCommandValidator validator,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _ticketRepository = ticketRepository;

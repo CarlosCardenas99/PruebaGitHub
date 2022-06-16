@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
@@ -12,11 +8,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
     public class ListTicketQueryHandler : QueryHandlerBase<ListTicketQuery, IEnumerable<ListTicketDto>>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public ListTicketQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(mapper)
         {
             _ticketRepository = ticketRepository;

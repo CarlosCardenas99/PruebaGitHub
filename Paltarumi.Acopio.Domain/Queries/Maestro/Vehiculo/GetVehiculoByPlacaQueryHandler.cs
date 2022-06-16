@@ -1,6 +1,6 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {
     public class GetVehiculoByPlacaQueryHandler : QueryHandlerBase<GetVehiculoByPlacaQuery, GetVehiculoDto>
     {
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public GetVehiculoByPlacaQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(mapper)
         {
             _vehiculoRepository = vehiculoRepository;

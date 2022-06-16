@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.TipoDocumento
 {
     public class GetTipoDocumentoQueryValidator : QueryValidatorBase<GetTipoDocumentoQuery>
     {
-        private readonly IRepositoryBase<Entity.TipoDocumento> _tipodocumentoRepository;
+        private readonly IRepository<Entity.TipoDocumento> _tipodocumentoRepository;
 
-        public GetTipoDocumentoQueryValidator(IRepositoryBase<Entity.TipoDocumento> tipodocumentoRepository)
+        public GetTipoDocumentoQueryValidator(IRepository<Entity.TipoDocumento> tipodocumentoRepository)
         {
             _tipodocumentoRepository = tipodocumentoRepository;
 

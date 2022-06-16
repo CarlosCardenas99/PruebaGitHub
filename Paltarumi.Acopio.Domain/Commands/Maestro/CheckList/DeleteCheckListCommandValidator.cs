@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.CheckList
 {
     public class DeleteCheckListCommandValidator : CommandValidatorBase<DeleteCheckListCommand>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _repositoryBase;
-        public DeleteCheckListCommandValidator(IRepositoryBase<Entity.CheckList> repositoryBase)
+        private readonly IRepository<Entity.CheckList> _repositoryBase;
+        public DeleteCheckListCommandValidator(IRepository<Entity.CheckList> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck
 {
     public class DeleteItemCheckCommandValidator : CommandValidatorBase<DeleteItemCheckCommand>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _repositoryBase;
-        public DeleteItemCheckCommandValidator(IRepositoryBase<Entity.ItemCheck> repositoryBase)
+        private readonly IRepository<Entity.ItemCheck> _repositoryBase;
+        public DeleteItemCheckCommandValidator(IRepository<Entity.ItemCheck> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

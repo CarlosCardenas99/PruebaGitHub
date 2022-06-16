@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class ExportLoteBalanzaReportCommandValidator : CommandValidatorBase<ExportLoteBalanzaReportCommand>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _repositoryBase;
-        public ExportLoteBalanzaReportCommandValidator(IRepositoryBase<Entity.LoteBalanza> repositoryBase)
+        private readonly IRepository<Entity.LoteBalanza> _repositoryBase;
+        public ExportLoteBalanzaReportCommandValidator(IRepository<Entity.LoteBalanza> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

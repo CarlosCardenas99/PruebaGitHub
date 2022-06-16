@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Repository.Abstractions.Base
 {
-    public interface IRepositoryBase<TEntity>
+    public interface IRepository<TEntity>
     {
         Task<TEntity?> AddAsync(TEntity entity);
         Task<IEnumerable<TEntity>?> AddAsync(params TEntity[] entities);

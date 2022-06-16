@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
 {
     public class GetDuenoMuestraQueryValidator : QueryValidatorBase<GetDuenoMuestraQuery>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenomuestraRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenomuestraRepository;
 
-        public GetDuenoMuestraQueryValidator(IRepositoryBase<Entity.DuenoMuestra> duenomuestraRepository)
+        public GetDuenoMuestraQueryValidator(IRepository<Entity.DuenoMuestra> duenomuestraRepository)
         {
             _duenomuestraRepository = duenomuestraRepository;
 

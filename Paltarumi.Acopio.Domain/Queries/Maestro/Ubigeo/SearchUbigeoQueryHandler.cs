@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Ubigeo
 {
     public class SearchUbigeoQueryHandler : SearchQueryHandlerBase<SearchUbigeoQuery, UbigeoFilterDto, SearchUbigeoDto>
     {
-        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
+        private readonly IRepository<Entity.Ubigeo> _ubigeoRepository;
 
         public SearchUbigeoQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Ubigeo> ubigeoRepository
+            IRepository<Entity.Ubigeo> ubigeoRepository
         ) : base(mapper)
         {
             _ubigeoRepository = ubigeoRepository;

@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Transporte
 {
     public class GetTransporteQueryValidator : QueryValidatorBase<GetTransporteQuery>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
 
-        public GetTransporteQueryValidator(IRepositoryBase<Entity.Transporte> transporteRepository)
+        public GetTransporteQueryValidator(IRepository<Entity.Transporte> transporteRepository)
         {
             _transporteRepository = transporteRepository;
 

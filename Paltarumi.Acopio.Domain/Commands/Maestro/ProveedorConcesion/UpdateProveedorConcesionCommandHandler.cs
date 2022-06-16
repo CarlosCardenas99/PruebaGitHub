@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ProveedorConcesion
 {
     public class UpdateProveedorConcesionCommandHandler : CommandHandlerBase<UpdateProveedorConcesionCommand, GetProveedorConcesionDto>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
+        private readonly IRepository<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
         public UpdateProveedorConcesionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateProveedorConcesionCommandValidator validator,
-            IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository
+            IRepository<Entity.ProveedorConcesion> proveedorconcesionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;

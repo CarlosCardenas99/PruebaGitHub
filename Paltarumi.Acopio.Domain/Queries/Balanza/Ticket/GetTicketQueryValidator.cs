@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
     public class GetTicketQueryValidator : QueryValidatorBase<GetTicketQuery>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
-        public GetTicketQueryValidator(IRepositoryBase<Entity.Ticket> ticketRepository)
+        public GetTicketQueryValidator(IRepository<Entity.Ticket> ticketRepository)
         {
             _ticketRepository = ticketRepository;
 

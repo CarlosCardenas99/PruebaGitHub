@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Commands.Security.Token;
 using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Security.Token;
 using Paltarumi.Acopio.Domain.Dto.Security.User;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 

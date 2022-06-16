@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
     public class ListConductorQueryHandler : QueryHandlerBase<ListConductorQuery, IEnumerable<ListConductorDto>>
     {
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public ListConductorQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepository<Entity.Conductor> conductorRepository
         ) : base(mapper)
         {
             _conductorRepository = conductorRepository;

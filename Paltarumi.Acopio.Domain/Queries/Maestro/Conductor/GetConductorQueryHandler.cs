@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
 {
     public class GetConductorQueryHandler : QueryHandlerBase<GetConductorQuery, GetConductorDto>
     {
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public GetConductorQueryHandler(
             IMapper mapper,
             GetConductorQueryValidator validator,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepository<Entity.Conductor> conductorRepository
         ) : base(mapper, validator)
         {
             _conductorRepository = conductorRepository;

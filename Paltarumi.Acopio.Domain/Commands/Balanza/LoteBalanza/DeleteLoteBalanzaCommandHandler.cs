@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class DeleteLoteBalanzaCommandHandler : CommandHandlerBase<DeleteLoteBalanzaCommand>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
         public DeleteLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteLoteBalanzaCommandValidator validator,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
 {
     public class DeleteConductorCommandValidator : CommandValidatorBase<DeleteConductorCommand>
     {
-        private readonly IRepositoryBase<Entity.Conductor> _repositoryBase;
-        public DeleteConductorCommandValidator(IRepositoryBase<Entity.Conductor> repositoryBase)
+        private readonly IRepository<Entity.Conductor> _repositoryBase;
+        public DeleteConductorCommandValidator(IRepository<Entity.Conductor> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

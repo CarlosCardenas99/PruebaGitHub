@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
 {
     public class GetCheckListQueryValidator : QueryValidatorBase<GetCheckListQuery>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _checklistRepository;
+        private readonly IRepository<Entity.CheckList> _checklistRepository;
 
-        public GetCheckListQueryValidator(IRepositoryBase<Entity.CheckList> checklistRepository)
+        public GetCheckListQueryValidator(IRepository<Entity.CheckList> checklistRepository)
         {
             _checklistRepository = checklistRepository;
 

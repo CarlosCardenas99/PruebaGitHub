@@ -15,28 +15,28 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class CreateLoteBalanzaCommandHandler : CommandHandlerBase<CreateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
-        private readonly IRepositoryBase<Entity.LoteCodigo> _loteCodigoRepository;
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenoMuestraRepository;
-        private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entity.LoteCodigo> _loteCodigoRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
+        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             CreateLoteBalanzaCommandValidator validator,
-            IRepositoryBase<Entity.LoteCodigo> loteCodigoRepository,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepositoryBase<Entity.Maestro> maestroRepository,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
-            IRepositoryBase<Entity.Transporte> transporteRepository,
-            IRepositoryBase<Entity.Conductor> conductorRepository,
-            IRepositoryBase<Entity.DuenoMuestra> duenoMuestraRepository,
-            IRepositoryBase<Entity.Proveedor> proveedorRepository
+            IRepository<Entity.LoteCodigo> loteCodigoRepository,
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entity.Maestro> maestroRepository,
+            IRepository<Entity.Vehiculo> vehiculoRepository,
+            IRepository<Entity.Transporte> transporteRepository,
+            IRepository<Entity.Conductor> conductorRepository,
+            IRepository<Entity.DuenoMuestra> duenoMuestraRepository,
+            IRepository<Entity.Proveedor> proveedorRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteCodigoRepository = loteCodigoRepository;

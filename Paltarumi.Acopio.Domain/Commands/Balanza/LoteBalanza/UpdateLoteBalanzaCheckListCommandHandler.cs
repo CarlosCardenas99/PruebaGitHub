@@ -2,10 +2,8 @@
 using Paltarumi.Acopio.Common;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.CheckList;
-using Paltarumi.Acopio.Entity.Extensions;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
@@ -13,20 +11,20 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCheckListCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCheckListCommand, GetLoteBalanzaCheckListDto>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepositoryBase<Entity.CheckList> _checkListRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.CheckList> _checkListRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public UpdateLoteBalanzaCheckListCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepositoryBase<Entity.CheckList> checkListRepository,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
-            IRepositoryBase<Entity.Transporte> transporteRepository,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entity.CheckList> checkListRepository,
+            IRepository<Entity.Vehiculo> vehiculoRepository,
+            IRepository<Entity.Transporte> transporteRepository,
+            IRepository<Entity.Conductor> conductorRepository
         ) : base(unitOfWork, mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

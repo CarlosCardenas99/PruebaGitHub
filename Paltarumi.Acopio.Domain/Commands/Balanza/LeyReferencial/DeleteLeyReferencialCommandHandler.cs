@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LeyReferencial
 {
     public class DeleteLeyReferencialCommandHandler : CommandHandlerBase<DeleteLeyReferencialCommand>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
 
         public DeleteLeyReferencialCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteLeyReferencialCommandValidator validator,
-            IRepositoryBase<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entity.LeyReferencial> leyreferencialRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _leyreferencialRepository = leyreferencialRepository;

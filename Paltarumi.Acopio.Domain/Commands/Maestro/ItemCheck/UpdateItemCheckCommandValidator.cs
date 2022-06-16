@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck
 {
     public class UpdateItemCheckCommandValidator : CommandValidatorBase<UpdateItemCheckCommand>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _repositoryBase;
-        public UpdateItemCheckCommandValidator(IRepositoryBase<Entity.ItemCheck> repositoryBase)
+        private readonly IRepository<Entity.ItemCheck> _repositoryBase;
+        public UpdateItemCheckCommandValidator(IRepository<Entity.ItemCheck> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
 {
     public class ListCheckListQueryHandler : QueryHandlerBase<ListCheckListQuery, IEnumerable<ListCheckListDto>>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _repository;
+        private readonly IRepository<Entity.CheckList> _repository;
 
         public ListCheckListQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.CheckList> repository
+            IRepository<Entity.CheckList> repository
         ) : base(mapper)
         {
             _repository = repository;

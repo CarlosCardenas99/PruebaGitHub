@@ -1,20 +1,20 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Queries.Base;
-using Paltarumi.Acopio.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Domain.Queries.Sunat;
 using Paltarumi.Acopio.Common;
+using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
+using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Domain.Queries.Sunat;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
 {
     public class GetDuenoMuestraByDocumentQueryHandler : QueryHandlerBase<GetDuenoMuestraByDocumentQuery, GetDuenoMuestraDto>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenoMuestraRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
 
         public GetDuenoMuestraByDocumentQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.DuenoMuestra> duenomuestraRepository
+            IRepository<Entity.DuenoMuestra> duenomuestraRepository
         ) : base(mapper)
         {
             _duenoMuestraRepository = duenomuestraRepository;

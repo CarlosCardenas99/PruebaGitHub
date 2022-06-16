@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class UpdateMaestroCommandValidator : CommandValidatorBase<UpdateMaestroCommand>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _repositoryBase;
-        public UpdateMaestroCommandValidator(IRepositoryBase<Entity.Maestro> repositoryBase)
+        private readonly IRepository<Entity.Maestro> _repositoryBase;
+        public UpdateMaestroCommandValidator(IRepository<Entity.Maestro> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

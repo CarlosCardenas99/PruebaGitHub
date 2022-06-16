@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LeyReferencial
 {
     public class UpdateLeyReferencialCommandValidator : CommandValidatorBase<UpdateLeyReferencialCommand>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _repositoryBase;
-        public UpdateLeyReferencialCommandValidator(IRepositoryBase<Entity.LeyReferencial> repositoryBase)
+        private readonly IRepository<Entity.LeyReferencial> _repositoryBase;
+        public UpdateLeyReferencialCommandValidator(IRepository<Entity.LeyReferencial> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

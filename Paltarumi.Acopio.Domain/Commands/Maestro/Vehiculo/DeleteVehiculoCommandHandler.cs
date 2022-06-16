@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
 {
     public class DeleteVehiculoCommandHandler : CommandHandlerBase<DeleteVehiculoCommand>
     {
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public DeleteVehiculoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteVehiculoCommandValidator validator,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _vehiculoRepository = vehiculoRepository;

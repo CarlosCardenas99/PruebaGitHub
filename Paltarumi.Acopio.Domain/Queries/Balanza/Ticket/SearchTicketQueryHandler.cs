@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
     public class SearchTicketQueryHandler : SearchQueryHandlerBase<SearchTicketQuery, SearchTicketFilterDto, SearchTicketDto>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public SearchTicketQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(mapper)
         {
             _ticketRepository = ticketRepository;

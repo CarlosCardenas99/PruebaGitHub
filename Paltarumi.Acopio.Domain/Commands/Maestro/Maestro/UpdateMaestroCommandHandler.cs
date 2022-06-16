@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class UpdateMaestroCommandHandler : CommandHandlerBase<UpdateMaestroCommand, GetMaestroDto>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public UpdateMaestroCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateMaestroCommandValidator validator,
-            IRepositoryBase<Entity.Maestro> maestroRepository
+            IRepository<Entity.Maestro> maestroRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _maestroRepository = maestroRepository;

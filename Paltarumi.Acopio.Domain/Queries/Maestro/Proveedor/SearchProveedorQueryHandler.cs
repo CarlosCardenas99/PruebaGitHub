@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
     public class SearchProveedorQueryHandler : SearchQueryHandlerBase<SearchProveedorQuery, SearchProveedorFilterDto, SearchProveedorDto>
     {
-        private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
 
         public SearchProveedorQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Proveedor> proveedorRepository
+            IRepository<Entity.Proveedor> proveedorRepository
         ) : base(mapper)
         {
             _proveedorRepository = proveedorRepository;

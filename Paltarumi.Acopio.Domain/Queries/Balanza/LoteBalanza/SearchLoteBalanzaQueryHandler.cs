@@ -10,13 +10,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza
 {
     public class SearchLoteBalanzaQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaQuery, SearchLoteBalanzaFilterDto, SearchLoteBalanzaDto>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public SearchLoteBalanzaQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
-             IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+             IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

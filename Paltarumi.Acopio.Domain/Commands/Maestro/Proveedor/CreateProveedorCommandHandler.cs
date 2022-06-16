@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Proveedor
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
 
         public CreateProveedorCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateProveedorCommandValidator validator,
-            IRepositoryBase<Entity.Proveedor> proveedorRepository
+            IRepository<Entity.Proveedor> proveedorRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _proveedorRepository = proveedorRepository;

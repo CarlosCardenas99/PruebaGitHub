@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.CheckList
 {
     public class UpdateCheckListCommandHandler : CommandHandlerBase<UpdateCheckListCommand, GetCheckListDto>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _checklistRepository;
+        private readonly IRepository<Entity.CheckList> _checklistRepository;
 
         public UpdateCheckListCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateCheckListCommandValidator validator,
-            IRepositoryBase<Entity.CheckList> checklistRepository
+            IRepository<Entity.CheckList> checklistRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _checklistRepository = checklistRepository;

@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
 {
     public class DeleteTicketCommandHandler : CommandHandlerBase<DeleteTicketCommand>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public DeleteTicketCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteTicketCommandValidator validator,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _ticketRepository = ticketRepository;

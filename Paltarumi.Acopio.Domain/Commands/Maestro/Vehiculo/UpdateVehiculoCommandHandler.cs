@@ -10,15 +10,15 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
 {
     public class UpdateVehiculoCommandHandler : CommandHandlerBase<UpdateVehiculoCommand, GetVehiculoDto>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public UpdateVehiculoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateVehiculoCommandValidator validator,
-            IRepositoryBase<Entity.Maestro> maestroRepository,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.Maestro> maestroRepository,
+            IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _maestroRepository = maestroRepository;

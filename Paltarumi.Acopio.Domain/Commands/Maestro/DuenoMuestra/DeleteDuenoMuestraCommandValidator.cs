@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.DuenoMuestra
 {
     public class DeleteDuenoMuestraCommandValidator : CommandValidatorBase<DeleteDuenoMuestraCommand>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _repositoryBase;
-        public DeleteDuenoMuestraCommandValidator(IRepositoryBase<Entity.DuenoMuestra> repositoryBase)
+        private readonly IRepository<Entity.DuenoMuestra> _repositoryBase;
+        public DeleteDuenoMuestraCommandValidator(IRepository<Entity.DuenoMuestra> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

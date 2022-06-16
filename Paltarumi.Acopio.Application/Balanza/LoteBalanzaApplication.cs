@@ -47,6 +47,6 @@ namespace Paltarumi.Acopio.Application.Balanza
         public async Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto)
             => await _mediator.Send(new UpdateLoteBalanzaCheckListCommand(updateDto));
 
-        
+
     }
 }

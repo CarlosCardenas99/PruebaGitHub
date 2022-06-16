@@ -2,19 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 {
     public class GetLoteBalanzaByCodigoQueryValidator : QueryValidatorBase<GetLoteBalanzaByCodigoQuery>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
-        public GetLoteBalanzaByCodigoQueryValidator(IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository)
+        public GetLoteBalanzaByCodigoQueryValidator(IRepository<Entity.LoteBalanza> loteBalanzaRepository)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
 

@@ -8,11 +8,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 {
     public class ListProveedorConcesionQueryHandler : QueryHandlerBase<ListProveedorConcesionQuery, IEnumerable<ListProveedorConcesionDto>>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
+        private readonly IRepository<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
         public ListProveedorConcesionQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository
+            IRepository<Entity.ProveedorConcesion> proveedorconcesionRepository
         ) : base(mapper)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;

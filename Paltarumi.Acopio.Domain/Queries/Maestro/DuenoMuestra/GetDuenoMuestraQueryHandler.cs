@@ -1,6 +1,6 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
 {
     public class GetDuenoMuestraQueryHandler : QueryHandlerBase<GetDuenoMuestraQuery, GetDuenoMuestraDto>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenomuestraRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenomuestraRepository;
 
         public GetDuenoMuestraQueryHandler(
             IMapper mapper,
             GetDuenoMuestraQueryValidator validator,
-            IRepositoryBase<Entity.DuenoMuestra> duenomuestraRepository
+            IRepository<Entity.DuenoMuestra> duenomuestraRepository
         ) : base(mapper, validator)
         {
             _duenomuestraRepository = duenomuestraRepository;

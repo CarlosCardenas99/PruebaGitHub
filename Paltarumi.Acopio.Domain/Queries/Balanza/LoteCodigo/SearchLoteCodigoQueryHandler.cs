@@ -1,6 +1,6 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
 {
     public class SearchLoteCodigoQueryHandler : SearchQueryHandlerBase<SearchLoteCodigoQuery, SearchLoteCodigoFilterDto, SearchLoteCodigoDto>
     {
-        private readonly IRepositoryBase<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
 
         public SearchLoteCodigoQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.LoteCodigo> lotecodigoRepository
+            IRepository<Entity.LoteCodigo> lotecodigoRepository
         ) : base(mapper)
         {
             _lotecodigoRepository = lotecodigoRepository;

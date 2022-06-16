@@ -14,11 +14,11 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
     {
         private readonly IMemoryCache _memoryCache;
         private readonly IUbigeoApplication _ubigeoApplication;
-        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepositoryBase;
+        private readonly IRepository<Entity.Ubigeo> _ubigeoRepositoryBase;
 
         public UbigeoController(
             IUbigeoApplication ubigeoApplication,
-            IRepositoryBase<Entity.Ubigeo> ubigeoRepositoryBase
+            IRepository<Entity.Ubigeo> ubigeoRepositoryBase
         )
         {
             _memoryCache = new MemoryCache(new MemoryCacheOptions());

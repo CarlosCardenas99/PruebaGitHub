@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Common;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
@@ -12,11 +11,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class ListMaestroQueryHandler : QueryHandlerBase<ListMaestroQuery, IEnumerable<ListMaestroDto>>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _repository;
+        private readonly IRepository<Entity.Maestro> _repository;
 
         public ListMaestroQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Maestro> repository
+            IRepository<Entity.Maestro> repository
         ) : base(mapper)
         {
             _repository = repository;

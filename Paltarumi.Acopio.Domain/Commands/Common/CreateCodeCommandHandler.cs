@@ -8,11 +8,11 @@ namespace Paltarumi.Acopio.Domain.Commands.Common
     public class CreateCodeCommandHandler : CommandHandlerBase<CreateCodeCommand, string>
     {
 
-        private readonly IRepositoryBase<Entity.Correlativo> _correlativoRepository;
+        private readonly IRepository<Entity.Correlativo> _correlativoRepository;
 
         public CreateCodeCommandHandler(
             IUnitOfWork unitOfWork,
-            IRepositoryBase<Entity.Correlativo> correlativoRepository
+            IRepository<Entity.Correlativo> correlativoRepository
         ) : base(unitOfWork)
         {
             _correlativoRepository = correlativoRepository;

@@ -8,18 +8,18 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 {
-    public class SearchLoteBalanzaCheckListQueryHandler: SearchQueryHandlerBase<SearchLoteBalanzaCheckListQuery, SearchLoteBalanzaChecklistFilterDto, SearchLoteBalanzaChecklistDto>
+    public class SearchLoteBalanzaCheckListQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaCheckListQuery, SearchLoteBalanzaChecklistFilterDto, SearchLoteBalanzaChecklistDto>
     {
 
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemCheckRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemCheckRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public SearchLoteBalanzaCheckListQueryHandler(
            IMapper mapper,
-           IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
-           IRepositoryBase<Entity.ItemCheck> itemCheckRepository,
-             IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+           IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+           IRepository<Entity.ItemCheck> itemCheckRepository,
+             IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

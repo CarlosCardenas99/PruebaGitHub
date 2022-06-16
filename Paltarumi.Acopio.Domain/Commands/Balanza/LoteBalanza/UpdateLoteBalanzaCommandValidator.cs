@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandValidator : CommandValidatorBase<UpdateLoteBalanzaCommand>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _repositoryBase;
-        public UpdateLoteBalanzaCommandValidator(IRepositoryBase<Entity.LoteBalanza> repositoryBase)
+        private readonly IRepository<Entity.LoteBalanza> _repositoryBase;
+        public UpdateLoteBalanzaCommandValidator(IRepository<Entity.LoteBalanza> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

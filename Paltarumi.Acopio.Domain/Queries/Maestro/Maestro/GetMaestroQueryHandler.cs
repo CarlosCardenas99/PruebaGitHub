@@ -1,6 +1,6 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class GetMaestroQueryHandler : QueryHandlerBase<GetMaestroQuery, GetMaestroDto>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public GetMaestroQueryHandler(
             IMapper mapper,
             GetMaestroQueryValidator validator,
-            IRepositoryBase<Entity.Maestro> maestroRepository
+            IRepository<Entity.Maestro> maestroRepository
         ) : base(mapper, validator)
         {
             _maestroRepository = maestroRepository;

@@ -1,21 +1,18 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.ItemCheck;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Repository.Extensions;
-using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 {
     public class ListItemCheckQueryHandler : QueryHandlerBase<ListItemCheckQuery, IEnumerable<ListItemCheckDto>>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _repository;
+        private readonly IRepository<Entity.ItemCheck> _repository;
 
         public ListItemCheckQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.ItemCheck> repository
+            IRepository<Entity.ItemCheck> repository
         ) : base(mapper)
         {
             _repository = repository;

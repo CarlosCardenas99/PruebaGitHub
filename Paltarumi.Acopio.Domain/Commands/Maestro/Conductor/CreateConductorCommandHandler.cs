@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public CreateConductorCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateConductorCommandValidator validator,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepository<Entity.Conductor> conductorRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _conductorRepository = conductorRepository;

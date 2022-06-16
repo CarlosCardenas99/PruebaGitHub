@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteCodigo
 {
     public class DeleteLoteCodigoCommandValidator : CommandValidatorBase<DeleteLoteCodigoCommand>
     {
-        private readonly IRepositoryBase<Entity.LoteCodigo> _repositoryBase;
-        public DeleteLoteCodigoCommandValidator(IRepositoryBase<Entity.LoteCodigo> repositoryBase)
+        private readonly IRepository<Entity.LoteCodigo> _repositoryBase;
+        public DeleteLoteCodigoCommandValidator(IRepository<Entity.LoteCodigo> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

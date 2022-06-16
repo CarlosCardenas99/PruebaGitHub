@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
 {
     public class UpdateConductorCommandValidator : CommandValidatorBase<UpdateConductorCommand>
     {
-        private readonly IRepositoryBase<Entity.Conductor> _repositoryBase;
-        public UpdateConductorCommandValidator(IRepositoryBase<Entity.Conductor> repositoryBase)
+        private readonly IRepository<Entity.Conductor> _repositoryBase;
+        public UpdateConductorCommandValidator(IRepository<Entity.Conductor> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

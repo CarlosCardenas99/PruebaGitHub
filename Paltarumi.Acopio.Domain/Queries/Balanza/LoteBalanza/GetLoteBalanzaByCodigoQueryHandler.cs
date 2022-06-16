@@ -7,23 +7,18 @@ using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 {
     public class GetLoteBalanzaByCodigoQueryHandler : QueryHandlerBase<GetLoteBalanzaByCodigoQuery, GetLoteBalanzaCodigoDto>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
         public GetLoteBalanzaByCodigoQueryHandler(
             IMapper mapper,
             GetLoteBalanzaByCodigoQueryValidator validator,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(mapper, validator)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

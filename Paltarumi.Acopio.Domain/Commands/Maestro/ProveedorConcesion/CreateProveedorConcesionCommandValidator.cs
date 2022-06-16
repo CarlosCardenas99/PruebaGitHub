@@ -8,8 +8,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ProveedorConcesion
 {
     public class CreateProveedorConcesionCommandValidator : CommandValidatorBase<CreateProveedorConcesionCommand>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _repositoryBase;
-        public CreateProveedorConcesionCommandValidator(IRepositoryBase<Entity.ProveedorConcesion> repositoryBase)
+        private readonly IRepository<Entity.ProveedorConcesion> _repositoryBase;
+        public CreateProveedorConcesionCommandValidator(IRepository<Entity.ProveedorConcesion> repositoryBase)
         {
             _repositoryBase = repositoryBase;
             RequiredInformation(x => x.CreateDto).DependentRules(() =>

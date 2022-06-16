@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 {
     public class GetItemCheckQueryValidator : QueryValidatorBase<GetItemCheckQuery>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemcheckRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemcheckRepository;
 
-        public GetItemCheckQueryValidator(IRepositoryBase<Entity.ItemCheck> itemcheckRepository)
+        public GetItemCheckQueryValidator(IRepository<Entity.ItemCheck> itemcheckRepository)
         {
             _itemcheckRepository = itemcheckRepository;
 

@@ -1,7 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
 {
     public class ListLeyReferencialQueryHandler : QueryHandlerBase<ListLeyReferencialQuery, IEnumerable<ListLeyReferencialDto>>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _repository;
+        private readonly IRepository<Entity.LeyReferencial> _repository;
 
         public ListLeyReferencialQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.LeyReferencial> repository
+            IRepository<Entity.LeyReferencial> repository
         ) : base(mapper)
         {
             _repository = repository;

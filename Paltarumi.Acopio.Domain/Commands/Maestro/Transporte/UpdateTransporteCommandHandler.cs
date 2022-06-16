@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
 {
     public class UpdateTransporteCommandHandler : CommandHandlerBase<UpdateTransporteCommand, GetTransporteDto>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
 
         public UpdateTransporteCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateTransporteCommandValidator validator,
-            IRepositoryBase<Entity.Transporte> transporteRepository
+            IRepository<Entity.Transporte> transporteRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _transporteRepository = transporteRepository;

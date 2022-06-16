@@ -2,15 +2,10 @@
 using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza
 {
-    public class GetLoteBalanzaCodigoDto: LoteBalanzaDto
+    public class GetLoteBalanzaCodigoDto : LoteBalanzaDto
     {
         public int IdLoteBalanza { get; set; }
         public GetConcesionDto? Concesion { get; set; }

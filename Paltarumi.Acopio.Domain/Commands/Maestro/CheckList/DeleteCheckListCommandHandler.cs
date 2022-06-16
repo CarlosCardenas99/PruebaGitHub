@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.CheckList
 {
     public class DeleteCheckListCommandHandler : CommandHandlerBase<DeleteCheckListCommand>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _checklistRepository;
+        private readonly IRepository<Entity.CheckList> _checklistRepository;
 
         public DeleteCheckListCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteCheckListCommandValidator validator,
-            IRepositoryBase<Entity.CheckList> checklistRepository
+            IRepository<Entity.CheckList> checklistRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _checklistRepository = checklistRepository;

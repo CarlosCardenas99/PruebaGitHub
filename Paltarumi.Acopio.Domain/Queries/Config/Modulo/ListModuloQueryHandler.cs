@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
 using Paltarumi.Acopio.Domain.Queries.Base;
@@ -9,11 +8,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Config.Modulo
 {
     public class ListModuloQueryHandler : QueryHandlerBase<ListModuloQuery, IEnumerable<ListModuloDto>>
     {
-        private readonly IRepositoryBase<Entity.Modulo> _repository;
+        private readonly IRepository<Entity.Modulo> _repository;
 
         public ListModuloQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Modulo> repository
+            IRepository<Entity.Modulo> repository
         ) : base(mapper)
         {
             _repository = repository;

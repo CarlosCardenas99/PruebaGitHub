@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public CreateMaestroCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateMaestroCommandValidator validator,
-            IRepositoryBase<Entity.Maestro> maestroRepository
+            IRepository<Entity.Maestro> maestroRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _maestroRepository = maestroRepository;

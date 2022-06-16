@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class DeleteMaestroCommandValidator : CommandValidatorBase<DeleteMaestroCommand>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _repositoryBase;
-        public DeleteMaestroCommandValidator(IRepositoryBase<Entity.Maestro> repositoryBase)
+        private readonly IRepository<Entity.Maestro> _repositoryBase;
+        public DeleteMaestroCommandValidator(IRepository<Entity.Maestro> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza
 {
     public class GetLoteBalanzaQueryValidator : QueryValidatorBase<GetLoteBalanzaQuery>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
-        public GetLoteBalanzaQueryValidator(IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository)
+        public GetLoteBalanzaQueryValidator(IRepository<Entity.LoteBalanza> loteBalanzaRepository)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
 

@@ -1,8 +1,8 @@
 using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
@@ -10,12 +10,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
 {
     public class GetLeyReferencialQueryHandler : QueryHandlerBase<GetLeyReferencialQuery, GetLeyReferencialDto>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
 
         public GetLeyReferencialQueryHandler(
             IMapper mapper,
             GetLeyReferencialQueryValidator validator,
-            IRepositoryBase<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entity.LeyReferencial> leyreferencialRepository
         ) : base(mapper, validator)
         {
             _leyreferencialRepository = leyreferencialRepository;

@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemcheckRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemcheckRepository;
 
         public CreateItemCheckCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateItemCheckCommandValidator validator,
-            IRepositoryBase<Entity.ItemCheck> itemcheckRepository
+            IRepository<Entity.ItemCheck> itemcheckRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _itemcheckRepository = itemcheckRepository;

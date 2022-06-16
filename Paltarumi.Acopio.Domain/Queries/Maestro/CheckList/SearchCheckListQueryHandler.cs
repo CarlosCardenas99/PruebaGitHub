@@ -10,17 +10,14 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.CheckList
 {
     public class SearchCheckListQueryHandler : SearchQueryHandlerBase<SearchCheckListQuery, SearchCheckListFilterDto, SearchCheckListDto>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _checklistRepository;
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.CheckList> _checklistRepository;
 
         public SearchCheckListQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.CheckList> checklistRepository,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository
+            IRepository<Entity.CheckList> checklistRepository
         ) : base(mapper)
         {
             _checklistRepository = checklistRepository;
-            _loteBalanzaRepository = loteBalanzaRepository;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchCheckListDto>>> HandleQuery(SearchCheckListQuery request, CancellationToken cancellationToken)

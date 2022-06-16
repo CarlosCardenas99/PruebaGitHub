@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Domain.Dto.Base;
 
 namespace Paltarumi.Acopio.Application.Abstractions.Balanza
 {

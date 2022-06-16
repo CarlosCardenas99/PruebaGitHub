@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LeyReferencial
 {
     public class DeleteLeyReferencialCommandValidator : CommandValidatorBase<DeleteLeyReferencialCommand>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _repositoryBase;
-        public DeleteLeyReferencialCommandValidator(IRepositoryBase<Entity.LeyReferencial> repositoryBase)
+        private readonly IRepository<Entity.LeyReferencial> _repositoryBase;
+        public DeleteLeyReferencialCommandValidator(IRepository<Entity.LeyReferencial> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

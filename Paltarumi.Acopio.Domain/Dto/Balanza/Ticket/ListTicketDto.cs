@@ -1,7 +1,7 @@
 ﻿
 namespace Paltarumi.Acopio.Domain.Dto.Balanza.Ticket
 {
-    public class ListTicketDto: TicketDto
+    public class ListTicketDto : TicketDto
     {
         public int IdTicket { get; set; }
         public string Numero { get; set; } = null!;

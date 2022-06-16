@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
 
         public CreateTransporteCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateTransporteCommandValidator validator,
-            IRepositoryBase<Entity.Transporte> transporteRepository
+            IRepository<Entity.Transporte> transporteRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _transporteRepository = transporteRepository;

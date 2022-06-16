@@ -14,23 +14,23 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public UpdateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             UpdateLoteBalanzaCommandValidator validator,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepositoryBase<Entity.Ticket> ticketRepository,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository,
-            IRepositoryBase<Entity.Transporte> transporteRepository,
-            IRepositoryBase<Entity.Conductor> conductorRepository
-        ) : base(unitOfWork, mapper, mediator, validator)
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entity.Ticket> ticketRepository,
+            IRepository<Entity.Vehiculo> vehiculoRepository,
+            IRepository<Entity.Transporte> transporteRepository,
+            IRepository<Entity.Conductor> conductorRepository
+        ) : base(unitOfWork, mapper, validator)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
             _ticketRepository = ticketRepository;
@@ -108,7 +108,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 var newTickets = _mapper?.Map<IEnumerable<Entity.Ticket>>(newTicketDtos) ??
                     new List<Entity.Ticket>();
 
-                foreach(var newTicket in newTickets)
+                foreach (var newTicket in newTickets)
                 {
                     newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;

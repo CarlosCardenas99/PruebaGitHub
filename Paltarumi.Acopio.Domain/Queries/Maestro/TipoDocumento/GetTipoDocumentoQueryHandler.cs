@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.TipoDocumento
 {
     public class GetTipoDocumentoQueryHandler : QueryHandlerBase<GetTipoDocumentoQuery, GetTipoDocumentoDto>
     {
-        private readonly IRepositoryBase<Entity.TipoDocumento> _tipodocumentoRepository;
+        private readonly IRepository<Entity.TipoDocumento> _tipodocumentoRepository;
 
         public GetTipoDocumentoQueryHandler(
             IMapper mapper,
             GetTipoDocumentoQueryValidator validator,
-            IRepositoryBase<Entity.TipoDocumento> tipodocumentoRepository
+            IRepository<Entity.TipoDocumento> tipodocumentoRepository
         ) : base(mapper, validator)
         {
             _tipodocumentoRepository = tipodocumentoRepository;

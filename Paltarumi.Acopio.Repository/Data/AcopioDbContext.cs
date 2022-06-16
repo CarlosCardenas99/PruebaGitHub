@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Repository.Data
@@ -45,7 +42,7 @@ namespace Paltarumi.Acopio.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-       
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

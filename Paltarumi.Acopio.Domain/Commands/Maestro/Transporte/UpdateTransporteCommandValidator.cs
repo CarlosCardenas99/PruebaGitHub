@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
 {
     public class UpdateTransporteCommandValidator : CommandValidatorBase<UpdateTransporteCommand>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _repositoryBase;
-        public UpdateTransporteCommandValidator(IRepositoryBase<Entity.Transporte> repositoryBase)
+        private readonly IRepository<Entity.Transporte> _repositoryBase;
+        public UpdateTransporteCommandValidator(IRepository<Entity.Transporte> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

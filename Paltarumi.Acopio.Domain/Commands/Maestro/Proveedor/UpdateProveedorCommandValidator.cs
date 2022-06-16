@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Proveedor
 {
     public class UpdateProveedorCommandValidator : CommandValidatorBase<UpdateProveedorCommand>
     {
-        private readonly IRepositoryBase<Entity.Proveedor> _repositoryBase;
-        public UpdateProveedorCommandValidator(IRepositoryBase<Entity.Proveedor> repositoryBase)
+        private readonly IRepository<Entity.Proveedor> _repositoryBase;
+        public UpdateProveedorCommandValidator(IRepository<Entity.Proveedor> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

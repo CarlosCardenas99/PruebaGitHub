@@ -2,8 +2,8 @@ using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Balanza.LeyReferencial;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial;
 
 namespace Paltarumi.Acopio.Application.Balanza

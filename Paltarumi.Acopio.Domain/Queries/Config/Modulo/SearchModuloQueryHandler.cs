@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Config.Modulo
 {
     public class SearchModuloQueryHandler : SearchQueryHandlerBase<SearchModuloQuery, SearchModuloFilterDto, SearchModuloDto>
     {
-        private readonly IRepositoryBase<Entity.Modulo> _moduloRepository;
+        private readonly IRepository<Entity.Modulo> _moduloRepository;
 
         public SearchModuloQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Modulo> moduloRepository
+            IRepository<Entity.Modulo> moduloRepository
         ) : base(mapper)
         {
             _moduloRepository = moduloRepository;

@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
 {
     public class GetLoteCodigoQueryValidator : QueryValidatorBase<GetLoteCodigoQuery>
     {
-        private readonly IRepositoryBase<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
 
-        public GetLoteCodigoQueryValidator(IRepositoryBase<Entity.LoteCodigo> lotecodigoRepository)
+        public GetLoteCodigoQueryValidator(IRepository<Entity.LoteCodigo> lotecodigoRepository)
         {
             _lotecodigoRepository = lotecodigoRepository;
 

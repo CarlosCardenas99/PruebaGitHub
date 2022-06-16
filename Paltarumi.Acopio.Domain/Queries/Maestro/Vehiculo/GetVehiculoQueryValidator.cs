@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {
     public class GetVehiculoQueryValidator : QueryValidatorBase<GetVehiculoQuery>
     {
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
-        public GetVehiculoQueryValidator(IRepositoryBase<Entity.Vehiculo> vehiculoRepository)
+        public GetVehiculoQueryValidator(IRepository<Entity.Vehiculo> vehiculoRepository)
         {
             _vehiculoRepository = vehiculoRepository;
 

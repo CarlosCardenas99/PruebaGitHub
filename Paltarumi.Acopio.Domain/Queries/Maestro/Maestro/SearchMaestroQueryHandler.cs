@@ -11,11 +11,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class SearchMaestroQueryHandler : SearchQueryHandlerBase<SearchMaestroQuery, SearchMaestroFilterDto, SearchMaestroDto>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public SearchMaestroQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Maestro> maestroRepository
+            IRepository<Entity.Maestro> maestroRepository
         ) : base(mapper)
         {
             _maestroRepository = maestroRepository;

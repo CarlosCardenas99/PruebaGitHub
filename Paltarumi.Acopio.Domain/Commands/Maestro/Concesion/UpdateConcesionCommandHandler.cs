@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Concesion
 {
     public class UpdateConcesionCommandHandler : CommandHandlerBase<UpdateConcesionCommand, GetConcesionDto>
     {
-        private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
+        private readonly IRepository<Entity.Concesion> _concesionRepository;
 
         public UpdateConcesionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateConcesionCommandValidator validator,
-            IRepositoryBase<Entity.Concesion> concesionRepository
+            IRepository<Entity.Concesion> concesionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _concesionRepository = concesionRepository;

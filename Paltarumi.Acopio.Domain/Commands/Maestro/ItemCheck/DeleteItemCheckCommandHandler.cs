@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck
 {
     public class DeleteItemCheckCommandHandler : CommandHandlerBase<DeleteItemCheckCommand>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemcheckRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemcheckRepository;
 
         public DeleteItemCheckCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteItemCheckCommandValidator validator,
-            IRepositoryBase<Entity.ItemCheck> itemcheckRepository
+            IRepository<Entity.ItemCheck> itemcheckRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _itemcheckRepository = itemcheckRepository;

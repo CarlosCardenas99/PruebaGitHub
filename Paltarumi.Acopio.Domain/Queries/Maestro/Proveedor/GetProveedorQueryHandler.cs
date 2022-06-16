@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
     public class GetProveedorQueryHandler : QueryHandlerBase<GetProveedorQuery, GetProveedorDto>
     {
-        private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
 
         public GetProveedorQueryHandler(
             IMapper mapper,
             GetProveedorQueryValidator validator,
-            IRepositoryBase<Entity.Proveedor> proveedorRepository
+            IRepository<Entity.Proveedor> proveedorRepository
         ) : base(mapper, validator)
         {
             _proveedorRepository = proveedorRepository;

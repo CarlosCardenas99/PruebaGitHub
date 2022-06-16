@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Paltarumi.Acopio.Repository.Base
 {
-    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _dbContext;
         protected readonly IUserIdentity _userIdentity;

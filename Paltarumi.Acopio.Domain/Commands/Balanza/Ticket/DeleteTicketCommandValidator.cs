@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
 {
     public class DeleteTicketCommandValidator : CommandValidatorBase<DeleteTicketCommand>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _repositoryBase;
-        public DeleteTicketCommandValidator(IRepositoryBase<Entity.Ticket> repositoryBase)
+        private readonly IRepository<Entity.Ticket> _repositoryBase;
+        public DeleteTicketCommandValidator(IRepository<Entity.Ticket> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

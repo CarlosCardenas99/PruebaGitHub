@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
 {
     public class GetLeyReferencialQueryValidator : QueryValidatorBase<GetLeyReferencialQuery>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
 
-        public GetLeyReferencialQueryValidator(IRepositoryBase<Entity.LeyReferencial> leyreferencialRepository)
+        public GetLeyReferencialQueryValidator(IRepository<Entity.LeyReferencial> leyreferencialRepository)
         {
             _leyreferencialRepository = leyreferencialRepository;
 

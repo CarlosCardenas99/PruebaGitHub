@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Config.Modulo
 {
     public class GetModuloQueryValidator : QueryValidatorBase<GetModuloQuery>
     {
-        private readonly IRepositoryBase<Entity.Modulo> _moduloRepository;
+        private readonly IRepository<Entity.Modulo> _moduloRepository;
 
-        public GetModuloQueryValidator(IRepositoryBase<Entity.Modulo> moduloRepository)
+        public GetModuloQueryValidator(IRepository<Entity.Modulo> moduloRepository)
         {
             _moduloRepository = moduloRepository;
 

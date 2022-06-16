@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Concesion
 {
     public class UpdateConcesionCommandValidator : CommandValidatorBase<UpdateConcesionCommand>
     {
-        private readonly IRepositoryBase<Entity.Concesion> _repositoryBase;
-        public UpdateConcesionCommandValidator(IRepositoryBase<Entity.Concesion> repositoryBase)
+        private readonly IRepository<Entity.Concesion> _repositoryBase;
+        public UpdateConcesionCommandValidator(IRepository<Entity.Concesion> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

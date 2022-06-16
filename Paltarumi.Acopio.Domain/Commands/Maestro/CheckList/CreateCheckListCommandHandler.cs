@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.CheckList
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.CheckList> _checklistRepository;
+        private readonly IRepository<Entity.CheckList> _checklistRepository;
 
         public CreateCheckListCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateCheckListCommandValidator validator,
-            IRepositoryBase<Entity.CheckList> checklistRepository
+            IRepository<Entity.CheckList> checklistRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _checklistRepository = checklistRepository;

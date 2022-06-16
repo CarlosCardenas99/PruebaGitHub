@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Maestro
 {
     public class GetMaestroQueryValidator : QueryValidatorBase<GetMaestroQuery>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
-        public GetMaestroQueryValidator(IRepositoryBase<Entity.Maestro> maestroRepository)
+        public GetMaestroQueryValidator(IRepository<Entity.Maestro> maestroRepository)
         {
             _maestroRepository = maestroRepository;
 

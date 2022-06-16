@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck
 {
     public class UpdateItemCheckCommandHandler : CommandHandlerBase<UpdateItemCheckCommand, GetItemCheckDto>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemcheckRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemcheckRepository;
 
         public UpdateItemCheckCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateItemCheckCommandValidator validator,
-            IRepositoryBase<Entity.ItemCheck> itemcheckRepository
+            IRepository<Entity.ItemCheck> itemcheckRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _itemcheckRepository = itemcheckRepository;

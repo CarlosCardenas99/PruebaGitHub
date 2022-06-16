@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 {
     public class SearchProveedorConcesionQueryHandler : SearchQueryHandlerBase<SearchProveedorConcesionQuery, SearchProveedorConcesionFilterDto, SearchProveedorConcesionDto>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
+        private readonly IRepository<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
         public SearchProveedorConcesionQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository
+            IRepository<Entity.ProveedorConcesion> proveedorconcesionRepository
         ) : base(mapper)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;

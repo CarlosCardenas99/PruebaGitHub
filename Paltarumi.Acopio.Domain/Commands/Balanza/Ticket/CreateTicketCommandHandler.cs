@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public CreateTicketCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateTicketCommandValidator validator,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _ticketRepository = ticketRepository;

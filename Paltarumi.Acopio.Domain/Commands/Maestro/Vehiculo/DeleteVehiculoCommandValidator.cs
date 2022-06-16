@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
 {
     public class DeleteVehiculoCommandValidator : CommandValidatorBase<DeleteVehiculoCommand>
     {
-        private readonly IRepositoryBase<Entity.Vehiculo> _repositoryBase;
-        public DeleteVehiculoCommandValidator(IRepositoryBase<Entity.Vehiculo> repositoryBase)
+        private readonly IRepository<Entity.Vehiculo> _repositoryBase;
+        public DeleteVehiculoCommandValidator(IRepository<Entity.Vehiculo> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

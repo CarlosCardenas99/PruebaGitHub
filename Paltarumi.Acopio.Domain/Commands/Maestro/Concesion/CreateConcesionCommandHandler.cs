@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Concesion
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
+        private readonly IRepository<Entity.Concesion> _concesionRepository;
 
         public CreateConcesionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateConcesionCommandValidator validator,
-            IRepositoryBase<Entity.Concesion> concesionRepository
+            IRepository<Entity.Concesion> concesionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _concesionRepository = concesionRepository;

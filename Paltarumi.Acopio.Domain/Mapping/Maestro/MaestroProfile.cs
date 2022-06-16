@@ -18,7 +18,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Maestro
 
             CreateMap<Entity.Maestro, GetMaestroDto>()
                 .ReverseMap();
-            
+
             CreateMap<Entity.Maestro, ListMaestroDto>()
                 .ReverseMap();
 

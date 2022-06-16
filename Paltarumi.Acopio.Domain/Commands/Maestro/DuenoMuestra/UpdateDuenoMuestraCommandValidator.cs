@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.DuenoMuestra
 {
     public class UpdateDuenoMuestraCommandValidator : CommandValidatorBase<UpdateDuenoMuestraCommand>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _repositoryBase;
-        public UpdateDuenoMuestraCommandValidator(IRepositoryBase<Entity.DuenoMuestra> repositoryBase)
+        private readonly IRepository<Entity.DuenoMuestra> _repositoryBase;
+        public UpdateDuenoMuestraCommandValidator(IRepository<Entity.DuenoMuestra> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

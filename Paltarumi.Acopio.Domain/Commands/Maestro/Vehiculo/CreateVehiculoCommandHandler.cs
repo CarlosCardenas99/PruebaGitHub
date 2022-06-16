@@ -12,15 +12,15 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public CreateVehiculoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateVehiculoCommandValidator validator,
-            IRepositoryBase<Entity.Maestro> maestroRepository,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.Maestro> maestroRepository,
+            IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _maestroRepository = maestroRepository;

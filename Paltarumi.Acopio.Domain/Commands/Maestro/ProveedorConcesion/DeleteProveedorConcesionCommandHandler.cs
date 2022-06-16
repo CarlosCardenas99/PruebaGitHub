@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.ProveedorConcesion
 {
     public class DeleteProveedorConcesionCommandHandler : CommandHandlerBase<DeleteProveedorConcesionCommand>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
+        private readonly IRepository<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
         public DeleteProveedorConcesionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteProveedorConcesionCommandValidator validator,
-            IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository
+            IRepository<Entity.ProveedorConcesion> proveedorconcesionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;

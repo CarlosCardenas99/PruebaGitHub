@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.DuenoMuestra
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenomuestraRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenomuestraRepository;
 
         public CreateDuenoMuestraCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateDuenoMuestraCommandValidator validator,
-            IRepositoryBase<Entity.DuenoMuestra> duenomuestraRepository
+            IRepository<Entity.DuenoMuestra> duenomuestraRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _duenomuestraRepository = duenomuestraRepository;

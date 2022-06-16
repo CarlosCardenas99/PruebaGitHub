@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Maestro
 {
     public class DeleteMaestroCommandHandler : CommandHandlerBase<DeleteMaestroCommand>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public DeleteMaestroCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteMaestroCommandValidator validator,
-            IRepositoryBase<Entity.Maestro> maestroRepository
+            IRepository<Entity.Maestro> maestroRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _maestroRepository = maestroRepository;

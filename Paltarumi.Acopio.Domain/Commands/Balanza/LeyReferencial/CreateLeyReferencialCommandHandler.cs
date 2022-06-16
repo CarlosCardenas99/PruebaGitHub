@@ -1,7 +1,7 @@
 using AutoMapper;
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LeyReferencial
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
 
         public CreateLeyReferencialCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLeyReferencialCommandValidator validator,
-            IRepositoryBase<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entity.LeyReferencial> leyreferencialRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _leyreferencialRepository = leyreferencialRepository;

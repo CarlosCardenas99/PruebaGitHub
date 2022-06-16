@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
 {
     public class DeleteTransporteCommandValidator : CommandValidatorBase<DeleteTransporteCommand>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _repositoryBase;
-        public DeleteTransporteCommandValidator(IRepositoryBase<Entity.Transporte> repositoryBase)
+        private readonly IRepository<Entity.Transporte> _repositoryBase;
+        public DeleteTransporteCommandValidator(IRepository<Entity.Transporte> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

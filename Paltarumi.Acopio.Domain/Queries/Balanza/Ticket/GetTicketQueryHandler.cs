@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Domain.Queries.Base;
@@ -12,12 +12,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {
     public class GetTicketQueryHandler : QueryHandlerBase<GetTicketQuery, GetTicketDto>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public GetTicketQueryHandler(
             IMapper mapper,
             GetTicketQueryValidator validator,
-            IRepositoryBase<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(mapper, validator)
         {
             _ticketRepository = ticketRepository;
@@ -46,8 +46,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 ticketDto.EstadoTmh = _mapper?.Map<GetMaestroDto>(ticket.IdEstadoTmhNavigation);
                 ticketDto.UnidadMedida = _mapper?.Map<GetMaestroDto>(ticket.IdUnidadMedidaNavigation);
                 ticketDto.Vehiculo = _mapper?.Map<GetVehiculoDto>(ticket.IdVehiculoNavigation);
-                if ( ticketDto.Vehiculo != null ) ticketDto.Vehiculo.Marca = ticket.IdVehiculoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdVehiculoMarcaNavigation);
-                if ( ticketDto.Vehiculo != null) ticketDto.Vehiculo.TipoVehiculo = ticket.IdVehiculoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdTipoVehiculoNavigation);
+                if (ticketDto.Vehiculo != null) ticketDto.Vehiculo.Marca = ticket.IdVehiculoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdVehiculoMarcaNavigation);
+                if (ticketDto.Vehiculo != null) ticketDto.Vehiculo.TipoVehiculo = ticket.IdVehiculoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(ticket.IdVehiculoNavigation.IdTipoVehiculoNavigation);
                 ticketDto.TipoMineral = _mapper?.Map<GetMaestroDto>(ticket.IdTipoMineralNavigation);
                 response.UpdateData(ticketDto);
             }

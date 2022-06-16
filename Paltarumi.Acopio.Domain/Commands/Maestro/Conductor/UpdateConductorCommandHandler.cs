@@ -9,13 +9,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
 {
     public class UpdateConductorCommandHandler : CommandHandlerBase<UpdateConductorCommand, GetConductorDto>
     {
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public UpdateConductorCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateConductorCommandValidator validator,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepository<Entity.Conductor> conductorRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _conductorRepository = conductorRepository;

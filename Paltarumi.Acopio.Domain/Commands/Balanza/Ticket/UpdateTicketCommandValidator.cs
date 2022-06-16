@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
 {
     public class UpdateTicketCommandValidator : CommandValidatorBase<UpdateTicketCommand>
     {
-        private readonly IRepositoryBase<Entity.Ticket> _repositoryBase;
-        public UpdateTicketCommandValidator(IRepositoryBase<Entity.Ticket> repositoryBase)
+        private readonly IRepository<Entity.Ticket> _repositoryBase;
+        public UpdateTicketCommandValidator(IRepository<Entity.Ticket> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

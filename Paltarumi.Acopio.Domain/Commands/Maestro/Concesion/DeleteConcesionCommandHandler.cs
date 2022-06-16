@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Concesion
 {
     public class DeleteConcesionCommandHandler : CommandHandlerBase<DeleteConcesionCommand>
     {
-        private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
+        private readonly IRepository<Entity.Concesion> _concesionRepository;
 
         public DeleteConcesionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteConcesionCommandValidator validator,
-            IRepositoryBase<Entity.Concesion> concesionRepository
+            IRepository<Entity.Concesion> concesionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _concesionRepository = concesionRepository;

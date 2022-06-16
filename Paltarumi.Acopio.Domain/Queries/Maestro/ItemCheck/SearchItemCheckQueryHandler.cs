@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 {
     public class SearchItemCheckQueryHandler : SearchQueryHandlerBase<SearchItemCheckQuery, SearchItemCheckFilterDto, SearchItemCheckDto>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemcheckRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemcheckRepository;
 
         public SearchItemCheckQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.ItemCheck> itemcheckRepository
+            IRepository<Entity.ItemCheck> itemcheckRepository
         ) : base(mapper)
         {
             _itemcheckRepository = itemcheckRepository;
@@ -29,7 +29,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
             var filters = request.SearchParams?.Filter;
 
             if (!String.IsNullOrEmpty(filters?.concepto))
-                filter = filter.And(x => x.Concepto.Contains(filters.concepto) );
+                filter = filter.And(x => x.Concepto.Contains(filters.concepto));
 
             if (filters?.Activo.HasValue == true)
                 filter = filter.And(x => x.Activo == filters.Activo.Value);

@@ -1,11 +1,11 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
+﻿using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza
 {
-    public class GetLoteBalanzaDto: LoteBalanzaDto
+    public class GetLoteBalanzaDto : LoteBalanzaDto
     {
         public int IdLoteBalanza { get; set; }
         public GetConcesionDto? Concesion { get; set; }

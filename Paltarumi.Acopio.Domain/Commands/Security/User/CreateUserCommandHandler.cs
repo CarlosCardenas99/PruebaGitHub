@@ -71,7 +71,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Security.User
         {
             var sendMail = _configuration.GetValue<bool>("SignInOptions:SendMailOnSignUp");
 
-            if(sendMail)
+            if (sendMail)
             {
                 var emailBody = Resources.Security.User.CreateUserEmailBody;
 

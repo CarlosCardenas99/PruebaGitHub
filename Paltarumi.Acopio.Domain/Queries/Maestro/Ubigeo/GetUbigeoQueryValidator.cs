@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Ubigeo
 {
     public class GetUbigeoQueryValidator : QueryValidatorBase<GetUbigeoQuery>
     {
-        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
+        private readonly IRepository<Entity.Ubigeo> _ubigeoRepository;
 
-        public GetUbigeoQueryValidator(IRepositoryBase<Entity.Ubigeo> ubigeoRepository)
+        public GetUbigeoQueryValidator(IRepository<Entity.Ubigeo> ubigeoRepository)
         {
             _ubigeoRepository = ubigeoRepository;
 

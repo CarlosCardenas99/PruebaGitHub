@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
 {
     public class ListDuenoMuestraQueryHandler : QueryHandlerBase<ListDuenoMuestraQuery, IEnumerable<ListDuenoMuestraDto>>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _repository;
+        private readonly IRepository<Entity.DuenoMuestra> _repository;
 
         public ListDuenoMuestraQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.DuenoMuestra> repository
+            IRepository<Entity.DuenoMuestra> repository
         ) : base(mapper)
         {
             _repository = repository;

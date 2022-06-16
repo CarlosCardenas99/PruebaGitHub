@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza
 {
     public class ListLoteBalanzaQueryHandler : QueryHandlerBase<ListLoteBalanzaQuery, IEnumerable<ListLoteBalanzaDto>>
     {
-        private readonly IRepositoryBase<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
         public ListLoteBalanzaQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.LoteBalanza> loteBalanzaRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

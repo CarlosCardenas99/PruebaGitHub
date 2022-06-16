@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Ubigeo
 {
     public class GetUbigeoQueryHandler : QueryHandlerBase<GetUbigeoQuery, GetUbigeoDto>
     {
-        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
+        private readonly IRepository<Entity.Ubigeo> _ubigeoRepository;
 
         public GetUbigeoQueryHandler(
             IMapper mapper,
             GetUbigeoQueryValidator validator,
-            IRepositoryBase<Entity.Ubigeo> ubigeoRepository
+            IRepository<Entity.Ubigeo> ubigeoRepository
         ) : base(mapper, validator)
         {
             _ubigeoRepository = ubigeoRepository;

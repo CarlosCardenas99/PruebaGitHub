@@ -7,8 +7,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.CheckList
 {
     public class UpdateCheckListCommandValidator : CommandValidatorBase<UpdateCheckListCommand>
     {
-        private readonly IRepositoryBase<Entity.CheckList> _repositoryBase;
-        public UpdateCheckListCommandValidator(IRepositoryBase<Entity.CheckList> repositoryBase)
+        private readonly IRepository<Entity.CheckList> _repositoryBase;
+        public UpdateCheckListCommandValidator(IRepository<Entity.CheckList> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

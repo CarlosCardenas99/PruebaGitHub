@@ -1,6 +1,6 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
 {
     public class SearchLeyReferencialQueryHandler : SearchQueryHandlerBase<SearchLeyReferencialQuery, SearchLeyReferencialFilterDto, SearchLeyReferencialDto>
     {
-        private readonly IRepositoryBase<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
 
         public SearchLeyReferencialQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entity.LeyReferencial> leyreferencialRepository
         ) : base(mapper)
         {
             _leyreferencialRepository = leyreferencialRepository;
@@ -44,7 +44,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
             }
             filter = filter.And(x => x.Activo == true);
 
-            if ( !string.IsNullOrEmpty(filters?.Dueno) )
+            if (!string.IsNullOrEmpty(filters?.Dueno))
                 filter = filter.And(x => x.IdDuenoMuestraNavigation.Nombres.Contains(filters.Dueno));
 
             var leyreferencials = await _leyreferencialRepository.SearchByAsNoTrackingAsync(

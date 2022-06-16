@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.DuenoMuestra
 {
     public class DeleteDuenoMuestraCommandHandler : CommandHandlerBase<DeleteDuenoMuestraCommand>
     {
-        private readonly IRepositoryBase<Entity.DuenoMuestra> _duenomuestraRepository;
+        private readonly IRepository<Entity.DuenoMuestra> _duenomuestraRepository;
 
         public DeleteDuenoMuestraCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteDuenoMuestraCommandValidator validator,
-            IRepositoryBase<Entity.DuenoMuestra> duenomuestraRepository
+            IRepository<Entity.DuenoMuestra> duenomuestraRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _duenomuestraRepository = duenomuestraRepository;

@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 {
     public class GetConcesionQueryHandler : QueryHandlerBase<GetConcesionQuery, GetConcesionDto>
     {
-        private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
+        private readonly IRepository<Entity.Concesion> _concesionRepository;
 
         public GetConcesionQueryHandler(
             IMapper mapper,
             GetConcesionQueryValidator validator,
-            IRepositoryBase<Entity.Concesion> concesionRepository
+            IRepository<Entity.Concesion> concesionRepository
         ) : base(mapper, validator)
         {
             _concesionRepository = concesionRepository;

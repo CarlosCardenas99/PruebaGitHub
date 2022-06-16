@@ -1,7 +1,7 @@
 using AutoMapper;
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteCodigo
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepositoryBase<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
 
         public CreateLoteCodigoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLoteCodigoCommandValidator validator,
-            IRepositoryBase<Entity.LoteCodigo> lotecodigoRepository
+            IRepository<Entity.LoteCodigo> lotecodigoRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _lotecodigoRepository = lotecodigoRepository;

@@ -8,13 +8,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
 {
     public class DeleteConductorCommandHandler : CommandHandlerBase<DeleteConductorCommand>
     {
-        private readonly IRepositoryBase<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public DeleteConductorCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteConductorCommandValidator validator,
-            IRepositoryBase<Entity.Conductor> conductorRepository
+            IRepository<Entity.Conductor> conductorRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _conductorRepository = conductorRepository;

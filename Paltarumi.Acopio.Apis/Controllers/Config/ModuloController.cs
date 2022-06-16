@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Config;
-using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Config
 {

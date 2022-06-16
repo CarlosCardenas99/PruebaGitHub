@@ -9,11 +9,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {
     public class ListVehiculoQueryHandler : QueryHandlerBase<ListVehiculoQuery, IEnumerable<ListVehiculoDto>>
     {
-        private readonly IRepositoryBase<Entity.Vehiculo> _repository;
+        private readonly IRepository<Entity.Vehiculo> _repository;
 
         public ListVehiculoQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Vehiculo> repository
+            IRepository<Entity.Vehiculo> repository
         ) : base(mapper)
         {
             _repository = repository;

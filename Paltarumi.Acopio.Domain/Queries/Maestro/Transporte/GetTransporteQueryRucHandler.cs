@@ -9,12 +9,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
     public class GetTransporteQueryRucHandler : QueryHandlerBase<GetTransporteQueryRuc, GetTransporteDto>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _transporteRepository;
-        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
+        private readonly IRepository<Entity.Transporte> _transporteRepository;
+        private readonly IRepository<Entity.Ubigeo> _ubigeoRepository;
         public GetTransporteQueryRucHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Transporte> transporteRepository,
-            IRepositoryBase<Entity.Ubigeo> ubigeoRepository
+            IRepository<Entity.Transporte> transporteRepository,
+            IRepository<Entity.Ubigeo> ubigeoRepository
         ) : base(mapper)
         {
             _transporteRepository = transporteRepository;
@@ -81,7 +81,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
             return await Task.FromResult(response);
         }
 
-        private Entity.Transporte mapperCreateTransporteDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo ubigeo) 
+        private Entity.Transporte mapperCreateTransporteDto(SunatConsultaRucVo sunatVo, Entity.Ubigeo ubigeo)
             => new Entity.Transporte
             {
                 Ruc = sunatVo.ruc,

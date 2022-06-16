@@ -7,12 +7,12 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
 {
     public class UpdateVehiculoCommandValidator : CommandValidatorBase<UpdateVehiculoCommand>
     {
-        private readonly IRepositoryBase<Entity.Maestro> _maestroRepositoryBase;
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepositoryBase;
+        private readonly IRepository<Entity.Maestro> _maestroRepositoryBase;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepositoryBase;
 
         public UpdateVehiculoCommandValidator(
-            IRepositoryBase<Entity.Maestro> maestroRepositoryBase,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepositoryBase
+            IRepository<Entity.Maestro> maestroRepositoryBase,
+            IRepository<Entity.Vehiculo> vehiculoRepositoryBase
         )
         {
             _maestroRepositoryBase = maestroRepositoryBase;

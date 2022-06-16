@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {
     public class GetVehiculoQueryHandler : QueryHandlerBase<GetVehiculoQuery, GetVehiculoDto>
     {
-        private readonly IRepositoryBase<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
         public GetVehiculoQueryHandler(
             IMapper mapper,
             GetVehiculoQueryValidator validator,
-            IRepositoryBase<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.Vehiculo> vehiculoRepository
         ) : base(mapper, validator)
         {
             _vehiculoRepository = vehiculoRepository;

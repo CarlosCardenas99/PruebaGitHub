@@ -9,12 +9,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {
     public class GetProveedorQueryRucHandler : QueryHandlerBase<GetProveedorQueryRuc, GetProveedorDto>
     {
-        private readonly IRepositoryBase<Entity.Proveedor> _proveedorRepository;
-        private readonly IRepositoryBase<Entity.Ubigeo> _ubigeoRepository;
+        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entity.Ubigeo> _ubigeoRepository;
         public GetProveedorQueryRucHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Proveedor> proveedorRepository,
-            IRepositoryBase<Entity.Ubigeo> ubigeoRepository
+            IRepository<Entity.Proveedor> proveedorRepository,
+            IRepository<Entity.Ubigeo> ubigeoRepository
         ) : base(mapper)
         {
             _proveedorRepository = proveedorRepository;
@@ -60,7 +60,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 
                     proveedorDto = _mapper?.Map<GetProveedorDto>(proveedor);
 
-                    if( proveedorDto != null ) response.UpdateData(proveedorDto);
+                    if (proveedorDto != null) response.UpdateData(proveedorDto);
                 }
                 else
                 {

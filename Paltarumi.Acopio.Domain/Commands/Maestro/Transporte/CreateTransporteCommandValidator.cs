@@ -8,8 +8,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
 {
     public class CreateTransporteCommandValidator : CommandValidatorBase<CreateTransporteCommand>
     {
-        private readonly IRepositoryBase<Entity.Transporte> _repositoryBase;
-        public CreateTransporteCommandValidator(IRepositoryBase<Entity.Transporte> repositoryBase)
+        private readonly IRepository<Entity.Transporte> _repositoryBase;
+        public CreateTransporteCommandValidator(IRepository<Entity.Transporte> repositoryBase)
         {
             _repositoryBase = repositoryBase;
             RequiredInformation(x => x.CreateDto).DependentRules(() =>

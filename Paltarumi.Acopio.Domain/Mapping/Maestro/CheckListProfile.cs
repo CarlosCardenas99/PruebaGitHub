@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Domain.Mapping.Maestro
 
             CreateMap<Entity.CheckList, SearchCheckListDto>()
                 .ForMember(x => x.Codigo, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.Codigo : String.Empty))
-                .ForMember(x => x.FechaIngreso, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.FechaIngreso.ToString("yyyy-MM-dd") )) //+ " " + x.HoraIngreso
+                .ForMember(x => x.FechaIngreso, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.FechaIngreso.ToString("yyyy-MM-dd"))) //+ " " + x.HoraIngreso
                 .ForMember(x => x.NombreProveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ForMember(x => x.Ruc, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc : string.Empty))
                 .ForMember(x => x.EstadoPorcentual, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.PorcentajeCheckList))

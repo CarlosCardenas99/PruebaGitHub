@@ -1,6 +1,6 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.ItemCheck;
 using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Maestro.ItemCheck;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
@@ -8,12 +8,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck
 {
     public class GetItemCheckQueryHandler : QueryHandlerBase<GetItemCheckQuery, GetItemCheckDto>
     {
-        private readonly IRepositoryBase<Entity.ItemCheck> _itemcheckRepository;
+        private readonly IRepository<Entity.ItemCheck> _itemcheckRepository;
 
         public GetItemCheckQueryHandler(
             IMapper mapper,
             GetItemCheckQueryValidator validator,
-            IRepositoryBase<Entity.ItemCheck> itemcheckRepository
+            IRepository<Entity.ItemCheck> itemcheckRepository
         ) : base(mapper, validator)
         {
             _itemcheckRepository = itemcheckRepository;

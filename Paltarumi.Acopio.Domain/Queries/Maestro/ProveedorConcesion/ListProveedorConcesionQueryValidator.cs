@@ -7,9 +7,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.ProveedorConcesion
 {
     public class ListProveedorConcesionQueryValidator : QueryValidatorBase<ListProveedorConcesionQuery>
     {
-        private readonly IRepositoryBase<Entity.ProveedorConcesion> _proveedorconcesionRepository;
+        private readonly IRepository<Entity.ProveedorConcesion> _proveedorconcesionRepository;
 
-        public ListProveedorConcesionQueryValidator(IRepositoryBase<Entity.ProveedorConcesion> proveedorconcesionRepository)
+        public ListProveedorConcesionQueryValidator(IRepository<Entity.ProveedorConcesion> proveedorconcesionRepository)
         {
             _proveedorconcesionRepository = proveedorconcesionRepository;
 

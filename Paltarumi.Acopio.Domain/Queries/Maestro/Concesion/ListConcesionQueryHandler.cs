@@ -10,11 +10,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 {
     public class ListConcesionQueryHandler : QueryHandlerBase<ListConcesionQuery, IEnumerable<ListConcesionDto>>
     {
-        private readonly IRepositoryBase<Entity.Concesion> _concesionRepository;
+        private readonly IRepository<Entity.Concesion> _concesionRepository;
 
         public ListConcesionQueryHandler(
             IMapper mapper,
-            IRepositoryBase<Entity.Concesion> concesionRepository
+            IRepository<Entity.Concesion> concesionRepository
         ) : base(mapper)
         {
             _concesionRepository = concesionRepository;
