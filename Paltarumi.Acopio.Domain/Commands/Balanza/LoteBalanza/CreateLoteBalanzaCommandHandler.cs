@@ -161,15 +161,11 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             if (duenoMuestra != null)
                 return duenoMuestra;
 
-            //var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
-
             duenoMuestra = new Entity.DuenoMuestra
             {
-                //IdProveedor = idProveedor,
                 CodigoTipoDocumento = Constants.TipoDocumento.RUC,
                 Numero = proveedor?.Ruc ?? string.Empty,
                 Nombres = proveedor?.RazonSocial ?? string.Empty,
-                //CodigoUbigeo = proveedor?.CodigoUbigeo ?? string.Empty,
                 Direccion = proveedor?.Direccion ?? string.Empty,
                 Telefono = proveedor?.Telefono ?? string.Empty,
                 Email = proveedor?.Email ?? string.Empty,

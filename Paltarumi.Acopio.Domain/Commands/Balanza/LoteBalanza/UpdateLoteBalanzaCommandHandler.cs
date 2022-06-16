@@ -30,7 +30,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.Vehiculo> vehiculoRepository,
             IRepository<Entity.Transporte> transporteRepository,
             IRepository<Entity.Conductor> conductorRepository
-        ) : base(unitOfWork, mapper, validator)
+        ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
             _ticketRepository = ticketRepository;
@@ -56,7 +56,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             var idConductores = ticketDetails?.Select(x => x.IdConductor) ?? new List<int>();
             var conductores = await _conductorRepository.FindByAsNoTrackingAsync(x => idConductores.Contains(x.IdConductor));
 
-            if (loteBalanza != null)
+            if (loteBalanza != null && _mediator != null)
             {
                 _mapper?.Map(request.UpdateDto, loteBalanza);
 
