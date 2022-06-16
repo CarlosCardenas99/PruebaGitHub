@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Paltarumi.Acopio.Entity.Base;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -90,6 +91,31 @@ namespace Paltarumi.Acopio.Repository.Extensions
             var body = Expression.OrElse(a.Body, visitor.Visit(b.Body));
 
             return Expression.Lambda<Func<T, bool>>(body, p);
+        }
+
+        public static SortExpression<TEntity> GetSortExpression<TEntity>(string? direction, string? property)
+        {
+            if (string.IsNullOrEmpty(property)) return null;
+
+            var expression = GetSortExpression<TEntity>(property);
+            if (expression == null) return null;
+
+            return new SortExpression<TEntity>
+            {
+                Direction = direction == "asc" ? SortDirection.Asc : SortDirection.Desc,
+                Property = expression
+            };
+        }
+
+        private static Expression<Func<TEntity, object>> GetSortExpression<TEntity>(string property)
+        {
+            var prop = typeof(TEntity).GetProperties().FirstOrDefault(x => x.Name.ToLower() == property.ToLower());
+            if (prop == null) return null;
+
+            var parameterExpression = Expression.Parameter(typeof(TEntity), "entity");
+            var propertyExpression = Expression.Property(parameterExpression, prop);
+
+            return Expression.Lambda<Func<TEntity, object>>(Expression.Convert(propertyExpression, typeof(object)), parameterExpression);
         }
     }
 
