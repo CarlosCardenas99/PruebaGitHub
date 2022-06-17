@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Repository.Data
@@ -24,6 +27,7 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<Humedad> Humedads { get; set; } = null!;
         public virtual DbSet<ItemCheck> ItemChecks { get; set; } = null!;
         public virtual DbSet<JapBlackList> JapBlackLists { get; set; } = null!;
+        public virtual DbSet<LeyReferencial> LeyReferencials { get; set; } = null!;
         public virtual DbSet<LoteBalanza> LoteBalanzas { get; set; } = null!;
         public virtual DbSet<LoteCodigo> LoteCodigos { get; set; } = null!;
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
@@ -36,13 +40,14 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; } = null!;
         public virtual DbSet<Transporte> Transportes { get; set; } = null!;
+        public virtual DbSet<TransporteVehiculo> TransporteVehiculos { get; set; } = null!;
         public virtual DbSet<Ubigeo> Ubigeos { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Vehiculo> Vehiculos { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -452,6 +457,57 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("objectType");
+            });
+
+            modelBuilder.Entity<LeyReferencial>(entity =>
+            {
+                entity.HasKey(e => e.IdLeyReferencial)
+                    .HasName("PK_balanza_LeyReferencial_idLeyReferencial");
+
+                entity.ToTable("LeyReferencial", "balanza");
+
+                entity.Property(e => e.IdLeyReferencial).HasColumnName("idLeyReferencial");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CodigoHash).HasColumnName("codigoHash");
+
+                entity.Property(e => e.CodigoMuestraProveedor)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoMuestraProveedor");
+
+                entity.Property(e => e.CodigoPlanta)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoPlanta");
+
+                entity.Property(e => e.EnsayoConsumo).HasColumnName("ensayoConsumo");
+
+                entity.Property(e => e.EnsayoLeyAg).HasColumnName("ensayoLeyAg");
+
+                entity.Property(e => e.EnsayoLeyAu).HasColumnName("ensayoLeyAu");
+
+                entity.Property(e => e.EnsayoPorcentajeRecuperacion).HasColumnName("ensayoPorcentajeRecuperacion");
+
+                entity.Property(e => e.FechaRecepcion)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaRecepcion");
+
+                entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
+
+                entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
+
+                entity.HasOne(d => d.IdDuenoMuestraNavigation)
+                    .WithMany(p => p.LeyReferencials)
+                    .HasForeignKey(d => d.IdDuenoMuestra)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_balanza_LeyReferencial_idDuenoMuestra");
+
+                entity.HasOne(d => d.IdTipoMineralNavigation)
+                    .WithMany(p => p.LeyReferencials)
+                    .HasForeignKey(d => d.IdTipoMineral)
+                    .HasConstraintName("FK_balanza_LeyReferencial_idTipoMineral");
             });
 
             modelBuilder.Entity<LoteBalanza>(entity =>
@@ -1104,6 +1160,34 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasConstraintName("fk_maestro_Transporte_codigoUbigeo");
             });
 
+            modelBuilder.Entity<TransporteVehiculo>(entity =>
+            {
+                entity.HasKey(e => e.IdTransporteVehiculo)
+                    .HasName("PK_maestro_TransporteVehiculo_idTransporteVehiculo");
+
+                entity.ToTable("TransporteVehiculo", "maestro");
+
+                entity.Property(e => e.IdTransporteVehiculo).HasColumnName("idTransporteVehiculo");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
+
+                entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
+
+                entity.HasOne(d => d.IdTransporteNavigation)
+                    .WithMany(p => p.TransporteVehiculos)
+                    .HasForeignKey(d => d.IdTransporte)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_maestro_TransporteVehiculo_idTransporte");
+
+                entity.HasOne(d => d.IdVehiculoNavigation)
+                    .WithMany(p => p.TransporteVehiculos)
+                    .HasForeignKey(d => d.IdVehiculo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_maestro_TransporteVehiculo_idVehiculo");
+            });
+
             modelBuilder.Entity<Ubigeo>(entity =>
             {
                 entity.HasKey(e => e.CodigoUbigeo)
@@ -1196,10 +1280,19 @@ namespace Paltarumi.Acopio.Repository.Data
 
                 entity.Property(e => e.IdVehiculoMarca).HasColumnName("idVehiculoMarca");
 
+                entity.Property(e => e.OtraPlaca)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("otraPlaca");
+
                 entity.Property(e => e.Placa)
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("placa");
+
+                entity.Property(e => e.Tara)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("tara");
 
                 entity.HasOne(d => d.IdTipoVehiculoNavigation)
                     .WithMany(p => p.VehiculoIdTipoVehiculoNavigations)
