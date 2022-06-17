@@ -31,5 +31,8 @@ namespace Paltarumi.Acopio.Application.Balanza
 
         public async Task<ResponseDto<SearchResultDto<SearchTicketDto>>> Search(SearchParamsDto<SearchTicketFilterDto> searchParams)
             => await _mediator.Send(new SearchTicketQuery(searchParams));
+
+        public async Task<ResponseDto<SearchResultDto<SearchConsultaTicketDto>>> SearchQuery(SearchParamsDto<SearchConsultaTicketFilterDto> searchParams)
+            => await _mediator.Send(new SearchConsultaTicketQuery(searchParams));
     }
 }

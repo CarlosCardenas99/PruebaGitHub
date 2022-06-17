@@ -27,64 +27,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
             Expression<Func<Entity.Ticket, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
-            //fechas
-            if (filters?.FechaDesde.HasValue == true || filters?.FechaHasta.HasValue == true)
-            {
-                if (filters?.FechaDesde.HasValue == true)
-                {
-                    var fechaDesde = filters.FechaDesde.Value.Date;
-                    filter = filter.And(x => (x.FechaIngreso >= fechaDesde || x.FechaSalida >= fechaDesde));
-                }
 
-                if (filters?.FechaHasta.HasValue == true)
-                {
-                    var fechahasta = filters.FechaHasta.Value.Date.AddDays(1);
-                    filter = filter.And(x => (x.FechaIngreso < fechahasta || x.FechaSalida < fechahasta));
-                }
-            }
-            //codigo
-            if (!string.IsNullOrEmpty(filters?.Codigo))
-                filter = filter.And(x => x.IdLoteBalanzaNavigation.Codigo.Contains(filters.Codigo));
+            if (filters?.Activo == true)
+                filter = filter.And(x => x.Activo == filters.Activo);
 
-            //proveedor
-            if (!string.IsNullOrEmpty(filters?.Proveedor))
-            {
-                var proveedores = filters.Proveedor.Split(" ");
-                proveedores.ToList().ForEach(p =>
-                {
-                    filter = filter.And(x =>
-                    (x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(p) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(p)));
-                });
-            }
-
-            if (!string.IsNullOrEmpty(filters?.Concesion))
-            {
-                var concesiones = filters.Concesion.Split(" ");
-                concesiones.ToList().ForEach(p =>
-                {
-                    filter = filter.And(x =>
-                    (x.IdLoteBalanzaNavigation.IdConcesionNavigation.CodigoUnico.Contains(p) || x.IdLoteBalanzaNavigation.IdConcesionNavigation.Nombre.Contains(p)));
-                });
-            }
-
-            //vehiculo
-            if (!string.IsNullOrEmpty(filters?.Vehiculo))
-                filter = filter.And(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculo));
-
-            //conductor
-            if (!string.IsNullOrEmpty(filters?.Conductor))
-                filter = filter.And(x => (x.IdConductorNavigation.Nombres.Contains(filters.Conductor)|| x.IdConductorNavigation.Licencia.Contains(filters.Conductor)));
-
-            //tara
-            if (filters?.TaraVehiculo > 0)
-                filter = filter.And(x => x.Tara == filters.TaraVehiculo);
-
-            //guias
-            if (!string.IsNullOrEmpty(filters?.GuiasGR))
-                filter = filter.And(x => (x.Grr.Contains(filters.GuiasGR) || x.Grt.Contains(filters.GuiasGR)));
-
-            //activo
-            filter = filter.And(x => x.Activo == true);
+            if (filters?.IdLoteBalanza != null)
+                filter = filter.And(x => x.IdLoteBalanza == filters.IdLoteBalanza);
 
             var tickets = await _ticketRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
@@ -95,12 +43,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
                 x => x.IdTransporteNavigation,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,
-                x => x.IdLoteBalanzaNavigation.IdProveedorNavigation,
-                x => x.IdLoteBalanzaNavigation,
-                x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
-                x => x.IdEstadoTmhNavigation,
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
-                x => x.IdLoteBalanzaNavigation.IdConcesionNavigation
+                x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
+                x => x.IdEstadoTmhNavigation
             );
 
             var ticketDtos = _mapper?.Map<IEnumerable<SearchTicketDto>>(tickets.Items);
