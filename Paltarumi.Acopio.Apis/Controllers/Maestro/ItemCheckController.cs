@@ -34,6 +34,10 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<IEnumerable<ListItemCheckDto>>> List(int idModulo)
             => await _itemcheckApplication.List(idModulo);
 
+        [HttpGet("list")]
+        public async Task<ResponseDto<IEnumerable<ListAllItemCheckDto>>> ListAll()
+            => await _itemcheckApplication.ListAll();
+
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchItemCheckDto>>> Search(SearchParamsDto<SearchItemCheckFilterDto> searchParams)
             => await _itemcheckApplication.Search(searchParams);

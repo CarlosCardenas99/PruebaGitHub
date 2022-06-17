@@ -10,6 +10,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetItemCheckDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListItemCheckDto>>> List(int idModulo);
+        Task<ResponseDto<IEnumerable<ListAllItemCheckDto>>> ListAll();
         Task<ResponseDto<SearchResultDto<SearchItemCheckDto>>> Search(SearchParamsDto<SearchItemCheckFilterDto> searchParams);
     }
 }

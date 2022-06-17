@@ -5,6 +5,7 @@
         public Transporte()
         {
             Tickets = new HashSet<Ticket>();
+            TransporteVehiculos = new HashSet<TransporteVehiculo>();
         }
 
         public int IdTransporte { get; set; }
@@ -18,5 +19,6 @@
 
         public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
+        public virtual ICollection<TransporteVehiculo> TransporteVehiculos { get; set; }
     }
 }

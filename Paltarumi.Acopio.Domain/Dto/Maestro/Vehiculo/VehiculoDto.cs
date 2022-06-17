@@ -5,5 +5,7 @@ namespace Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo
         public int? IdTipoVehiculo { get; set; }
         public int? IdVehiculoMarca { get; set; }
         public string? Placa { get; set; }
+        public string? OtraPlaca { get; set; }
+        public decimal? Tara { get; set; }
     }
 }
