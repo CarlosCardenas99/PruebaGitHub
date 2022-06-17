@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Apis.Controllers.Base;
+using Paltarumi.Acopio.Apis.Security;
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Domain.Dto.Base;
@@ -42,6 +43,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
 
         //----------------------------------------------------------
 
+        [Authorize]
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()
             => await _loteBalanzaApplication.List();

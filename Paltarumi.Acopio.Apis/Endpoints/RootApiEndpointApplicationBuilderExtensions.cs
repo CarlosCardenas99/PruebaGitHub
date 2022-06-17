@@ -8,8 +8,6 @@ namespace Paltarumi.Acopio.Apis.Endpoints
         {
             var options = configuration.GetSection("ApiOptions").Get<ApiOptions>();
 
-            app.UseRouting();
-
             app.UseEndpoints(configure =>
             {
                 configure.MapGet("/", async context =>

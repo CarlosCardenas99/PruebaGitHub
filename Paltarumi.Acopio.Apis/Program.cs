@@ -51,6 +51,12 @@ app.UseSwaggerDocumentation(configuration);
 // HttpsRedirection
 app.UseHttpsRedirection();
 
+// Routing
+app.UseRouting();
+
+// Authentication
+app.UseAuthentication();
+
 // Authorization
 app.UseAuthorization();
 
@@ -59,12 +65,6 @@ app.MapControllers();
 
 // RootApiEndpoint
 app.UseRootApiEndpoint(configuration);
-
-// Authentication
-app.UseAuthentication();
-
-// Authorization
-app.UseAuthorization();
 
 // Run
 app.Run();
