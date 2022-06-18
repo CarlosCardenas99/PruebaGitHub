@@ -17,14 +17,22 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, GetTicketDto>()
+
                 .ReverseMap();
+
             CreateMap<Entity.Ticket, ListTicketDto>()
                 .ForMember(x => x.FechaHoraIngreso, opt => opt.MapFrom(x => x.FechaIngreso.ToString("yyyy-MM-dd") + " " + x.HoraIngreso))
                 .ForMember(x => x.FechaHoraSalida, opt => opt.MapFrom(x => x.FechaSalida != null && x.HoraSalida != null ? Convert.ToDateTime(x.FechaSalida.ToString()).ToString("yyyy-MM-dd") + " " + x.HoraSalida : string.Empty))
                 .ForMember(x => x.Conductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
+                .ForMember(x => x.ConductorLicencia, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Licencia : string.Empty))
+                .ForMember(x => x.ConductorDni, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Numero : string.Empty))
+                
                 .ForMember(x => x.Transporte, opt => opt.MapFrom(x => x.IdTransporteNavigation != null ? x.IdTransporteNavigation.RazonSocial : string.Empty))
+                .ForMember(x => x.TransporteRuc, opt => opt.MapFrom(x => x.IdTransporteNavigation != null ? x.IdTransporteNavigation.Ruc : string.Empty))
                 .ForMember(x => x.UnidadMedida, opt => opt.MapFrom(x => x.IdUnidadMedidaNavigation != null ? x.IdUnidadMedidaNavigation.Descripcion : string.Empty))
                 .ForMember(x => x.Placa, opt => opt.MapFrom(x => x.IdVehiculoNavigation != null ? x.IdVehiculoNavigation.Placa : string.Empty))
+                .ForMember(x => x.VehiculoMarca, opt => opt.MapFrom(x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation != null ? x.IdVehiculoNavigation.IdVehiculoMarcaNavigation.Descripcion : string.Empty))
+                .ForMember(x => x.VehiculoTipo, opt => opt.MapFrom(x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation != null ? x.IdVehiculoNavigation.IdTipoVehiculoNavigation.Descripcion : string.Empty))
                 .ForMember(x => x.EstadoTmh, opt => opt.MapFrom(x => x.IdEstadoTmhNavigation != null ? x.IdEstadoTmhNavigation.Descripcion : string.Empty))
                 .ReverseMap();
 
