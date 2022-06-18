@@ -3,7 +3,9 @@ using Paltarumi.Acopio.Entity.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using Paltarumi.Acopio.Repository.Security;
+using System.Collections;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Paltarumi.Acopio.Repository.Base
 {
@@ -22,6 +24,8 @@ namespace Paltarumi.Acopio.Repository.Base
         {
             if (entity == null) return null;
 
+            UpdateAuditTrails(entity, true);
+
             await _dbContext.Set<TEntity>().AddAsync(entity);
 
             return await Task.FromResult(entity);
@@ -32,6 +36,8 @@ namespace Paltarumi.Acopio.Repository.Base
             if (entities == null) return null;
             if (!entities.Any()) return entities;
 
+            foreach (var entity in entities) UpdateAuditTrails(entity, true);
+
             await _dbContext.Set<TEntity>().AddRangeAsync(entities);
 
             return await Task.FromResult(entities);
@@ -41,6 +47,7 @@ namespace Paltarumi.Acopio.Repository.Base
         {
             if (entity == null) return null;
 
+            UpdateAuditTrails(entity);
             _dbContext.Set<TEntity>().Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.Update(entity);
@@ -55,6 +62,7 @@ namespace Paltarumi.Acopio.Repository.Base
 
             entities.ToList().ForEach(entity =>
             {
+                UpdateAuditTrails(entity);
                 _dbContext.Set<TEntity>().Attach(entity);
                 _dbContext.Entry(entity).State = EntityState.Modified;
             });
@@ -204,5 +212,81 @@ namespace Paltarumi.Acopio.Repository.Base
 
         public async Task<int> SaveAsync()
             => await _dbContext.SaveChangesAsync();
+
+        public void UpdateAuditTrails(TEntity entity, bool creation = true)
+            => UpdateAuditTrailsDetails(entity, new List<Type>(), creation);
+
+        private void UpdateAuditTrailsDetails<TDetail>(TDetail entity, ICollection<Type> baseTypes, bool creation = true)
+        {
+            if (entity == null) return;
+
+            if (entity.GetType().IsSimple()) return;
+
+            UpdateAuditInfo(entity, creation);
+
+            foreach (var property in entity.GetType().GetProperties())
+            {
+                var propertyValue = property.GetValue(entity);
+
+                if (propertyValue == null) continue;
+
+                if (property.PropertyType.IsSimple()) continue;
+
+                if (baseTypes.Contains(property.PropertyType)) continue;
+
+                if (!baseTypes.Contains(entity.GetType())) baseTypes.Add(entity.GetType());
+
+                if (property.PropertyType.IsCollection())
+                {
+                    if (propertyValue is IEnumerable entities)
+                    {
+                        var entitiesEnumerator = entities.GetEnumerator();
+                        while (entitiesEnumerator.MoveNext())
+                            UpdateAuditTrailsDetails(entitiesEnumerator.Current, baseTypes);
+                    }
+
+                    continue;
+                }
+
+                UpdateAuditTrailsDetails(propertyValue, baseTypes);
+            }
+        }
+
+        private void UpdateAuditInfo(object entity, bool creation = true)
+        {
+            if (entity == null) return;
+
+            var now = DateTime.UtcNow;
+            var properties = entity.GetType().GetProperties();
+
+            DateTime? nowNullable = now;
+            int? idUsuario = _userIdentity.GetCurrentUserId();
+
+            if (creation)
+            {
+                UpdateProperty(entity, properties, "IdUsuarioCreate", idUsuario, typeof(int?));
+                if (idUsuario.HasValue) UpdateProperty(entity, properties, "IdUsuarioCreate", idUsuario.Value);
+                UpdateProperty(entity, properties, "CreateDate", nowNullable, typeof(DateTime?));
+                UpdateProperty(entity, properties, "CreateDate", now);
+                UpdateProperty(entity, properties, "Activo", true);
+            }
+
+            UpdateProperty(entity, properties, "IdUsuarioUpdate", idUsuario, typeof(int?));
+            if (idUsuario.HasValue) UpdateProperty(entity, properties, "IdUsuarioUpdate", idUsuario.Value);
+            UpdateProperty(entity, properties, "UpdateDate", nowNullable, typeof(DateTime?));
+            UpdateProperty(entity, properties, "UpdateDate", now);
+        }
+
+        private void UpdateProperty(object entity, IEnumerable<PropertyInfo> properties, string propertyName, object? value, Type? type = null)
+        {
+            type ??= value?.GetType();
+
+            var property = properties.FirstOrDefault(x => x.Name == propertyName);
+
+            if (property == null) return;
+            if (property.PropertyType.FullName != type?.FullName) return;
+
+            property.SetValue(entity, value);
+        }
     }
 }

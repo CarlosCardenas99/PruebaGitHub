@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Paltarumi.Acopio.Entity
 {
-    public class ApplicationUser : IdentityUser<Guid>
+    public class ApplicationUser : IdentityUser<int>
     {
         [Required]
         [MaxLength(100)]

@@ -4,7 +4,7 @@ using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Repository.Data
 {
-    public class SecurityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class SecurityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {
         public SecurityDbContext(DbContextOptions<SecurityDbContext> options) : base(options)
         {

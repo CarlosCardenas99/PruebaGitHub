@@ -2,6 +2,6 @@
 {
     public class GetUserDto : UserDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
     }
 }
