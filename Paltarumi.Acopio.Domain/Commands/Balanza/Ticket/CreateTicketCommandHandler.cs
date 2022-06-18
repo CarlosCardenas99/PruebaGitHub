@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.VisualBasic;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
@@ -18,6 +19,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.Ticket
             IMapper mapper,
             CreateTicketCommandValidator validator,
             IRepository<Entity.Ticket> ticketRepository
+
         ) : base(unitOfWork, mapper, validator)
         {
             _ticketRepository = ticketRepository;

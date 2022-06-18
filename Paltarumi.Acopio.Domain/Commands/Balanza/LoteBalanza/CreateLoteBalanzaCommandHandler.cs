@@ -23,6 +23,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         private readonly IRepository<Entity.Conductor> _conductorRepository;
         private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
         private readonly IRepository<Entity.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entity.TransporteVehiculo> _transporteVehiculoRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
@@ -36,6 +37,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.Transporte> transporteRepository,
             IRepository<Entity.Conductor> conductorRepository,
             IRepository<Entity.DuenoMuestra> duenoMuestraRepository,
+            IRepository<Entity.TransporteVehiculo> transporteVehiculoRepository,
             IRepository<Entity.Proveedor> proveedorRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
@@ -43,6 +45,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             _loteBalanzaRepository = loteBalanzaRepository;
             _maestroRepository = maestroRepository;
             _vehiculoRepository = vehiculoRepository;
+            _transporteVehiculoRepository = transporteVehiculoRepository;
             _transporteRepository = transporteRepository;
             _conductorRepository = conductorRepository;
             _duenoMuestraRepository = duenoMuestraRepository;
@@ -67,6 +70,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
             var duenoMuestra = await GetOrCreateDuenoMuestra(loteBalanza.IdProveedor);
 
+           
+
             if (loteBalanza != null && _mediator != null)
             {
                 // Actualizar la serie harcoded
@@ -81,6 +86,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 {
                     ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
                     ticket.Activo = true;
+                    await CreateTransporteVehiculo(ticket.IdTransporte, ticket.IdVehiculo); //GetOr
                 }
 
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
@@ -176,6 +182,32 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             await _duenoMuestraRepository.SaveAsync();
 
             return duenoMuestra;
+        }
+        private async Task<Entity.TransporteVehiculo> CreateTransporteVehiculo(int? idTransporte, int? idVehiculo)
+        {
+            var transporteVehiculo = default(Entity.TransporteVehiculo);
+            //transporte
+            if (idTransporte.HasValue == true && idVehiculo.HasValue == true)
+                transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => x.IdTransporte == idTransporte);
+            transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => x.IdVehiculo == idVehiculo);
+
+            if (transporteVehiculo != null)
+                return transporteVehiculo;
+
+            //var transporte = await _transporteRepository.GetByAsNoTrackingAsync(x => x.IdTransporte == idTransporte);
+            //var vehiculo = await _vehiculoRepository.GetByAsNoTrackingAsync(x => x.IdVehiculo == idVehiculo);
+
+            transporteVehiculo = new Entity.TransporteVehiculo
+            {
+                IdTransporte = idTransporte,
+                IdVehiculo = idVehiculo,
+                Activo = true 
+            };
+
+            await _transporteVehiculoRepository.AddAsync(transporteVehiculo);
+            await _transporteVehiculoRepository.SaveAsync();
+
+            return transporteVehiculo;
         }
     }
 }
