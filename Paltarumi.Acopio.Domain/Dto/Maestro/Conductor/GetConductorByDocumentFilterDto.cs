@@ -4,5 +4,6 @@
     {
         public string? CodigoTipoDocumento { get; set; }
         public string? numero { get; set; }
+
     }
 }
