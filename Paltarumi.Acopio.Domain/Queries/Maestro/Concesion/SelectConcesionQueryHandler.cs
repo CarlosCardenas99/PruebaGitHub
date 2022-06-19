@@ -2,6 +2,7 @@
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Entity.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using System;
@@ -38,6 +39,17 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 
             if (filters?.Activo.HasValue == true)
                 filter = filter.And(x => x.Activo == filters.Activo.Value);
+
+            var sorts = new List<SortExpression<Entity.Concesion>>();
+
+            if (request.SearchParams?.Sort != null)
+            {
+                foreach (var srt in request.SearchParams.Sort)
+                {
+                    var property = IQueryableExtensions.GetSortExpression<Entity.Concesion>(srt.Direction, srt.Property);
+                    if (property != null) sorts.Add(property);
+                }
+            }
 
             var concesions = await _concesionRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
