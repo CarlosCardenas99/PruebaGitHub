@@ -42,5 +42,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         [HttpPost("list")]
         public async Task<ResponseDto<IEnumerable<ListConcesionDto>>> List(ListConcesionFilterDto filter)
             => await _concesionApplication.List(filter);
+
+        [HttpPost("select")]
+        public async Task<ResponseDto<SearchResultDto<SelectConcesionDto>>> Select(SearchParamsDto<SelectConcesionFilterDto> searchParams)
+            => await _concesionApplication.Select(searchParams);
     }
 }

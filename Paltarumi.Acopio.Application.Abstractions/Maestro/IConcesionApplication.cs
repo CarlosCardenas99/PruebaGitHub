@@ -12,5 +12,7 @@ namespace Paltarumi.Acopio.Application.Abstractions.Maestro
         Task<ResponseDto<GetConcesionDto>> Get(string codigoUnico);
         Task<ResponseDto<IEnumerable<ListConcesionDto>>> List(ListConcesionFilterDto filter);
         Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<SearchConcesionFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SelectConcesionDto>>> Select(SearchParamsDto<SelectConcesionFilterDto> searchParams);
+
     }
 }
