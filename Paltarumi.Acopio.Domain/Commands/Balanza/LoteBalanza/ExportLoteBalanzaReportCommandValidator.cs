@@ -7,15 +7,15 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class ExportLoteBalanzaReportCommandValidator : CommandValidatorBase<ExportLoteBalanzaReportCommand>
     {
-        private readonly IRepository<Entity.LoteBalanza> _repositoryBase;
-        public ExportLoteBalanzaReportCommandValidator(IRepository<Entity.LoteBalanza> repositoryBase)
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        public ExportLoteBalanzaReportCommandValidator(IRepository<Entity.Ticket> ticketRepository)
         {
-            _repositoryBase = repositoryBase;
+            _ticketRepository = ticketRepository;
 
-            RequiredField(x => x.IdLoteBalanza, Resources.Balanza.LoteBalanza.IdLoteBalanza)
+            RequiredField(x => x.IdTicket, Resources.Balanza.Ticket.IdTicket)
                 .DependentRules(() =>
                 {
-                    RuleFor(x => x.IdLoteBalanza)
+                    RuleFor(x => x.IdTicket)
                         .MustAsync(ValidateExistenceAsync)
                         .WithCustomValidationMessage()
                         .DependentRules(() =>
@@ -27,9 +27,9 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 });
         }
 
-        protected async Task<bool> ValidateExistenceAsync(ExportLoteBalanzaReportCommand command, int idLoteBalanza, ValidationContext<ExportLoteBalanzaReportCommand> context, CancellationToken cancellationToken)
+        protected async Task<bool> ValidateExistenceAsync(ExportLoteBalanzaReportCommand command, int idTicket, ValidationContext<ExportLoteBalanzaReportCommand> context, CancellationToken cancellationToken)
         {
-            var exists = await _repositoryBase.FindAll().Where(x => x.IdLoteBalanza == idLoteBalanza).AnyAsync(cancellationToken);
+            var exists = await _ticketRepository.FindAll().Where(x => x.IdTicket == idTicket).AnyAsync(cancellationToken);
             if (!exists) throw new Exception(Resources.Common.UpdateRecordNotFound);
             return true;
         }
