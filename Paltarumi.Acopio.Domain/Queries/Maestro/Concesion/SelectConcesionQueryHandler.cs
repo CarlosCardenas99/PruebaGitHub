@@ -54,7 +54,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
             var concesions = await _concesionRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
-                null,
+                sorts,
                 filter
             );
 
