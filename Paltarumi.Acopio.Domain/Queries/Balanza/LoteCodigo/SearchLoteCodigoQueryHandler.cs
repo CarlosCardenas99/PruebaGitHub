@@ -2,6 +2,7 @@ using AutoMapper;
 using Paltarumi.Acopio.Domain.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Entity.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
@@ -51,11 +52,21 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
                 filter = filter.And(x =>
                 (x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(filters.Proveedor) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(filters.Proveedor)));
             }
+            var sorts = new List<SortExpression<Entity.LoteCodigo>>();
+
+            if (request.SearchParams?.Sort != null)
+            {
+                foreach (var srt in request.SearchParams.Sort)
+                {
+                    var property = IQueryableExtensions.GetSortExpression<Entity.LoteCodigo>(srt.Direction, srt.Property);
+                    if (property != null) sorts.Add(property);
+                }
+            }
 
             var lotes = await _lotecodigoRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
-                null,
+                sorts,
                 filter,
                 x => x.IdLoteBalanzaNavigation,
                 x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,

@@ -122,7 +122,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                     IdLoteBalanza = loteBalanza.IdLoteBalanza,
                     IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
                     IdTipoLoteCodigo = 1,
-                    FechaRecepcion = DateTime.Now,
+                    FechaRecepcion =DateTime.Now, 
                     HoraRecepcion = DateTime.Now.ToString("HH:mm"),
                     CodigoPlanta = loteBalanza.Codigo,
                     CodigoMuestra = String.Empty,
