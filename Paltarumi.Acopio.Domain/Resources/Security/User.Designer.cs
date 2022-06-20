@@ -149,7 +149,7 @@ namespace Paltarumi.Acopio.Domain.Resources.Security {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ocurrió un error generando el token.
+        ///   Busca una cadena traducida similar a Ocurrió un error generando el token.
         /// </summary>
         internal static string LoginAccessTokenError {
             get {
@@ -158,7 +158,7 @@ namespace Paltarumi.Acopio.Domain.Resources.Security {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El correo no ha sido confirmado.
+        ///   Busca una cadena traducida similar a El correo no ha sido confirmado.
         /// </summary>
         internal static string LoginEmailNotConfirmed {
             get {

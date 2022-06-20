@@ -1,6 +1,7 @@
 using Paltarumi.Acopio.Apis.Documentation;
 using Paltarumi.Acopio.Apis.Endpoints;
 using Paltarumi.Acopio.Apis.Exception;
+using Paltarumi.Acopio.Apis.Region;
 using Paltarumi.Acopio.Apis.Security;
 using Paltarumi.Acopio.Application.Extensions;
 using Paltarumi.Acopio.Domain.Extensions;
@@ -36,6 +37,10 @@ builder.Services.UseSecurity(configuration);
 // EmailClient
 builder.Services.UseEmailClient(configuration);
 
+//TODO: UTC
+// Region
+builder.Services.UseRegion(configuration);
+
 #endregion
 
 #region App
@@ -65,6 +70,14 @@ app.MapControllers();
 
 // RootApiEndpoint
 app.UseRootApiEndpoint(configuration);
+
+//TODO: UTC
+app.UseRequestLocalization(options =>
+{
+    var questStringCultureProvider = options.RequestCultureProviders[0];
+    options.RequestCultureProviders.RemoveAt(0);
+    options.RequestCultureProviders.Insert(1, questStringCultureProvider);
+});
 
 // Run
 app.Run();
