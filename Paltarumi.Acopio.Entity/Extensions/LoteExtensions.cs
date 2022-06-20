@@ -29,10 +29,10 @@ namespace Paltarumi.Acopio.Entity.Extensions
             => loteBalanza.HoraIngreso = loteBalanza?.Tickets?.Min(x => x.FechaIngreso).ToString("HH:mm") ?? string.Empty;
 
         public static void UpdateFechaAcopio(this LoteBalanza loteBalanza)
-            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Min(x => x.FechaSalida) ?? DateTime.Now;
+            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTime.Now;
 
         public static void UpdateHoraAcopio(this LoteBalanza loteBalanza)
-            => loteBalanza.HoraAcopio = loteBalanza?.Tickets?.Min(x => x.FechaSalida)?.ToString("HH:mm") ?? string.Empty;
+            => loteBalanza.HoraAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida)?.ToString("HH:mm") ?? string.Empty;
 
         public static void UpdateTms(this LoteBalanza loteBalanza)
             => loteBalanza.Tms = loteBalanza?.Tickets?.Sum(x => x.PesoNeto) ?? 0;

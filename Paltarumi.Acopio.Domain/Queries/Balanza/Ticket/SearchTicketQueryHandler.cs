@@ -2,6 +2,7 @@
 using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Entity.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
@@ -34,10 +35,21 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
             if (filters?.IdLoteBalanza != null)
                 filter = filter.And(x => x.IdLoteBalanza == filters.IdLoteBalanza);
 
+            var sorts = new List<SortExpression<Entity.Ticket>>();
+
+            if (request.SearchParams?.Sort != null)
+            {
+                foreach (var srt in request.SearchParams.Sort)
+                {
+                    var property = IQueryableExtensions.GetSortExpression<Entity.Ticket>(srt.Direction, srt.Property);
+                    if (property != null) sorts.Add(property);
+                }
+            }
+
             var tickets = await _ticketRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
-                null,
+                sorts,
                 filter,
                 x => x.IdConductorNavigation,
                 x => x.IdTransporteNavigation,
