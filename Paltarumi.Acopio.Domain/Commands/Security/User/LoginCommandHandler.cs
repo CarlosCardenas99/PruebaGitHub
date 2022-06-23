@@ -39,7 +39,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Security.User
             if (result.Succeeded)
             {
                 var user = await _userManager.FindByNameAsync(request.LoginDto.UserName);
-                var accessToken = await _mediator?.Send(new GenerateTokenCommand(user), cancellationToken);
+                var accessToken = await _mediator?.Send(new GenerateTokenCommand(user), cancellationToken)!;
 
                 if (accessToken?.Data == null)
                 {

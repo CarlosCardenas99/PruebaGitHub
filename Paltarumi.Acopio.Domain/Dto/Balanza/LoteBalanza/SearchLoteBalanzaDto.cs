@@ -6,11 +6,11 @@
         public string? Estado { get; set; }
         public string Vehiculos { get; set; } = null!;
         public string? NombreConcesion { get; set; }
-        public DateTime? FechaAcopio { get; set; }
+        public DateTimeOffset? FechaAcopio { get; set; }
         public string HoraAcopio { get; set; } = null!;
         public string CantidadSacos { get; set; } = null!;
         public string Transportistas { get; set; } = null!;
-        public DateTime? FechaIngreso { get; set; }
+        public DateTimeOffset? FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
         public string Codigo { get; set; } = null!;
         public string? NombreProveedor { get; set; }

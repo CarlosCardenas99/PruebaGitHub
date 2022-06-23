@@ -4,9 +4,6 @@
     {
         public Maestro()
         {
-            CheckListIdCheckListEstadoBalanzaNavigations = new HashSet<CheckList>();
-            CheckListIdCheckListEstadoComercialNavigations = new HashSet<CheckList>();
-            LeyReferencials = new HashSet<LeyReferencial>();
             LoteBalanzaIdEstadoNavigations = new HashSet<LoteBalanza>();
             LoteBalanzaIdEstadoTipoMaterialNavigations = new HashSet<LoteBalanza>();
             LoteCodigos = new HashSet<LoteCodigo>();
@@ -23,9 +20,6 @@
         public string Descripcion { get; set; } = null!;
         public bool Activo { get; set; }
 
-        public virtual ICollection<CheckList> CheckListIdCheckListEstadoBalanzaNavigations { get; set; }
-        public virtual ICollection<CheckList> CheckListIdCheckListEstadoComercialNavigations { get; set; }
-        public virtual ICollection<LeyReferencial> LeyReferencials { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoNavigations { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoTipoMaterialNavigations { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }

@@ -4,6 +4,6 @@
     {
         public int IdLoteBalanza { get; set; }
         public bool Activo { get; set; }
-        public string ProveedorRazonSocial { get; set; }
+        public string ProveedorRazonSocial { get; set; } = null!;
     }
 }

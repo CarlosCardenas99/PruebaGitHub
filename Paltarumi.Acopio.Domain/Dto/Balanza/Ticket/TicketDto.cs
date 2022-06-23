@@ -4,9 +4,9 @@
     {
         public int IdLoteBalanza { get; set; }
         public string Numero { get; set; } = null!;
-        public DateTime FechaIngreso { get; set; }
+        public DateTimeOffset FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
-        public DateTime? FechaSalida { get; set; }
+        public DateTimeOffset? FechaSalida { get; set; }
         public string? HoraSalida { get; set; }
         public int IdEstadoTmh { get; set; }
         public float PesoBruto100 { get; set; }

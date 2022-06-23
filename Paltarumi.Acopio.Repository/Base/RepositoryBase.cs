@@ -256,24 +256,24 @@ namespace Paltarumi.Acopio.Repository.Base
         {
             if (entity == null) return;
 
-            var now = DateTime.UtcNow;
+            var now = DateTimeOffset.UtcNow;
             var properties = entity.GetType().GetProperties();
 
-            DateTime? nowNullable = now;
+            DateTimeOffset? nowNullable = now;
             int? idUsuario = _userIdentity.GetCurrentUserId();
 
             if (creation)
             {
                 UpdateProperty(entity, properties, "IdUsuarioCreate", idUsuario, typeof(int?));
                 if (idUsuario.HasValue) UpdateProperty(entity, properties, "IdUsuarioCreate", idUsuario.Value);
-                UpdateProperty(entity, properties, "CreateDate", nowNullable, typeof(DateTime?));
+                UpdateProperty(entity, properties, "CreateDate", nowNullable, typeof(DateTimeOffset?));
                 UpdateProperty(entity, properties, "CreateDate", now);
                 UpdateProperty(entity, properties, "Activo", true);
             }
 
             UpdateProperty(entity, properties, "IdUsuarioUpdate", idUsuario, typeof(int?));
             if (idUsuario.HasValue) UpdateProperty(entity, properties, "IdUsuarioUpdate", idUsuario.Value);
-            UpdateProperty(entity, properties, "UpdateDate", nowNullable, typeof(DateTime?));
+            UpdateProperty(entity, properties, "UpdateDate", nowNullable, typeof(DateTimeOffset?));
             UpdateProperty(entity, properties, "UpdateDate", now);
         }
 

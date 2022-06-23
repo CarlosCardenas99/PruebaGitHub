@@ -71,9 +71,9 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza
 
             var sorts = new List<SortExpression<Entity.LoteBalanza>>();
 
-            if(request.SearchParams?.Sort != null)
+            if (request.SearchParams?.Sort != null)
             {
-                foreach(var srt in request.SearchParams.Sort)
+                foreach (var srt in request.SearchParams.Sort)
                 {
                     var property = IQueryableExtensions.GetSortExpression<Entity.LoteBalanza>(srt.Direction, srt.Property);
                     if (property != null) sorts.Add(property);

@@ -44,14 +44,14 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
             if (loteBalanza != null)
             {
-                int total = ticketDetails.Where(x => x.HabilitadoBalanza == true).ToList().Count;
-                int revisados = ticketDetails.Where(x => x.HabilitadoBalanza == true && x.IdCheckListEstadoBalanza == Constants.Maestro.EstadoCheckList.Revisado).ToList().Count;
+                int total = ticketDetails?.Where(x => x.HabilitadoBalanza == true).ToList().Count ?? 0;
+                int revisados = ticketDetails?.Where(x => x.HabilitadoBalanza == true && x.IdCheckListEstadoBalanza == Constants.Maestro.EstadoCheckList.Revisado).ToList().Count ?? 0;
                 int porcentajeAvance = (revisados * 100) / total;
 
                 //loteBalanza.Tickets = null;
                 //loteBalanza.CheckLists = null;
                 loteBalanza.PorcentajeCheckList = porcentajeAvance;
-                loteBalanza.UpdateDate = DateTime.Now;
+                loteBalanza.UpdateDate = DateTimeOffset.Now;
                 loteBalanza.IdUsuarioUpdate = request.UpdateDto?.IdUsuarioUpdate;
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);
 
@@ -85,12 +85,10 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 newCheckLists.ToList().ForEach(t =>
                 {
                     t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
-                    t.IdLoteBalanzaNavigation = null;
                     t.Activo = true;
                 });
 
                 await _checkListRepository.AddAsync(newCheckLists.ToArray());
-
                 await _loteBalanzaRepository.SaveAsync();
                 await _checkListRepository.SaveAsync();
 
@@ -99,9 +97,6 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 var loteDto = _mapper?.Map<GetLoteBalanzaCheckListDto>(loteBalanza);
                 if (loteDto != null)
                 {
-                    loteDto.CheckListDetails =
-                        _mapper?.Map<List<GetCheckListDto>>(loteBalanza?.CheckLists) ?? new List<GetCheckListDto>();
-
                     response.UpdateData(loteDto);
                     response.AddOkResult(Resources.Common.UpdateSuccessMessage);
                 }

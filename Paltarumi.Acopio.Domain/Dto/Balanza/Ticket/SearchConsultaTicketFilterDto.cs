@@ -2,8 +2,8 @@
 {
     public class SearchConsultaTicketFilterDto
     {
-        public DateTime? FechaDesde { get; set; }//listo
-        public DateTime? FechaHasta { get; set; }//listo
+        public DateTimeOffset? FechaDesde { get; set; }//listo
+        public DateTimeOffset? FechaHasta { get; set; }//listo
         public string? Codigo { get; set; }//lote codigo  listo
         public string? Proveedor { get; set; } //ruc - razon social   listp
         public string? Concesion { get; set; }//codigo unico - nombre listo

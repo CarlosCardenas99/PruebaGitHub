@@ -14,10 +14,10 @@ namespace Paltarumi.Acopio.Apis.Region
             {
                 var supportedCultures = new[]
                 {
-                    new CultureInfo(apiOntion.Region)
+                    new CultureInfo(apiOntion.Region!)
                 };
 
-                options.DefaultRequestCulture = new RequestCulture(culture: apiOntion.Region, uiCulture: apiOntion.Region);
+                options.DefaultRequestCulture = new RequestCulture(culture: apiOntion.Region!, uiCulture: apiOntion.Region!);
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
 

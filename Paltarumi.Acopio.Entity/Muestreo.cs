@@ -5,7 +5,7 @@
         public int IdMuestreo { get; set; }
         public int CodigoTurno { get; set; }
         public int CodigoResponsable { get; set; }
-        public DateTime Fecha { get; set; }
+        public DateTimeOffset Fecha { get; set; }
         public int IdLote { get; set; }
         public int CodigoCancha { get; set; }
         public bool LlevaGrueso { get; set; }

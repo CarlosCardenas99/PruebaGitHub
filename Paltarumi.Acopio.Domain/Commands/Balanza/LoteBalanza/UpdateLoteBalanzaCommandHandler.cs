@@ -112,7 +112,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 {
                     newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
-                    newTicket.IdLoteBalanzaNavigation = null;
+                    newTicket.IdLoteBalanzaNavigation = null!;
                     newTicket.Activo = true;
                 };
 

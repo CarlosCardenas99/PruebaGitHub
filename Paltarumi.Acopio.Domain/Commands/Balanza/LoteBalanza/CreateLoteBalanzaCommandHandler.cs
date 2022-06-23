@@ -70,7 +70,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
             var duenoMuestra = await GetOrCreateDuenoMuestra(loteBalanza.IdProveedor);
 
-           
+
 
             if (loteBalanza != null && _mediator != null)
             {
@@ -122,10 +122,10 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                     IdLoteBalanza = loteBalanza.IdLoteBalanza,
                     IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
                     IdTipoLoteCodigo = 1,
-                    FechaRecepcion =DateTime.Now, 
-                    HoraRecepcion = DateTime.Now.ToString("HH:mm"),
+                    FechaRecepcion = DateTimeOffset.Now,
+                    HoraRecepcion = DateTimeOffset.Now.ToString("HH:mm"),
                     CodigoPlanta = loteBalanza.Codigo,
-                    CodigoMuestra = String.Empty,
+                    CodigoMuestra = string.Empty,
                     CodigoHash = Convert.ToBase64String(bytes),
                     EnsayoLeyAu = false,
                     EnsayoLeyAg = false,
@@ -133,7 +133,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                     EnsayoConsumo = false,
                     IdEstado = 1,
                     IdUsuarioCreate = 1,
-                    CreateDate = DateTime.Now,
+                    CreateDate = DateTimeOffset.Now,
                     Activo = true
                 };
 
@@ -186,6 +186,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
         private async Task<Entity.TransporteVehiculo> CreateTransporteVehiculo(int? idTransporte, int? idVehiculo)
         {
             var transporteVehiculo = default(Entity.TransporteVehiculo);
+
             //transporte
             if (idTransporte.HasValue == true && idVehiculo.HasValue == true)
                 transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => x.IdTransporte == idTransporte);
@@ -199,9 +200,9 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
             transporteVehiculo = new Entity.TransporteVehiculo
             {
-                IdTransporte = idTransporte,
-                IdVehiculo = idVehiculo,
-                Activo = true 
+                IdTransporte = idTransporte ?? 0,
+                IdVehiculo = idVehiculo ?? 0,
+                Activo = true
             };
 
             await _transporteVehiculoRepository.AddAsync(transporteVehiculo);

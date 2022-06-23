@@ -4,7 +4,6 @@
     {
         public DuenoMuestra()
         {
-            LeyReferencials = new HashSet<LeyReferencial>();
             LoteCodigos = new HashSet<LoteCodigo>();
         }
 
@@ -17,7 +16,6 @@
         public string Email { get; set; } = null!;
         public bool Activo { get; set; }
 
-        public virtual ICollection<LeyReferencial> LeyReferencials { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
     }
 }

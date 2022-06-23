@@ -52,7 +52,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
                 {
                     departamento.Provincias = await _ubigeoRepositoryBase
                         .FindAllAsNoTracking()
-                        .Where(x => x.CodigoUbigeo.StartsWith(departamento.Codigo))
+                        .Where(x => x.CodigoUbigeo.StartsWith(departamento.Codigo!))
                         .Select(x =>
                         new ProvinciaDto
                         {
@@ -66,7 +66,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
                     {
                         provincia.Distritos = await _ubigeoRepositoryBase
                         .FindAllAsNoTracking()
-                        .Where(x => x.CodigoUbigeo.StartsWith(provincia.Codigo))
+                        .Where(x => x.CodigoUbigeo.StartsWith(provincia.Codigo!))
                         .Select(x =>
                         new DistritoDto
                         {

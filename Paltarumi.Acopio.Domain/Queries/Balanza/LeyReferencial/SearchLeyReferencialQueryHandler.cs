@@ -53,8 +53,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
                 null,
                 filter,
                 x => x.IdDuenoMuestraNavigation,
-                //x => x.IdDuenoMuestraNavigation.IdProveedorNavigation,
-                x => x.IdTipoMineralNavigation
+                x => x.IdTipoMineralNavigation!
             );
 
             var leyreferencialDtos = _mapper?.Map<IEnumerable<SearchLeyReferencialDto>>(leyreferencials.Items);

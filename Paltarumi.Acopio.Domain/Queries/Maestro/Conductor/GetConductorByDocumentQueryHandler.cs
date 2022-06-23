@@ -23,7 +23,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
         protected override async Task<ResponseDto<GetConductorDto>> HandleQuery(GetConductorByDocumentQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetConductorDto>();
-            var conductor = await _conductorRepository.GetByAsync(x => x.Numero.Equals(request.Filter.numero) ||  x.Licencia.Equals(request.Filter.numero) && x.CodigoTipoDocumento.Equals(request.Filter.CodigoTipoDocumento) && x.Activo == true);
+            var conductor = await _conductorRepository.GetByAsync(x => x.Numero.Equals(request.Filter.numero) || x.Licencia.Equals(request.Filter.numero) && x.CodigoTipoDocumento.Equals(request.Filter.CodigoTipoDocumento) && x.Activo == true);
             var conductorDto = _mapper?.Map<GetConductorDto>(conductor);
 
             if (conductor != null && conductorDto != null)
@@ -32,22 +32,27 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             }
             else
             {
-                SunatConsultaRucDto result = null;
+                SunatConsultaRucDto result = null!;
                 SunatStorage sunat = new SunatStorage();
-                if (request.Filter.CodigoTipoDocumento.Equals(Constants.TipoDocumento.DNI))
-                    result = sunat.ConsultaDni(request.Filter.numero);
-                else if (request.Filter.CodigoTipoDocumento.Equals(Constants.TipoDocumento.RUC))
-                    result = sunat.ConsultaRuc(request.Filter.numero);
+
+                if (string.Equals(Constants.TipoDocumento.DNI, request?.Filter?.CodigoTipoDocumento))
+                    result = sunat.ConsultaDni(request?.Filter.numero);
+
+                else if (string.Equals(Constants.TipoDocumento.RUC, request?.Filter?.CodigoTipoDocumento))
+                    result = sunat.ConsultaRuc(request?.Filter.numero);
                 else
                     return await Task.FromResult(response);
 
                 if (result != null && result?.response.responseCode == 0)
                 {
-                    conductor = mapperCreateConductorDto(result.sunatVo, request.Filter.CodigoTipoDocumento);
-                    await _conductorRepository.AddAsync(conductor);
+                    conductor = mapperCreateConductorDto(result.sunatVo, request?.Filter?.CodigoTipoDocumento);
+
+                    await _conductorRepository.AddAsync(conductor!);
                     await _conductorRepository.SaveAsync();
+
                     conductorDto = _mapper?.Map<GetConductorDto>(conductor);
-                    response.UpdateData(conductorDto);
+
+                    response.UpdateData(conductorDto!);
                 }
                 else
                 {
@@ -64,19 +69,21 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
             return await Task.FromResult(response);
         }
 
-        private Entity.Conductor? mapperCreateConductorDto(SunatConsultaRucVo sunatVo, string codigoTipoDocumento)
+        private Entity.Conductor? mapperCreateConductorDto(SunatConsultaRucVo sunatVo, string? codigoTipoDocumento)
         {
             Entity.Conductor conductor = new Entity.Conductor();
+
             conductor.IdConductor = 0;
             conductor.Numero = sunatVo.ruc;
             conductor.Nombres = sunatVo.razonSocial;
-            conductor.CodigoTipoDocumento = codigoTipoDocumento;
+            conductor.CodigoTipoDocumento = codigoTipoDocumento ?? string.Empty;
             conductor.CodigoUbigeo = null;
-            conductor.Licencia = String.Empty;
-            conductor.Domicilio = String.Empty;
-            conductor.Email = String.Empty;
-            conductor.Telefono = String.Empty;
+            conductor.Licencia = string.Empty;
+            conductor.Domicilio = string.Empty;
+            conductor.Email = string.Empty;
+            conductor.Telefono = string.Empty;
             conductor.Activo = true;
+
             return conductor;
         }
     }

@@ -29,7 +29,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
                 );
             var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
 
-            if (vehiculo != null && vehiculoDto != null)
+            if (vehiculo != null && vehiculoDto != null && _mapper != null)
             {
                 vehiculoDto.TipoVehiculo = _mapper.Map<GetMaestroDto>(vehiculo.IdTipoVehiculoNavigation);
                 vehiculoDto.Marca = _mapper.Map<GetMaestroDto>(vehiculo.IdVehiculoMarcaNavigation);

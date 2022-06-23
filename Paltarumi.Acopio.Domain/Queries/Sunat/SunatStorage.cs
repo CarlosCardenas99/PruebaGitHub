@@ -40,7 +40,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
             }
         };
 
-        public SunatConsultaRucDto ConsultaRuc(string ruc)
+        public SunatConsultaRucDto ConsultaRuc(string? ruc)
         {
             var response = new SunatConsultaRucDto();
 
@@ -129,7 +129,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
             return response;
         }
 
-        public SunatConsultaRucDto ConsultaDni(string dni)
+        public SunatConsultaRucDto ConsultaDni(string? dni)
         {
             var response = new SunatConsultaRucDto();
 
@@ -218,12 +218,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
                 if (token != string.Empty)
                     wc.Headers.Add(HttpRequestHeader.Authorization, "Bearer " + token);
 
-                var respuesta = wc.DownloadString(ruta);
+                var respuesta = wc.DownloadString(ruta!);
                 return respuesta;
             }
             catch (WebException x)
             {
-                return new StreamReader(x.Response.GetResponseStream()).ReadToEnd();
+                return new StreamReader(x.Response?.GetResponseStream()!).ReadToEnd();
             }
         }
 
@@ -241,90 +241,90 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
             }
             catch (WebException ex)
             {
-                return new StreamReader(ex?.Response.GetResponseStream()).ReadToEnd();
+                return new StreamReader(ex?.Response?.GetResponseStream()!).ReadToEnd();
             }
         }
     }
 
     public class ResponseErrorSunat
     {
-        public string success { get; set; }
-        public string message { get; set; }
+        public string success { get; set; } = null!;
+        public string message { get; set; } = null!;
     }
 
     class EmpresaApiEn
     {
-        public string ruc { get; set; }
-        public string razonSocial { get; set; }
-        public string nombreComercial { get; set; }
-        public List<string> telefonos { get; set; }
-        public string tipo { get; set; }
-        public string estado { get; set; }
-        public string condicion { get; set; }
-        public string direccion { get; set; }
-        public string departamento { get; set; }
-        public string provincia { get; set; }
-        public string distrito { get; set; }
-        public string fechaInscripcion { get; set; }
-        public string sistEmsion { get; set; }
-        public string sistContabilidad { get; set; }
-        public string actExterior { get; set; }
-        public List<string> actEconomicas { get; set; }
-        public List<string> cpPago { get; set; }
-        public List<string> sistElectronica { get; set; }
-        public string fechaEmisorFe { get; set; }
-        public List<string> cpeElectronico { get; set; }
-        public string fechaPle { get; set; }
-        public List<string> padrones { get; set; }
-        public string fechaBaja { get; set; }
-        public string profesion { get; set; }
-        public string ubigeo { get; set; }
-        public string capital { get; set; }
-        public EmpresaApiLaravelDataEn data { get; set; }
+        public string ruc { get; set; } = null!;
+        public string razonSocial { get; set; } = null!;
+        public string nombreComercial { get; set; } = null!;
+        public List<string> telefonos { get; set; } = null!;
+        public string tipo { get; set; } = null!;
+        public string estado { get; set; } = null!;
+        public string condicion { get; set; } = null!;
+        public string direccion { get; set; } = null!;
+        public string departamento { get; set; } = null!;
+        public string provincia { get; set; } = null!;
+        public string distrito { get; set; } = null!;
+        public string fechaInscripcion { get; set; } = null!;
+        public string sistEmsion { get; set; } = null!;
+        public string sistContabilidad { get; set; } = null!;
+        public string actExterior { get; set; } = null!;
+        public List<string> actEconomicas { get; set; } = null!;
+        public List<string> cpPago { get; set; } = null!;
+        public List<string> sistElectronica { get; set; } = null!;
+        public string fechaEmisorFe { get; set; } = null!;
+        public List<string> cpeElectronico { get; set; } = null!;
+        public string fechaPle { get; set; } = null!;
+        public List<string> padrones { get; set; } = null!;
+        public string fechaBaja { get; set; } = null!;
+        public string profesion { get; set; } = null!;
+        public string ubigeo { get; set; } = null!;
+        public string capital { get; set; } = null!;
+        public EmpresaApiLaravelDataEn data { get; set; } = null!;
     }
 
     class EmpresaApiLaravelDataEn
     {
-        public string direccion_completa { get; set; }
-        public string ruc { get; set; }
-        public string nombre_o_razon_social { get; set; }
-        public string estado { get; set; }
-        public string departamento { get; set; }
-        public string provincia { get; set; }
-        public string distrito { get; set; }
+        public string direccion_completa { get; set; } = null!;
+        public string ruc { get; set; } = null!;
+        public string nombre_o_razon_social { get; set; } = null!;
+        public string estado { get; set; } = null!;
+        public string departamento { get; set; } = null!;
+        public string provincia { get; set; } = null!;
+        public string distrito { get; set; } = null!;
     }
 
     class PersonaApiEn
     {
-        public string dni { get; set; }
-        public string nombres { get; set; }
-        public string apellidoPaterno { get; set; }
-        public string apellidoMaterno { get; set; }
-        public string codVerifica { get; set; }
+        public string dni { get; set; } = null!;
+        public string nombres { get; set; } = null!;
+        public string apellidoPaterno { get; set; } = null!;
+        public string apellidoMaterno { get; set; } = null!;
+        public string codVerifica { get; set; } = null!;
         public bool success { get; set; }
-        public string name { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string cui { get; set; }
-        public PersonaApiLaravelDataEn data { get; set; }
+        public string name { get; set; } = null!;
+        public string first_name { get; set; } = null!;
+        public string last_name { get; set; } = null!;
+        public string cui { get; set; } = null!;
+        public PersonaApiLaravelDataEn data { get; set; } = null!;
     }
 
     class PersonaApiLaravelDataEn
     {
         public int origen { get; set; }
-        public string numero { get; set; }
-        public string nombre_completo { get; set; }
-        public string nombres { get; set; }
-        public string apellido_paterno { get; set; }
-        public string apellido_materno { get; set; }
-        public string codigo_verificacion { get; set; }
-        public string sexo { get; set; }
+        public string numero { get; set; } = null!;
+        public string nombre_completo { get; set; } = null!;
+        public string nombres { get; set; } = null!;
+        public string apellido_paterno { get; set; } = null!;
+        public string apellido_materno { get; set; } = null!;
+        public string codigo_verificacion { get; set; } = null!;
+        public string sexo { get; set; } = null!;
     }
 
     public class SunatConsultaRucDto
     {
-        public Response response { get; set; }
-        public SunatConsultaRucVo sunatVo { get; set; }
+        public Response response { get; set; } = null!;
+        public SunatConsultaRucVo sunatVo { get; set; } = null!;
     }
 
     public class Response
@@ -347,12 +347,12 @@ namespace Paltarumi.Acopio.Domain.Queries.Sunat
 
     public class SunatConsultaRucVo
     {
-        public string ruc { get; set; }
-        public string razonSocial { get; set; }
-        public string direccion { get; set; }
-        public string departamento { get; set; }
-        public string provincia { get; set; }
-        public string distrito { get; set; }
-        public string ubigeo { get; set; }
+        public string ruc { get; set; } = null!;
+        public string razonSocial { get; set; } = null!;
+        public string direccion { get; set; } = null!;
+        public string departamento { get; set; } = null!;
+        public string provincia { get; set; } = null!;
+        public string distrito { get; set; } = null!;
+        public string ubigeo { get; set; } = null!;
     }
 }

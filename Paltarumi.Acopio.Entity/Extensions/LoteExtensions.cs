@@ -8,7 +8,7 @@ namespace Paltarumi.Acopio.Entity.Extensions
             => loteBalanza.Activo = true;
 
         public static void UpdateCreation(this LoteBalanza loteBalanza)
-            => loteBalanza.CreateDate = DateTime.Now;
+            => loteBalanza.CreateDate = DateTimeOffset.Now;
 
         public static void UpdateVehiculos(this LoteBalanza loteBalanza, IEnumerable<Vehiculo> vehiculos)
             => loteBalanza.Vehiculos = string.Join(",", vehiculos.Select(x => x.Placa));
@@ -23,13 +23,13 @@ namespace Paltarumi.Acopio.Entity.Extensions
             => loteBalanza.CantidadSacos = loteBalanza?.Tickets?.Count(x => x.IdUnidadMedida == Constants.Maestro.UnidadMedida.SACOS).ToString() ?? String.Empty;
 
         public static void UpdateFechaIngreso(this LoteBalanza loteBalanza)
-            => loteBalanza.FechaIngreso = loteBalanza?.Tickets?.Min(x => x.FechaIngreso) ?? DateTime.Now;
+            => loteBalanza.FechaIngreso = loteBalanza?.Tickets?.Min(x => x.FechaIngreso) ?? DateTimeOffset.Now;
 
         public static void UpdateHoraIngreso(this LoteBalanza loteBalanza)
             => loteBalanza.HoraIngreso = loteBalanza?.Tickets?.Min(x => x.FechaIngreso).ToString("HH:mm") ?? string.Empty;
 
         public static void UpdateFechaAcopio(this LoteBalanza loteBalanza)
-            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTime.Now;
+            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTimeOffset.Now;
 
         public static void UpdateHoraAcopio(this LoteBalanza loteBalanza)
             => loteBalanza.HoraAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida)?.ToString("HH:mm") ?? string.Empty;

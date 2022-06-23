@@ -32,11 +32,13 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
             }
             else
             {
-                SunatConsultaRucDto result = null;
+                SunatConsultaRucDto result = null!;
                 SunatStorage sunat = new SunatStorage();
-                if (request.Filter.CodigoTipoDocumento.Equals(Constants.TipoDocumento.DNI))
+
+                if (string.Equals(Constants.TipoDocumento.DNI, request.Filter.CodigoTipoDocumento))
                     result = sunat.ConsultaDni(request.Filter.numero);
-                else if (request.Filter.CodigoTipoDocumento.Equals(Constants.TipoDocumento.RUC))
+
+                else if (string.Equals(Constants.TipoDocumento.RUC, request.Filter.CodigoTipoDocumento))
                     result = sunat.ConsultaRuc(request.Filter.numero);
                 else
                     return await Task.FromResult(response);
@@ -44,17 +46,19 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
                 if (result != null && result?.response.responseCode == 0)
                 {
                     duenoMuestra = mapperCreateDuenoMuestraDto(result.sunatVo, request.Filter.CodigoTipoDocumento);
-                    await _duenoMuestraRepository.AddAsync(duenoMuestra);
+
+                    await _duenoMuestraRepository.AddAsync(duenoMuestra!);
                     await _duenoMuestraRepository.SaveAsync();
+
                     duenoMuestraDto = _mapper?.Map<GetDuenoMuestraDto>(duenoMuestra);
-                    response.UpdateData(duenoMuestraDto);
+                    response.UpdateData(duenoMuestraDto!);
                 }
                 else
                 {
                     List<ApplicationMessageDto> lisMsg = new List<ApplicationMessageDto>();
                     ApplicationMessageDto msg = new ApplicationMessageDto();
                     msg.MessageType = ApplicationMessageType.Error;
-                    msg.Message = result.response.responseMessage;
+                    msg.Message = result?.response.responseMessage;
                     msg.Key = "Error";
                     lisMsg.Add(msg);
                     response.Messages = lisMsg;
@@ -64,18 +68,19 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
             return await Task.FromResult(response);
         }
 
-        private Entity.DuenoMuestra? mapperCreateDuenoMuestraDto(SunatConsultaRucVo sunatVo, string codigoTipoDocumento)
+        private Entity.DuenoMuestra? mapperCreateDuenoMuestraDto(SunatConsultaRucVo sunatVo, string? codigoTipoDocumento)
         {
             Entity.DuenoMuestra duenoMuestra = new Entity.DuenoMuestra();
+
             duenoMuestra.IdDuenoMuestra = 0;
             duenoMuestra.Numero = sunatVo.ruc;
             duenoMuestra.Nombres = sunatVo.razonSocial;
-            duenoMuestra.CodigoTipoDocumento = codigoTipoDocumento;
-            //duenoMuestra.CodigoUbigeo = null;
-            duenoMuestra.Email = String.Empty;
-            duenoMuestra.Telefono = String.Empty;
+            duenoMuestra.CodigoTipoDocumento = codigoTipoDocumento ?? string.Empty;
+            duenoMuestra.Email = string.Empty;
+            duenoMuestra.Telefono = string.Empty;
             duenoMuestra.Direccion = sunatVo.direccion ?? string.Empty;
             duenoMuestra.Activo = true;
+
             return duenoMuestra;
         }
     }

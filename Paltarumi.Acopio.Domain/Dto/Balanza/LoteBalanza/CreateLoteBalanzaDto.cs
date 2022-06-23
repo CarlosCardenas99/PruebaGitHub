@@ -9,7 +9,7 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza
         public int? IdEstadoTipoMaterial { get; set; }
         public string? Observacion { get; set; }
         public int? IdUsuarioCreate { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTimeOffset? CreateDate { get; set; }
         public IEnumerable<CreateTicketDto>? TicketDetails { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Security.Token
 
         public override async Task<ResponseDto<AccessTokenDto>> HandleCommand(GenerateTokenCommand request, CancellationToken cancellationToken)
         {
-            var now = DateTime.UtcNow;
+            var now = DateTimeOffset.UtcNow;
             var issuer = _configuration.GetValue<string>("SecurityOptions:Issuer");
             var audience = _configuration.GetValue<string>("SecurityOptions:Audience");
             var expiration = _configuration.GetValue<int>("SecurityOptions:ExpirationInSeconds");
@@ -41,7 +41,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Security.Token
             {
                 new Claim(JwtRegisteredClaimNames.Sub, request.User.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, request.User.Email, ClaimValueTypes.String),
                 new Claim("UserId", request.User.Id.ToString()),
                 new Claim("DisplayName", $"{request.User.FirstName} {request.User.LastName}"),
@@ -53,8 +53,8 @@ namespace Paltarumi.Acopio.Domain.Commands.Security.Token
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                notBefore: now,
-                expires: now.Add(TimeSpan.FromSeconds(expiration)),
+                notBefore: now.DateTime,
+                expires: now.Add(TimeSpan.FromSeconds(expiration)).DateTime,
                 signingCredentials: signingCredentials
             );
 

@@ -3,7 +3,7 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.LoteCodigo
 {
     public class SearchLoteCodigoDto
     {
-        public DateTime FechaRecepcion { get; set; }
+        public DateTimeOffset FechaRecepcion { get; set; }
         public string? loteCodigo { get; set; }
         public string? Proveedor { get; set; }
         public string CodigoMuestra { get; set; } = null!;

@@ -9,9 +9,9 @@
         public string Transportistas { get; set; } = null!;
         public string NumeroTickets { get; set; } = null!;
         public string Conductores { get; set; } = null!;
-        public DateTime FechaIngreso { get; set; }
+        public DateTimeOffset FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;
-        public DateTime? FechaAcopio { get; set; }
+        public DateTimeOffset? FechaAcopio { get; set; }
         public string? HoraAcopio { get; set; }
         public int IdEstadoTipoMaterial { get; set; }
         public string CantidadSacos { get; set; } = null!;
@@ -28,8 +28,8 @@
         public string Observacion { get; set; } = null!;
         public int PorcentajeCheckList { get; set; }
         public int IdUsuarioCreate { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTimeOffset CreateDate { get; set; }
         public int? IdUsuarioUpdate { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
     }
 }

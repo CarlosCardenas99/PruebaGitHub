@@ -93,7 +93,7 @@ namespace Paltarumi.Acopio.Repository.Extensions
             return Expression.Lambda<Func<T, bool>>(body, p);
         }
 
-        public static SortExpression<TEntity> GetSortExpression<TEntity>(string? direction, string? property)
+        public static SortExpression<TEntity>? GetSortExpression<TEntity>(string? direction, string? property)
         {
             if (string.IsNullOrEmpty(property)) return null;
 
@@ -107,7 +107,7 @@ namespace Paltarumi.Acopio.Repository.Extensions
             };
         }
 
-        private static Expression<Func<TEntity, object>> GetSortExpression<TEntity>(string property)
+        private static Expression<Func<TEntity, object>>? GetSortExpression<TEntity>(string property)
         {
             var prop = typeof(TEntity).GetProperties().FirstOrDefault(x => x.Name.ToLower() == property.ToLower());
             if (prop == null) return null;

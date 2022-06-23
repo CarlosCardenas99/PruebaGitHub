@@ -27,7 +27,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LeyReferencial
             var leyreferencial = await _leyreferencialRepository.GetByAsync(
                 x => x.IdLeyReferencial == request.Id,
                 x => x.IdDuenoMuestraNavigation,
-                x => x.IdTipoMineralNavigation
+                x => x.IdTipoMineralNavigation!
             );
             var leyreferencialDto = _mapper?.Map<GetLeyReferencialDto>(leyreferencial);
 

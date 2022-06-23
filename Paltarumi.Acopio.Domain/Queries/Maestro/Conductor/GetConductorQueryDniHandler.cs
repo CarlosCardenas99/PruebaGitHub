@@ -37,10 +37,10 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
                 if (result.response.responseCode == 0)
                 {
                     conductor = mapperCreateConductorDto(result.sunatVo);
-                    await _conductorRepository.AddAsync(conductor);
+                    await _conductorRepository.AddAsync(conductor!);
                     await _conductorRepository.SaveAsync();
                     conductorDto = _mapper?.Map<GetConductorDto>(conductor);
-                    response.UpdateData(conductorDto);
+                    response.UpdateData(conductorDto!);
                 }
                 else
                 {

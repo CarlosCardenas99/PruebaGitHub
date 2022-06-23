@@ -3,7 +3,7 @@ namespace Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial
 {
     public class LeyReferencialDto
     {
-        public DateTime FechaRecepcion { get; set; }
+        public DateTimeOffset FechaRecepcion { get; set; }
         public int IdDuenoMuestra { get; set; }
         public string CodigoMuestraProveedor { get; set; } = null!;
         public string CodigoPlanta { get; set; } = null!;
