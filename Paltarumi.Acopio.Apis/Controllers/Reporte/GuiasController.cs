@@ -14,6 +14,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Reporte
         public GuiasController(IServiceProvider serviceProvider, IGuiasApplication guiaApplication) : base(serviceProvider)
            => _guiaApplication = guiaApplication;
 
+
         [HttpGet("guiarecepmineral/{id}")]
         public async Task<IActionResult> GuiaRmReport(int id)
             => await ViewFile(
