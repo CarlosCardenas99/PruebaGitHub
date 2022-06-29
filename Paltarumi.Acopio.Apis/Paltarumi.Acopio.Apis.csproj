@@ -10,12 +10,16 @@
 
   <ItemGroup>
     <None Remove="Report\Balanza\LoteReport.trdp" />
+	<None Remove="Report\Balanza\RecepcionMineralReport.trdp" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Report\Balanza\LoteReport.trdp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+	<Content Include="Report\Balanza\RecepcionMineralReport.trdp">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
 
   <ItemGroup>
