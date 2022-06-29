@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Apis.Controllers.Base;
-using Paltarumi.Acopio.Application.Abstractions.Balanza;
+using Paltarumi.Acopio.Application.Abstractions.Reportes;
 
-namespace Paltarumi.Acopio.Apis.Controllers.Balanza
+namespace Paltarumi.Acopio.Apis.Controllers.Reporte
 {
     [ApiController]
     [Route("api/guias")]
@@ -20,3 +20,4 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
             );
     }
 }
+

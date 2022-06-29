@@ -1,6 +1,6 @@
 ﻿using Paltarumi.Acopio.Domain.Dto.Base;
 
-namespace Paltarumi.Acopio.Application.Abstractions.Balanza
+namespace Paltarumi.Acopio.Application.Abstractions.Reportes
 {
     public interface IGuiasApplication
     {

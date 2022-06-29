@@ -7,7 +7,7 @@ using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 using System.Collections;
 using Telerik.Reporting;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
+namespace Paltarumi.Acopio.Domain.Commands.Reportes
 {
     public class GuiaRecepcionMineralReportCommandHandler : CommandHandlerBase<GuiaRecepcionMineralReportCommand, byte[]>
     {

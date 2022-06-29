@@ -1,6 +1,6 @@
 ﻿using Paltarumi.Acopio.Domain.Commands.Base;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
+namespace Paltarumi.Acopio.Domain.Commands.Reportes
 {
     public class GuiaRecepcionMineralReportCommand : CommandBase<byte[]>
     {

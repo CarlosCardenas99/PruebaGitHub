@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
-namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
+namespace Paltarumi.Acopio.Domain.Commands.Reportes
 {
     public class GuiaRecepcionMineralReportCommandValidator : CommandValidatorBase<GuiaRecepcionMineralReportCommand>
     {
