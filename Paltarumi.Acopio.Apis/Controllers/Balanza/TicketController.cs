@@ -41,5 +41,6 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         [HttpPost("searchBy")]
         public async Task<ResponseDto<SearchResultDto<SearchConsultaTicketDto>>> SearchQuery(SearchParamsDto<SearchConsultaTicketFilterDto> searchParams)
            => await _ticketApplication.SearchQuery(searchParams);
+
     }
 }

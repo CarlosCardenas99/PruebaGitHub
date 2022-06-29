@@ -17,7 +17,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Reporte
         [HttpGet("guiarecepmineral/{id}")]
         public async Task<IActionResult> GuiaRmReport(int id)
             => await ViewFile(
-                await _guiaApplication.ExportReport(GetSettingFilePath("ReportOptions:BalanzaFolder", "RecepcionMineralReport.trdp"), id),
+                await _guiaApplication.ExportReport(GetSettingFilePath("ReportOptions:BalanzaFolder", "RecepcionMineralReport.trdp"), id),  
                 "GuiaRecepcionMineralReport.pdf"
             );
     }
