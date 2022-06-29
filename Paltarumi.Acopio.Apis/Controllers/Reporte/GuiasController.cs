@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Apis.Controllers.Base;
+using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Domain.Dto.Security.User;
 using Paltarumi.Acopio.Application.Abstractions.Reportes;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Reporte
@@ -20,4 +22,3 @@ namespace Paltarumi.Acopio.Apis.Controllers.Reporte
             );
     }
 }
-
