@@ -3,13 +3,11 @@ namespace Paltarumi.Acopio.Dto.Maestro.DuenoMuestra
 {
     public class DuenoMuestraDto
     {
-        public int? IdProveedor { get; set; }
-        public string CodigoTipoDocumento { get; set; } = null!;
-        public string Numero { get; set; } = null!;
-        public string Nombres { get; set; } = null!;
-        public string? CodigoUbigeo { get; set; }
-        public string Direccion { get; set; } = null!;
-        public string Telefono { get; set; } = null!;
-        public string Email { get; set; } = null!;
+		public string? CodigoTipoDocumento { get; set; }
+		public string? Numero { get; set; }
+		public string? Nombres { get; set; }
+		public string? Direccion { get; set; }
+		public string? Telefono { get; set; }
+		public string? Email { get; set; }
     }
 }

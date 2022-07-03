@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Vehiculo
     {
@@ -12,7 +15,7 @@
         public int IdTipoVehiculo { get; set; }
         public int IdVehiculoMarca { get; set; }
         public string Placa { get; set; } = null!;
-        public string OtraPlaca { get; set; } = null!;
+        public string PlacaCarreta { get; set; } = null!;
         public decimal Tara { get; set; }
         public bool Activo { get; set; }
 

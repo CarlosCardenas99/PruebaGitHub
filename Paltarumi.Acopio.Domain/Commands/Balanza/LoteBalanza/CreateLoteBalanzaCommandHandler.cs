@@ -78,7 +78,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                 var codeResponse = await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1"));
                 var code = codeResponse?.Data ?? string.Empty;
 
-                loteBalanza.Codigo = code;
+                loteBalanza.CodigoLote = code;
 
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
 
@@ -96,18 +96,9 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
                 loteBalanza.Enable();
                 loteBalanza.UpdateCreation();
-                loteBalanza.UpdateVehiculos(vehiculos);
-                loteBalanza.UpdateTransportistas(transportistas);
-                loteBalanza.UpdateConductores(conductores);
                 loteBalanza.UpdateCantidadSacos();
                 loteBalanza.UpdateFechaIngreso();
-                loteBalanza.UpdateHoraIngreso();
                 loteBalanza.UpdateFechaAcopio();
-                loteBalanza.UpdateHoraAcopio();
-                loteBalanza.UpdateTms();
-                loteBalanza.UpdateTms100();
-                loteBalanza.UpdateTmsBase();
-                loteBalanza.UpdateNumeroTickets();
                 if (estadoLote != null) loteBalanza.IdEstado = estadoLote.IdMaestro;
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
@@ -124,15 +115,15 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
                     IdTipoLoteCodigo = 1,
                     FechaRecepcion = DateTimeOffset.Now,
                     HoraRecepcion = DateTimeOffset.Now.ToString("HH:mm"),
-                    CodigoPlanta = loteBalanza.Codigo,
-                    CodigoMuestra = string.Empty,
+                    CodigoPlanta = loteBalanza.CodigoLote,
+                    CodigoExterno = string.Empty,
                     CodigoHash = Convert.ToBase64String(bytes),
                     EnsayoLeyAu = false,
                     EnsayoLeyAg = false,
                     EnsayoPorcentajeRecuperacion = false,
                     EnsayoConsumo = false,
                     IdEstado = 1,
-                    IdUsuarioCreate = 1,
+                    UserNameCreate = string.Empty,
                     CreateDate = DateTimeOffset.Now,
                     Activo = true
                 };

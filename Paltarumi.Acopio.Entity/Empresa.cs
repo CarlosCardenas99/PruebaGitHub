@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Empresa
     {
@@ -13,5 +16,7 @@
         public string Email { get; set; } = null!;
         public string RutaSunat { get; set; } = null!;
         public bool Activo { get; set; }
+
+        public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
     }
 }

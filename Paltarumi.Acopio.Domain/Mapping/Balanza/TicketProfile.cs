@@ -21,8 +21,6 @@ namespace Paltarumi.Acopio.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, ListTicketDto>()
-                .ForMember(x => x.FechaHoraIngreso, opt => opt.MapFrom(x => x.FechaIngreso.ToString("yyyy-MM-dd") + " " + x.HoraIngreso))
-                .ForMember(x => x.FechaHoraSalida, opt => opt.MapFrom(x => x.FechaSalida != null && x.HoraSalida != null ? Convert.ToDateTime(x.FechaSalida.ToString()).ToString("yyyy-MM-dd") + " " + x.HoraSalida : string.Empty))
                 .ForMember(x => x.Conductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
                 .ForMember(x => x.ConductorLicencia, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Licencia : string.Empty))
                 .ForMember(x => x.ConductorDni, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Numero : string.Empty))

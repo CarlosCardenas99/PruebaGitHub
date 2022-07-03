@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class LoteCodigo
     {
@@ -9,14 +12,14 @@
         public DateTimeOffset FechaRecepcion { get; set; }
         public string HoraRecepcion { get; set; } = null!;
         public string CodigoPlanta { get; set; } = null!;
-        public string CodigoMuestra { get; set; } = null!;
+        public string CodigoExterno { get; set; } = null!;
         public string CodigoHash { get; set; } = null!;
         public bool EnsayoLeyAu { get; set; }
         public bool EnsayoLeyAg { get; set; }
         public bool EnsayoPorcentajeRecuperacion { get; set; }
         public bool EnsayoConsumo { get; set; }
         public int IdEstado { get; set; }
-        public int IdUsuarioCreate { get; set; }
+        public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public bool Activo { get; set; }
 

@@ -15,7 +15,5 @@ namespace Paltarumi.Acopio.Dto.Balanza.Ticket
         public string VehiculoTipo { get; set; } = null!;
         public string Placa { get; set; } = null!;
         public string EstadoTmh { get; set; } = null!;
-        public string FechaHoraIngreso { get; set; } = null!;
-        public string FechaHoraSalida { get; set; } = null!;
     }
 }

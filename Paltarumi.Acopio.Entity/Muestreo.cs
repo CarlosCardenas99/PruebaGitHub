@@ -1,19 +1,26 @@
-﻿namespace Paltarumi.Acopio.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Entity
 {
     public partial class Muestreo
     {
         public int IdMuestreo { get; set; }
-        public int CodigoTurno { get; set; }
-        public int CodigoResponsable { get; set; }
-        public DateTimeOffset Fecha { get; set; }
-        public int IdLote { get; set; }
-        public int CodigoCancha { get; set; }
-        public bool LlevaGrueso { get; set; }
-        public string CodigoTrujillo { get; set; } = null!;
-        public string CodigoAum { get; set; } = null!;
-        public int IdEncargado { get; set; }
-        public int CodigoCondicion { get; set; }
-        public int CodigoEstado { get; set; }
+        public int IdTurno { get; set; }
+        public string? UserNameSupervisor { get; set; }
+        public DateTimeOffset? FechaMuestreo { get; set; }
+        public string CodigoLote { get; set; } = null!;
+        public int? IdCancha { get; set; }
+        public string IdProveedor { get; set; } = null!;
+        public int? IdDuenoMuestra { get; set; }
+        public bool? LlevaGrueso { get; set; }
+        public float Tmh { get; set; }
+        public int? IdMuestraCondicion { get; set; }
+        public int? IdMuestraEstado { get; set; }
+        public string UserNameCreate { get; set; } = null!;
+        public DateTimeOffset CreateDate { get; set; }
+        public string? UserNameUpdate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
     }
 }

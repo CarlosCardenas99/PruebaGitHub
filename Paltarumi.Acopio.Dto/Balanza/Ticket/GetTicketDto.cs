@@ -13,7 +13,6 @@ namespace Paltarumi.Acopio.Dto.Balanza.Ticket
         public GetVehiculoDto? Vehiculo { get; set; }
         public GetMaestroDto? UnidadMedida { get; set; }
         public GetMaestroDto? EstadoTmh { get; set; }
-        public GetMaestroDto? TipoMineral { get; set; }
         public bool Activo { get; set; }
     }
 }
