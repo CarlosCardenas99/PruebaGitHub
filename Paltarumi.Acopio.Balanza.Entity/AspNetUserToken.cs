@@ -1,0 +1,12 @@
+﻿namespace Paltarumi.Acopio.Balanza.Entity
+{
+    public partial class AspNetUserToken
+    {
+        public int UserId { get; set; }
+        public string LoginProvider { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string? Value { get; set; }
+
+        public virtual AspNetUser User { get; set; } = null!;
+    }
+}

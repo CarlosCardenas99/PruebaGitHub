@@ -4,12 +4,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.0.2</Version>
   </PropertyGroup>
-	
+
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.0.1" />
+    <Folder Include="Muestreo\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Domain\Paltarumi.Acopio.Balanza.Domain.csproj" />
   </ItemGroup>
 
 </Project>
