@@ -181,7 +181,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
 
             messages.Add(new ApplicationMessageDto
             {
-                Message = ex.Message.Contains("connection attempt failed") ? "Error de conexión" : ex.Message,
+                Message = ex.Message.Contains("connection attempt failed") ? "Error de conexión" : $"{ex.Message}{Environment.NewLine}{ex.StackTrace}",
                 MessageType = ApplicationMessageType.Error
             });
 

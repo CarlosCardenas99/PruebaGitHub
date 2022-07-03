@@ -6,7 +6,7 @@ using Paltarumi.Acopio.Dto.Base;
 namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 {
     [ApiController]
-    [Route("api/tickets")]
+    [Route("api/ticket")]
     public class TicketController
     {
         private readonly ITicketApplication _ticketApplication;
