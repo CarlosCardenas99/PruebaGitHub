@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/Maestro";
 
+        public MaestroService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response seleccionarItemsMaestro(string filter)
         {
             var response = EntityGet<ResponseDto<IEnumerable<ListMaestroDto>>>($"/list/{filter}");

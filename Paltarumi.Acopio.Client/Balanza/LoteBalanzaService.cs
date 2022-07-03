@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Balanza
     {
         protected override string ApiController => "api/lotebalanza";
 
+        public LoteBalanzaService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response get(int id)
         {
             var response = EntityGet<ResponseDto<GetLoteBalanzaDto>>($"/{id}");

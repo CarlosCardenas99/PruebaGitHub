@@ -9,6 +9,11 @@ namespace Paltarumi.Acopio.Client.Balanza
     {
         protected override string ApiController => "api/lotecodigo";
 
+        public LoteCodigoService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response obtenerProveedorPorRuc(string ruc)
         {
             var response = EntityGet<ResponseDto<GetProveedorDto>>($"/ruc/{ruc}");

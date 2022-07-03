@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Balanza
     {
         protected override string ApiController => "api/leyreferencial";
 
+        public LeyReferencialService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response get(int id)
         {
             var response = EntityGet<ResponseDto<GetLeyReferencialDto>>($"/{id}");

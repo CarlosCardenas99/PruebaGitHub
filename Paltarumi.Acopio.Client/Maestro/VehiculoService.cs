@@ -6,6 +6,13 @@ namespace Paltarumi.Acopio.Client.Vehiculo
 {
     public class VehiculoService : BaseService
     {
+        protected override string ApiController => "api/vehiculo";
+
+        public VehiculoService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response insert(CreateVehiculoDto entity)
         {
             var response = EntityPost<CreateVehiculoDto, ResponseDto<GetVehiculoDto>>(string.Empty, entity);

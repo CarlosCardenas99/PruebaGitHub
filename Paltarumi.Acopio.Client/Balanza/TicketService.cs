@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Balanza
     {
         protected override string ApiController => "api/ticket";
 
+        public TicketService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response get(int id)
         {
             var response = EntityGet<ResponseDto<GetTicketDto>>($"/{id}");

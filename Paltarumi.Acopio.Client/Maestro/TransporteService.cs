@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/transporte";
 
+        public TransporteService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response insert(CreateTransporteDto entity)
         {
             var response = EntityPost<CreateTransporteDto, ResponseDto<GetTransporteDto>>(string.Empty, entity);

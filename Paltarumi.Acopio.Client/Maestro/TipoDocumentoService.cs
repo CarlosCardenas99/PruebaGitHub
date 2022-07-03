@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/tipodocumento";
 
+        public TipoDocumentoService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response listarCombo()
         {
             try

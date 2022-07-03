@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/ubigeo";
 
+        public UbigeoService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response listarUbigeo()
         {
             try

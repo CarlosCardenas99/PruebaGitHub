@@ -6,24 +6,32 @@ namespace Paltarumi.Acopio.Client.Base
 {
     public class BaseService
     {
-        protected virtual string ApiController { get; }
-        protected string API_URL = "http://192.168.0.2:8080/";
+        protected string BaseUrl { get; }
+        protected Dictionary<string, string> Headers { get; }
+        protected virtual string ApiController { get; } = null!;
 
-        protected IEnumerable<T> ListGet<T>(string resource = "")
+        public BaseService(ServiceOptions options)
         {
-            HttpClient http = new HttpClient();
-            string _json = http.GetStringAsync($"{API_URL}{ApiController}{resource}").Result;
-            IEnumerable<T> resultado = JsonConvert.DeserializeObject<IEnumerable<T>>(_json);
+            BaseUrl = options?.BaseUrl ?? String.Empty;
+            Headers = options?.Headers ?? new Dictionary<string, string>();
+        }
+
+        protected IEnumerable<T>? ListGet<T>(string resource = "")
+        {
+            HttpClient http = GetHttpClient();
+
+            string _json = http.GetStringAsync($"{BaseUrl}{ApiController}{resource}").Result;
+            IEnumerable<T>? resultado = JsonConvert.DeserializeObject<IEnumerable<T>>(_json!);
             return resultado;
         }
 
-        protected T EntityGetNoResponse<T>(string resource = "") where T : class
+        protected T? EntityGetNoResponse<T>(string resource = "") where T : class
         {
             try
             {
-                HttpClient http = new HttpClient();
-                string _json = http.GetStringAsync($"{API_URL}{ApiController}{resource}").Result;
-                T resultado = JsonConvert.DeserializeObject<T>(_json);
+                HttpClient http = GetHttpClient();
+                string _json = http.GetStringAsync($"{BaseUrl}{ApiController}{resource}").Result;
+                T? resultado = JsonConvert.DeserializeObject<T>(_json!);
                 return resultado;
             }
             catch (Exception)
@@ -32,13 +40,13 @@ namespace Paltarumi.Acopio.Client.Base
             }
         }
 
-        protected T EntityGet<T>(string resource = "") where T : ResponseDto, new()
+        protected T? EntityGet<T>(string resource = "") where T : ResponseDto, new()
         {
             try
             {
-                HttpClient http = new HttpClient();
-                string _json = http.GetStringAsync($"{API_URL}{ApiController}{resource}").Result;
-                T resultado = JsonConvert.DeserializeObject<T>(_json);
+                HttpClient http = GetHttpClient();
+                string _json = http.GetStringAsync($"{BaseUrl}{ApiController}{resource}").Result;
+                T? resultado = JsonConvert.DeserializeObject<T>(_json);
                 return resultado;
             }
             catch (Exception ex)
@@ -48,17 +56,17 @@ namespace Paltarumi.Acopio.Client.Base
             }
         }
 
-        protected M EntityPost<T, M>(string resource = "", T paramt = default) where M : ResponseDto, new()
+        protected M? EntityPost<T, M>(string resource = "", T? paramt = default) where M : ResponseDto, new()
         {
             try
             {
-                HttpClient http = new HttpClient();
+                HttpClient http = GetHttpClient();
 
                 string a = JsonConvert.SerializeObject(paramt);
 
-                HttpResponseMessage response = http.PostAsJsonAsync($"{API_URL}{ApiController}{resource}", paramt).Result;
+                HttpResponseMessage response = http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", paramt).Result;
                 string resulstring = response.Content.ReadAsStringAsync().Result;
-                M resultado = JsonConvert.DeserializeObject<M>(resulstring);
+                M? resultado = JsonConvert.DeserializeObject<M>(resulstring);
                 return resultado;
             }
             catch (Exception ex)
@@ -68,18 +76,18 @@ namespace Paltarumi.Acopio.Client.Base
             }
         }
 
-        protected M EntityPut<T, M>(string resource = "", T paramt = default) where M : ResponseDto, new()
+        protected M? EntityPut<T, M>(string resource = "", T? paramt = default) where M : ResponseDto, new()
         {
             try
             {
-                HttpClient http = new HttpClient();
+                HttpClient http = GetHttpClient();
 
                 string a = JsonConvert.SerializeObject(paramt);
 
-                HttpResponseMessage response = http.PutAsJsonAsync($"{API_URL}{ApiController}{resource}", paramt).Result;
+                HttpResponseMessage response = http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", paramt).Result;
 
                 string resultstring = response.Content.ReadAsStringAsync().Result;
-                M resultado = JsonConvert.DeserializeObject<M>(resultstring);
+                M? resultado = JsonConvert.DeserializeObject<M>(resultstring);
                 return resultado;
             }
             catch (Exception ex)
@@ -89,14 +97,14 @@ namespace Paltarumi.Acopio.Client.Base
             }
         }
 
-        protected M EntityDelete<M>(string resource = "") where M : ResponseDto, new()
+        protected M? EntityDelete<M>(string resource = "") where M : ResponseDto, new()
         {
             try
             {
-                HttpClient http = new HttpClient();
-                HttpResponseMessage response = http.DeleteAsync($"{API_URL}{ApiController}{resource}").Result;
+                HttpClient http = GetHttpClient();
+                HttpResponseMessage response = http.DeleteAsync($"{BaseUrl}{ApiController}{resource}").Result;
                 string resulstring = response.Content.ReadAsStringAsync().Result;
-                M resultado = JsonConvert.DeserializeObject<M>(resulstring);
+                M? resultado = JsonConvert.DeserializeObject<M>(resulstring);
                 return resultado;
             }
             catch (Exception ex)
@@ -109,15 +117,15 @@ namespace Paltarumi.Acopio.Client.Base
         protected Response ResponseData<T>(ResponseDto<T> response)
         {
             if (response.IsValid)
-                return new Response(response.Data);
+                return new Response(response.Data!);
             else
             {
-                string mensaje = null;
+                string? mensaje = null;
                 response.Messages.ToList().ForEach(x =>
                 {
                     mensaje += x.Message;
                 });
-                return new Response(-1, mensaje);
+                return new Response(-1, mensaje!);
             }
         }
 
@@ -127,28 +135,43 @@ namespace Paltarumi.Acopio.Client.Base
                 return new Response(response);
             else
             {
-                string mensaje = null;
+                string? mensaje = null;
                 response.Messages.ToList().ForEach(x =>
                 {
                     mensaje += x.Message;
                 });
-                return new Response(-1, mensaje);
+                return new Response(-1, mensaje!);
             }
         }
 
         protected Response ResponseSearchResult<T>(ResponseDto<SearchResultDto<T>> response)
         {
             if (response.IsValid)
-                return new Response(response.Data.Items);
+                return new Response(response.Data?.Items!);
             else
             {
-                string mensaje = null;
+                string? mensaje = null;
                 response.Messages.ToList().ForEach(x =>
                 {
                     mensaje += x.Message;
                 });
-                return new Response(-1, mensaje);
+                return new Response(-1, mensaje!);
             }
+        }
+
+        private HttpClient GetHttpClient()
+        {
+            var httpClient = new HttpClient();
+
+            if (httpClient.DefaultRequestHeaders != null && Headers != null)
+            {
+                Headers.ToList().ForEach(h =>
+                {
+                    httpClient.DefaultRequestHeaders.Add(h.Key, h.Value);
+                });
+            }
+
+            return httpClient;
         }
 
         private static T GetErrorResult<T>(Exception ex) where T : ResponseDto, new()

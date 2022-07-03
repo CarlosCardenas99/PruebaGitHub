@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/proveedorconcesion";
 
+        public ProveedorConcesionService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response insert(CreateProveedorConcesionDto createDto)
         {
             try

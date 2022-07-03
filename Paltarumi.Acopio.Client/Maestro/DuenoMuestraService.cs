@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/duenomuestra";
 
+        public DuenoMuestraService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response obtenerDuenoMuestraPorRuc(GetDuenoMuestraByDocumentFilterDto filter)
         {
             var response = EntityPost<GetDuenoMuestraByDocumentFilterDto, ResponseDto<GetDuenoMuestraDto>>("/findbydocument", filter);

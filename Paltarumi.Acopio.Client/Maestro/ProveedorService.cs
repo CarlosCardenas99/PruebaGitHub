@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/proveedor";
 
+        public ProveedorService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response obtenerProveedorPorRuc(string ruc)
         {
             var response = EntityGet<ResponseDto<GetProveedorDto>>($"/ruc/{ruc}");

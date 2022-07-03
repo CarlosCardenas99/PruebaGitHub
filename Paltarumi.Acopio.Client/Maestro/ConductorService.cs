@@ -8,6 +8,11 @@ namespace Paltarumi.Acopio.Client.Maestro
     {
         protected override string ApiController => "api/conductor";
 
+        public ConductorService(ServiceOptions options) : base(options)
+        {
+
+        }
+
         public Response insert(CreateConductorDto entity)
         {
             var response = EntityPost<CreateConductorDto, ResponseDto<GetConductorDto>>(string.Empty, entity);
