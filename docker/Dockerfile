@@ -1,15 +1,6 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM paltarumi-aspnet
 
 WORKDIR /app
-
-# install System.Drawing native dependencies
-RUN apt-get update \
-    && apt-get install -y --allow-unauthenticated \
-        libc6-dev \
-        libgdiplus \
-        libx11-dev \
-     && rm -rf /var/lib/apt/lists/*
-
 
 COPY ./ .
 
