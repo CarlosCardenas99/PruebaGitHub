@@ -23,7 +23,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
         protected override async Task<ResponseDto<GetConductorDto>> HandleQuery(GetConductorByDocumentQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetConductorDto>();
-            var conductor = await _conductorRepository.GetByAsync(x => x.Numero.Equals(request.Filter.numero) || x.Licencia.Equals(request.Filter.numero) && x.CodigoTipoDocumento.Equals(request.Filter.CodigoTipoDocumento) && x.Activo == true);
+            var conductor = await _conductorRepository.GetByAsync(x => x.Numero.Equals(request.Filter.Numero) || x.Licencia.Equals(request.Filter.Numero) && x.CodigoTipoDocumento.Equals(request.Filter.CodigoTipoDocumento) && x.Activo == true);
             var conductorDto = _mapper?.Map<GetConductorDto>(conductor);
 
             if (conductor != null && conductorDto != null)
@@ -36,10 +36,10 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Conductor
                 SunatStorage sunat = new SunatStorage();
 
                 if (string.Equals(Constants.TipoDocumento.DNI, request?.Filter?.CodigoTipoDocumento))
-                    result = sunat.ConsultaDni(request?.Filter.numero);
+                    result = sunat.ConsultaDni(request?.Filter.Numero);
 
                 else if (string.Equals(Constants.TipoDocumento.RUC, request?.Filter?.CodigoTipoDocumento))
-                    result = sunat.ConsultaRuc(request?.Filter.numero);
+                    result = sunat.ConsultaRuc(request?.Filter.Numero);
                 else
                     return await Task.FromResult(response);
 

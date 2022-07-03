@@ -47,15 +47,6 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             var tickets = await _ticketRepository.FindByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var ticketDetails = request.UpdateDto?.TicketDetails?.Where(x => x.Activo).ToList();
 
-            var idVehiculos = ticketDetails?.Select(x => x.IdVehiculo) ?? new List<int>();
-            var vehiculos = await _vehiculoRepository.FindByAsNoTrackingAsync(x => idVehiculos.Contains(x.IdVehiculo));
-
-            var idTransportistas = ticketDetails?.Select(x => x.IdTransporte) ?? new List<int>();
-            var transportistas = await _transporteRepository.FindByAsNoTrackingAsync(x => idTransportistas.Contains(x.IdTransporte));
-
-            var idConductores = ticketDetails?.Select(x => x.IdConductor) ?? new List<int>();
-            var conductores = await _conductorRepository.FindByAsNoTrackingAsync(x => idConductores.Contains(x.IdConductor));
-
             if (loteBalanza != null && _mediator != null)
             {
                 _mapper?.Map(request.UpdateDto, loteBalanza);
@@ -64,18 +55,9 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
 
-                loteBalanza.UpdateVehiculos(vehiculos);
-                loteBalanza.UpdateTransportistas(transportistas);
-                loteBalanza.UpdateConductores(conductores);
                 loteBalanza.UpdateCantidadSacos();
                 loteBalanza.UpdateFechaIngreso();
-                loteBalanza.UpdateHoraIngreso();
                 loteBalanza.UpdateFechaAcopio();
-                loteBalanza.UpdateHoraAcopio();
-                loteBalanza.UpdateTms();
-                loteBalanza.UpdateTms100();
-                loteBalanza.UpdateTmsBase();
-                loteBalanza.UpdateNumeroTickets();
 
                 loteBalanza.Tickets = tickesTmp;
 

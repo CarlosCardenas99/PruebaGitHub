@@ -15,7 +15,7 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
 
         public LoteBalanzaController(IServiceProvider serviceProvider, ILoteBalanzaApplication loteBalanzaApplication) : base(serviceProvider)
             => _loteBalanzaApplication = loteBalanzaApplication;
-
+        
         [HttpPost]
         public async Task<ResponseDto<GetLoteBalanzaDto>> Create(CreateLoteBalanzaDto createDto)
             => await _loteBalanzaApplication.Create(createDto);
@@ -31,18 +31,15 @@ namespace Paltarumi.Acopio.Apis.Controllers.Balanza
         [HttpDelete("{id}")]
         public async Task<ResponseDto> Delete(int id)
             => await _loteBalanzaApplication.Delete(id);
-
+        
         [HttpGet("{id}")]
         public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
             => await _loteBalanzaApplication.Get(id);
 
-        //------------------------------------------------------------------
         [HttpGet("bycodigo/{codigo}")]
         public async Task<ResponseDto<GetLoteBalanzaCodigoDto>> GetbyCodigo(string codigo)
             => await _loteBalanzaApplication.GetbyCodigo(codigo);
-
-        //----------------------------------------------------------
-
+        
         [Authorize]
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()

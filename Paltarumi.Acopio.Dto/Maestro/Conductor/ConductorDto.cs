@@ -1,15 +1,14 @@
-
 namespace Paltarumi.Acopio.Dto.Maestro.Conductor
 {
     public class ConductorDto
     {
-		public string? CodigoTipoDocumento { get; set; }
-		public string? Numero { get; set; }
-		public string? Nombres { get; set; }
-		public string? Domicilio { get; set; }
-		public string? CodigoUbigeo { get; set; }
-		public string? Licencia { get; set; }
-		public string? Telefono { get; set; }
-		public string? Email { get; set; }
+        public string CodigoTipoDocumento { get; set; } = null!;
+        public string Numero { get; set; } = null!;
+        public string Nombres { get; set; } = null!;
+        public string Domicilio { get; set; } = null!;
+        public string? CodigoUbigeo { get; set; }
+        public string Licencia { get; set; } = null!;
+        public string Telefono { get; set; } = null!;
+        public string Email { get; set; } = null!;
     }
 }

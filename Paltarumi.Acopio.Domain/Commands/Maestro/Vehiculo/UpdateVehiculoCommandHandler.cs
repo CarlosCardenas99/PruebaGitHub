@@ -34,13 +34,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
             {
                 _mapper?.Map(request.UpdateDto, vehiculo);
 
-                if (!request.UpdateDto.IdTipoVehiculo.HasValue || request.UpdateDto.IdTipoVehiculo == 0)
+                if (request.UpdateDto.IdTipoVehiculo == default)
                 {
                     vehiculo.IdTipoVehiculoNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.UpdateDto.DescripcionTipoVehiculo);
                     vehiculo.IdTipoVehiculo = vehiculo.IdTipoVehiculoNavigation.IdMaestro;
                 }
 
-                if (!request.UpdateDto.IdVehiculoMarca.HasValue || request.UpdateDto.IdVehiculoMarca == 0)
+                if (request.UpdateDto.IdVehiculoMarca == default)
                 {
                     vehiculo.IdVehiculoMarcaNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.UpdateDto.DescripcionVehiculoMarca);
                     vehiculo.IdTipoVehiculo = vehiculo.IdVehiculoMarcaNavigation.IdMaestro;

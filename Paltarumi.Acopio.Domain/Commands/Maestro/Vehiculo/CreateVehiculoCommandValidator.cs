@@ -25,7 +25,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
                         {
                             RuleFor(x => x.CreateDto).Must((command, dto, context) =>
                             {
-                                if ((!dto.IdTipoVehiculo.HasValue || dto.IdTipoVehiculo == 0) && string.IsNullOrEmpty(dto.DescripcionTipoVehiculo))
+                                if ((dto.IdTipoVehiculo == default || dto.IdTipoVehiculo == 0) && string.IsNullOrEmpty(dto.DescripcionTipoVehiculo))
                                     return CustomValidationMessage(context, string.Format(Resources.Common.FieldRequired, Resources.Maestro.Vehiculo.DescripcionTipoVehiculo));
 
                                 return true;
@@ -40,7 +40,7 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
                         {
                             RuleFor(x => x.CreateDto).Must((command, dto, context) =>
                             {
-                                if ((!dto.IdVehiculoMarca.HasValue || dto.IdVehiculoMarca == 0) && string.IsNullOrEmpty(dto.DescripcionVehiculoMarca))
+                                if ((dto.IdVehiculoMarca == default || dto.IdVehiculoMarca == 0) && string.IsNullOrEmpty(dto.DescripcionVehiculoMarca))
                                     return CustomValidationMessage(context, string.Format(Resources.Common.FieldRequired, Resources.Maestro.Vehiculo.DescripcionVehiculoMarca));
 
                                 return true;
@@ -50,9 +50,9 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
                 });
         }
 
-        protected async Task<bool> ValidateMaestroExistenceAsync(CreateVehiculoCommand command, int? idMaestro, ValidationContext<CreateVehiculoCommand> context, CancellationToken cancellationToken)
+        protected async Task<bool> ValidateMaestroExistenceAsync(CreateVehiculoCommand command, int idMaestro, ValidationContext<CreateVehiculoCommand> context, CancellationToken cancellationToken)
         {
-            if (!idMaestro.HasValue || idMaestro == 0) return true;
+            if (idMaestro == default) return true;
 
             var exists = await _maestroRepositoryBase.FindAll().Where(x => x.IdMaestro == idMaestro).AnyAsync(cancellationToken);
             if (!exists) return false;

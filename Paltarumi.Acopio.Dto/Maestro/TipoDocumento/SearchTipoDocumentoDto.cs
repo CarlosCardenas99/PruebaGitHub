@@ -1,8 +1,7 @@
-
 namespace Paltarumi.Acopio.Dto.Maestro.TipoDocumento
 {
-    public class SearchTipoDocumentoDto
+    public class SearchTipoDocumentoDto : TipoDocumentoDto
     {
-        public int? IdTipoDocumento { get; set; }
+        public bool Activo { get; set; }
     }
 }

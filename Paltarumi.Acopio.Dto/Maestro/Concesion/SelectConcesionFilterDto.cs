@@ -2,7 +2,7 @@
 {
     public class SelectConcesionFilterDto
     {
-        public string? codigoOnombre { get; set; }
+        public string? CodigoONombre { get; set; }
         public bool? Activo { get; set; }
     }
 }

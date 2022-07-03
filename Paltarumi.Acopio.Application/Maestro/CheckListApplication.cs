@@ -1,10 +1,10 @@
 using MediatR;
-using Paltarumi.Acopio.Application.Abstractions.Maestro;
+using Paltarumi.Acopio.Application.Abstractions.Acopio;
 using Paltarumi.Acopio.Application.Base;
-using Paltarumi.Acopio.Domain.Commands.Maestro.CheckList;
-using Paltarumi.Acopio.Domain.Queries.Maestro.CheckList;
+using Paltarumi.Acopio.Domain.Commands.Acopio.CheckList;
+using Paltarumi.Acopio.Domain.Queries.Acopio.CheckList;
+using Paltarumi.Acopio.Dto.Acopio.CheckList;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Dto.Maestro.CheckList;
 
 namespace Paltarumi.Acopio.Application.Maestro
 {

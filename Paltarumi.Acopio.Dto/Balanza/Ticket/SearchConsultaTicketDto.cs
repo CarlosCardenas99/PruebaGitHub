@@ -3,7 +3,7 @@
     public class SearchConsultaTicketDto
     {
         public int? IdTicket { get; set; }
-        public string Codigo { get; set; } = null!;//lote
+        public string CodigoLote { get; set; } = null!;//lote
         public string Numero { get; set; } = null!;
         public DateTimeOffset? FechaIngreso { get; set; }
         public string HoraIngreso { get; set; } = null!;

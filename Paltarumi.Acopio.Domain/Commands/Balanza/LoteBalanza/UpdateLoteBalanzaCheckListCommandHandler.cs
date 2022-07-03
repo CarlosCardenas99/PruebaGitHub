@@ -3,7 +3,6 @@ using Paltarumi.Acopio.Common;
 using Paltarumi.Acopio.Domain.Commands.Base;
 using Paltarumi.Acopio.Dto.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Dto.Maestro.CheckList;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
@@ -11,27 +10,21 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCheckListCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCheckListCommand, GetLoteBalanzaCheckListDto>
     {
+        private readonly IRepository<Entity.Lote> _loteRepository;
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.CheckList> _checkListRepository;
-        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
-        private readonly IRepository<Entity.Transporte> _transporteRepository;
-        private readonly IRepository<Entity.Conductor> _conductorRepository;
+        private readonly IRepository<Entity.LoteCheckList> _loteCheckListRepository;
 
         public UpdateLoteBalanzaCheckListCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IRepository<Entity.Lote> loteRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.CheckList> checkListRepository,
-            IRepository<Entity.Vehiculo> vehiculoRepository,
-            IRepository<Entity.Transporte> transporteRepository,
-            IRepository<Entity.Conductor> conductorRepository
+            IRepository<Entity.LoteCheckList> loteCheckListRepository
         ) : base(unitOfWork, mapper)
         {
+            _loteRepository = loteRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
-            _checkListRepository = checkListRepository;
-            _vehiculoRepository = vehiculoRepository;
-            _transporteRepository = transporteRepository;
-            _conductorRepository = conductorRepository;
+            _loteCheckListRepository = loteCheckListRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaCheckListDto>> HandleCommand(UpdateLoteBalanzaCheckListCommand request, CancellationToken cancellationToken)
@@ -39,58 +32,56 @@ namespace Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza
             var response = new ResponseDto<GetLoteBalanzaCheckListDto>();
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
-            var checkList = await _checkListRepository.FindByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
-            var ticketDetails = request.UpdateDto?.ChecListDetails?.Where(x => x.Activo == true).ToList();
+            var lote = await _loteRepository.GetByAsNoTrackingAsync(x=>x.CodigoLote == loteBalanza.CodigoLote);
+            var checkList = await _loteCheckListRepository.FindByAsync(x => x.IdLote == lote.IdLote);
+            var ticketDetails = request.UpdateDto?.CheckListDetails?.Where(x => x.Activo == true).ToList();
 
             if (loteBalanza != null)
             {
-                int total = ticketDetails?.Where(x => x.HabilitadoBalanza == true).ToList().Count ?? 0;
-                int revisados = ticketDetails?.Where(x => x.HabilitadoBalanza == true && x.IdCheckListEstadoBalanza == Constants.Maestro.EstadoCheckList.Revisado).ToList().Count ?? 0;
+                int total = ticketDetails?.Where(x => x.Habilitado == true).ToList().Count ?? 0;
+                int revisados = ticketDetails?.Where(x => x.Habilitado == true && x.IdCheckListEstado == Constants.Maestro.EstadoCheckList.Revisado).ToList().Count ?? 0;
                 int porcentajeAvance = (revisados * 100) / total;
 
-                //loteBalanza.Tickets = null;
-                //loteBalanza.CheckLists = null;
                 loteBalanza.PorcentajeCheckList = porcentajeAvance;
                 loteBalanza.UpdateDate = DateTimeOffset.Now;
-                loteBalanza.IdUsuarioUpdate = request.UpdateDto?.IdUsuarioUpdate;
+
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);
 
                 #region Update / Disable Existing
 
-                foreach (var check in (checkList ?? new List<Entity.CheckList>()))
+                foreach (var check in (checkList ?? new List<Entity.LoteCheckList>()))
                 {
-                    var ticketDto = request.UpdateDto?.ChecListDetails?.FirstOrDefault(x => x.IdCheckList == check.IdCheckList);
+                    var ticketDto = request.UpdateDto?.CheckListDetails?.FirstOrDefault(x => x.IdLoteCheckList == check.IdLoteCheckList);
 
                     if (ticketDto != null)
                         _mapper?.Map(ticketDto, check);
                     else
                         check.Activo = false;
 
-                    await _checkListRepository.UpdateAsync(check);
+                    await _loteCheckListRepository.UpdateAsync(check);
                 }
 
                 #endregion
 
                 #region Add Non Existing
 
-                var checkIds = checkList?.Select(x => x.IdCheckList) ?? new List<int>();
+                var checkIds = checkList?.Select(x => x.IdLoteCheckList) ?? new List<int>();
 
                 var newCheckListDtos =
-                    request.UpdateDto?.ChecListDetails?.Where(x => !checkIds.Contains(x.IdCheckList)).ToList() ??
-                    new List<UpdateCheckListDto>();
+                    request.UpdateDto?.CheckListDetails?.Where(x => !checkIds.Contains(x.IdLoteCheckList)).ToList();
 
-                var newCheckLists = _mapper?.Map<IEnumerable<Entity.CheckList>>(newCheckListDtos) ??
-                    new List<Entity.CheckList>();
+                var newCheckLists = _mapper?.Map<IEnumerable<Entity.LoteCheckList>>(newCheckListDtos) ??
+                    new List<Entity.LoteCheckList>();
 
                 newCheckLists.ToList().ForEach(t =>
                 {
-                    t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
+                    t.IdLote = lote.IdLote;
                     t.Activo = true;
                 });
 
-                await _checkListRepository.AddAsync(newCheckLists.ToArray());
+                await _loteCheckListRepository.AddAsync(newCheckLists.ToArray());
                 await _loteBalanzaRepository.SaveAsync();
-                await _checkListRepository.SaveAsync();
+                await _loteCheckListRepository.SaveAsync();
 
                 #endregion
 

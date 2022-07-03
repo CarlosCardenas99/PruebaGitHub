@@ -1,4 +1,3 @@
-
 namespace Paltarumi.Acopio.Dto.Balanza.LoteBalanza
 {
     public class LoteBalanzaDto

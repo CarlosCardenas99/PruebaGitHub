@@ -28,8 +28,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 
             var filters = request.SearchParams?.Filter;
 
-            if (!String.IsNullOrEmpty(filters?.codigoOnombre))
-                filter = filter.And(x => x.CodigoUnico.Contains(filters.codigoOnombre) || x.Nombre.Contains(filters.codigoOnombre));
+            if (!String.IsNullOrEmpty(filters?.CodigoONombre))
+                filter = filter.And(x => x.CodigoUnico.Contains(filters.CodigoONombre) || x.Nombre.Contains(filters.CodigoONombre));
 
             if (filters?.Activo.HasValue == true)
                 filter = filter.And(x => x.Activo == filters.Activo.Value);

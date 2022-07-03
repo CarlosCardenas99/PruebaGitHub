@@ -8,7 +8,6 @@
 	
   <ItemGroup>
     <Folder Include="Mapping\Muestreo\" />
-    <Folder Include="Queries\Muestreo\" />
     <Folder Include="Resources\Muestreo\" />
   </ItemGroup>
 

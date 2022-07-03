@@ -5,6 +5,6 @@
         public int IdLoteBalanza { get; set; }
         public string? Estado { get; set; }
         public string NumeroTickets { get; set; } = null!;
-        public string? concepto { get; set; }
+        public string? Concepto { get; set; }
     }
 }

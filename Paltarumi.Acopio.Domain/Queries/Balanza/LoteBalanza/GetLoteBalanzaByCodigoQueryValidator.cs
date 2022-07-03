@@ -13,18 +13,18 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
         {
             _loteBalanzaRepository = loteBalanzaRepository;
 
-            RequiredField(x => x.Codigo, Resources.Balanza.LoteBalanza.Codigo)
+            RequiredField(x => x.CodigoLote, Resources.Balanza.LoteBalanza.Codigo)
                 .DependentRules(() =>
                 {
-                    RuleFor(x => x.Codigo!)
+                    RuleFor(x => x.CodigoLote!)
                         .MustAsync(ValidateExistenceAsync)
                         .WithCustomValidationMessage();
                 });
         }
 
-        protected async Task<bool> ValidateExistenceAsync(GetLoteBalanzaByCodigoQuery command, string codigo, ValidationContext<GetLoteBalanzaByCodigoQuery> context, CancellationToken cancellationToken)
+        protected async Task<bool> ValidateExistenceAsync(GetLoteBalanzaByCodigoQuery command, string codigoLote, ValidationContext<GetLoteBalanzaByCodigoQuery> context, CancellationToken cancellationToken)
         {
-            var exists = await _loteBalanzaRepository.FindAll().Where(x => x.Codigo == codigo).AnyAsync(cancellationToken);
+            var exists = await _loteBalanzaRepository.FindAll().Where(x => x.CodigoLote == codigoLote).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.GetRecordNotFound);
             return true;
         }

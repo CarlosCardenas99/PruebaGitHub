@@ -2,6 +2,6 @@
 {
     public class SelectConcesionDto : ConcesionDto
     {
-        public int idConcesion { get; set; }
+        public int IdConcesion { get; set; }
     }
 }

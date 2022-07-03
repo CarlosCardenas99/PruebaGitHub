@@ -30,8 +30,11 @@ namespace Paltarumi.Acopio.Repository.Data
         public virtual DbSet<CorrelativoTipo> CorrelativoTipos { get; set; } = null!;
         public virtual DbSet<DuenoMuestra> DuenoMuestras { get; set; } = null!;
         public virtual DbSet<Empresa> Empresas { get; set; } = null!;
+        public virtual DbSet<EnsayoLote> EnsayoLotes { get; set; } = null!;
+        public virtual DbSet<EnsayoLoteDetalle> EnsayoLoteDetalles { get; set; } = null!;
         public virtual DbSet<ItemCheck> ItemChecks { get; set; } = null!;
         public virtual DbSet<JapBlackList> JapBlackLists { get; set; } = null!;
+        public virtual DbSet<Ley> Leys { get; set; } = null!;
         public virtual DbSet<Lote> Lotes { get; set; } = null!;
         public virtual DbSet<LoteBalanza> LoteBalanzas { get; set; } = null!;
         public virtual DbSet<LoteChancado> LoteChancados { get; set; } = null!;
@@ -148,6 +151,18 @@ namespace Paltarumi.Acopio.Repository.Data
                 entity.Property(e => e.IdModulo).HasColumnName("idModulo");
 
                 entity.Property(e => e.Mandatorio).HasColumnName("mandatorio");
+
+                entity.HasOne(d => d.IdItemCheckNavigation)
+                    .WithMany(p => p.CheckLists)
+                    .HasForeignKey(d => d.IdItemCheck)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_acopio_CheckList_idItemCheck");
+
+                entity.HasOne(d => d.IdModuloNavigation)
+                    .WithMany(p => p.CheckLists)
+                    .HasForeignKey(d => d.IdModulo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_acopio_CheckList_idModulo");
             });
 
             modelBuilder.Entity<Concesion>(entity =>
@@ -415,6 +430,105 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasConstraintName("fk_config_Empresa_codigoTipoDocumento");
             });
 
+            modelBuilder.Entity<EnsayoLote>(entity =>
+            {
+                entity.HasKey(e => e.IdEnsayoLote)
+                    .HasName("PK_laboratorio_EnsayoLote_idEnsayoLote");
+
+                entity.ToTable("EnsayoLote", "laboratorio");
+
+                entity.Property(e => e.IdEnsayoLote).HasColumnName("idEnsayoLote");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CodigoPlanta)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoPlanta");
+
+                entity.Property(e => e.CreateDate).HasColumnName("createDate");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.IdEnsayoLotePadre).HasColumnName("idEnsayoLotePadre");
+
+                entity.Property(e => e.IdEstado).HasColumnName("idEstado");
+
+                entity.Property(e => e.IdLoteCodigo).HasColumnName("idLoteCodigo");
+
+                entity.Property(e => e.PromLeyGt).HasColumnName("promLeyGt");
+
+                entity.Property(e => e.PromedioAgGt).HasColumnName("promedioAgGt");
+
+                entity.Property(e => e.PromedioAgOzTc).HasColumnName("promedioAgOzTc");
+
+                entity.Property(e => e.PromedioAuGt).HasColumnName("promedioAuGt");
+
+                entity.Property(e => e.PromedioAuOzTc).HasColumnName("promedioAuOzTc");
+
+                entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
+
+                entity.Property(e => e.UserNameCreate)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameCreate");
+
+                entity.Property(e => e.UserNameResponsable)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameResponsable");
+
+                entity.Property(e => e.UserNameUpdate)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameUpdate");
+            });
+
+            modelBuilder.Entity<EnsayoLoteDetalle>(entity =>
+            {
+                entity.HasKey(e => e.IdEnsayoLoteDetalle)
+                    .HasName("PK_laboratorio_EnsayoLoteDetalle_idEnsayoLoteDetalle");
+
+                entity.ToTable("EnsayoLoteDetalle", "laboratorio");
+
+                entity.Property(e => e.IdEnsayoLoteDetalle).HasColumnName("idEnsayoLoteDetalle");
+
+                entity.Property(e => e.AuFinoEnsayo).HasColumnName("auFinoEnsayo");
+
+                entity.Property(e => e.AuGruesoEnsayo).HasColumnName("auGruesoEnsayo");
+
+                entity.Property(e => e.IdEnsayoLoteDetallePadre).HasColumnName("idEnsayoLoteDetallePadre");
+
+                entity.Property(e => e.LeyAgGt).HasColumnName("leyAgGt");
+
+                entity.Property(e => e.LeyAgOzTc).HasColumnName("leyAgOzTc");
+
+                entity.Property(e => e.LeyAuGt).HasColumnName("leyAuGt");
+
+                entity.Property(e => e.LeyAuOzTc).HasColumnName("leyAuOzTc");
+
+                entity.Property(e => e.LeyGt).HasColumnName("leyGt");
+
+                entity.Property(e => e.LeyOzTc).HasColumnName("leyOzTc");
+
+                entity.Property(e => e.PesoFino).HasColumnName("pesoFino");
+
+                entity.Property(e => e.PesoFinoEnsayo).HasColumnName("pesoFinoEnsayo");
+
+                entity.Property(e => e.PesoGrueso).HasColumnName("pesoGrueso");
+
+                entity.Property(e => e.PesoTotal).HasColumnName("pesoTotal");
+
+                entity.Property(e => e.PorcentajeFino).HasColumnName("porcentajeFino");
+
+                entity.Property(e => e.PorcentajeGrueso).HasColumnName("porcentajeGrueso");
+
+                entity.Property(e => e.WAg).HasColumnName("wAg");
+
+                entity.Property(e => e.WAu).HasColumnName("wAu");
+
+                entity.Property(e => e.WDore).HasColumnName("wDore");
+
+                entity.Property(e => e.WMuestra).HasColumnName("wMuestra");
+            });
+
             modelBuilder.Entity<ItemCheck>(entity =>
             {
                 entity.HasKey(e => e.IdItemCheck)
@@ -456,6 +570,55 @@ namespace Paltarumi.Acopio.Repository.Data
                     .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("objectType");
+            });
+
+            modelBuilder.Entity<Ley>(entity =>
+            {
+                entity.HasKey(e => e.IdLey)
+                    .HasName("PK_laboratorio_idLey");
+
+                entity.ToTable("Ley", "laboratorio");
+
+                entity.Property(e => e.IdLey).HasColumnName("idLey");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CodigoPlanta)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoPlanta");
+
+                entity.Property(e => e.CreateDate).HasColumnName("createDate");
+
+                entity.Property(e => e.Diferencia).HasColumnName("diferencia");
+
+                entity.Property(e => e.Dilucion).HasColumnName("dilucion");
+
+                entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.IdLoteCodigo).HasColumnName("idLoteCodigo");
+
+                entity.Property(e => e.LeyAuGt).HasColumnName("leyAuGt");
+
+                entity.Property(e => e.LeyAuGt100).HasColumnName("leyAuGt100");
+
+                entity.Property(e => e.LeyAuOzTc).HasColumnName("leyAuOzTc");
+
+                entity.Property(e => e.LeyAuOzTc100).HasColumnName("leyAuOzTc100");
+
+                entity.Property(e => e.Tms).HasColumnName("tms");
+
+                entity.Property(e => e.Total).HasColumnName("total");
+
+                entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
+
+                entity.Property(e => e.UserNameCreate)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameCreate");
+
+                entity.Property(e => e.UserNameUpdate)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameUpdate");
             });
 
             modelBuilder.Entity<Lote>(entity =>

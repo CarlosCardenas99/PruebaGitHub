@@ -1,10 +1,10 @@
 using MediatR;
-using Paltarumi.Acopio.Application.Abstractions.Maestro;
+using Paltarumi.Acopio.Application.Abstractions.Acopio;
 using Paltarumi.Acopio.Application.Base;
-using Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck;
-using Paltarumi.Acopio.Domain.Queries.Maestro.ItemCheck;
+using Paltarumi.Acopio.Domain.Commands.Acopio.ItemCheck;
+using Paltarumi.Acopio.Domain.Queries.Acopio.ItemCheck;
+using Paltarumi.Acopio.Dto.Acopio.ItemCheck;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Dto.Maestro.ItemCheck;
 
 namespace Paltarumi.Acopio.Application.Maestro
 {
@@ -23,10 +23,8 @@ namespace Paltarumi.Acopio.Application.Maestro
             => await _mediator.Send(new DeleteItemCheckCommand(id));
         public async Task<ResponseDto<GetItemCheckDto>> Get(int id)
             => await _mediator.Send(new GetItemCheckQuery(id));
-        public async Task<ResponseDto<IEnumerable<ListItemCheckDto>>> List(int idModulo)
-            => await _mediator.Send(new ListItemCheckQuery(idModulo));
-        public async Task<ResponseDto<IEnumerable<ListAllItemCheckDto>>> ListAll()
-            => await _mediator.Send(new ListAllItemCheckQuery());
+        public async Task<ResponseDto<IEnumerable<ListItemCheckDto>>> List()
+            => await _mediator.Send(new ListItemCheckQuery());
         public async Task<ResponseDto<SearchResultDto<SearchItemCheckDto>>> Search(SearchParamsDto<SearchItemCheckFilterDto> searchParams)
             => await _mediator.Send(new SearchItemCheckQuery(searchParams));
     }

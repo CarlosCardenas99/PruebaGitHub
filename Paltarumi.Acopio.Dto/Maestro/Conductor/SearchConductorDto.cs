@@ -1,4 +1,3 @@
-
 namespace Paltarumi.Acopio.Dto.Maestro.Conductor
 {
     public class SearchConductorDto : ConductorDto

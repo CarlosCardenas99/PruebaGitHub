@@ -27,8 +27,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 
             filter = filter.And(x => x.Activo == true);
 
-            if (!string.IsNullOrEmpty(filters.codigoOnombre))
-                filter = filter.And(x => x.CodigoUnico.Contains(filters.codigoOnombre) || x.Nombre.Contains(filters.codigoOnombre));
+            if (!string.IsNullOrEmpty(filters.CodigoONombre))
+                filter = filter.And(x => x.CodigoUnico.Contains(filters.CodigoONombre) || x.Nombre.Contains(filters.CodigoONombre));
 
 
             var response = new ResponseDto<IEnumerable<ListConcesionDto>>();

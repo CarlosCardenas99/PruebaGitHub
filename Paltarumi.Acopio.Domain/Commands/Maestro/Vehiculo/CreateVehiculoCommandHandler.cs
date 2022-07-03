@@ -36,13 +36,13 @@ namespace Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo
             {
                 vehiculo.Activo = true;
 
-                if (!request.CreateDto.IdTipoVehiculo.HasValue || request.CreateDto.IdTipoVehiculo == 0)
+                if (request.CreateDto.IdTipoVehiculo == default)
                 {
                     vehiculo.IdTipoVehiculoNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.CreateDto.DescripcionTipoVehiculo);
                     vehiculo.IdTipoVehiculo = vehiculo.IdTipoVehiculoNavigation.IdMaestro;
                 }
 
-                if (!request.CreateDto.IdVehiculoMarca.HasValue || request.CreateDto.IdVehiculoMarca == 0)
+                if (request.CreateDto.IdVehiculoMarca == default)
                 {
                     vehiculo.IdVehiculoMarcaNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionVehiculoMarca);
                     vehiculo.IdTipoVehiculo = vehiculo.IdVehiculoMarcaNavigation.IdMaestro;

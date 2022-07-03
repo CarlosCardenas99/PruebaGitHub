@@ -44,8 +44,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
                 }
             }
 
-            if (!string.IsNullOrEmpty(filters?.Codigo))
-                filter = filter.And(x => x.IdLoteBalanzaNavigation.Codigo.Contains(filters.Codigo));
+            if (!string.IsNullOrEmpty(filters?.CodigoLote))
+                filter = filter.And(x => x.IdLoteBalanzaNavigation.CodigoLote.Contains(filters.CodigoLote));
 
             if (!string.IsNullOrEmpty(filters?.Proveedor))
             {

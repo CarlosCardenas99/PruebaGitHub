@@ -2,7 +2,7 @@
 {
     public class GetDuenoMuestraByDocumentFilterDto
     {
-        public string? numero { get; set; }
+        public string Numero { get; set; } = null!;
         public string? CodigoTipoDocumento { get; set; }
     }
 }

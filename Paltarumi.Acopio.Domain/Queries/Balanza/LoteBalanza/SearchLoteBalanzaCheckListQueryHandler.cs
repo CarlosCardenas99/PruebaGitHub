@@ -49,8 +49,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
                 }
             }
 
-            if (!string.IsNullOrEmpty(filters?.Codigo))
-                filter = filter.And(x => x.Codigo.Contains(filters.Codigo));
+            if (!string.IsNullOrEmpty(filters?.CodigoLote))
+                filter = filter.And(x => x.CodigoLote.Contains(filters.CodigoLote));
 
             var lotes = await _loteBalanzaRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,
@@ -64,19 +64,11 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 
             var checkLists = new List<Entity.CheckList>();
 
-            if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(x => checkLists.AddRange(x.CheckLists));
+            /*if (lotes.Items != null)
+                lotes.Items.ToList().ForEach(x => checkLists.AddRange(x.CheckLists));*/
 
             var itemcheckIds = checkLists.Select(x => x.IdItemCheckNavigation.IdItemCheck);
             var itemchecks = await _itemCheckRepository.FindByAsNoTrackingAsync(x => itemcheckIds.Contains(x.IdItemCheck));
-
-            if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(item =>
-                {
-                    var ids = item.Tickets.Select(x => x.IdVehiculo);
-                    var vehicles = itemchecks.Where(x => ids.Contains(x.IdItemCheck)).Select(x => x.Concepto);
-                    item.Vehiculos = string.Join(",", vehicles);
-                });
 
             var tickets = new List<Entity.Ticket>();
 
@@ -85,14 +77,6 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 
             var vehículoIds = tickets.Select(x => x.IdVehiculo);
             var vehículos = await _vehiculoRepository.FindByAsNoTrackingAsync(x => vehículoIds.Contains(x.IdVehiculo));
-
-            if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(item =>
-                {
-                    var ids = item.Tickets.Select(x => x.IdVehiculo);
-                    var vehicles = vehículos.Where(x => ids.Contains(x.IdVehiculo)).Select(x => x.Placa);
-                    item.Vehiculos = string.Join(",", vehicles);
-                });
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaChecklistDto>>(lotes.Items);
 
@@ -106,6 +90,5 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 
             return await Task.FromResult(response);
         }
-
     }
 }

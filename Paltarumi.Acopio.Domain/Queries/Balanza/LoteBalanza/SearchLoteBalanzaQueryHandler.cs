@@ -47,8 +47,8 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza
                 }
             }
 
-            if (!string.IsNullOrEmpty(filters?.Codigo))
-                filter = filter.And(x => x.Codigo.Contains(filters.Codigo));
+            if (!string.IsNullOrEmpty(filters?.CodigoLote))
+                filter = filter.And(x => x.CodigoLote.Contains(filters.CodigoLote));
 
             if (!string.IsNullOrEmpty(filters?.Proveedor))
             {
@@ -105,7 +105,6 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza
                 {
                     var ids = item.Tickets.Select(x => x.IdVehiculo);
                     var vehicles = vehículos.Where(x => ids.Contains(x.IdVehiculo)).Select(x => x.Placa);
-                    item.Vehiculos = string.Join(",", vehicles);
                 });
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);

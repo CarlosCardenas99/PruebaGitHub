@@ -1,7 +1,7 @@
 namespace Paltarumi.Acopio.Dto.Maestro.Vehiculo
 {
-    public class SearchVehiculoDto
+    public class SearchVehiculoDto : VehiculoDto
     {
-        public int? IdVehiculo { get; set; }
+        public int IdVehiculo { get; set; }
     }
 }

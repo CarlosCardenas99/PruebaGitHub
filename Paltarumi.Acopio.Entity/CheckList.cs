@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Paltarumi.Acopio.Entity
+﻿namespace Paltarumi.Acopio.Entity
 {
     public partial class CheckList
     {
@@ -10,5 +7,8 @@ namespace Paltarumi.Acopio.Entity
         public int IdItemCheck { get; set; }
         public bool Mandatorio { get; set; }
         public bool Activo { get; set; }
+
+        public virtual ItemCheck IdItemCheckNavigation { get; set; } = null!;
+        public virtual Modulo IdModuloNavigation { get; set; } = null!;
     }
 }

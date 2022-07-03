@@ -2,6 +2,6 @@
 {
     public class ListConcesionFilterDto
     {
-        public string? codigoOnombre { get; set; }
+        public string? CodigoONombre { get; set; }
     }
 }

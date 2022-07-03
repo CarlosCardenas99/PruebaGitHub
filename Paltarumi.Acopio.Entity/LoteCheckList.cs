@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Paltarumi.Acopio.Entity
+﻿namespace Paltarumi.Acopio.Entity
 {
     public partial class LoteCheckList
     {
@@ -13,5 +10,6 @@ namespace Paltarumi.Acopio.Entity
         public string Adjunto { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
+        public bool Activo { get; set; }
     }
 }

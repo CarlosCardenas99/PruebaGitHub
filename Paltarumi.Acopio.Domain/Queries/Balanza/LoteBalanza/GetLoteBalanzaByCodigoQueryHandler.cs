@@ -27,14 +27,16 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
         protected override async Task<ResponseDto<GetLoteBalanzaCodigoDto>> HandleQuery(GetLoteBalanzaByCodigoQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaCodigoDto>();
+
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(
-                x => x.Codigo == request.Codigo,
+                x => x.CodigoLote == request.CodigoLote,
                 x => x.Tickets,
                 x => x.IdEstadoNavigation,
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation
                 );
+
             var loteDto = _mapper?.Map<GetLoteBalanzaCodigoDto>(loteBalanza);
 
             if (loteBalanza != null && loteDto != null)
@@ -53,6 +55,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
                     x => x.IdUnidadMedidaNavigation,
                     x => x.IdVehiculoNavigation
                     );
+
                 loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
                 response.UpdateData(loteDto);

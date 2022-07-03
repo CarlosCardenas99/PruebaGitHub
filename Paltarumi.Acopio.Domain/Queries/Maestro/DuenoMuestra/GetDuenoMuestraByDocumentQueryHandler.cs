@@ -23,7 +23,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
         protected override async Task<ResponseDto<GetDuenoMuestraDto>> HandleQuery(GetDuenoMuestraByDocumentQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetDuenoMuestraDto>();
-            var duenoMuestra = await _duenoMuestraRepository.GetByAsync(x => x.Numero.Equals(request.Filter.numero) && x.CodigoTipoDocumento.Equals(request.Filter.CodigoTipoDocumento) && x.Activo == true);
+            var duenoMuestra = await _duenoMuestraRepository.GetByAsync(x => x.Numero.Equals(request.Filter.Numero) && x.CodigoTipoDocumento.Equals(request.Filter.CodigoTipoDocumento) && x.Activo == true);
             var duenoMuestraDto = _mapper?.Map<GetDuenoMuestraDto>(duenoMuestra);
 
             if (duenoMuestra != null && duenoMuestraDto != null)
@@ -36,10 +36,10 @@ namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra
                 SunatStorage sunat = new SunatStorage();
 
                 if (string.Equals(Constants.TipoDocumento.DNI, request.Filter.CodigoTipoDocumento))
-                    result = sunat.ConsultaDni(request.Filter.numero);
+                    result = sunat.ConsultaDni(request.Filter.Numero);
 
                 else if (string.Equals(Constants.TipoDocumento.RUC, request.Filter.CodigoTipoDocumento))
-                    result = sunat.ConsultaRuc(request.Filter.numero);
+                    result = sunat.ConsultaRuc(request.Filter.Numero);
                 else
                     return await Task.FromResult(response);
 

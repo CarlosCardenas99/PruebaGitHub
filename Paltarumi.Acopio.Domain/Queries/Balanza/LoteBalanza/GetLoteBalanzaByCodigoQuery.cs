@@ -5,7 +5,7 @@ namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza
 {
     public class GetLoteBalanzaByCodigoQuery : QueryBase<GetLoteBalanzaCodigoDto>
     {
-        public GetLoteBalanzaByCodigoQuery(string codigo) => Codigo = codigo;
-        public string? Codigo { get; set; }
+        public GetLoteBalanzaByCodigoQuery(string codigoLote) => CodigoLote = codigoLote;
+        public string? CodigoLote { get; set; }
     }
 }

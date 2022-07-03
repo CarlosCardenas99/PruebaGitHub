@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using Paltarumi.Acopio.Application.Abstractions.Maestro;
+using Paltarumi.Acopio.Application.Abstractions.Acopio;
+using Paltarumi.Acopio.Dto.Acopio.ItemCheck;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Dto.Maestro.ItemCheck;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {
@@ -30,13 +30,9 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<GetItemCheckDto>> Get(int id)
             => await _itemcheckApplication.Get(id);
 
-        [HttpGet("list/{idModulo}")]
-        public async Task<ResponseDto<IEnumerable<ListItemCheckDto>>> List(int idModulo)
-            => await _itemcheckApplication.List(idModulo);
-
         [HttpGet("list")]
-        public async Task<ResponseDto<IEnumerable<ListAllItemCheckDto>>> ListAll()
-            => await _itemcheckApplication.ListAll();
+        public async Task<ResponseDto<IEnumerable<ListItemCheckDto>>> List()
+            => await _itemcheckApplication.List();
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchItemCheckDto>>> Search(SearchParamsDto<SearchItemCheckFilterDto> searchParams)
