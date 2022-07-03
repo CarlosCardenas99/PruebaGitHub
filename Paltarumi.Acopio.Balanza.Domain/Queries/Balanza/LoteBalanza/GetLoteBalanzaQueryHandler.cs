@@ -12,22 +12,30 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 {
     public class GetLoteBalanzaQueryHandler : QueryHandlerBase<GetLoteBalanzaQuery, GetLoteBalanzaDto>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
+
         public GetLoteBalanzaQueryHandler(
             IMapper mapper,
             GetLoteBalanzaQueryValidator validator,
+            IRepository<Entity.Ticket> ticketRepository,
+            IRepository<Entity.Maestro> maestroRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
         ) : base(mapper, validator)
         {
-            _loteBalanzaRepository = loteBalanzaRepository;
             _ticketRepository = ticketRepository;
+            _maestroRepository = maestroRepository;
+            _loteBalanzaRepository = loteBalanzaRepository;
+            _loteMuestreoRepository = loteMuestreoRepository;
         }
 
         protected override async Task<ResponseDto<GetLoteBalanzaDto>> HandleQuery(GetLoteBalanzaQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaDto>();
+
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(
                 x => x.IdLoteBalanza == request.Id,
                 x => x.Tickets,
@@ -36,6 +44,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation
                 );
+
+            var loteMuestreo = loteBalanza != null ? await _loteMuestreoRepository
+                .GetByAsNoTrackingAsync(
+                    x => x.CodigoLote == loteBalanza.CodigoLote
+                ) : null;
+
+            var tipoMineral = loteMuestreo != null ?
+                await _maestroRepository.GetByAsNoTrackingAsync(x => x.IdMaestro == loteMuestreo.IdTipoMineral) : null;
+
             var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);
 
             if (loteBalanza != null && loteDto != null)
@@ -54,7 +71,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                     x => x.IdUnidadMedidaNavigation,
                     x => x.IdVehiculoNavigation
                     );
+
                 loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
+
+                loteDto.Humedad = loteMuestreo?.Humedad;
+                loteDto.Tms = loteMuestreo?.Tms;
+                loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
+                loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
 
                 response.UpdateData(loteDto);
             }

@@ -8,6 +8,7 @@
         public DateTimeOffset FechaIngreso { get; set; }
         public DateTimeOffset FechaAcopio { get; set; }
         public int IdEstadoTipoMaterial { get; set; }
+        public int? IdTipoMineral { get; set; }
         public string? CantidadSacos { get; set; }
         public Single Tmh100 { get; set; }
         public Single TmhBase { get; set; }

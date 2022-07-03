@@ -16,7 +16,7 @@
         public int? IdTipoMineral { get; set; }
         public bool? ReportadoProveedor { get; set; }
         public bool? Firmado { get; set; }
-        public string IdProveedor { get; set; } = null!;
+        public int IdProveedor { get; set; }
         public int? IdDuenoMuestra { get; set; }
         public string? Observacion { get; set; }
         public string UserNameCreate { get; set; } = null!;
@@ -24,5 +24,9 @@
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
+
+        public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
+        public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
+        public virtual Maestro? IdTipoMineralNavigation { get; set; }
     }
 }

@@ -15,6 +15,15 @@
         public float PesoNeto100 { get; set; }
         public float PesoNetoBase { get; set; }
         public float PesoNeto { get; set; }
+        public int IdEstadoTmhCarreta { get; set; }
+        public float PesoBrutoCarreta100 { get; set; }
+        public float PesoBrutoCarretaBase { get; set; }
+        public float PesoBrutoCarreta { get; set; }
+        public float TaraCarreta { get; set; }
+        public float PesoNetoCarreta100 { get; set; }
+        public float PesoNetoCarretaBase { get; set; }
+        public float PesoNetoCarreta { get; set; }
+        public float PesoNetoTotal { get; set; }
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
         public int IdTransporte { get; set; }
@@ -26,6 +35,7 @@
         public bool Activo { get; set; }
 
         public virtual Conductor IdConductorNavigation { get; set; } = null!;
+        public virtual Maestro IdEstadoTmhCarretaNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
         public virtual LoteBalanza IdLoteBalanzaNavigation { get; set; } = null!;
         public virtual Transporte IdTransporteNavigation { get; set; } = null!;

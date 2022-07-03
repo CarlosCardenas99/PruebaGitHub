@@ -5,6 +5,7 @@
         public Proveedor()
         {
             LoteBalanzas = new HashSet<LoteBalanza>();
+            LoteMuestreos = new HashSet<LoteMuestreo>();
             ProveedorConcesions = new HashSet<ProveedorConcesion>();
         }
 
@@ -19,6 +20,7 @@
 
         public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
+        public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
         public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }
     }
 }

@@ -5,6 +5,8 @@
         public DuenoMuestra()
         {
             LoteCodigos = new HashSet<LoteCodigo>();
+            LoteMuestreos = new HashSet<LoteMuestreo>();
+            Muestras = new HashSet<Muestra>();
         }
 
         public int IdDuenoMuestra { get; set; }
@@ -18,5 +20,7 @@
 
         public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
+        public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
+        public virtual ICollection<Muestra> Muestras { get; set; }
     }
 }
