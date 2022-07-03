@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Dto.Balanza.LoteCodigo
         public int IdTipoLoteCodigo { get; set; }
         public DateTimeOffset FechaRecepcion { get; set; }
         public string HoraRecepcion { get; set; } = null!;
+        public string CodigoLote { get; set; } = null!;
         public string CodigoPlanta { get; set; } = null!;
         public string CodigoMuestra { get; set; } = null!;
         public string CodigoHash { get; set; } = null!;
