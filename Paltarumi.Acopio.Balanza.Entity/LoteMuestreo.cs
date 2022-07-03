@@ -5,7 +5,7 @@
         public int IdLoteMuestreo { get; set; }
         public string CodigoLote { get; set; } = null!;
         public DateTimeOffset? Fecha { get; set; }
-        public int? IdUsuarioSupervisor { get; set; }
+        public string UserNameSupervisor { get; set; } = null!;
         public float Tmh { get; set; }
         public float? Humedad100 { get; set; }
         public float? HumedadBase { get; set; }

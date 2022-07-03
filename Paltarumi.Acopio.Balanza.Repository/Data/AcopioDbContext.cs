@@ -913,8 +913,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
 
-                entity.Property(e => e.IdUsuarioSupervisor).HasColumnName("idUsuarioSupervisor");
-
                 entity.Property(e => e.Observacion)
                     .HasMaxLength(200)
                     .IsUnicode(false)
@@ -936,6 +934,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(256)
                     .HasColumnName("userNameCreate");
 
+                entity.Property(e => e.UserNameSupervisor)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameSupervisor");
+
                 entity.Property(e => e.UserNameUpdate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameUpdate");
@@ -943,18 +945,18 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
                     .WithMany(p => p.LoteMuestreos)
                     .HasForeignKey(d => d.IdDuenoMuestra)
-                    .HasConstraintName("fk_balanza_LoteMuestreo_idDuenoMuestra");
+                    .HasConstraintName("fk_muestreo_LoteMuestreo_idDuenoMuestra");
 
                 entity.HasOne(d => d.IdProveedorNavigation)
                     .WithMany(p => p.LoteMuestreos)
                     .HasForeignKey(d => d.IdProveedor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_balanza_LoteMuestreo_idProveedor");
+                    .HasConstraintName("fk_muestreo_LoteMuestreo_idProveedor");
 
                 entity.HasOne(d => d.IdTipoMineralNavigation)
                     .WithMany(p => p.LoteMuestreos)
                     .HasForeignKey(d => d.IdTipoMineral)
-                    .HasConstraintName("fk_balanza_LoteMuestreo_idTipoMineral");
+                    .HasConstraintName("fk_muestreo_LoteMuestreo_idTipoMineral");
             });
 
             modelBuilder.Entity<LoteOperacion>(entity =>
@@ -1136,10 +1138,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdMuestraEstado).HasColumnName("idMuestraEstado");
 
-                entity.Property(e => e.IdProveedor)
-                    .HasMaxLength(11)
-                    .IsUnicode(false)
-                    .HasColumnName("idProveedor");
+                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
                 entity.Property(e => e.IdTurno).HasColumnName("idTurno");
 
@@ -1180,6 +1179,12 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .WithMany(p => p.MuestraIdMuestraEstadoNavigations)
                     .HasForeignKey(d => d.IdMuestraEstado)
                     .HasConstraintName("fk_muestreo_Muestra_idMuestraEstado");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany(p => p.Muestras)
+                    .HasForeignKey(d => d.IdProveedor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_muestreo_Muestra_idProveedor");
 
                 entity.HasOne(d => d.IdTurnoNavigation)
                     .WithMany(p => p.MuestraIdTurnoNavigations)

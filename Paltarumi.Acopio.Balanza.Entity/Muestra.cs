@@ -8,7 +8,7 @@
         public DateTimeOffset? FechaMuestreo { get; set; }
         public string CodigoLote { get; set; } = null!;
         public int? IdCancha { get; set; }
-        public string IdProveedor { get; set; } = null!;
+        public int IdProveedor { get; set; }
         public int? IdDuenoMuestra { get; set; }
         public bool? LlevaGrueso { get; set; }
         public float Tmh { get; set; }
@@ -24,6 +24,7 @@
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
         public virtual Maestro? IdMuestraCondicionNavigation { get; set; }
         public virtual Maestro? IdMuestraEstadoNavigation { get; set; }
+        public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual Maestro IdTurnoNavigation { get; set; } = null!;
     }
 }
