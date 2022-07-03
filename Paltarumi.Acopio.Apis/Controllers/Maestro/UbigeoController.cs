@@ -90,24 +90,4 @@ namespace Paltarumi.Acopio.Apis.Controllers.Maestro
         public async Task<ResponseDto<SearchResultDto<SearchUbigeoDto>>> Search(SearchParamsDto<UbigeoFilterDto> searchParams)
             => await _ubigeoApplication.Search(searchParams);
     }
-
-    public class DepartamentoDto
-    {
-        public string? Codigo { get; set; }
-        public string? Nombre { get; set; }
-        public IEnumerable<ProvinciaDto>? Provincias { get; set; }
-    }
-
-    public class ProvinciaDto
-    {
-        public string? Codigo { get; set; }
-        public string? Nombre { get; set; }
-        public IEnumerable<DistritoDto>? Distritos { get; set; }
-    }
-
-    public class DistritoDto
-    {
-        public string? Codigo { get; set; }
-        public string? Nombre { get; set; }
-    }
 }

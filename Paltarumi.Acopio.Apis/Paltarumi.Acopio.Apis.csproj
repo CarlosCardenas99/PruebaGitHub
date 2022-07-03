@@ -37,8 +37,4 @@
     <ProjectReference Include="..\Paltarumi.Acopio.Repository\Paltarumi.Acopio.Repository.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Muestreo\" />
-  </ItemGroup>
-
 </Project>
