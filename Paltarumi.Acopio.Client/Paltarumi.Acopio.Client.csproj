@@ -5,16 +5,29 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>1.0.0.1</Version>
+    <Version>1.0.0.2</Version>
   </PropertyGroup>
 	
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Paltarumi.Acopio.Dto.Base" Version="1.0.0" />
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\Paltarumi.Acopio.Dto.Base\Paltarumi.Acopio.Dto.Base.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Dto\Paltarumi.Acopio.Dto.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Paltarumi.Acopio.Dto\Paltarumi.Acopio.Dto.csproj">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<IncludeAssets>Paltarumi.Acopio.Dto.dll</IncludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+	<Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
+		</ItemGroup>
+	</Target>
 
 </Project>

@@ -37,9 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.EmailClien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.Client", "Paltarumi.Acopio.Client\Paltarumi.Acopio.Client.csproj", "{108635D4-D923-42EE-9A03-A3027FA6EF61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paltarumi.Acopio.Dto", "Paltarumi.Acopio.Dto\Paltarumi.Acopio.Dto.csproj", "{053185D6-46E7-41DF-9EF1-1FD807C7D2BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paltarumi.Acopio.Dto.Base", "Paltarumi.Acopio.Dto.Base\Paltarumi.Acopio.Dto.Base.csproj", "{93DAEBE0-D373-4D24-AFA1-1C2E98C4D255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.Dto", "Paltarumi.Acopio.Dto\Paltarumi.Acopio.Dto.csproj", "{053185D6-46E7-41DF-9EF1-1FD807C7D2BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,10 +93,6 @@ Global
 		{053185D6-46E7-41DF-9EF1-1FD807C7D2BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{053185D6-46E7-41DF-9EF1-1FD807C7D2BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{053185D6-46E7-41DF-9EF1-1FD807C7D2BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93DAEBE0-D373-4D24-AFA1-1C2E98C4D255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93DAEBE0-D373-4D24-AFA1-1C2E98C4D255}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93DAEBE0-D373-4D24-AFA1-1C2E98C4D255}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93DAEBE0-D373-4D24-AFA1-1C2E98C4D255}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -116,7 +110,6 @@ Global
 		{532DAF31-7DC7-44E2-BC0C-6D6E35E86C16} = {BA3B44F3-4519-4558-9F40-FBDBD69A6EF5}
 		{108635D4-D923-42EE-9A03-A3027FA6EF61} = {BA3B44F3-4519-4558-9F40-FBDBD69A6EF5}
 		{053185D6-46E7-41DF-9EF1-1FD807C7D2BB} = {86E88C41-F989-4710-9678-8BC7F6239F21}
-		{93DAEBE0-D373-4D24-AFA1-1C2E98C4D255} = {86E88C41-F989-4710-9678-8BC7F6239F21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6038C8B8-813B-4C14-BE6E-CB0282AF0330}
