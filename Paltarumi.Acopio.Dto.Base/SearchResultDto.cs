@@ -2,6 +2,11 @@
 {
     public class SearchResultDto<TResult>
     {
+        public SearchResultDto()
+        {
+			
+        }
+		
         public SearchResultDto(IEnumerable<TResult> items)
         {
             Items = items;
