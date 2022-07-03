@@ -6,4 +6,4 @@ COPY ./ .
 
 ENV ASPNET_VERSION=6.0
 
-ENTRYPOINT ["dotnet", "Paltarumi.Acopio.Apis.dll"]
+ENTRYPOINT ["dotnet", "Paltarumi.Acopio.Balanza.Apis.dll"]
