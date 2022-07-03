@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Dto.Maestro.Transporte;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte

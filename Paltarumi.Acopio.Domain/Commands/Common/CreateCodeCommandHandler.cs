@@ -1,5 +1,5 @@
 ﻿using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 

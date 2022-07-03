@@ -2,8 +2,8 @@
 using Paltarumi.Acopio.Apis.Controllers.Base;
 using Paltarumi.Acopio.Apis.Security;
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
-using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Balanza.LoteBalanza;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Balanza
 {

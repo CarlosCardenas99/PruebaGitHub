@@ -1,5 +1,5 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Domain.Queries.Base;
+﻿using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Balanza.Ticket;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket
 {

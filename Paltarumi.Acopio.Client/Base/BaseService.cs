@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Base;
 using System.Net.Http.Json;
 
 namespace Paltarumi.Acopio.Client.Base

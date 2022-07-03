@@ -1,8 +1,8 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.TipoDocumento;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.TipoDocumento;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.TipoDocumento

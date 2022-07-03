@@ -1,5 +1,5 @@
 ﻿using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Security.User;
+using Paltarumi.Acopio.Dto.Security.User;
 
 namespace Paltarumi.Acopio.Domain.Commands.Security.User
 {

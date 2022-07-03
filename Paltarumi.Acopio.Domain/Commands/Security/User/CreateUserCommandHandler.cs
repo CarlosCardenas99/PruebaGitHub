@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Security.User;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Security.User;
 using Paltarumi.Acopio.EmailClient;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 

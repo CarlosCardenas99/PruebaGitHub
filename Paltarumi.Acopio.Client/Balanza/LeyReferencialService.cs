@@ -1,6 +1,6 @@
 ﻿using Paltarumi.Acopio.Client.Base;
-using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Client.Balanza
 {

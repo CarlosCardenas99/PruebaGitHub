@@ -1,7 +1,7 @@
 ﻿using Paltarumi.Acopio.Client.Base;
-using Paltarumi.Acopio.Domain.Dto.Balanza.LoteCodigo;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
+using Paltarumi.Acopio.Dto.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Client.Balanza
 {

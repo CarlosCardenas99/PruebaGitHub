@@ -1,9 +1,9 @@
 using AutoMapper;
 using Paltarumi.Acopio.Common;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Domain.Queries.Sunat;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.DuenoMuestra;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.DuenoMuestra

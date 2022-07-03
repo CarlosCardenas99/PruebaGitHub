@@ -13,7 +13,8 @@
   </ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\Paltarumi.Acopio.Domain\Paltarumi.Acopio.Domain.csproj" />
+    <ProjectReference Include="..\Paltarumi.Acopio.Dto.Base\Paltarumi.Acopio.Dto.Base.csproj" />
+    <ProjectReference Include="..\Paltarumi.Acopio.Dto\Paltarumi.Acopio.Dto.csproj" />
   </ItemGroup>
 
 </Project>

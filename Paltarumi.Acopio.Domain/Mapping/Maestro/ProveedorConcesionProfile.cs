@@ -1,5 +1,5 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.ProveedorConcesion;
+using Paltarumi.Acopio.Dto.Maestro.ProveedorConcesion;
 
 namespace Paltarumi.Acopio.Domain.Mapping.Maestro
 {

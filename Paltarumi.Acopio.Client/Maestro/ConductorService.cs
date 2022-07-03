@@ -1,6 +1,6 @@
 ﻿using Paltarumi.Acopio.Client.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Client.Maestro
 {

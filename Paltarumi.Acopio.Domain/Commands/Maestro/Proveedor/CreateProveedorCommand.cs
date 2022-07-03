@@ -1,5 +1,5 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
+using Paltarumi.Acopio.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.Proveedor
 {

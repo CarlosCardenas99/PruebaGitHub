@@ -1,5 +1,5 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.ItemCheck;
+using Paltarumi.Acopio.Dto.Maestro.ItemCheck;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.ItemCheck
 {

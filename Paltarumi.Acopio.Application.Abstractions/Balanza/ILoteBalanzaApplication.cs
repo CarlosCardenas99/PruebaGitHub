@@ -1,5 +1,5 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
-using Paltarumi.Acopio.Domain.Dto.Base;
+﻿using Paltarumi.Acopio.Dto.Balanza.LoteBalanza;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Application.Abstractions.Balanza
 {

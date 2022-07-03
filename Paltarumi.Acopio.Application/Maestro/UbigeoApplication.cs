@@ -1,9 +1,9 @@
 using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
 using Paltarumi.Acopio.Application.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Ubigeo;
 using Paltarumi.Acopio.Domain.Queries.Maestro.Ubigeo;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Ubigeo;
 
 namespace Paltarumi.Acopio.Application.Maestro
 {

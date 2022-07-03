@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Config.Modulo;
 
 namespace Paltarumi.Acopio.Domain.Queries.Config.Modulo
 {

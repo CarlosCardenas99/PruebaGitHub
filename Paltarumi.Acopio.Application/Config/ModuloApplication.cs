@@ -1,9 +1,9 @@
 using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Config;
 using Paltarumi.Acopio.Application.Base;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
 using Paltarumi.Acopio.Domain.Queries.Config.Modulo;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Config.Modulo;
 
 namespace Paltarumi.Acopio.Application.Config
 {

@@ -2,10 +2,10 @@
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Balanza.LoteBalanza;
-using Paltarumi.Acopio.Domain.Dto.Balanza.LoteBalanza;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Domain.Queries.Maestro.LoteBalanza;
+using Paltarumi.Acopio.Dto.Balanza.LoteBalanza;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Application.Balanza
 {

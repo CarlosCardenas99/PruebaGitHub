@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.Ticket

@@ -2,7 +2,7 @@
 using Paltarumi.Acopio.Application.Abstractions.Reportes;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Reportes;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Application.Reportes
 {

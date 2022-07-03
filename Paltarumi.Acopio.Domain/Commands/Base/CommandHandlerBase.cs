@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
 #pragma warning disable CS8604 // Possible null reference argument.

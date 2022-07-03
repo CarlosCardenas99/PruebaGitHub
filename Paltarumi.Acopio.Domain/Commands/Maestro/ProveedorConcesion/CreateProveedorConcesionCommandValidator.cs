@@ -1,7 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.ProveedorConcesion;
+using Paltarumi.Acopio.Dto.Maestro.ProveedorConcesion;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.ProveedorConcesion

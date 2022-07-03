@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Maestro.Vehiculo;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo
 {

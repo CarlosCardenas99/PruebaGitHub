@@ -2,10 +2,10 @@ using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Maestro.Transporte;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
 using Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Queries.Maestro.Transporte;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Transporte;
 
 namespace Paltarumi.Acopio.Application.Maestro
 {

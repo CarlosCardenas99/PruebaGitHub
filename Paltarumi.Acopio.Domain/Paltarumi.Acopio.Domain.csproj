@@ -5,9 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	
   <ItemGroup>
-    <Folder Include="Commands\Muestreo\" />
     <Folder Include="Mapping\Muestreo\" />
     <Folder Include="Queries\Muestreo\" />
     <Folder Include="Resources\Muestreo\" />
@@ -29,6 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paltarumi.Acopio.Common\Paltarumi.Acopio.Common.csproj" />
+    <ProjectReference Include="..\Paltarumi.Acopio.Dto.Base\Paltarumi.Acopio.Dto.Base.csproj" />
+    <ProjectReference Include="..\Paltarumi.Acopio.Dto\Paltarumi.Acopio.Dto.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.EmailClient\Paltarumi.Acopio.EmailClient.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Repository.Abstractions\Paltarumi.Acopio.Repository.Abstractions.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Repository\Paltarumi.Acopio.Repository.csproj" />

@@ -1,5 +1,5 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.CheckList;
+using Paltarumi.Acopio.Dto.Maestro.CheckList;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.CheckList
 {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Security.User;
+using Paltarumi.Acopio.Dto.Security.User;
 
 namespace Paltarumi.Acopio.Domain.Mapping.Security
 {

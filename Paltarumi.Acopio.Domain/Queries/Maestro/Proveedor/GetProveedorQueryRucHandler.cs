@@ -1,8 +1,8 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Queries.Base;
 using Paltarumi.Acopio.Domain.Queries.Sunat;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Proveedor;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor

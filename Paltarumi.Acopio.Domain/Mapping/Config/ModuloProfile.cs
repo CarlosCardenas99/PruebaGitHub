@@ -1,5 +1,5 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
+using Paltarumi.Acopio.Dto.Config.Modulo;
 
 namespace Paltarumi.Acopio.Domain.Mapping.Config
 {

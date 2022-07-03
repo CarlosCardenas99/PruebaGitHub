@@ -1,5 +1,5 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Security.User;
+﻿using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Security.User;
 
 namespace Paltarumi.Acopio.Application.Abstractions.Security
 {

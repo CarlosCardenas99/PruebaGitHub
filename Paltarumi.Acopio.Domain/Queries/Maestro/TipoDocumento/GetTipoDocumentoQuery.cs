@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Domain.Dto.Maestro.TipoDocumento;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Maestro.TipoDocumento;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.TipoDocumento
 {

@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Proveedor
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Security;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Security.User;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Security.User;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Security
 {

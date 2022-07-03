@@ -1,5 +1,5 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Dto.Maestro.Transporte;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.Transporte
 {

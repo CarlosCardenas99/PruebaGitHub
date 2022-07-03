@@ -1,5 +1,5 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Ubigeo;
+using Paltarumi.Acopio.Dto.Maestro.Ubigeo;
 
 namespace Paltarumi.Acopio.Domain.Mapping.Maestro
 {

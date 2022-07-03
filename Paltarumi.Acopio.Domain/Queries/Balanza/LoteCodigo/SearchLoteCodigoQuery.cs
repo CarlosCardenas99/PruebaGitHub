@@ -1,6 +1,6 @@
-using Paltarumi.Acopio.Domain.Dto.Balanza.LoteCodigo;
-using Paltarumi.Acopio.Domain.Dto.Base;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Balanza.LoteCodigo
 {

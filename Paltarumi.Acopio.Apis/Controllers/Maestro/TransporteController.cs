@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Transporte;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Maestro
 {

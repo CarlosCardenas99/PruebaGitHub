@@ -1,5 +1,5 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.Conductor
 {

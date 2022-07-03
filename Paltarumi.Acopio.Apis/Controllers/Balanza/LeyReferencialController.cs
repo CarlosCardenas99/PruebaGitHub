@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Application.Abstractions.Balanza;
-using Paltarumi.Acopio.Domain.Dto.Balanza.LeyReferencial;
-using Paltarumi.Acopio.Domain.Dto.Base;
+using Paltarumi.Acopio.Dto.Balanza.LeyReferencial;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Apis.Controllers.Balanza
 {

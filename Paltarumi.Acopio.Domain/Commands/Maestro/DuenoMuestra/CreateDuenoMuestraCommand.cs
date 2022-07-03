@@ -1,5 +1,5 @@
 using Paltarumi.Acopio.Domain.Commands.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.DuenoMuestra;
+using Paltarumi.Acopio.Dto.Maestro.DuenoMuestra;
 
 namespace Paltarumi.Acopio.Domain.Commands.Maestro.DuenoMuestra
 {

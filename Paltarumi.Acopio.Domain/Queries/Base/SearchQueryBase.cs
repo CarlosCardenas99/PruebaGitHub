@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Domain.Dto.Base;
+﻿using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Domain.Queries.Base
 {

@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Proveedor;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Application.Abstractions.Maestro
 {

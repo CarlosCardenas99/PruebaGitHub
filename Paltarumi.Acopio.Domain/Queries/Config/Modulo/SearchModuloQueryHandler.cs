@@ -1,7 +1,7 @@
 using AutoMapper;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Config.Modulo;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Config.Modulo;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;

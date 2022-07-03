@@ -2,9 +2,9 @@ using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Maestro.Vehiculo;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Vehiculo;
 using Paltarumi.Acopio.Domain.Queries.Maestro.Vehiculo;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Vehiculo;
 
 namespace Paltarumi.Acopio.Application.Maestro
 {

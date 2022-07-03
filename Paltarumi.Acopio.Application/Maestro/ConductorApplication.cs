@@ -2,9 +2,9 @@ using MediatR;
 using Paltarumi.Acopio.Application.Abstractions.Maestro;
 using Paltarumi.Acopio.Application.Base;
 using Paltarumi.Acopio.Domain.Commands.Maestro.Conductor;
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Conductor;
 using Paltarumi.Acopio.Domain.Queries.Maestro.Conductor;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Application.Maestro
 {

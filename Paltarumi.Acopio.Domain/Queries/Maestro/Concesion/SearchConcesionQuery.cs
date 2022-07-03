@@ -1,6 +1,6 @@
-using Paltarumi.Acopio.Domain.Dto.Base;
-using Paltarumi.Acopio.Domain.Dto.Maestro.Concesion;
 using Paltarumi.Acopio.Domain.Queries.Base;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Dto.Maestro.Concesion;
 
 namespace Paltarumi.Acopio.Domain.Queries.Maestro.Concesion
 {
