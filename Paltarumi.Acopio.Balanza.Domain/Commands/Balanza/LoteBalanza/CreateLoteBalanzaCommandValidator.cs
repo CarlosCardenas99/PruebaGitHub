@@ -8,9 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             RequiredInformation(x => x.CreateDto).DependentRules(() =>
             {
-                //RequiredString(x => x.CreateDto.Codigo, Resources.Balanza.LoteBalanza.Codigo, 4, 10);
-                //RequiredField(x => x.CreateDto.FechaIngreso, Resources.Balanza.LoteBalanza.FechaIngreso);
-                //RequiredField(x => x.CreateDto.HoraIngreso, Resources.Balanza.LoteBalanza.HoraIngreso);
+
             });
         }
     }

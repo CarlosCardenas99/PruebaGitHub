@@ -13,13 +13,13 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response listarUbigeo()
+        public Response<IEnumerable<DepartamentoDto>> listarUbigeo()
         {
             try
             {
                 var response = EntityGet<ResponseDto<IEnumerable<DepartamentoDto>>>("/ubigeos");
                 if (response.IsValid)
-                    return new Response(response.Data);
+                    return new Response<IEnumerable<DepartamentoDto>>(response.Data!);
                 else
                 {
                     string mensaje = null;
@@ -27,12 +27,12 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
                     {
                         mensaje += x.Message;
                     });
-                    return new Response(-1, mensaje);
+                    return new Response<IEnumerable<DepartamentoDto>>(-1, mensaje);
                 }
             }
             catch (Exception e)
             {
-                return new Response(-1, e.Message);
+                return new Response<IEnumerable<DepartamentoDto>>(-1, e.Message);
             }
         }
     }

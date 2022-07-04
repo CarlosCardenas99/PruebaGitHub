@@ -38,16 +38,16 @@ namespace Paltarumi.Acopio.Balanza.Client.Vehiculo
             }
         }
 
-        public Response listarVehiculo()
+        public Response<IEnumerable<GetVehiculoDto>> listarVehiculo()
         {
             try
             {
                 var lista = ListGet<GetVehiculoDto>(string.Empty);
-                return new Response(lista);
+                return new Response<IEnumerable<GetVehiculoDto>>(lista!);
             }
             catch (Exception e)
             {
-                return new Response(-99, e.Message);
+                return new Response<IEnumerable<GetVehiculoDto>>(-99, e.Message);
             }
         }
 

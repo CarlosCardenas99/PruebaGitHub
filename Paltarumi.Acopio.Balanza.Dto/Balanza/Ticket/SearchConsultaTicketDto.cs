@@ -6,9 +6,7 @@
         public string CodigoLote { get; set; } = null!;//lote
         public string Numero { get; set; } = null!;
         public DateTimeOffset? FechaIngreso { get; set; }
-        public string HoraIngreso { get; set; } = null!;
         public DateTimeOffset? FechaSalida { get; set; }
-        public string HoraSalida { get; set; } = null!;
         public string Concesion { get; set; } = null!;//concesion
         public string Proveedor { get; set; } = null!;//proveedor
         public string Grr { get; set; } = null!;

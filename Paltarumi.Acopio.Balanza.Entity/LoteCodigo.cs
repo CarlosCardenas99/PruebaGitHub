@@ -7,7 +7,6 @@
         public int? IdDuenoMuestra { get; set; }
         public int IdTipoLoteCodigo { get; set; }
         public DateTimeOffset FechaRecepcion { get; set; }
-        public string HoraRecepcion { get; set; } = null!;
         public string CodigoPlanta { get; set; } = null!;
         public string CodigoExterno { get; set; } = null!;
         public string CodigoHash { get; set; } = null!;

@@ -3,11 +3,8 @@
     public class CreateTicketDto //: TicketDto
     {
         public int IdLoteBalanza { get; set; }
-        //public string Numero { get; set; } = null!;
         public DateTimeOffset FechaIngreso { get; set; }
-        public string HoraIngreso { get; set; } = null!;
         public DateTimeOffset? FechaSalida { get; set; }
-        public string? HoraSalida { get; set; }
         public int IdEstadoTmh { get; set; }
         public float PesoBruto100 { get; set; }
         public float PesoBrutoBase { get; set; }

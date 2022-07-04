@@ -114,7 +114,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
                     IdTipoLoteCodigo = 1,
                     FechaRecepcion = DateTimeOffset.Now,
-                    HoraRecepcion = DateTimeOffset.Now.ToString("HH:mm"),
                     CodigoPlanta = loteBalanza.CodigoLote,
                     CodigoExterno = string.Empty,
                     CodigoHash = Convert.ToBase64String(bytes),

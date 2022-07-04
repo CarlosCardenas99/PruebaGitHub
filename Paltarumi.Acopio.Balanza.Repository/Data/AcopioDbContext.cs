@@ -844,12 +844,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.FechaRecepcion).HasColumnName("fechaRecepcion");
 
-                entity.Property(e => e.HoraRecepcion)
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasColumnName("horaRecepcion")
-                    .IsFixedLength();
-
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
                 entity.Property(e => e.IdEstado).HasColumnName("idEstado");

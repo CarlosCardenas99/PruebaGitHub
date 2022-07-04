@@ -6,7 +6,6 @@
         public int responseCode { get; set; }
         public string responseMessage { get; set; }
         public string responseSubMessage { get; set; }
-        public dynamic objectDynamic { get; set; }
 
         public Response()
         {
@@ -14,14 +13,6 @@
             this.responseCode = 0;
             this.responseMessage = string.Empty;
             this.responseSubMessage = string.Empty;
-        }
-        public Response(Object objeto)
-        {
-            this.responseTitle = string.Empty;
-            this.responseCode = 0;
-            this.responseMessage = string.Empty;
-            this.responseSubMessage = string.Empty;
-            this.objectDynamic = objeto;
         }
 
         public Response(string strResponseTitle)
@@ -35,13 +26,32 @@
         public Response(int responseCode, string responseMessage)
         {
             if (responseCode < 0)
-                this.responseTitle = "Sistema";
+                responseTitle = "Sistema";
             else
-                this.responseTitle = string.Empty;
+                responseTitle = string.Empty;
 
             this.responseCode = responseCode;
             this.responseMessage = responseMessage;
             this.responseSubMessage = string.Empty;
+        }
+    }
+
+    public class Response<T> : Response
+    {
+        public T Data { get; set; }
+
+        public Response(T data)
+        {
+            this.responseTitle = string.Empty;
+            this.responseCode = 0;
+            this.responseMessage = string.Empty;
+            this.responseSubMessage = string.Empty;
+            this.Data = data;
+        }
+
+        public Response(int responseCode, string responseMessage) : base(responseCode, responseMessage)
+        {
+            this.Data = default(T)!;
         }
     }
 }

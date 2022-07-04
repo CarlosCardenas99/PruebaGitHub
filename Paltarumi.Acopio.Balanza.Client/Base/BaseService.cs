@@ -63,7 +63,6 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
                 HttpClient http = GetHttpClient();
 
                 string a = JsonConvert.SerializeObject(paramt);
-
                 HttpResponseMessage response = http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", paramt).Result;
                 string resulstring = response.Content.ReadAsStringAsync().Result;
                 M? resultado = JsonConvert.DeserializeObject<M>(resulstring);
@@ -114,10 +113,10 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             }
         }
 
-        protected Response ResponseData<T>(ResponseDto<T> response)
+        protected Response<T> ResponseData<T>(ResponseDto<T> response)
         {
             if (response.IsValid)
-                return new Response(response.Data!);
+                return new Response<T>(response.Data!);
             else
             {
                 string? mensaje = null;
@@ -125,14 +124,14 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
                 {
                     mensaje += x.Message;
                 });
-                return new Response(-1, mensaje!);
+                return new Response<T>(-1, mensaje!);
             }
         }
 
         protected Response ResponseNoData(ResponseDto response)
         {
             if (response.IsValid)
-                return new Response(response);
+                return new Response();
             else
             {
                 string? mensaje = null;
@@ -144,10 +143,10 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             }
         }
 
-        protected Response ResponseSearchResult<T>(ResponseDto<SearchResultDto<T>> response)
+        protected Response<IEnumerable<T>> ResponseSearchResult<T>(ResponseDto<SearchResultDto<T>> response)
         {
             if (response.IsValid)
-                return new Response(response.Data?.Items!);
+                return new Response<IEnumerable<T>>(response.Data?.Items!);
             else
             {
                 string? mensaje = null;
@@ -155,7 +154,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
                 {
                     mensaje += x.Message;
                 });
-                return new Response(-1, mensaje!);
+                return new Response<IEnumerable<T>>(-1, mensaje!);
             }
         }
 
