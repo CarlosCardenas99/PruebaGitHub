@@ -13,28 +13,19 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         }
 
-        public Response get(int id)
-        {
-            var response = EntityGet<ResponseDto<GetLoteBalanzaDto>>($"/{id}");
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetLoteBalanzaDto>> Insert(CreateLoteBalanzaDto createDto)
+            => await Post<CreateLoteBalanzaDto, GetLoteBalanzaDto>(string.Empty, createDto)!;
 
-        public Response insert(CreateLoteBalanzaDto entity)
-        {
-            var response = EntityPost<CreateLoteBalanzaDto, ResponseDto<GetLoteBalanzaDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto)
+            => await Put<UpdateLoteBalanzaDto, GetLoteBalanzaDto>(string.Empty, updateDto)!;
 
-        public Response update(UpdateLoteBalanzaDto entity)
-        {
-            var response = EntityPut<UpdateLoteBalanzaDto, ResponseDto<GetLoteBalanzaDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response seleccionarLote(SearchParamsDto<SearchLoteBalanzaFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchLoteBalanzaFilterDto>, ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
+            => await Get<GetLoteBalanzaDto>($"/{id}")!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> filter)
+            => await Post<SearchParamsDto<SearchLoteBalanzaFilterDto>, SearchResultDto<SearchLoteBalanzaDto>>("/search", filter)!;
     }
 }

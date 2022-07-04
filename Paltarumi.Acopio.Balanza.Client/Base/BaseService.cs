@@ -12,150 +12,184 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
 
         public BaseService(ServiceOptions options)
         {
-            BaseUrl = options?.BaseUrl ?? String.Empty;
+            BaseUrl = options?.BaseUrl ?? string.Empty;
             Headers = options?.Headers ?? new Dictionary<string, string>();
         }
 
-        protected IEnumerable<T>? ListGet<T>(string resource = "")
-        {
-            HttpClient http = GetHttpClient();
-
-            string _json = http.GetStringAsync($"{BaseUrl}{ApiController}{resource}").Result;
-            IEnumerable<T>? resultado = JsonConvert.DeserializeObject<IEnumerable<T>>(_json!);
-            return resultado;
-        }
-
-        protected T? EntityGetNoResponse<T>(string resource = "") where T : class
+        protected async Task<ResponseDto>? Get(string resource = "")
         {
             try
             {
-                HttpClient http = GetHttpClient();
-                string _json = http.GetStringAsync($"{BaseUrl}{ApiController}{resource}").Result;
-                T? resultado = JsonConvert.DeserializeObject<T>(_json!);
-                return resultado;
-            }
-            catch (Exception)
-            {
-                return default(T);
-            }
-        }
-
-        protected T? EntityGet<T>(string resource = "") where T : ResponseDto, new()
-        {
-            try
-            {
-                HttpClient http = GetHttpClient();
-                string _json = http.GetStringAsync($"{BaseUrl}{ApiController}{resource}").Result;
-                T? resultado = JsonConvert.DeserializeObject<T>(_json);
-                return resultado;
+                return await GetEntity<ResponseDto>(resource)!;
             }
             catch (Exception ex)
             {
-                var response = GetErrorResult<T>(ex);
+                var response = GetErrorResult(ex);
                 return response;
             }
         }
 
-        protected M? EntityPost<T, M>(string resource = "", T? paramt = default) where M : ResponseDto, new()
+        protected async Task<ResponseDto<TResponse>>? Get<TResponse>(string resource = "")
         {
             try
             {
-                HttpClient http = GetHttpClient();
-
-                string a = JsonConvert.SerializeObject(paramt);
-                HttpResponseMessage response = http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", paramt).Result;
-                string resulstring = response.Content.ReadAsStringAsync().Result;
-                M? resultado = JsonConvert.DeserializeObject<M>(resulstring);
-                return resultado;
+                return await GetEntity<ResponseDto<TResponse>>(resource)!;
             }
             catch (Exception ex)
             {
-                var response = GetErrorResult<M>(ex);
+                var response = GetErrorResult<TResponse>(ex);
                 return response;
             }
         }
 
-        protected M? EntityPut<T, M>(string resource = "", T? paramt = default) where M : ResponseDto, new()
+        protected async Task<TResponse>? GetEntity<TResponse>(string resource = "")
+        {
+            var http = GetHttpClient();
+            var response = await http.GetStringAsync($"{BaseUrl}{ApiController}{resource}");
+            var resultado = JsonConvert.DeserializeObject<TResponse>(response!);
+            return resultado!;
+        }
+
+        protected async Task<ResponseDto>? Post<TRequest>(string resource = "", TRequest? body = default)
         {
             try
             {
-                HttpClient http = GetHttpClient();
-
-                string a = JsonConvert.SerializeObject(paramt);
-
-                HttpResponseMessage response = http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", paramt).Result;
-
-                string resultstring = response.Content.ReadAsStringAsync().Result;
-                M? resultado = JsonConvert.DeserializeObject<M>(resultstring);
-                return resultado;
+                return await PostEntity<TRequest, ResponseDto>(resource, body)!;
             }
             catch (Exception ex)
             {
-                var response = GetErrorResult<M>(ex);
+                var response = GetErrorResult(ex);
                 return response;
             }
         }
 
-        protected M? EntityDelete<M>(string resource = "") where M : ResponseDto, new()
+        protected async Task<ResponseDto<TResponse>>? Post<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
             try
             {
-                HttpClient http = GetHttpClient();
-                HttpResponseMessage response = http.DeleteAsync($"{BaseUrl}{ApiController}{resource}").Result;
-                string resulstring = response.Content.ReadAsStringAsync().Result;
-                M? resultado = JsonConvert.DeserializeObject<M>(resulstring);
-                return resultado;
+                return await PostEntity<TRequest, ResponseDto<TResponse>>(resource, body)!;
             }
             catch (Exception ex)
             {
-                var response = GetErrorResult<M>(ex);
-                return response as M;
+                var response = GetErrorResult<TResponse>(ex);
+                return response;
             }
         }
 
-        protected Response<T> ResponseData<T>(ResponseDto<T> response)
+        protected async Task<TResponse>? PostEntity<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
-            if (response.IsValid)
-                return new Response<T>(response.Data!);
-            else
+            var http = GetHttpClient();
+            var payload = JsonConvert.SerializeObject(body);
+            var response = await http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", payload);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            return resultado!;
+        }
+
+        protected async Task<ResponseDto>? Put<TRequest>(string resource = "", TRequest? body = default)
+        {
+            try
             {
-                string? mensaje = null;
-                response.Messages.ToList().ForEach(x =>
-                {
-                    mensaje += x.Message;
-                });
-                return new Response<T>(-1, mensaje!);
+                return await PutEntity<TRequest, ResponseDto>(resource, body)!;
+            }
+            catch (Exception ex)
+            {
+                var response = GetErrorResult(ex);
+                return response;
             }
         }
 
-        protected Response ResponseNoData(ResponseDto response)
+        protected async Task<ResponseDto<TResponse>>? Put<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
-            if (response.IsValid)
-                return new Response();
-            else
+            try
             {
-                string? mensaje = null;
-                response.Messages.ToList().ForEach(x =>
-                {
-                    mensaje += x.Message;
-                });
-                return new Response(-1, mensaje!);
+                return await PutEntity<TRequest, ResponseDto<TResponse>>(resource, body)!;
+            }
+            catch (Exception ex)
+            {
+                var response = GetErrorResult<TResponse>(ex);
+                return response;
             }
         }
 
-        protected Response<IEnumerable<T>> ResponseSearchResult<T>(ResponseDto<SearchResultDto<T>> response)
+        protected async Task<TResponse>? PutEntity<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
-            if (response.IsValid)
-                return new Response<IEnumerable<T>>(response.Data?.Items!);
-            else
+            var http = GetHttpClient();
+            var payload = JsonConvert.SerializeObject(body);
+            var response = await http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", payload);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            return resultado!;
+        }
+
+        protected async Task<ResponseDto>? Patch<TRequest>(string resource = "", HttpContent? body = default)
+        {
+            try
             {
-                string? mensaje = null;
-                response.Messages.ToList().ForEach(x =>
-                {
-                    mensaje += x.Message;
-                });
-                return new Response<IEnumerable<T>>(-1, mensaje!);
+                return await PatchEntity<TRequest, ResponseDto>(resource, body)!;
             }
+            catch (Exception ex)
+            {
+                var response = GetErrorResult(ex);
+                return response;
+            }
+        }
+
+        protected async Task<ResponseDto<TResponse>>? Patch<TRequest, TResponse>(string resource = "", HttpContent? body = default)
+        {
+            try
+            {
+                return await PatchEntity<TRequest, ResponseDto<TResponse>>(resource, body)!;
+            }
+            catch (Exception ex)
+            {
+                var response = GetErrorResult<TResponse>(ex);
+                return response;
+            }
+        }
+
+        protected async Task<TResponse>? PatchEntity<TRequest, TResponse>(string resource = "", HttpContent? body = default)
+        {
+            var http = GetHttpClient();
+            var response = await http.PatchAsync($"{BaseUrl}{ApiController}{resource}", body);
+            var responseString = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            return resultado!;
+        }
+
+        protected async Task<ResponseDto>? Delete(string resource = "")
+        {
+            try
+            {
+                return await DeleteEntity<ResponseDto>()!;
+            }
+            catch (Exception ex)
+            {
+                var response = GetErrorResult(ex);
+                return response;
+            }
+        }
+
+        protected async Task<ResponseDto<TResponse>>? Delete<TResponse>(string resource = "")
+        {
+            try
+            {
+                return await DeleteEntity<ResponseDto<TResponse>>()!;
+            }
+            catch (Exception ex)
+            {
+                var response = GetErrorResult<TResponse>(ex);
+                return response;
+            }
+        }
+
+        protected async Task<TResponse>? DeleteEntity<TResponse>(string resource = "")
+        {
+            var http = GetHttpClient();
+            var response = await http.DeleteAsync($"{BaseUrl}{ApiController}{resource}");
+            var responseString = await response.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            return resultado!;
         }
 
         private HttpClient GetHttpClient()
@@ -173,20 +207,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             return httpClient;
         }
 
-        private static T GetErrorResult<T>(Exception ex) where T : ResponseDto, new()
+        private ResponseDto GetErrorResult(Exception ex)
+            => new ResponseDto { Messages = GetMessages(ex) };
+
+        private ResponseDto<T> GetErrorResult<T>(Exception ex)
+            => new ResponseDto<T> { Messages = GetMessages(ex) };
+
+        private List<ApplicationMessageDto> GetMessages(Exception ex)
         {
-            var response = new T();
-            var messages = new List<ApplicationMessageDto>();
-
-            messages.Add(new ApplicationMessageDto
+            return new List<ApplicationMessageDto>
             {
-                Message = ex.Message.Contains("connection attempt failed") ? "Error de conexión" : $"{ex.Message}{Environment.NewLine}{ex.StackTrace}",
-                MessageType = ApplicationMessageType.Error
-            });
-
-            response.Messages = messages;
-
-            return response;
+                new ApplicationMessageDto
+                {
+                    Message = ex.Message.Contains("connection attempt failed") ? "Error de conexión" : $"{ex.Message}{Environment.NewLine}{ex.StackTrace}",
+                    MessageType = ApplicationMessageType.Error
+                }
+            };
         }
     }
 }

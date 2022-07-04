@@ -13,35 +13,25 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         }
 
-        public Response get(int id)
-        {
-            var response = EntityGet<ResponseDto<GetTicketDto>>($"/{id}");
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetTicketDto>> Insert(CreateTicketDto createDto)
+            => await Post<CreateTicketDto, GetTicketDto>(string.Empty, createDto)!;
 
-        public Response list(int idLote)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<IEnumerable<ListTicketDto>>>($"/list/{idLote}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto<GetTicketDto>> Update(UpdateTicketDto updateDto)
+            => await Put<UpdateTicketDto, GetTicketDto>(string.Empty, updateDto)!;
 
-        public Response listarTicket(SearchParamsDto<SearchTicketFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchTicketFilterDto>, ResponseDto<SearchResultDto<SearchTicketDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response SearchTicket(SearchParamsDto<SearchConsultaTicketFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchConsultaTicketFilterDto>, ResponseDto<SearchResultDto<SearchConsultaTicketDto>>>("/searchby", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto<GetTicketDto>> Get(int id)
+            => await Get<GetTicketDto>($"/{id}")!;
+
+        public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLote)
+            => await Get<IEnumerable<ListTicketDto>>($"/list/{idLote}")!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchTicketDto>>> Search(SearchParamsDto<SearchTicketFilterDto> filter)
+            => await Post<SearchParamsDto<SearchTicketFilterDto>, SearchResultDto<SearchTicketDto>>("/search", filter)!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchConsultaTicketDto>>> SearchTicket(SearchParamsDto<SearchConsultaTicketFilterDto> filter)
+            => await Post<SearchParamsDto<SearchConsultaTicketFilterDto>, SearchResultDto<SearchConsultaTicketDto>>("/searchby", filter)!;
     }
 }

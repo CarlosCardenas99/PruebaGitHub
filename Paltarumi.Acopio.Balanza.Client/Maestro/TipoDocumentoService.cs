@@ -13,28 +13,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response<IEnumerable<ListTipoDocumentoDto>> listarCombo()
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<IEnumerable<ListTipoDocumentoDto>>>("/list");
-
-                if (response.IsValid)
-                    return new Response<IEnumerable<ListTipoDocumentoDto>>(response.Data);
-                else
-                {
-                    string mensaje = null;
-                    response.Messages.ToList().ForEach(x =>
-                    {
-                        mensaje += x.Message;
-                    });
-                    return new Response<IEnumerable<ListTipoDocumentoDto>>(-1, mensaje);
-                }
-            }
-            catch (Exception e)
-            {
-                return new Response<IEnumerable<ListTipoDocumentoDto>>(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto<IEnumerable<ListTipoDocumentoDto>>> ListarCombo()
+            => await Get<IEnumerable<ListTipoDocumentoDto>>("/list")!;
     }
 }

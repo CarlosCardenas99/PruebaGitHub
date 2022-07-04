@@ -13,40 +13,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response obtenerDuenoMuestraPorRuc(GetDuenoMuestraByDocumentFilterDto filter)
-        {
-            var response = EntityPost<GetDuenoMuestraByDocumentFilterDto, ResponseDto<GetDuenoMuestraDto>>("/findbydocument", filter);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetDuenoMuestraDto>> Insert(CreateDuenoMuestraDto createDto)
+            => await Post<CreateDuenoMuestraDto, GetDuenoMuestraDto>(string.Empty, createDto)!;
 
-        public Response get(int id)
-        {
-            var response = EntityGet<ResponseDto<GetDuenoMuestraDto>>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetDuenoMuestraDto>> Update(UpdateDuenoMuestraDto updateDto)
+            => await Put<UpdateDuenoMuestraDto, GetDuenoMuestraDto>(string.Empty, updateDto)!;
 
-        public Response search(SearchParamsDto<SearchDuenoMuestraFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchDuenoMuestraFilterDto>, ResponseDto<SearchResultDto<SearchDuenoMuestraFilterDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response insert(CreateDuenoMuestraDto createDto)
-        {
-            var response = EntityPost<CreateDuenoMuestraDto, ResponseDto<GetDuenoMuestraDto>>(string.Empty, createDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetDuenoMuestraDto>> Get(int id)
+            => await Get<GetDuenoMuestraDto>($"/{id}")!;
 
-        public Response update(UpdateDuenoMuestraDto updateDto)
-        {
-            var response = EntityPost<UpdateDuenoMuestraDto, ResponseDto<GetDuenoMuestraDto>>(string.Empty, updateDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<SearchResultDto<SearchDuenoMuestraDto>>> Search(SearchParamsDto<SearchDuenoMuestraFilterDto> filter)
+            => await Post<SearchParamsDto<SearchDuenoMuestraFilterDto>, SearchResultDto<SearchDuenoMuestraDto>>("/search", filter)!;
 
-        public Response delete(int id)
-        {
-            var response = EntityDelete<ResponseDto>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetDuenoMuestraDto>> ObtenerDuenoMuestraPorRuc(GetDuenoMuestraByDocumentFilterDto filter)
+            => await Post<GetDuenoMuestraByDocumentFilterDto, GetDuenoMuestraDto>("/findbydocument", filter)!;
     }
 }

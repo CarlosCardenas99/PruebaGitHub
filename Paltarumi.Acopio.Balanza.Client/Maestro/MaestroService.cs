@@ -13,10 +13,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response seleccionarItemsMaestro(string filter)
-        {
-            var response = EntityGet<ResponseDto<IEnumerable<ListMaestroDto>>>($"/list/{filter}");
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<IEnumerable<ListMaestroDto>>> seleccionarItemsMaestro(string filter)
+            => await Get<IEnumerable<ListMaestroDto>>($"/list/{filter}")!;
     }
 }

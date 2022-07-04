@@ -13,40 +13,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response get(int id)
-        {
-            var response = EntityGet<ResponseDto<GetConcesionDto>>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetConcesionDto>> Insert(CreateConcesionDto createDto)
+            => await Post<CreateConcesionDto, GetConcesionDto>(string.Empty, createDto)!;
 
-        public Response search(SearchParamsDto<SearchConcesionFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchConcesionFilterDto>, ResponseDto<SearchResultDto<SearchConcesionDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto<GetConcesionDto>> Update(UpdateConcesionDto updateDto)
+            => await Put<UpdateConcesionDto, GetConcesionDto>(string.Empty, updateDto)!;
 
-        public Response insert(CreateConcesionDto createDto)
-        {
-            var response = EntityPost<CreateConcesionDto, ResponseDto<GetConcesionDto>>(string.Empty, createDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response update(UpdateConcesionDto updateDto)
-        {
-            var response = EntityPost<UpdateConcesionDto, ResponseDto<GetConcesionDto>>(string.Empty, updateDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetConcesionDto>> Get(int id)
+            => await Get<GetConcesionDto>($"/{id}")!;
 
-        public Response delete(int id)
-        {
-            var response = EntityDelete<ResponseDto>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Search(SearchParamsDto<SearchConcesionFilterDto> filter)
+            => await Post<SearchParamsDto<SearchConcesionFilterDto>, SearchResultDto<SearchConcesionDto>>("/search", filter)!;
 
-        public Response select(SearchParamsDto<SearchConcesionFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchConcesionFilterDto>, ResponseDto<SearchResultDto<SearchConcesionDto>>>("/select", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto<SearchResultDto<SearchConcesionDto>>> Select(SearchParamsDto<SearchConcesionFilterDto> filter)
+            => await Post<SearchParamsDto<SearchConcesionFilterDto>, SearchResultDto<SearchConcesionDto>>("/select", filter)!;
     }
 }

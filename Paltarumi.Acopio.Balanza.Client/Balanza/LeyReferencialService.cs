@@ -13,34 +13,19 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         }
 
-        public Response get(int id)
-        {
-            var response = EntityGet<ResponseDto<GetLeyReferencialDto>>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetLeyReferencialDto>> Insert(CreateLeyReferencialDto createDto)
+            => await Post<CreateLeyReferencialDto, GetLeyReferencialDto>(string.Empty, createDto)!;
 
-        public Response listarLeyReferencial(SearchParamsDto<SearchLeyReferencialFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchLeyReferencialFilterDto>, ResponseDto<SearchResultDto<SearchLeyReferencialDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto<GetLeyReferencialDto>> update(UpdateLeyReferencialDto updateDto)
+            => await Put<UpdateLeyReferencialDto, GetLeyReferencialDto>(string.Empty, updateDto)!;
 
-        public Response insert(CreateLeyReferencialDto createDto)
-        {
-            var response = EntityPost<CreateLeyReferencialDto, ResponseDto<GetLeyReferencialDto>>(string.Empty, createDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response update(UpdateLeyReferencialDto updateDto)
-        {
-            var response = EntityPut<UpdateLeyReferencialDto, ResponseDto<GetLeyReferencialDto>>(string.Empty, updateDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetLeyReferencialDto>> Get(int id)
+            => await Get<GetLeyReferencialDto>($"/{id}")!;
 
-        public Response delete(int id)
-        {
-            var response = EntityDelete<ResponseDto>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<SearchResultDto<SearchLeyReferencialDto>>> Search(SearchParamsDto<SearchLeyReferencialFilterDto> filter)
+            => await Post<SearchParamsDto<SearchLeyReferencialFilterDto>, SearchResultDto<SearchLeyReferencialDto>>("/search", filter)!;
     }
 }

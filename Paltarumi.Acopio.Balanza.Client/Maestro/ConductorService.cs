@@ -13,35 +13,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response insert(CreateConductorDto entity)
-        {
-            var response = EntityPost<CreateConductorDto, ResponseDto<GetConductorDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetConductorDto>> Insert(CreateConductorDto createDto)
+            => await Post<CreateConductorDto, GetConductorDto>(string.Empty, createDto)!;
 
-        public Response update(UpdateConductorDto entity)
-        {
-            var response = EntityPut<UpdateConductorDto, ResponseDto<GetConductorDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetConductorDto>> Update(UpdateConductorDto updateDto)
+            => await Put<UpdateConductorDto, GetConductorDto>(string.Empty, updateDto)!;
 
-        public Response getConductor(int id)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<GetConductorDto>>($"/{id}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response getByDocument(GetConductorByDocumentFilterDto filter)
-        {
-            var response = EntityPost<GetConductorByDocumentFilterDto, ResponseDto<GetConductorDto>>("/findbydocument", filter);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetConductorDto>> Get(int id)
+            => await Get<GetConductorDto>($"/{id}")!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchConductorDto>>> Search(SearchParamsDto<SearchConductorFilterDto> filter)
+            => await Post<SearchParamsDto<SearchConductorFilterDto>, SearchResultDto<SearchConductorDto>>("/search", filter)!;
+
+        public async Task<ResponseDto<GetConductorDto>> GetByDocument(GetConductorByDocumentFilterDto filter)
+            => await Post<GetConductorByDocumentFilterDto, GetConductorDto>("/findbydocument", filter)!;
     }
 }

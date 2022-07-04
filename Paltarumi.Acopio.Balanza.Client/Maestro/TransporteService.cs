@@ -13,41 +13,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response insert(CreateTransporteDto entity)
-        {
-            var response = EntityPost<CreateTransporteDto, ResponseDto<GetTransporteDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
-        public Response update(UpdateTransporteDto entity)
-        {
-            var response = EntityPut<UpdateTransporteDto, ResponseDto<GetTransporteDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetTransporteDto>> Insert(CreateTransporteDto createDto)
+            => await Post<CreateTransporteDto, GetTransporteDto>(string.Empty, createDto)!;
 
-        public Response obtenerTransporte(int id)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<GetTransporteDto>>($"/{id}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto<GetTransporteDto>> Update(UpdateTransporteDto updateDto)
+            => await Put<UpdateTransporteDto, GetTransporteDto>(string.Empty, updateDto)!;
 
-        public Response obtenerTransportePorRuc(string ruc)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<GetTransporteDto>>($"/ruc/{ruc}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
+
+        public async Task<ResponseDto<GetTransporteDto>> Get(int id)
+            => await Get<GetTransporteDto>($"/{id}")!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchTransporteDto>>> Search(SearchParamsDto<SearchTransporteFilterDto> filter)
+            => await Post<SearchParamsDto<SearchTransporteFilterDto>, SearchResultDto<SearchTransporteDto>>("/search", filter)!;
+
+        public async Task<ResponseDto<GetTransporteDto>> ObtenerTransportePorRuc(string ruc)
+            => await Get<GetTransporteDto>($"/ruc/{ruc}")!;
     }
 }

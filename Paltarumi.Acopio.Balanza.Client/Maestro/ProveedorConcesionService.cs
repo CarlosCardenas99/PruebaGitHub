@@ -13,30 +13,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response insert(CreateProveedorConcesionDto createDto)
-        {
-            try
-            {
-                var response = EntityPost<CreateProveedorConcesionDto, ResponseDto<GetProveedorConcesionDto>>(string.Empty, createDto);
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-99, e.Message);
-            }
-        }
+        public async Task<ResponseDto<GetProveedorConcesionDto>> Insert(CreateProveedorConcesionDto createDto)
+            => await Post<CreateProveedorConcesionDto, GetProveedorConcesionDto>(string.Empty, createDto)!;
 
-        public Response listarProveedorConcesionCombo(int idProveedor)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<IEnumerable<ListProveedorConcesionDto>>>($"/list/{idProveedor}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto<GetProveedorConcesionDto>> Update(UpdateProveedorConcesionDto updateDto)
+            => await Put<UpdateProveedorConcesionDto, GetProveedorConcesionDto>(string.Empty, updateDto)!;
+
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
+
+        public async Task<ResponseDto<GetProveedorConcesionDto>> Get(int id)
+            => await Get<GetProveedorConcesionDto>($"/{id}")!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchProveedorConcesionDto>>> Search(SearchParamsDto<SearchProveedorConcesionFilterDto> filter)
+            => await Post<SearchParamsDto<SearchProveedorConcesionFilterDto>, SearchResultDto<SearchProveedorConcesionDto>>("/search", filter)!;
+
+        public async Task<ResponseDto<IEnumerable<ListProveedorConcesionDto>>> ListarProveedorConcesionCombo(int idProveedor)
+            => await Get<IEnumerable<ListProveedorConcesionDto>>($"/list/{idProveedor}")!;
     }
 }

@@ -13,55 +13,25 @@ namespace Paltarumi.Acopio.Balanza.Client.Vehiculo
 
         }
 
-        public Response insert(CreateVehiculoDto entity)
-        {
-            var response = EntityPost<CreateVehiculoDto, ResponseDto<GetVehiculoDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetVehiculoDto>> Insert(CreateVehiculoDto createDto)
+            => await Post<CreateVehiculoDto, GetVehiculoDto>(string.Empty, createDto)!;
 
-        public Response update(UpdateVehiculoDto entity)
-        {
-            var response = EntityPut<UpdateVehiculoDto, ResponseDto<GetVehiculoDto>>(string.Empty, entity);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetVehiculoDto>> Update(UpdateVehiculoDto updateDto)
+            => await Put<UpdateVehiculoDto, GetVehiculoDto>(string.Empty, updateDto)!;
 
-        public Response getByPlaca(string placa)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<GetVehiculoDto>>($"/findbyplaca/{placa}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-1, e.Message);
-            }
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response<IEnumerable<GetVehiculoDto>> listarVehiculo()
-        {
-            try
-            {
-                var lista = ListGet<GetVehiculoDto>(string.Empty);
-                return new Response<IEnumerable<GetVehiculoDto>>(lista!);
-            }
-            catch (Exception e)
-            {
-                return new Response<IEnumerable<GetVehiculoDto>>(-99, e.Message);
-            }
-        }
+        public async Task<ResponseDto<GetVehiculoDto>> Get(int id)
+            => await Get<GetVehiculoDto>($"/{id}")!;
 
-        public Response obtenerVehiculo(int id)
-        {
-            try
-            {
-                var response = EntityGet<ResponseDto<GetVehiculoDto>>($"/{id}");
-                return ResponseData(response);
-            }
-            catch (Exception e)
-            {
-                return new Response(-99, e.Message);
-            }
-        }
+        public async Task<ResponseDto<IEnumerable<GetVehiculoDto>>> List()
+            => await Get<IEnumerable<GetVehiculoDto>>($"/list")!;
+
+        public async Task<ResponseDto<SearchResultDto<SearchVehiculoDto>>> Search(SearchParamsDto<SearchVehiculoFilterDto> filter)
+            => await Post<SearchParamsDto<SearchVehiculoFilterDto>, SearchResultDto<SearchVehiculoDto>>("/search", filter)!;
+
+        public async Task<ResponseDto<GetVehiculoDto>> GetByPlaca(string placa)
+            => await Get<GetVehiculoDto>($"/findbyplaca/{placa}")!;
     }
 }

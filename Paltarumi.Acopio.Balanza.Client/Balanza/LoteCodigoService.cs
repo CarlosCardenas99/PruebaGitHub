@@ -14,40 +14,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         }
 
-        public Response obtenerProveedorPorRuc(string ruc)
-        {
-            var response = EntityGet<ResponseDto<GetProveedorDto>>($"/ruc/{ruc}");
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetLoteCodigoDto>> Insert(CreateLoteCodigoDto createDto)
+            => await Post<CreateLoteCodigoDto, GetLoteCodigoDto>(string.Empty, createDto)!;
 
-        public Response get(int id)
-        {
-            var response = EntityGet<ResponseDto<GetLoteCodigoDto>>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetLoteCodigoDto>> Update(UpdateLoteCodigoDto updateDto)
+            => await Put<UpdateLoteCodigoDto, GetLoteCodigoDto>(string.Empty, updateDto)!;
 
-        public Response listarLoteCodigo(SearchParamsDto<SearchLoteCodigoFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchLoteCodigoFilterDto>, ResponseDto<SearchResultDto<SearchLoteCodigoDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response insert(CreateLoteCodigoDto createDto)
-        {
-            var response = EntityPost<CreateLoteCodigoDto, ResponseDto<GetLoteCodigoDto>>(string.Empty, createDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetLoteCodigoDto>> Get(int id)
+            => await Get<GetLoteCodigoDto>($"/{id}")!;
 
-        public Response update(UpdateLoteCodigoDto updateDto)
-        {
-            var response = EntityPut<UpdateLoteCodigoDto, ResponseDto<GetLoteCodigoDto>>(string.Empty, updateDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<SearchLoteCodigoFilterDto> filter)
+            => await Post<SearchParamsDto<SearchLoteCodigoFilterDto>, SearchResultDto<SearchLoteCodigoDto>>("/search", filter)!;
 
-        public Response delete(int id)
-        {
-            var response = EntityDelete<ResponseDto>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetProveedorDto>> ObtenerProveedorPorRuc(string ruc)
+            => await Get<GetProveedorDto>($"/ruc/{ruc}")!;
     }
 }

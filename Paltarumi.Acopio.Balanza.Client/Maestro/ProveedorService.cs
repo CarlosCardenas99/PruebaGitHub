@@ -13,40 +13,22 @@ namespace Paltarumi.Acopio.Balanza.Client.Maestro
 
         }
 
-        public Response obtenerProveedorPorRuc(string ruc)
-        {
-            var response = EntityGet<ResponseDto<GetProveedorDto>>($"/ruc/{ruc}");
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetProveedorDto>> Insert(CreateProveedorDto createDto)
+            => await Post<CreateProveedorDto, GetProveedorDto>(string.Empty, createDto)!;
 
-        public Response get(int id)
-        {
-            ResponseDto response = EntityGet<ResponseDto<GetProveedorDto>>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetProveedorDto>> Update(UpdateProveedorDto updateDto)
+            => await Put<UpdateProveedorDto, GetProveedorDto>(string.Empty, updateDto)!;
 
-        public Response search(SearchParamsDto<SearchProveedorFilterDto> filter)
-        {
-            var response = EntityPost<SearchParamsDto<SearchProveedorFilterDto>, ResponseDto<SearchResultDto<SearchProveedorDto>>>("/search", filter);
-            return ResponseSearchResult(response);
-        }
+        public async Task<ResponseDto> Delete(int id)
+            => await Delete($"/{id}")!;
 
-        public Response insert(CreateProveedorDto createDto)
-        {
-            var response = EntityPost<CreateProveedorDto, ResponseDto<GetProveedorDto>>(string.Empty, createDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<GetProveedorDto>> Get(int id)
+            => await Get<GetProveedorDto>($"/{id}")!;
 
-        public Response update(UpdateProveedorDto updateDto)
-        {
-            var response = EntityPost<UpdateProveedorDto, ResponseDto<GetProveedorDto>>(string.Empty, updateDto);
-            return ResponseData(response);
-        }
+        public async Task<ResponseDto<SearchResultDto<SearchProveedorDto>>> Search(SearchParamsDto<SearchProveedorFilterDto> filter)
+            => await Post<SearchParamsDto<SearchProveedorFilterDto>, SearchResultDto<SearchProveedorDto>>("/search", filter)!;
 
-        public Response delete(int id)
-        {
-            var response = EntityDelete<ResponseDto>($"/{id}");
-            return ResponseNoData(response);
-        }
+        public async Task<ResponseDto<GetProveedorDto>> ObtenerProveedorPorRuc(string ruc)
+            => await Get<GetProveedorDto>($"/ruc/{ruc}")!;
     }
 }
