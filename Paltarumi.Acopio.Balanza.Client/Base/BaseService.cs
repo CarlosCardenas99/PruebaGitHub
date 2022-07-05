@@ -45,8 +45,10 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
         protected async Task<TResponse>? GetEntity<TResponse>(string resource = "")
         {
             var http = GetHttpClient();
-            var response = await http.GetStringAsync($"{BaseUrl}{ApiController}{resource}");
-            var resultado = JsonConvert.DeserializeObject<TResponse>(response!);
+            var response = await http.GetAsync($"{BaseUrl}{ApiController}{resource}");
+            var responseString = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
             return resultado!;
         }
 
@@ -82,6 +84,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var payload = JsonConvert.SerializeObject(body);
             var response = await http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", payload);
             var responseString = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
             var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
             return resultado!;
         }
@@ -118,6 +121,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var payload = JsonConvert.SerializeObject(body);
             var response = await http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", payload);
             var responseString = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
             var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
             return resultado!;
         }
@@ -153,6 +157,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var http = GetHttpClient();
             var response = await http.PatchAsync($"{BaseUrl}{ApiController}{resource}", body);
             var responseString = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
             var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
             return resultado!;
         }
@@ -188,6 +193,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var http = GetHttpClient();
             var response = await http.DeleteAsync($"{BaseUrl}{ApiController}{resource}");
             var responseString = await response.Content.ReadAsStringAsync();
+            if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
             var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
             return resultado!;
         }
