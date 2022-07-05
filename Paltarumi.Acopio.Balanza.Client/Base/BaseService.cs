@@ -81,8 +81,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
         protected async Task<TResponse>? PostEntity<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
             var http = GetHttpClient();
-            var payload = JsonConvert.SerializeObject(body);
-            var response = await http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", payload);
+            var response = await http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", body);
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
             var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
@@ -118,8 +117,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
         protected async Task<TResponse>? PutEntity<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
             var http = GetHttpClient();
-            var payload = JsonConvert.SerializeObject(body);
-            var response = await http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", payload);
+            var response = await http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", body);
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
             var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
