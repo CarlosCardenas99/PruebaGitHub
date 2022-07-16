@@ -12,13 +12,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
     public class SearchConsultaTicketQueryHandler : SearchQueryHandlerBase<SearchConsultaTicketQuery, SearchConsultaTicketFilterDto, SearchConsultaTicketDto>
     {
         private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
 
         public SearchConsultaTicketQueryHandler(
             IMapper mapper,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entity.Ticket> ticketRepository,
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
         ) : base(mapper)
         {
             _ticketRepository = ticketRepository;
+            _loteMuestreoRepository = loteMuestreoRepository;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchConsultaTicketDto>>> HandleQuery(SearchConsultaTicketQuery request, CancellationToken cancellationToken)
@@ -123,8 +126,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
                 x => x.IdLoteBalanzaNavigation.IdConcesionNavigation
             );
+            var placas =tickets;
 
             var ticketDtos = _mapper?.Map<IEnumerable<SearchConsultaTicketDto>>(tickets.Items);
+
+            var codigoLotes = ticketDtos?.Select(x => x.CodigoLote) ?? new List<string>();
+            var loteMuestreos = await _loteMuestreoRepository.FindByAsNoTrackingAsync(x => codigoLotes.Contains(x.CodigoLote));
+
+            if (ticketDtos != null)
+                ticketDtos.ToList().ForEach(item =>
+                {
+                    var loteMuestreo = loteMuestreos.Where(x => x.CodigoLote.Equals(item.CodigoLote)).FirstOrDefault(new Entity.LoteMuestreo());
+                    item.PorcentajeHumedad = loteMuestreo?.Humedad ?? 0;
+                });
 
             var searchResult = new SearchResultDto<SearchConsultaTicketDto>(
                 ticketDtos ?? new List<SearchConsultaTicketDto>(),
