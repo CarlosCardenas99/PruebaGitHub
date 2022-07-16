@@ -40,7 +40,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
             foreach (var item in listOperaciones)
             {
                 request.CreateDto.IdOperacion = item.IdOperacion;
-                request.CreateDto.Status = "";
+                request.CreateDto.Status = Constants.Operaciones.Status.PENDIENTE;
                 request.CreateDto.CreateDate = DateTimeOffset.Now;
                 request.CreateDto.Attempts = 0;
                 request.CreateDto.Body = "";

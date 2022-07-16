@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Balanza.Application.Base;
 using Paltarumi.Acopio.Balanza.Common;
@@ -32,17 +33,16 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
             createDto.CodigoLote = respuestaLote.Data?.CodigoLote;
             var respuestaLoteBalanza = await _mediator.Send(new CreateLoteBalanzaCommand(createDto));
 
-
             UpdateLoteOperacionDto updateLoteOperacion = new UpdateLoteOperacionDto();
             updateLoteOperacion.IdLote = respuestaLote.Data == null ? 0 : respuestaLote.Data.IdLote;
             updateLoteOperacion.IdModulo = Constants.Operaciones.Modulo.BALANZA;
             updateLoteOperacion.Codigo = Constants.Operaciones.CrudOpeacion.CREATE;
-
+            updateLoteOperacion.Body = JsonConvert.SerializeObject(createDto);
             if (respuestaLoteBalanza.IsValid && updateLoteOperacion.IdLote != 0)
                 updateLoteOperacion.Status = Constants.Operaciones.Status.CORRECTO;
             else
                 updateLoteOperacion.Status = Constants.Operaciones.Status.ERROR;
-            await _mediator.Send(new UpdateLoteOperacionCommand(updateLoteOperacion));
+            var respuestaUpdateLoteOperacion = await _mediator.Send(new UpdateLoteOperacionCommand(updateLoteOperacion));
 
             return respuestaLoteBalanza;
         }
