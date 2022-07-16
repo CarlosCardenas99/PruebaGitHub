@@ -32,5 +32,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
 		public int IdUnidadMedida { get; set; }
 		public int CantidadUnidadMedida { get; set; }
 		public string? Observacion { get; set; }
+
     }
 }

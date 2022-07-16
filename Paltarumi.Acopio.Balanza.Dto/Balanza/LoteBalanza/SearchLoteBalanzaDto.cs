@@ -14,8 +14,8 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public string? NombreProveedor { get; set; }
         public string? NombreEstadoTipoMaterial { get; set; }
         public float Tmh { get; set; }
-        public float Humedad { get; set; }
-        public float Tms { get; set; }
+        public float? Humedad { get; set; }
+        public float? Tms { get; set; }
         public string NumeroTickets { get; set; } = null!;
     }
 }
