@@ -14,10 +14,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
         public UpdateLoteOperacionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            UpdateLoteOperacionCommandValidator validator,
             IRepository<Entity.LoteOperacion> loteoperacionRepository,
             IRepository<Entity.Operacion> operacionRepository
-        ) : base(unitOfWork, mapper, validator)
+        ) : base(unitOfWork, mapper)
         {
             _loteoperacionRepository = loteoperacionRepository;
             _operacionRepository = operacionRepository;
@@ -28,12 +27,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
             var operacion = await _operacionRepository.GetByAsync(x => x.IdModulo == request.UpdateDto.IdModulo && x.Codigo.Equals(request.UpdateDto.Codigo));
 
             var response = new ResponseDto<GetLoteOperacionDto>();
-            var loteoperacion = await _loteoperacionRepository.GetByAsync(x => x.IdOperacion == operacion.IdOperacion);
+            var loteoperacion = await _loteoperacionRepository.GetByAsync(x => x.IdOperacion == operacion.IdOperacion && x.IdLote == request.UpdateDto.IdLote);
 
             if (loteoperacion != null)
             {
-                _mapper?.Map(request.UpdateDto, loteoperacion);
+                loteoperacion.Status = request.UpdateDto.Status;
+                loteoperacion.Body = request.UpdateDto.Body;
                 await _loteoperacionRepository.UpdateAsync(loteoperacion);
+                await _loteoperacionRepository.SaveAsync();
             }
 
             var loteoperacionDto = _mapper?.Map<GetLoteOperacionDto>(loteoperacion);
