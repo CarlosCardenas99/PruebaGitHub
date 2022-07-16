@@ -2,6 +2,25 @@
 {
     public class Constants
     {
+        public class Operaciones
+        {
+            public struct Status
+            {
+                public const string CORRECTO = "S";
+                public const string ERROR = "E";
+                public const string PENDIENTE = "P";
+            }
+            public struct Modulo
+            {
+                public const int BALANZA = 1;
+            }
+
+            public struct CrudOpeacion
+            {
+                public const string? CREATE = "CREATE";
+            }
+        }
+
         public struct Security
         {
             public struct User

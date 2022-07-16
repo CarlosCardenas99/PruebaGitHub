@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Common;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
+using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Dto.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
@@ -74,12 +76,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             if (loteBalanza != null && _mediator != null)
             {
-                // Actualizar la serie harcoded
-                var codeResponse = await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1"));
-                var code = codeResponse?.Data ?? string.Empty;
-
-                loteBalanza.CodigoLote = code;
-
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
 
                 foreach (var ticket in loteBalanza.Tickets)
@@ -99,6 +95,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateCantidadSacos();
                 loteBalanza.UpdateFechaIngreso();
                 loteBalanza.UpdateFechaAcopio();
+                loteBalanza.UserNameCreate = "";
+                
                 if (estadoLote != null) loteBalanza.IdEstado = estadoLote.IdMaestro;
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);

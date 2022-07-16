@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Balanza.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class CorrelativoTipo
     {
