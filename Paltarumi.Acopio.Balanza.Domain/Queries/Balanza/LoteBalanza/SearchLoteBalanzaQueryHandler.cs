@@ -92,9 +92,21 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdEstadoNavigation
             );
 
-
-            var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);
+            if (lotes.Items != null)
+                lotes.Items.ToList().ForEach(item =>
+                {
+                    var loteMuestreo = item != null?  _loteMuestreoRepository
+                .GetByAsNoTrackingAsync(
+                    x => x.CodigoLote == item.CodigoLote
+                ) : null;
+                    //loteDto.Humedad = loteMuestreo?.Humedad;
+                    //loteDto.Tms = loteMuestreo?.Tms;
+                });
             
+            var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);
+
+            
+
             var searchResult = new SearchResultDto<SearchLoteBalanzaDto>(
                 loteDtos ?? new List<SearchLoteBalanzaDto>(),
                 lotes.Total,
