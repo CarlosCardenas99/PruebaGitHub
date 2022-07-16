@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.Ticket;
+﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Maestro.Dto.Concesion;
 using Paltarumi.Acopio.Maestro.Dto.Maestro;
 using Paltarumi.Acopio.Maestro.Dto.Proveedor;

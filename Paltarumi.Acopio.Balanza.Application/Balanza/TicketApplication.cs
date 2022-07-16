@@ -3,7 +3,7 @@ using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Balanza.Application.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Dto.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Application.Balanza

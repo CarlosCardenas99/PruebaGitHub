@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
-using Paltarumi.Acopio.Balanza.Dto.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza

@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Paltarumi.Acopio.Balanza.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Repository.Data

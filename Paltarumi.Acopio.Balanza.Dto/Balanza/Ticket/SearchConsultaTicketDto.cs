@@ -1,4 +1,4 @@
-﻿namespace Paltarumi.Acopio.Balanza.Dto.Ticket
+﻿namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
 {
     public class SearchConsultaTicketDto
     {

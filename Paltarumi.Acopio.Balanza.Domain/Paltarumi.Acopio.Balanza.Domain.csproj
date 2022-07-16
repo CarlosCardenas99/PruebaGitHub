@@ -35,6 +35,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Acopio\LoteOperacion.Designer.cs">
+      <DependentUpon>LoteOperacion.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Resources\Balanza\LoteCheckList.Designer.cs">
       <DependentUpon>LoteCheckList.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -138,6 +143,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Acopio\LoteOperacion.resx">
+      <LastGenOutput>LoteOperacion.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\LoteCheckList.resx">
       <LastGenOutput>LoteCheckList.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>

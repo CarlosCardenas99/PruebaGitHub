@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.Ticket;
+﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 
 namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
 {
@@ -8,8 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public int? IdProveedor { get; set; }
         public int? IdEstadoTipoMaterial { get; set; }
         public string? Observacion { get; set; }
-        public int? IdUsuarioCreate { get; set; }
-        public DateTimeOffset? CreateDate { get; set; }
         public IEnumerable<CreateTicketDto>? TicketDetails { get; set; }
+        public string? CodigoLote { get; set; }
     }
 }

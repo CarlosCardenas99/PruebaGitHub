@@ -1,5 +1,5 @@
 ﻿using Paltarumi.Acopio.Balanza.Client.Base;
-using Paltarumi.Acopio.Balanza.Dto.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Client.Balanza
