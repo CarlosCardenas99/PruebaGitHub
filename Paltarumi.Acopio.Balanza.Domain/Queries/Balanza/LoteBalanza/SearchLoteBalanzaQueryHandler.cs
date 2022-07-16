@@ -12,16 +12,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
     public class SearchLoteBalanzaQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaQuery, SearchLoteBalanzaFilterDto, SearchLoteBalanzaDto>
     {
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
 
         public SearchLoteBalanzaQueryHandler(
             IMapper mapper,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-             IRepository<Entity.Vehiculo> vehiculoRepository
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
-            _vehiculoRepository = vehiculoRepository;
+            _loteMuestreoRepository = loteMuestreoRepository;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> HandleQuery(SearchLoteBalanzaQuery request, CancellationToken cancellationToken)
@@ -92,29 +92,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdEstadoNavigation
             );
 
-            var tickets = new List<Entity.Ticket>();
-
-            if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(x => tickets.AddRange(x.Tickets));
-
-            var vehículoIds = tickets.Select(x => x.IdVehiculo);
-            var vehículos = await _vehiculoRepository.FindByAsNoTrackingAsync(x => vehículoIds.Contains(x.IdVehiculo));
-
-            if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(item =>
-                {
-                    var ids = item.Tickets.Select(x => x.IdVehiculo);
-                    var vehicles = vehículos.Where(x => ids.Contains(x.IdVehiculo)).Select(x => x.Placa);
-                });
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);
-
+            
             var searchResult = new SearchResultDto<SearchLoteBalanzaDto>(
                 loteDtos ?? new List<SearchLoteBalanzaDto>(),
                 lotes.Total,
                 request.SearchParams
             );
-
+            
             response.UpdateData(searchResult);
 
             return await Task.FromResult(response);
