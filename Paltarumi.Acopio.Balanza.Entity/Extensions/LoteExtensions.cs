@@ -19,5 +19,15 @@ namespace Paltarumi.Acopio.Balanza.Entity.Extensions
         public static void UpdateFechaAcopio(this LoteBalanza loteBalanza)
             => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTimeOffset.Now;
 
+        
+        public static void UpdateTmh(this LoteBalanza loteBalanza)
+           => loteBalanza.Tmh = loteBalanza?.Tickets?.Sum(x => x.PesoNeto) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarreta) ?? 0;
+
+        public static void UpdateTmh100(this LoteBalanza loteBalanza)
+            => loteBalanza.Tmh100 = loteBalanza?.Tickets?.Sum(x => x.PesoNeto100) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarreta100) ?? 0; //pesoNeto100
+
+        public static void UpdateTmhBase(this LoteBalanza loteBalanza)
+            => loteBalanza.TmhBase = loteBalanza?.Tickets?.Sum(x => x.PesoNetoBase) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarretaBase) ?? 0; //pesoNetoBase
+
     }
 }
