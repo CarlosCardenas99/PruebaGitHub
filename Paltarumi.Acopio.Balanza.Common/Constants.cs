@@ -13,6 +13,7 @@
             public struct Modulo
             {
                 public const int BALANZA = 1;
+                public const int CHANCADO = 2;
             }
 
             public struct CrudOpeacion

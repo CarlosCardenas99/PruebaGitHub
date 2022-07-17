@@ -26,26 +26,8 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
 
         }
         public async Task<ResponseDto<GetLoteBalanzaDto>> Create(CreateLoteBalanzaDto createDto)
-        {
-            CreateLoteDto createLote = new CreateLoteDto();
-            var respuestaLote = await _mediator.Send(new CreateLoteCommand(createLote));
+            => await _mediator.Send(new CreateLoteBalanzaCommand(createDto));
 
-            createDto.CodigoLote = respuestaLote.Data?.CodigoLote;
-            var respuestaLoteBalanza = await _mediator.Send(new CreateLoteBalanzaCommand(createDto));
-
-            UpdateLoteOperacionDto updateLoteOperacion = new UpdateLoteOperacionDto();
-            updateLoteOperacion.IdLote = respuestaLote.Data == null ? 0 : respuestaLote.Data.IdLote;
-            updateLoteOperacion.IdModulo = Constants.Operaciones.Modulo.BALANZA;
-            updateLoteOperacion.Codigo = Constants.Operaciones.CrudOpeacion.CREATE;
-            updateLoteOperacion.Body = JsonConvert.SerializeObject(createDto);
-            if (respuestaLoteBalanza.IsValid && updateLoteOperacion.IdLote != 0)
-                updateLoteOperacion.Status = Constants.Operaciones.Status.CORRECTO;
-            else
-                updateLoteOperacion.Status = Constants.Operaciones.Status.ERROR;
-            var respuestaUpdateLoteOperacion = await _mediator.Send(new UpdateLoteOperacionCommand(updateLoteOperacion));
-
-            return respuestaLoteBalanza;
-        }
         public async Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto)
             => await _mediator.Send(new UpdateLoteBalanzaCommand(updateDto));
 
