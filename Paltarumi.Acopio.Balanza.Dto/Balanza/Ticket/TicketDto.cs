@@ -11,6 +11,8 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
 		public float PesoBruto100 { get; set; }
 		public float PesoBrutoBase { get; set; }
 		public float PesoBruto { get; set; }
+		public bool PesoBrutoEdit { get; set; }
+		public int? IdUsuarioAprobadorPesoBruto { get; set; }
 		public float Tara { get; set; }
 		public float PesoNeto100 { get; set; }
 		public float PesoNetoBase { get; set; }
@@ -19,6 +21,8 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
 		public float PesoBrutoCarreta100 { get; set; }
 		public float PesoBrutoCarretaBase { get; set; }
 		public float PesoBrutoCarreta { get; set; }
+		public bool PesoBrutoCarretaEdit { get; set; }
+		public int? IdUsuarioAprobadorPesoBrutoCarreta { get; set; }
 		public float TaraCarreta { get; set; }
 		public float PesoNetoCarreta100 { get; set; }
 		public float PesoNetoCarretaBase { get; set; }
