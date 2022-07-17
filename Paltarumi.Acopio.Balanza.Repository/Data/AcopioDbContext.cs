@@ -59,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+       
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1212,7 +1212,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnName("notificationEmail");
 
                 entity.Property(e => e.PushUrl)
-                    .HasMaxLength(32)
+                    .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("pushUrl");
 
@@ -1402,6 +1402,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdUnidadMedida).HasColumnName("idUnidadMedida");
 
+                entity.Property(e => e.IdUsuarioAprobadorPesoBruto).HasColumnName("idUsuarioAprobadorPesoBruto");
+
+                entity.Property(e => e.IdUsuarioAprobadorPesoBrutoCarreta).HasColumnName("idUsuarioAprobadorPesoBrutoCarreta");
+
                 entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
 
                 entity.Property(e => e.Numero)
@@ -1425,6 +1429,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.PesoBrutoCarreta100).HasColumnName("pesoBrutoCarreta100");
 
                 entity.Property(e => e.PesoBrutoCarretaBase).HasColumnName("pesoBrutoCarretaBase");
+
+                entity.Property(e => e.PesoBrutoCarretaEdit).HasColumnName("pesoBrutoCarretaEdit");
+
+                entity.Property(e => e.PesoBrutoEdit).HasColumnName("pesoBrutoEdit");
 
                 entity.Property(e => e.PesoNeto).HasColumnName("pesoNeto");
 
@@ -1479,6 +1487,16 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasForeignKey(d => d.IdUnidadMedida)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_Ticket_idUnidadMedida");
+
+                entity.HasOne(d => d.IdUsuarioAprobadorPesoBrutoNavigation)
+                    .WithMany(p => p.TicketIdUsuarioAprobadorPesoBrutoNavigations)
+                    .HasForeignKey(d => d.IdUsuarioAprobadorPesoBruto)
+                    .HasConstraintName("fk_balanza_Ticket_idUsuarioAprobadorPesoBruto");
+
+                entity.HasOne(d => d.IdUsuarioAprobadorPesoBrutoCarretaNavigation)
+                    .WithMany(p => p.TicketIdUsuarioAprobadorPesoBrutoCarretaNavigations)
+                    .HasForeignKey(d => d.IdUsuarioAprobadorPesoBrutoCarreta)
+                    .HasConstraintName("fk_balanza_Ticket_idUsuarioAprobadorPesoBrutoCarreta");
 
                 entity.HasOne(d => d.IdVehiculoNavigation)
                     .WithMany(p => p.Tickets)
