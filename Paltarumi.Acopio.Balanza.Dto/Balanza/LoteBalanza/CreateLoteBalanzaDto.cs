@@ -9,6 +9,5 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public int? IdEstadoTipoMaterial { get; set; }
         public string? Observacion { get; set; }
         public IEnumerable<CreateTicketDto>? TicketDetails { get; set; }
-        public string? CodigoLote { get; set; }
     }
 }
