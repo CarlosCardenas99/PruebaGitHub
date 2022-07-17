@@ -109,6 +109,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateCantidadSacos();
                 loteBalanza.UpdateFechaIngreso();
                 loteBalanza.UpdateFechaAcopio();
+                loteBalanza.UpdateTmh();
+                loteBalanza.UpdateTmh100();
+                loteBalanza.UpdateTmhBase();
                 loteBalanza.UserNameCreate = "";
                 
                 if (estadoLote != null) loteBalanza.IdEstado = estadoLote.IdMaestro;
