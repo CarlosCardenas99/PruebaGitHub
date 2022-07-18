@@ -1,6 +1,6 @@
 ﻿namespace Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion
 {
-    public class UpdateLoteOperacionStatusDto
+    public class CreateOrUpdateLoteOperacionDto
     {
         public string Modulo { get; set; } = null!;
         public string Operacion { get; set; } = null!;

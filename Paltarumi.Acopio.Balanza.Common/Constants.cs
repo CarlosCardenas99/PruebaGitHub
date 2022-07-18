@@ -20,6 +20,7 @@
             public struct Operacion
             {
                 public const string CREATE = "CREATE";
+                public const string UPDATE = "UPDATE";
             }
         }
 

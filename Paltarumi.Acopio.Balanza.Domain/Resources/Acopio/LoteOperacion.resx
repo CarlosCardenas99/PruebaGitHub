@@ -123,10 +123,19 @@
   <data name="IdLoteOperacion" xml:space="preserve">
     <value>IdLoteOperacion</value>
   </data>
+  <data name="LoteNoExiste" xml:space="preserve">
+    <value>Lote no existe</value>
+  </data>
   <data name="Modulo" xml:space="preserve">
     <value>Módulo</value>
   </data>
+  <data name="ModuloNoExiste" xml:space="preserve">
+    <value>Módulo no existe</value>
+  </data>
   <data name="Operacion" xml:space="preserve">
     <value>Operación</value>
+  </data>
+  <data name="OperacionNoExiste" xml:space="preserve">
+    <value>Operación no existe</value>
   </data>
 </root>

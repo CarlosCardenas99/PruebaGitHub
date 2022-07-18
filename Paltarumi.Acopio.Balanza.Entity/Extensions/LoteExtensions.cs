@@ -11,13 +11,13 @@ namespace Paltarumi.Acopio.Balanza.Entity.Extensions
             => loteBalanza.CreateDate = DateTimeOffset.Now;
 
         public static void UpdateCantidadSacos(this LoteBalanza loteBalanza)
-            => loteBalanza.CantidadSacos = loteBalanza?.Tickets?.Count(x => x.IdUnidadMedida == Constants.Maestro.UnidadMedida.SACOS).ToString() ?? String.Empty;
+            => loteBalanza.CantidadSacos = loteBalanza?.Tickets?.Any() == false ? string.Empty : loteBalanza?.Tickets?.Count(x => x.IdUnidadMedida == Constants.Maestro.UnidadMedida.SACOS).ToString() ?? String.Empty;
 
         public static void UpdateFechaIngreso(this LoteBalanza loteBalanza)
-            => loteBalanza.FechaIngreso = loteBalanza?.Tickets?.Min(x => x.FechaIngreso) ?? DateTimeOffset.Now;
+            => loteBalanza.FechaIngreso = loteBalanza?.Tickets?.Any() == false ? DateTimeOffset.Now : loteBalanza?.Tickets?.Min(x => x.FechaIngreso) ?? DateTimeOffset.Now;
 
         public static void UpdateFechaAcopio(this LoteBalanza loteBalanza)
-            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTimeOffset.Now;
+            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Any() == false ? null : loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTimeOffset.Now;
 
         //TMH
         public static void UpdateTmh(this LoteBalanza loteBalanza)

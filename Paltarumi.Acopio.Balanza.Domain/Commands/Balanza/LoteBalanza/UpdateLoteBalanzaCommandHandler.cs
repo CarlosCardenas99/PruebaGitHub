@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
+using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Common;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
+using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
@@ -14,36 +17,75 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
+        private readonly IRepository<Entity.Lote> _loteRepository;
+        private readonly IRepository<Entity.Operacion> _operacionRepository;
+        private readonly IRepository<Entity.LoteOperacion> _loteOperacionRepository;
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepository<Entity.Ticket> _ticketRepository;
-        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
-        private readonly IRepository<Entity.Transporte> _transporteRepository;
-        private readonly IRepository<Entity.Conductor> _conductorRepository;
 
         public UpdateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             UpdateLoteBalanzaCommandValidator validator,
+            IRepository<Entity.Lote> loteRepository,
+            IRepository<Entity.Operacion> operacionRepository,
+            IRepository<Entity.LoteOperacion> loteOperacionRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.Vehiculo> vehiculoRepository,
-            IRepository<Entity.Transporte> transporteRepository,
-            IRepository<Entity.Conductor> conductorRepository
+            IRepository<Entity.Ticket> ticketRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _loteRepository = loteRepository;
+            _operacionRepository = operacionRepository;
+            _loteOperacionRepository = loteOperacionRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
             _ticketRepository = ticketRepository;
-            _vehiculoRepository = vehiculoRepository;
-            _transporteRepository = transporteRepository;
-            _conductorRepository = conductorRepository;
+        }
+        public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
+        {
+            var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
+
+            await CreateLoteOperationsAsync(loteBalanza?.CodigoLote!);
+
+            var response = await UpdateLoteBalanza(loteBalanza!, request, cancellationToken);
+
+            await CheckStatusOperacionAsync(loteBalanza?.CodigoLote!, response, request);
+
+            return response;
         }
 
-        public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
+        private async Task CreateLoteOperationsAsync(string codigoLote)
+        {
+            var lote = await _loteRepository.GetByAsync(x => x.CodigoLote == codigoLote);
+            if (lote == null) return;
+
+            var operacions = await _operacionRepository.FindByAsNoTrackingAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.UPDATE));
+            var existingLoteOperacions = await _loteOperacionRepository.FindByAsNoTrackingAsync(x => x.IdLote == lote.IdLote);
+            var existingOperacionIds = existingLoteOperacions.Select(x => x.IdOperacion);
+            var loteOperacions = new List<Entity.LoteOperacion>();
+
+            foreach (var operacion in operacions.Where(x => !existingOperacionIds.Contains(x.IdOperacion)))
+            {
+                loteOperacions.Add(new Entity.LoteOperacion
+                {
+                    IdLote = lote.IdLote,
+                    IdOperacionNavigation = null!,
+                    IdOperacion = operacion.IdOperacion,
+                    Status = Constants.Operaciones.Status.PENDING,
+                    Attempts = 0,
+                    Body = "",
+                    Message = ""
+                });
+            }
+
+            await _loteOperacionRepository.AddAsync(loteOperacions.ToArray());
+            await _loteOperacionRepository.SaveAsync();
+        }
+
+        public async Task<ResponseDto<GetLoteBalanzaDto>> UpdateLoteBalanza(Entity.LoteBalanza loteBalanza, UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaDto>();
 
-            var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var tickets = await _ticketRepository.FindByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var ticketDetails = request.UpdateDto?.TicketDetails?.Where(x => x.Activo).ToList();
 
@@ -114,6 +156,18 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             }
 
             return response;
+        }
+
+        private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, UpdateLoteBalanzaCommand request)
+        {
+            await _mediator?.Send(new CreateOrUpdateLoteOperacionCommand(new CreateOrUpdateLoteOperacionDto
+            {
+                CodigoLote = codigoLote,
+                Modulo = Constants.Operaciones.Modulo.BALANZA,
+                Operacion = Constants.Operaciones.Operacion.UPDATE,
+                Body = JsonConvert.SerializeObject(request.UpdateDto),
+                Exception = response.IsValid ? null! : new Exception(response.GetFormattedApiResponse())
+            }))!;
         }
     }
 }

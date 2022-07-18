@@ -79,6 +79,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Acopio {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lote no existe.
+        /// </summary>
+        internal static string LoteNoExiste {
+            get {
+                return ResourceManager.GetString("LoteNoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Módulo.
         /// </summary>
         internal static string Modulo {
@@ -88,11 +97,29 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Acopio {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Módulo no existe.
+        /// </summary>
+        internal static string ModuloNoExiste {
+            get {
+                return ResourceManager.GetString("ModuloNoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operación.
         /// </summary>
         internal static string Operacion {
             get {
                 return ResourceManager.GetString("Operacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operación no existe.
+        /// </summary>
+        internal static string OperacionNoExiste {
+            get {
+                return ResourceManager.GetString("OperacionNoExiste", resourceCulture);
             }
         }
     }

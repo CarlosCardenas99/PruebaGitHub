@@ -19,7 +19,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
     public class CreateLoteBalanzaCommandHandler : CommandHandlerBase<CreateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
         private readonly IRepository<Entity.Lote> _loteRepository;
-        private readonly IRepository<Entity.LoteOperacion> _loteOperacionRepository;
         private readonly IRepository<Entity.Operacion> _operacionRepository;
         private readonly IRepository<Entity.LoteCodigo> _loteCodigoRepository;
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
@@ -40,8 +39,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.DuenoMuestra> duenoMuestraRepository,
             IRepository<Entity.TransporteVehiculo> transporteVehiculoRepository,
             IRepository<Entity.Proveedor> proveedorRepository,
-            IRepository<Entity.Operacion> operacionRepository,
-            IRepository<Entity.LoteOperacion> loteOperacionRepository
+            IRepository<Entity.Operacion> operacionRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteRepository = loteRepository;
@@ -52,7 +50,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             _duenoMuestraRepository = duenoMuestraRepository;
             _proveedorRepository = proveedorRepository;
             _operacionRepository = operacionRepository;
-            _loteOperacionRepository = loteOperacionRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -64,14 +61,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var idLote = await CreateLoteAsync(codigoLote);
             var response = await CreateLoteBalanzaAsync(request, codigoLote);
 
-            await CheckStatusOperacionAsync(codigoLote, response, request, codigoLote);
+            await CheckStatusOperacionAsync(codigoLote, response, request);
 
             return response;
         }
 
-        private async Task<int> CreateLoteAsync(string code)
+        private async Task<int> CreateLoteAsync(string codigoLote)
         {
-            var lote = new Entity.Lote { CodigoLote = code };
+            var lote = new Entity.Lote { CodigoLote = codigoLote };
 
             var operacions = await _operacionRepository.FindByAsNoTrackingAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.CREATE));
             var loteOperacions = new List<Entity.LoteOperacion>();
@@ -176,9 +173,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, CreateLoteBalanzaCommand request, string CodigoLote)
+        private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, CreateLoteBalanzaCommand request)
         {
-            await _mediator?.Send(new UpdateLoteOperacionStatusCommand(new UpdateLoteOperacionStatusDto
+            await _mediator?.Send(new CreateOrUpdateLoteOperacionCommand(new CreateOrUpdateLoteOperacionDto
             {
                 CodigoLote = codigoLote,
                 Modulo = Constants.Operaciones.Modulo.BALANZA,
