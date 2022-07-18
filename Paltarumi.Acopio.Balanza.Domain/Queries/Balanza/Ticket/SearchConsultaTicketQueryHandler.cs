@@ -124,7 +124,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
-                x => x.IdLoteBalanzaNavigation.IdConcesionNavigation
+                x => x.IdLoteBalanzaNavigation.IdConcesionNavigation,
+                x => x.IdEstadoTmhCarretaNavigation
             );
             var placas = tickets;
 

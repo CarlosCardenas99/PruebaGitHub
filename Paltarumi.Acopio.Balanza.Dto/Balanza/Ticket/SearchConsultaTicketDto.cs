@@ -11,9 +11,11 @@
         public string Proveedor { get; set; } = null!;//proveedor
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
+        public string EstadoTmh { get; set; } = null!;
         public float? PesoBruto { get; set; }
         public float? Tara { get; set; }
         public float? PesoNeto { get; set; }
+        public string EstadoTmhCarreta { get; set; } = null!;
         public float PesoBrutoCarreta { get; set; }
         public float TaraCarreta { get; set; }
         public float PesoNetoCarreta { get; set; }
