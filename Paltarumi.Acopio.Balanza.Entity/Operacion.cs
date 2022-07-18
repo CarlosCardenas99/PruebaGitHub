@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Paltarumi.Acopio.Balanza.Entity
+﻿namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class Operacion
     {
@@ -16,7 +13,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string PushUrl { get; set; } = null!;
         public string NotificationEmail { get; set; } = null!;
 
-        public virtual Maestro IdModuloNavigation { get; set; } = null!;
+        public virtual Modulo IdModuloNavigation { get; set; } = null!;
         public virtual ICollection<LoteOperacion> LoteOperacions { get; set; }
     }
 }

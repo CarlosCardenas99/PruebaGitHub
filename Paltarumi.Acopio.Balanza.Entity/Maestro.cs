@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Paltarumi.Acopio.Balanza.Entity
+﻿namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class Maestro
     {
@@ -15,7 +12,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
             MuestraIdMuestraCondicionNavigations = new HashSet<Muestra>();
             MuestraIdMuestraEstadoNavigations = new HashSet<Muestra>();
             MuestraIdTurnoNavigations = new HashSet<Muestra>();
-            Operacions = new HashSet<Operacion>();
             TicketIdEstadoTmhCarretaNavigations = new HashSet<Ticket>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
             TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
@@ -39,7 +35,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual ICollection<Muestra> MuestraIdMuestraCondicionNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdMuestraEstadoNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdTurnoNavigations { get; set; }
-        public virtual ICollection<Operacion> Operacions { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhCarretaNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }

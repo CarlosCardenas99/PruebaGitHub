@@ -260,19 +260,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             var properties = entity.GetType().GetProperties();
 
             DateTimeOffset? nowNullable = now;
-            int? idUsuario = _userIdentity.GetCurrentUserId();
+            var usuario = _userIdentity.GetCurrentUser();
 
             if (creation)
             {
-                UpdateProperty(entity, properties, "IdUsuarioCreate", idUsuario, typeof(int?));
-                if (idUsuario.HasValue) UpdateProperty(entity, properties, "IdUsuarioCreate", idUsuario.Value);
+                UpdateProperty(entity, properties, "UserNameCreate", usuario);
                 UpdateProperty(entity, properties, "CreateDate", nowNullable, typeof(DateTimeOffset?));
                 UpdateProperty(entity, properties, "CreateDate", now);
                 UpdateProperty(entity, properties, "Activo", true);
             }
 
-            UpdateProperty(entity, properties, "IdUsuarioUpdate", idUsuario, typeof(int?));
-            if (idUsuario.HasValue) UpdateProperty(entity, properties, "IdUsuarioUpdate", idUsuario.Value);
+            UpdateProperty(entity, properties, "UserNameUpdate", usuario);
             UpdateProperty(entity, properties, "UpdateDate", nowNullable, typeof(DateTimeOffset?));
             UpdateProperty(entity, properties, "UpdateDate", now);
         }

@@ -1,9 +1,9 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Operacion;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Operacion
 {

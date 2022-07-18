@@ -91,7 +91,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.Tickets,
                 x => x.IdEstadoNavigation
             );
-            
+
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);
 
             var codigoLotes = loteDtos?.Select(x => x.CodigoLote) ?? new List<string>();
@@ -110,7 +110,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 lotes.Total,
                 request.SearchParams
             );
-            
+
             response.UpdateData(searchResult);
 
             return await Task.FromResult(response);

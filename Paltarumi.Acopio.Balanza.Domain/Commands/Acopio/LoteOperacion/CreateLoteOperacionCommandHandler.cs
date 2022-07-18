@@ -1,13 +1,10 @@
 using AutoMapper;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
-using Microsoft.EntityFrameworkCore;
-using System;
-using Paltarumi.Acopio.Balanza.Common;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
 {
@@ -35,12 +32,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
 
         public override async Task<ResponseDto<GetLoteOperacionDto>> HandleCommand(CreateLoteOperacionCommand request, CancellationToken cancellationToken)
         {
-            var listOperaciones = await _operacionRepository.FindByAsync(x=>x.Codigo.Equals(Constants.Operaciones.CrudOpeacion.CREATE));
+            var listOperaciones = await _operacionRepository.FindByAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.CREATE));
 
             foreach (var item in listOperaciones)
             {
                 request.CreateDto.IdOperacion = item.IdOperacion;
-                request.CreateDto.Status = Constants.Operaciones.Status.PENDIENTE;
+                request.CreateDto.Status = Constants.Operaciones.Status.PENDING;
                 request.CreateDto.CreateDate = DateTimeOffset.Now;
                 request.CreateDto.Attempts = 0;
                 request.CreateDto.Body = "";

@@ -1,4 +1,5 @@
 ﻿dotnet new tool-manifest
+dotnet tool restore
 dotnet tool install dotnet-ef
 
 dotnet ef migrations add AcopioMigration_00 --context AcopioDbContext

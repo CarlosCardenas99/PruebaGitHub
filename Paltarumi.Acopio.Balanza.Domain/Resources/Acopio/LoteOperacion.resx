@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CodigoLote" xml:space="preserve">
+    <value>Código de Lote</value>
+  </data>
   <data name="IdLoteOperacion" xml:space="preserve">
     <value>IdLoteOperacion</value>
+  </data>
+  <data name="Modulo" xml:space="preserve">
+    <value>Módulo</value>
+  </data>
+  <data name="Operacion" xml:space="preserve">
+    <value>Operación</value>
   </data>
 </root>

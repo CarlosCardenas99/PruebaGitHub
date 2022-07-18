@@ -126,7 +126,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
                 x => x.IdLoteBalanzaNavigation.IdConcesionNavigation
             );
-            var placas =tickets;
+            var placas = tickets;
 
             var ticketDtos = _mapper?.Map<IEnumerable<SearchConsultaTicketDto>>(tickets.Items);
 

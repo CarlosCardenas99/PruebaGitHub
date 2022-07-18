@@ -1,6 +1,4 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-
-namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
+﻿namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
 {
     public class SearchLoteBalanzaDto
     {

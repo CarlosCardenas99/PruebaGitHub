@@ -24,9 +24,9 @@ namespace Paltarumi.Acopio.Balanza.Entity.Extensions
            => loteBalanza.Tmh = loteBalanza?.Tickets?.Sum(x => x.PesoNeto) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarreta) ?? 0;
 
         public static void UpdateTmh100(this LoteBalanza loteBalanza)
-            => loteBalanza.Tmh100 = loteBalanza?.Tickets?.Sum(x => x.PesoNeto100) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarreta100) ?? 0; 
+            => loteBalanza.Tmh100 = loteBalanza?.Tickets?.Sum(x => x.PesoNeto100) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarreta100) ?? 0;
 
         public static void UpdateTmhBase(this LoteBalanza loteBalanza)
-            => loteBalanza.TmhBase = loteBalanza?.Tickets?.Sum(x => x.PesoNetoBase) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarretaBase) ?? 0; 
+            => loteBalanza.TmhBase = loteBalanza?.Tickets?.Sum(x => x.PesoNetoBase) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarretaBase) ?? 0;
     }
 }

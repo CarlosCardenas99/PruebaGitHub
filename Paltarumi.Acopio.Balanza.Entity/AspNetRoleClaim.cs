@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Paltarumi.Acopio.Balanza.Entity
+﻿namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class AspNetRoleClaim
     {

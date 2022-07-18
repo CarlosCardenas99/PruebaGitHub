@@ -6,19 +6,20 @@
         {
             public struct Status
             {
-                public const string CORRECTO = "S";
+                public const string SUCCESS = "S";
                 public const string ERROR = "E";
-                public const string PENDIENTE = "P";
-            }
-            public struct Modulo
-            {
-                public const int BALANZA = 1;
-                public const int CHANCADO = 2;
+                public const string PENDING = "P";
             }
 
-            public struct CrudOpeacion
+            public struct Modulo
             {
-                public const string? CREATE = "CREATE";
+                public const string BALANZA = "Balanza";
+                public const string CHANCADO = "Chancado";
+            }
+
+            public struct Operacion
+            {
+                public const string CREATE = "CREATE";
             }
         }
 
