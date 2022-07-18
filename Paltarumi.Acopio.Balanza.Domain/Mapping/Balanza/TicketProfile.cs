@@ -53,7 +53,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.CodigoLote, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CodigoLote : string.Empty))
                 .ForMember(x => x.CantidadSacos, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CantidadSacos : string.Empty))
                 .ForMember(x => x.VehiculoTara, opt => opt.MapFrom(x => x.IdVehiculoNavigation != null ? x.IdVehiculoNavigation.Tara.ToString() : string.Empty))
-
                 .ForMember(x => x.Conductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
                 .ForMember(x => x.Licencia, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Licencia : string.Empty))
                 .ForMember(x => x.Transportista, opt => opt.MapFrom(x => x.IdTransporteNavigation != null ? x.IdTransporteNavigation.Ruc + " - " + x.IdTransporteNavigation.RazonSocial : string.Empty))
@@ -61,7 +60,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.VehiculoMarca, opt => opt.MapFrom(x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation != null ? x.IdVehiculoNavigation.IdVehiculoMarcaNavigation.Descripcion : string.Empty))
                 .ForMember(x => x.Placa, opt => opt.MapFrom(x => x.IdVehiculoNavigation != null ? x.IdVehiculoNavigation.Placa + " - " + x.IdVehiculoNavigation.PlacaCarreta : string.Empty))
                 .ForMember(x => x.TipoVehiculo, opt => opt.MapFrom(x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation != null ? x.IdVehiculoNavigation.IdTipoVehiculoNavigation.Descripcion : string.Empty))
-
+                .ForMember(x => x.EstadoTmh, opt => opt.MapFrom(x => x.IdEstadoTmhNavigation != null ? x.IdEstadoTmhNavigation.Descripcion : string.Empty))
+                .ForMember(x => x.EstadoTmhCarreta, opt => opt.MapFrom(x => x.IdEstadoTmhCarretaNavigation != null ? x.IdEstadoTmhCarretaNavigation.Descripcion : string.Empty))
                 .ReverseMap();
         }
     }
