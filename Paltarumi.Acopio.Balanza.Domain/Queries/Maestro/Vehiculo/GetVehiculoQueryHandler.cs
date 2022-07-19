@@ -31,10 +31,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
 
             var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
 
+            //if (vehiculoDto != null) response.UpdateData(vehiculoDto);
+
             if (vehiculo != null && vehiculoDto != null && _mapper != null)
             {
-                vehiculoDto.Marca = _mapper.Map<GetMaestroDto>(vehiculo.IdVehiculoMarcaNavigation);
-                vehiculoDto.TipoVehiculo = _mapper.Map<GetMaestroDto>(vehiculo.IdTipoVehiculoNavigation);
+                vehiculoDto.Marca =vehiculo.IdVehiculoMarcaNavigation==null ? null : _mapper.Map<GetMaestroDto>(vehiculo.IdVehiculoMarcaNavigation);
+                vehiculoDto.TipoVehiculo = vehiculo.IdTipoVehiculoNavigation == null ? null : _mapper.Map<GetMaestroDto>(vehiculo.IdTipoVehiculoNavigation);
 
                 response.UpdateData(vehiculoDto);
             }

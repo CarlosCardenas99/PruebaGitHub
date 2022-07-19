@@ -4,6 +4,7 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Maestro.Dto.Maestro;
 using Paltarumi.Acopio.Maestro.Dto.Vehiculo;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
@@ -45,15 +46,28 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
                 if (request.CreateDto.IdVehiculoMarca == default)
                 {
                     vehiculo.IdVehiculoMarcaNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionVehiculoMarca);
-                    vehiculo.IdTipoVehiculo = vehiculo.IdVehiculoMarcaNavigation.IdMaestro;
+                    vehiculo.IdVehiculoMarca = vehiculo.IdVehiculoMarcaNavigation.IdMaestro;
                 }
 
                 await _vehiculoRepository.AddAsync(vehiculo);
                 await _vehiculoRepository.SaveAsync();
             }
 
-            var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
-            if (vehiculoDto != null) response.UpdateData(vehiculoDto);
+            var consultaVehiculo = await _vehiculoRepository.GetByAsync(
+                x => x.IdVehiculo== vehiculo.IdVehiculo,
+                x => x.IdTipoVehiculoNavigation,
+                x => x.IdVehiculoMarcaNavigation
+                );    
+
+            var vehiculoDto = _mapper?.Map<GetVehiculoDto>(consultaVehiculo);
+
+            if (consultaVehiculo != null && vehiculoDto != null && _mapper != null)
+            {
+                vehiculoDto.Marca = consultaVehiculo.IdVehiculoMarcaNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdVehiculoMarcaNavigation);
+                vehiculoDto.TipoVehiculo = consultaVehiculo.IdTipoVehiculoNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdTipoVehiculoNavigation);
+
+                response.UpdateData(vehiculoDto);
+            }
 
             response.AddOkResult(Resources.Common.CreateSuccessMessage);
 
