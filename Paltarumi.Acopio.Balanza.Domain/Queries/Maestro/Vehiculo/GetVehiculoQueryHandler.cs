@@ -33,7 +33,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
 
             if (vehiculo != null && vehiculoDto != null && _mapper != null)
             {
-                vehiculoDto.Marca = _mapper.Map<GetMaestroDto>(vehiculo.IdTipoVehiculoNavigation);
+                vehiculoDto.Marca = _mapper.Map<GetMaestroDto>(vehiculo.IdVehiculoMarcaNavigation);
                 vehiculoDto.TipoVehiculo = _mapper.Map<GetMaestroDto>(vehiculo.IdTipoVehiculoNavigation);
 
                 response.UpdateData(vehiculoDto);
