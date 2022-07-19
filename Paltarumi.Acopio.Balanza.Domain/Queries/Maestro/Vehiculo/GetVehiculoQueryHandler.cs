@@ -2,6 +2,7 @@
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Maestro.Dto.Maestro;
 using Paltarumi.Acopio.Maestro.Dto.Vehiculo;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
@@ -22,11 +23,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
         protected override async Task<ResponseDto<GetVehiculoDto>> HandleQuery(GetVehiculoQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetVehiculoDto>();
-            var vehiculo = await _vehiculoRepository.GetByAsync(x => x.IdVehiculo == request.Id);
+            var vehiculo = await _vehiculoRepository.GetByAsync(
+                x => x.IdVehiculo == request.Id,
+                x => x.IdTipoVehiculoNavigation,
+                x => x.IdVehiculoMarcaNavigation
+                );
+
             var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
 
             if (vehiculo != null && vehiculoDto != null)
             {
+                vehiculoDto.Marca = vehiculoDto.IdVehiculoMarca== null ? null : _mapper?.Map<GetMaestroDto>(vehiculo.IdVehiculoMarcaNavigation);
+                vehiculoDto.TipoVehiculo = vehiculoDto.IdTipoVehiculo == null ? null : _mapper?.Map<GetMaestroDto>(vehiculo.IdTipoVehiculoNavigation);
+
                 response.UpdateData(vehiculoDto);
             }
 
