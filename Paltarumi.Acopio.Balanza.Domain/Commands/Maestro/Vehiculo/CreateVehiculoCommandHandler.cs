@@ -11,7 +11,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 {
     public class CreateVehiculoCommandHandler : CommandHandlerBase<CreateVehiculoCommand, GetVehiculoDto>
     {
-        protected override bool UseTransaction => false;
+        //protected override bool UseTransaction => false;
 
         private readonly IRepository<Entity.Maestro> _maestroRepository;
         private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
@@ -31,7 +31,23 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
         public override async Task<ResponseDto<GetVehiculoDto>> HandleCommand(CreateVehiculoCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetVehiculoDto>();
-            var vehiculo = _mapper?.Map<Entity.Vehiculo>(request.CreateDto);
+            Entity.Vehiculo? vehiculo;
+
+            var updateDto = await _vehiculoRepository.GetByAsync(
+                   x => x.Placa == request.CreateDto.Placa && x.Activo == true
+                   );
+
+            if (updateDto != null)
+            {
+                _mapper?.Map(request.CreateDto, updateDto);
+
+                vehiculo = new Entity.Vehiculo();
+                _mapper?.Map(updateDto, vehiculo);
+            }
+            else
+            {
+                vehiculo = _mapper?.Map<Entity.Vehiculo>(request.CreateDto);
+            }
 
             if (vehiculo != null)
             {
@@ -39,34 +55,41 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 
                 if (request.CreateDto.IdTipoVehiculo == default)
                 {
-                    vehiculo.IdTipoVehiculoNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.CreateDto.DescripcionTipoVehiculo);
-                    vehiculo.IdTipoVehiculo = vehiculo.IdTipoVehiculoNavigation.IdMaestro;
+                    int IdTipoVehiculo = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.CreateDto.DescripcionTipoVehiculo);
+                    vehiculo.IdTipoVehiculo = IdTipoVehiculo;
                 }
 
                 if (request.CreateDto.IdVehiculoMarca == default)
                 {
-                    vehiculo.IdVehiculoMarcaNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionVehiculoMarca);
-                    vehiculo.IdVehiculoMarca = vehiculo.IdVehiculoMarcaNavigation.IdMaestro;
+                    int IdMarcaVehiculo = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionTipoVehiculo);
+                    vehiculo.IdVehiculoMarca = IdMarcaVehiculo;
                 }
 
-                await _vehiculoRepository.AddAsync(vehiculo);
-                await _vehiculoRepository.SaveAsync();
-            }
+                if (vehiculo.IdVehiculo > 0)
+                {
+                    await _vehiculoRepository.UpdateAsync(vehiculo);
+                }
+                else
+                {
+                    await _vehiculoRepository.AddAsync(vehiculo);
+                    await _vehiculoRepository.SaveAsync();
+                }
 
-            var consultaVehiculo = await _vehiculoRepository.GetByAsync(
-                x => x.IdVehiculo== vehiculo.IdVehiculo,
-                x => x.IdTipoVehiculoNavigation,
-                x => x.IdVehiculoMarcaNavigation
-                );    
+                var consultaVehiculo = await _vehiculoRepository.GetByAsync(
+                   x => x.IdVehiculo == vehiculo.IdVehiculo,
+                   x => x.IdTipoVehiculoNavigation,
+                   x => x.IdVehiculoMarcaNavigation
+                   );
 
-            var vehiculoDto = _mapper?.Map<GetVehiculoDto>(consultaVehiculo);
+                var vehiculoDto = _mapper?.Map<GetVehiculoDto>(consultaVehiculo);
 
-            if (consultaVehiculo != null && vehiculoDto != null && _mapper != null)
-            {
-                vehiculoDto.Marca = consultaVehiculo.IdVehiculoMarcaNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdVehiculoMarcaNavigation);
-                vehiculoDto.TipoVehiculo = consultaVehiculo.IdTipoVehiculoNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdTipoVehiculoNavigation);
+                if (consultaVehiculo != null && vehiculoDto != null && _mapper != null)
+                {
+                    vehiculoDto.Marca = consultaVehiculo.IdVehiculoMarcaNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdVehiculoMarcaNavigation);
+                    vehiculoDto.TipoVehiculo = consultaVehiculo.IdTipoVehiculoNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdTipoVehiculoNavigation);
 
-                response.UpdateData(vehiculoDto);
+                    response.UpdateData(vehiculoDto);
+                }
             }
 
             response.AddOkResult(Resources.Common.CreateSuccessMessage);
@@ -74,7 +97,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
             return await Task.FromResult(response);
         }
 
-        private async Task<Entity.Maestro> GetMaestro(string codigoTabla, string? descripcion)
+        private async Task<int> GetMaestro(string codigoTabla, string? descripcion)
         {
             var tipoVehiculos = await _maestroRepository.FindByAsNoTrackingAsync(
                 x => x.CodigoTabla == codigoTabla
@@ -86,13 +109,18 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
             codigoItem = $"0{codigoItemInt + 1}";
             codigoItem = codigoItem.Substring(codigoItem.Length - 2);
 
-            return new Entity.Maestro
+            var maestro = new Entity.Maestro
             {
                 CodigoTabla = codigoTabla,
                 CodigoItem = codigoItem,
                 Descripcion = descripcion ?? string.Empty,
                 Activo = true
             };
+
+            await _maestroRepository.AddAsync(maestro);
+            await _maestroRepository.SaveAsync();
+
+            return maestro.IdMaestro;
         }
     }
 }
