@@ -4,15 +4,12 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
 using Paltarumi.Acopio.Maestro.Dto.Vehiculo;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 {
     public class CreateVehiculoCommandHandler : CommandHandlerBase<CreateVehiculoCommand, GetVehiculoDto>
     {
-        //protected override bool UseTransaction => false;
-
         private readonly IRepository<Entity.Maestro> _maestroRepository;
         private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
 
@@ -31,85 +28,76 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
         public override async Task<ResponseDto<GetVehiculoDto>> HandleCommand(CreateVehiculoCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetVehiculoDto>();
-            Entity.Vehiculo? vehiculo;
 
-            var updateDto = await _vehiculoRepository.GetByAsync(
-                   x => x.Placa == request.CreateDto.Placa && x.Activo == true
-                   );
+            var vehiculo = await _vehiculoRepository.GetByAsync(
+                x => x.Placa == request.CreateDto.Placa &&
+                x.Activo == true
+            );
 
-            if (updateDto != null)
-            {
-                _mapper?.Map(request.CreateDto, updateDto);
+            var exists = vehiculo != null;
 
-                vehiculo = new Entity.Vehiculo();
-                _mapper?.Map(updateDto, vehiculo);
-            }
+            if (exists)
+                _mapper?.Map(request.CreateDto, vehiculo);
             else
-            {
-                vehiculo = _mapper?.Map<Entity.Vehiculo>(request.CreateDto);
-            }
+                vehiculo = _mapper?.Map<Entity.Vehiculo>(request.CreateDto) ?? new Entity.Vehiculo();
 
             if (vehiculo != null)
             {
-                vehiculo.Activo = true;
-
                 if (request.CreateDto.IdTipoVehiculo == default)
                 {
-                    int IdTipoVehiculo = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.CreateDto.DescripcionTipoVehiculo);
-                    vehiculo.IdTipoVehiculo = IdTipoVehiculo;
+                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.CreateDto.DescripcionTipoVehiculo);
+                    vehiculo.IdTipoVehiculo = maestro.IdMaestro;
+                    vehiculo.IdTipoVehiculoNavigation = (maestro.IdMaestro == default ? maestro : null)!;
                 }
 
                 if (request.CreateDto.IdVehiculoMarca == default)
                 {
-                    int IdMarcaVehiculo = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionTipoVehiculo);
-                    vehiculo.IdVehiculoMarca = IdMarcaVehiculo;
-                }
-
-                if (vehiculo.IdVehiculo > 0)
-                {
-                    await _vehiculoRepository.UpdateAsync(vehiculo);
-                }
-                else
-                {
-                    await _vehiculoRepository.AddAsync(vehiculo);
-                    await _vehiculoRepository.SaveAsync();
-                }
-
-                var consultaVehiculo = await _vehiculoRepository.GetByAsync(
-                   x => x.IdVehiculo == vehiculo.IdVehiculo,
-                   x => x.IdTipoVehiculoNavigation,
-                   x => x.IdVehiculoMarcaNavigation
-                   );
-
-                var vehiculoDto = _mapper?.Map<GetVehiculoDto>(consultaVehiculo);
-
-                if (consultaVehiculo != null && vehiculoDto != null && _mapper != null)
-                {
-                    vehiculoDto.Marca = consultaVehiculo.IdVehiculoMarcaNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdVehiculoMarcaNavigation);
-                    vehiculoDto.TipoVehiculo = consultaVehiculo.IdTipoVehiculoNavigation == null ? null : _mapper.Map<GetMaestroDto>(consultaVehiculo.IdTipoVehiculoNavigation);
-
-                    response.UpdateData(vehiculoDto);
+                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionTipoVehiculo);
+                    vehiculo.IdVehiculoMarca = maestro.IdMaestro;
+                    vehiculo.IdVehiculoMarcaNavigation = (maestro.IdMaestro == default ? maestro : null)!;
                 }
             }
 
+            if (exists)
+                await _vehiculoRepository.UpdateAsync(vehiculo!);
+            else
+                await _vehiculoRepository.AddAsync(vehiculo!);
+
+            await _vehiculoRepository.SaveAsync();
+
+            vehiculo = await _vehiculoRepository.GetByAsNoTrackingAsync(
+                x => x.IdVehiculo == vehiculo.IdVehiculo,
+                x => x.IdTipoVehiculoNavigation,
+                x => x.IdVehiculoMarcaNavigation
+            );
+
+            var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
+
+            response.UpdateData(vehiculoDto!);
             response.AddOkResult(Resources.Common.CreateSuccessMessage);
 
             return await Task.FromResult(response);
         }
 
-        private async Task<int> GetMaestro(string codigoTabla, string? descripcion)
+        private async Task<Entity.Maestro> GetMaestro(string codigoTabla, string? descripcion)
         {
-            var tipoVehiculos = await _maestroRepository.FindByAsNoTrackingAsync(
+            var maestro = await _maestroRepository.GetByAsNoTrackingAsync(
+                x => x.CodigoTabla == codigoTabla && x.Descripcion == descripcion
+            );
+
+            if (maestro != null) return maestro;
+
+            var maestros = await _maestroRepository.FindByAsNoTrackingAsync(
                 x => x.CodigoTabla == codigoTabla
             );
 
-            var codigoItem = tipoVehiculos.Max(x => x.CodigoItem);
+            var codigoItem = maestros.Max(x => x.CodigoItem);
             int.TryParse(codigoItem, out var codigoItemInt);
 
             codigoItem = $"0{codigoItemInt + 1}";
             codigoItem = codigoItem.Substring(codigoItem.Length - 2);
 
-            var maestro = new Entity.Maestro
+            maestro = new Entity.Maestro
             {
                 CodigoTabla = codigoTabla,
                 CodigoItem = codigoItem,
@@ -118,9 +106,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
             };
 
             await _maestroRepository.AddAsync(maestro);
-            await _maestroRepository.SaveAsync();
 
-            return maestro.IdMaestro;
+            return maestro;
         }
     }
 }

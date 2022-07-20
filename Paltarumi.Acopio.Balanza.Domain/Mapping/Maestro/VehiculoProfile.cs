@@ -7,6 +7,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public VehiculoProfile()
         {
+            /*CreateMap<Entity.Vehiculo, Entity.Vehiculo>()
+                .ReverseMap();*/
+
             CreateMap<Entity.Vehiculo, VehiculoDto>()
                 .ReverseMap();
 
