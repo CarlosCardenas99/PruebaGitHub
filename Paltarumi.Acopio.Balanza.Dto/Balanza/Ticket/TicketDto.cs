@@ -6,7 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
         public int IdLoteBalanza { get; set; }
         public string? Numero { get; set; }
         public DateTimeOffset FechaIngreso { get; set; }
-        public DateTimeOffset FechaSalida { get; set; }
+        public DateTimeOffset? FechaSalida { get; set; }
         public int IdEstadoTmh { get; set; }
         public float PesoBruto100 { get; set; }
         public float PesoBrutoBase { get; set; }

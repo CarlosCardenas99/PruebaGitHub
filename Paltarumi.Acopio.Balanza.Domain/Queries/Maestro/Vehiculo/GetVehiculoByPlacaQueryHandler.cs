@@ -22,6 +22,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
         protected override async Task<ResponseDto<GetVehiculoDto>> HandleQuery(GetVehiculoByPlacaQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetVehiculoDto>();
+
+            request.Placa=request.Placa.ToUpper();
+
+            if (request.Placa.Length ==6)
+            {
+                request.Placa = request.Placa.Insert(3, "-");
+            }
+
             var vehiculo = await _vehiculoRepository.GetByAsync(
                 x => x.Placa.Equals(request.Placa),
                 x => x.IdTipoVehiculoNavigation,

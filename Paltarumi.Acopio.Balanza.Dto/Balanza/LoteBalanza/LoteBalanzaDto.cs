@@ -6,7 +6,7 @@
         public int IdConcesion { get; set; }
         public int IdProveedor { get; set; }
         public DateTimeOffset FechaIngreso { get; set; }
-        public DateTimeOffset FechaAcopio { get; set; }
+        public DateTimeOffset? FechaAcopio { get; set; }
         public int IdEstadoTipoMaterial { get; set; }
         public int? IdTipoMineral { get; set; }
         public string? CantidadSacos { get; set; }
@@ -19,6 +19,6 @@
         public string? UserNameCreate { get; set; }
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
-        public DateTimeOffset UpdateDate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
     }
 }

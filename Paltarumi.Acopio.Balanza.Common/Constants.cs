@@ -57,6 +57,7 @@
             public const string NOTA_DE_DEBITO = "08";
             public const string LOTE = "50";
             public const string TICKET = "51";
+            public const string TICKETDOC = "53";
         }
         public class Config
         {

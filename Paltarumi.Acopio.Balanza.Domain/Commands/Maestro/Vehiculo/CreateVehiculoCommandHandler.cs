@@ -29,6 +29,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
         {
             var response = new ResponseDto<GetVehiculoDto>();
 
+            request.CreateDto.Placa = request.CreateDto.Placa.ToUpper();
+            request.CreateDto.PlacaCarreta = request.CreateDto.PlacaCarreta.ToUpper();
+
+            if (request.CreateDto.Placa.Length == 6 )request.CreateDto.Placa = request.CreateDto.Placa.Insert(3, "-");
+
+            if( request.CreateDto.PlacaCarreta.Length == 6) request.CreateDto.PlacaCarreta = request.CreateDto.PlacaCarreta.Insert(3, "-");
+            
             var vehiculo = await _vehiculoRepository.GetByAsync(
                 x => x.Placa == request.CreateDto.Placa &&
                 x.Activo == true

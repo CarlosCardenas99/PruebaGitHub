@@ -104,12 +104,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (loteBalanza != null && _mediator != null)
             {
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
+                loteBalanza.TicketDocs = _mapper?.Map<List<Entity.TicketDoc>>(ticketDetails) ?? new List<Entity.TicketDoc>();
 
                 foreach (var ticket in loteBalanza.Tickets)
                 {
                     ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
                     ticket.Activo = true;
                     await CreateTransporteVehiculo(ticket.IdTransporte, ticket.IdVehiculo);
+                }
+
+                foreach (var ticketDoc in loteBalanza.TicketDocs)
+                {
+                    ticketDoc.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKETDOC, "1")))?.Data ?? string.Empty;
+                    ticketDoc.Activo = true;
                 }
 
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>

@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Balanza.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class Maestro
     {
@@ -12,6 +15,11 @@
             MuestraIdMuestraCondicionNavigations = new HashSet<Muestra>();
             MuestraIdMuestraEstadoNavigations = new HashSet<Muestra>();
             MuestraIdTurnoNavigations = new HashSet<Muestra>();
+            TicketDocIdEstadoTmhCarretaNavigations = new HashSet<TicketDoc>();
+            TicketDocIdEstadoTmhNavigations = new HashSet<TicketDoc>();
+            TicketDocIdUnidadMedidaNavigations = new HashSet<TicketDoc>();
+            TicketDocIdUsuarioAprobadorPesoBrutoCarretaNavigations = new HashSet<TicketDoc>();
+            TicketDocIdUsuarioAprobadorPesoBrutoNavigations = new HashSet<TicketDoc>();
             TicketIdEstadoTmhCarretaNavigations = new HashSet<Ticket>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
             TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
@@ -35,6 +43,11 @@
         public virtual ICollection<Muestra> MuestraIdMuestraCondicionNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdMuestraEstadoNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdTurnoNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdEstadoTmhCarretaNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdEstadoTmhNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdUnidadMedidaNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdUsuarioAprobadorPesoBrutoCarretaNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdUsuarioAprobadorPesoBrutoNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhCarretaNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }

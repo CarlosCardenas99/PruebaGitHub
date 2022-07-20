@@ -1,9 +1,13 @@
-﻿namespace Paltarumi.Acopio.Balanza.Entity
+﻿using System;
+using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class Vehiculo
     {
         public Vehiculo()
         {
+            TicketDocs = new HashSet<TicketDoc>();
             Tickets = new HashSet<Ticket>();
             TransporteVehiculos = new HashSet<TransporteVehiculo>();
         }
@@ -18,6 +22,7 @@
 
         public virtual Maestro IdTipoVehiculoNavigation { get; set; } = null!;
         public virtual Maestro IdVehiculoMarcaNavigation { get; set; } = null!;
+        public virtual ICollection<TicketDoc> TicketDocs { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<TransporteVehiculo> TransporteVehiculos { get; set; }
     }
