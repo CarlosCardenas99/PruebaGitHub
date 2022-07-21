@@ -28,6 +28,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
         public override async Task<ResponseDto<GetVehiculoDto>> HandleCommand(UpdateVehiculoCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetVehiculoDto>();
+
+            //________________________
+            request.UpdateDto.Placa = request.UpdateDto.Placa.ToUpper();
+            request.UpdateDto.PlacaCarreta = request.UpdateDto.PlacaCarreta.ToUpper();
+
+            if (request.UpdateDto.Placa.Length == 6) request.UpdateDto.Placa = request.UpdateDto.Placa.Insert(3, "-");
+
+            if (request.UpdateDto.PlacaCarreta.Length == 6) request.UpdateDto.PlacaCarreta = request.UpdateDto.PlacaCarreta.Insert(3, "-");
+            //________________________
+
             var vehiculo = await _vehiculoRepository.GetByAsync(x => x.IdVehiculo == request.UpdateDto.IdVehiculo);
 
             if (vehiculo != null)
@@ -48,6 +58,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 
                 await _vehiculoRepository.UpdateAsync(vehiculo);
             }
+            vehiculo = await _vehiculoRepository.GetByAsNoTrackingAsync(
+               x => x.IdVehiculo == vehiculo.IdVehiculo,
+               x => x.IdTipoVehiculoNavigation,
+               x => x.IdVehiculoMarcaNavigation
+           );
 
             var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
             if (vehiculoDto != null) response.UpdateData(vehiculoDto);
