@@ -37,7 +37,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Reportes
             }
 
             report.UpdateDataSource("GuiaRecepcionMineralDataSource", connectionString, new Dictionary<string, object> {
-                { "@IdLoteBalanza", request.IdLoteBalanza }
+                { "@idLoteBalanza", request.IdLoteBalanza }
             });
 
             var reportProcessor = new Telerik.Reporting.Processing.ReportProcessor();
