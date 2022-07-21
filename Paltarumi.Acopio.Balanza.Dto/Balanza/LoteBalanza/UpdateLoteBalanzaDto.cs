@@ -1,5 +1,4 @@
 ﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.TicketDoc;
 
 namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
 {
@@ -14,6 +13,5 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
         public IEnumerable<UpdateTicketDto>? TicketDetails { get; set; }
-        public IEnumerable<UpdateTicketDocDto>? TicketDocDetails { get; set; }
     }
 }

@@ -70,11 +70,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Resources\Balanza\TicketDoc.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TicketDoc.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\Common.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -175,10 +170,6 @@
     <EmbeddedResource Update="Resources\Balanza\Ticket.resx">
       <LastGenOutput>Ticket.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Balanza\TicketDoc.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TicketDoc.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
