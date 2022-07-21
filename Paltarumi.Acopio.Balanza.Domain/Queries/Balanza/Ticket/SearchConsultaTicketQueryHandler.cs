@@ -84,13 +84,23 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 filter = filter.And(x => x.Tara == filters.TaraVehiculo);
 
             //guias
-            if (!string.IsNullOrEmpty(filters?.GuiasGR))
+            if (!string.IsNullOrEmpty(filters?.GuiaRemisionRemitente))
             {
-                var guias = filters.GuiasGR.Split(" ");
+                var guias = filters.GuiaRemisionRemitente.Split(" ");
                 guias.ToList().ForEach(p =>
                 {
                     filter = filter.And(x =>
-                    (x.Grr.Contains(p) || x.Grt.Contains(p)));
+                    (x.Grr.Contains(p)));
+                });
+            }
+            //Guia Remitente
+            if (!string.IsNullOrEmpty(filters?.GuiaRemisionTransportista))
+            {
+                var guias = filters.GuiaRemisionTransportista.Split(" ");
+                guias.ToList().ForEach(p =>
+                {
+                    filter = filter.And(x =>
+                    (x.Grt.Contains(p)));
                 });
             }
             //if (!string.IsNullOrEmpty(filters?.GuiasGR))

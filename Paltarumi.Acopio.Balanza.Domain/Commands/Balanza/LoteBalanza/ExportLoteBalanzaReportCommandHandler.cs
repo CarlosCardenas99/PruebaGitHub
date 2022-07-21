@@ -37,7 +37,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             }
 
             report.UpdateDataSource("TicketDataSource", connectionString, new Dictionary<string, object> {
-                { "@IdTicket", request.IdTicket }
+                { "@Ticket_idTicket", request.IdTicket }
             });
 
             var reportProcessor = new Telerik.Reporting.Processing.ReportProcessor();

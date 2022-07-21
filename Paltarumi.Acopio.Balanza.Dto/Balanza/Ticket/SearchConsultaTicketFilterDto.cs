@@ -10,7 +10,8 @@
         public string? Vehiculo { get; set; }//placa-licencia  
         public string? Conductor { get; set; }//nombre-licencia
         public int TaraVehiculo { get; set; } //tara
-        public string? GuiasGR { get; set; }//grr -grt
+        public string? GuiaRemisionTransportista { get; set; }//-grt
+        public string? GuiaRemisionRemitente { get; set; }//-grr
         public bool Activo { get; set; }
     }
 }
