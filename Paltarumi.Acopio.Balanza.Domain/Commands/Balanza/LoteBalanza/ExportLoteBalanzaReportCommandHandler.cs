@@ -21,7 +21,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         ) : base(unitOfWork, mapper, validator)
         {
             _configuration = configuration;
-        }
+        }  
 
         public override async Task<ResponseDto<byte[]>> HandleCommand(ExportLoteBalanzaReportCommand request, CancellationToken cancellationToken)
         {
