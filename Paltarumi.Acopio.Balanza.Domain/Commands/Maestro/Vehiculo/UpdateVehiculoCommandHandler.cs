@@ -46,14 +46,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 
                 if (request.UpdateDto.IdTipoVehiculo == default)
                 {
-                    vehiculo.IdTipoVehiculoNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.UpdateDto.DescripcionTipoVehiculo);
-                    vehiculo.IdTipoVehiculo = vehiculo.IdTipoVehiculoNavigation.IdMaestro;
+                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_TIPO, request.UpdateDto.DescripcionTipoVehiculo);
+                    vehiculo.IdTipoVehiculo = maestro.IdMaestro;
+                    vehiculo.IdTipoVehiculoNavigation = (maestro.IdMaestro == default ? maestro : null)!;
                 }
 
                 if (request.UpdateDto.IdVehiculoMarca == default)
                 {
-                    vehiculo.IdVehiculoMarcaNavigation = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.UpdateDto.DescripcionVehiculoMarca);
-                    vehiculo.IdTipoVehiculo = vehiculo.IdVehiculoMarcaNavigation.IdMaestro;
+                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.UpdateDto.DescripcionTipoVehiculo);
+                    vehiculo.IdVehiculoMarca = maestro.IdMaestro;
+                    vehiculo.IdVehiculoMarcaNavigation = (maestro.IdMaestro == default ? maestro : null)!;
                 }
 
                 await _vehiculoRepository.UpdateAsync(vehiculo);
@@ -63,7 +65,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
                x => x.IdVehiculo == vehiculo.IdVehiculo,
                x => x.IdTipoVehiculoNavigation,
                x => x.IdVehiculoMarcaNavigation
-           );
+             );
 
             var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
             if (vehiculoDto != null) response.UpdateData(vehiculoDto);
@@ -75,23 +77,33 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 
         private async Task<Entity.Maestro> GetMaestro(string codigoTabla, string? descripcion)
         {
-            var tipoVehiculos = await _maestroRepository.FindByAsNoTrackingAsync(
+            var maestro = await _maestroRepository.GetByAsNoTrackingAsync(
+                x => x.CodigoTabla == codigoTabla && x.Descripcion == descripcion
+            );
+
+            if (maestro != null) return maestro;
+
+            var maestros = await _maestroRepository.FindByAsNoTrackingAsync(
                 x => x.CodigoTabla == codigoTabla
             );
 
-            var codigoItem = tipoVehiculos.Max(x => x.CodigoItem);
+            var codigoItem = maestros.Max(x => x.CodigoItem);
             int.TryParse(codigoItem, out var codigoItemInt);
 
             codigoItem = $"0{codigoItemInt + 1}";
             codigoItem = codigoItem.Substring(codigoItem.Length - 2);
 
-            return new Entity.Maestro
+            maestro = new Entity.Maestro
             {
                 CodigoTabla = codigoTabla,
                 CodigoItem = codigoItem,
                 Descripcion = descripcion ?? string.Empty,
                 Activo = true
             };
+
+            await _maestroRepository.AddAsync(maestro);
+
+            return maestro;
         }
     }
 }
