@@ -2,6 +2,7 @@
 {
     public class SearchConsultaTicketDto
     {
+        public int IdLoteBalanza { get; set; }
         public int? IdTicket { get; set; }
         public string CodigoLote { get; set; } = null!;//lote
         public string Numero { get; set; } = null!;
