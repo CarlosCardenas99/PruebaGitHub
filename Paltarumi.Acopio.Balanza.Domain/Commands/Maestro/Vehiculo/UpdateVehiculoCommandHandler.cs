@@ -53,12 +53,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 
                 if (request.UpdateDto.IdVehiculoMarca == default)
                 {
-                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.UpdateDto.DescripcionTipoVehiculo);
+                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.UpdateDto.DescripcionVehiculoMarca);
                     vehiculo.IdVehiculoMarca = maestro.IdMaestro;
                     vehiculo.IdVehiculoMarcaNavigation = (maestro.IdMaestro == default ? maestro : null)!;
                 }
 
                 await _vehiculoRepository.UpdateAsync(vehiculo);
+                await _vehiculoRepository.SaveAsync();
             }
 
             vehiculo = await _vehiculoRepository.GetByAsNoTrackingAsync(
