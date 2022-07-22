@@ -59,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
 
                 if (request.CreateDto.IdVehiculoMarca == default)
                 {
-                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionTipoVehiculo);
+                    var maestro = await GetMaestro(Constants.Maestro.CodigoTabla.VEHICULO_MARCA, request.CreateDto.DescripcionVehiculoMarca);
                     vehiculo.IdVehiculoMarca = maestro.IdMaestro;
                     vehiculo.IdVehiculoMarcaNavigation = (maestro.IdMaestro == default ? maestro : null)!;
                 }
