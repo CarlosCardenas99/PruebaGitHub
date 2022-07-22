@@ -113,7 +113,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                         ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
 
                     ticket.Activo = true;
-                    await CreateTransporteVehiculo(ticket.IdTransporte, ticket.IdVehiculo);
+                    //await CreateTransporteVehiculo(ticket.IdTransporte, ticket.IdVehiculo);
                 }
 
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
@@ -224,6 +224,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             if (idTransporte.HasValue == true && idVehiculo.HasValue == true)
                 transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => x.IdTransporte == idTransporte);
+
             transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => x.IdVehiculo == idVehiculo);
 
             if (transporteVehiculo != null)
