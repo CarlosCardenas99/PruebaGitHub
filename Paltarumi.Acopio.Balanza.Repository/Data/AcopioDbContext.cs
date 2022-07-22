@@ -60,6 +60,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1501,7 +1502,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdTransporteNavigation)
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdTransporte)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_Ticket_idTransporte");
 
                 entity.HasOne(d => d.IdUnidadMedidaNavigation)

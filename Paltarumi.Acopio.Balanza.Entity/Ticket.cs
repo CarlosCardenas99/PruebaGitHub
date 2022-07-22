@@ -33,7 +33,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public float PesoNetoTotal { get; set; }
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
-        public int IdTransporte { get; set; }
+        public int? IdTransporte { get; set; }
         public int IdConductor { get; set; }
         public int IdVehiculo { get; set; }
         public int IdUnidadMedida { get; set; }
@@ -45,7 +45,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual Maestro IdEstadoTmhCarretaNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
         public virtual LoteBalanza IdLoteBalanzaNavigation { get; set; } = null!;
-        public virtual Transporte IdTransporteNavigation { get; set; } = null!;
+        public virtual Transporte? IdTransporteNavigation { get; set; }
         public virtual Maestro IdUnidadMedidaNavigation { get; set; } = null!;
         public virtual Maestro? IdUsuarioAprobadorPesoBrutoCarretaNavigation { get; set; }
         public virtual Maestro? IdUsuarioAprobadorPesoBrutoNavigation { get; set; }

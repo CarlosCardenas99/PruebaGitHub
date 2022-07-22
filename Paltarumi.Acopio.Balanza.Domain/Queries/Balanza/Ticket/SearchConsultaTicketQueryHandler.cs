@@ -72,12 +72,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             }
 
             //vehiculo
+            filters.Vehiculo = filters.Vehiculo.ToUpper();
+
+            if (filters.Vehiculo.Length == 6) filters.Vehiculo = filters.Vehiculo.Insert(3, "-");
+
             if (!string.IsNullOrEmpty(filters?.Vehiculo))
                 filter = filter.And(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculo));
 
             //conductor
             if (!string.IsNullOrEmpty(filters?.Conductor))
-                filter = filter.And(x => (x.IdConductorNavigation.Nombres.Contains(filters.Conductor) || x.IdConductorNavigation.Licencia.Contains(filters.Conductor)));
+                filter = filter.And(x => (x.IdConductorNavigation.Nombres.Contains(filters.Conductor) || x.IdConductorNavigation.Licencia.Contains(filters.Conductor) || x.IdConductorNavigation.Numero.Contains(filters.Conductor)));
 
             //tara
             if (filters?.TaraVehiculo > 0)
