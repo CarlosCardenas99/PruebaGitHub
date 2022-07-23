@@ -22,7 +22,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Conductor
         protected override async Task<ResponseDto<GetConductorDto>> HandleQuery(GetConductorQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetConductorDto>();
-            var conductor = await _conductorRepository.GetByAsync(x => x.IdConductor == request.Id);
+            var conductor = await _conductorRepository.GetByAsync(
+                x => x.IdConductor == request.Id,
+                x => x.IdTipoLicenciaNavigation
+                );
             var conductorDto = _mapper?.Map<GetConductorDto>(conductor);
 
             if (conductor != null && conductorDto != null)

@@ -38,7 +38,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Conductor
                 request.SearchParams?.Page?.Page ?? 1,
                 request.SearchParams?.Page?.PageSize ?? 10,
                 null,
-                filter
+                filter,
+                x => x.IdTipoLicenciaNavigation
             );
 
             var conductorDtos = _mapper?.Map<IEnumerable<SearchConductorDto>>(conductors.Items);

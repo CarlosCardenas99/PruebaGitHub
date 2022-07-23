@@ -16,6 +16,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string Nombres { get; set; } = null!;
         public string Domicilio { get; set; } = null!;
         public string? CodigoUbigeo { get; set; }
+        public int? IdTipoLicencia { get; set; }
         public string Licencia { get; set; } = null!;
         public string Telefono { get; set; } = null!;
         public string Email { get; set; } = null!;
@@ -23,6 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
         public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
+        public virtual Maestro? IdTipoLicenciaNavigation { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

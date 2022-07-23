@@ -60,7 +60,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-          
+         
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -230,6 +230,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("email");
 
+                entity.Property(e => e.IdTipoLicencia).HasColumnName("idTipoLicencia");
+
                 entity.Property(e => e.Licencia)
                     .HasMaxLength(20)
                     .IsUnicode(false)
@@ -260,6 +262,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .WithMany(p => p.Conductors)
                     .HasForeignKey(d => d.CodigoUbigeo)
                     .HasConstraintName("fk_maestro_Conductor_codigoUbigeo");
+
+                entity.HasOne(d => d.IdTipoLicenciaNavigation)
+                    .WithMany(p => p.Conductors)
+                    .HasForeignKey(d => d.IdTipoLicencia)
+                    .HasConstraintName("fk_maestro_Conductor_idTipoLicencia");
             });
 
             modelBuilder.Entity<Correlativo>(entity =>

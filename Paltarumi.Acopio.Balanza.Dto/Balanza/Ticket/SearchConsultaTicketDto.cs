@@ -27,6 +27,7 @@
         public string TipoVehiculo { get; set; } = null!;
         public string VehiculoTara { get; set; } = null!;
         public string Conductor { get; set; } = null!;//conductor
+        public string ConductorTipoLicencia { get; set; } = null!;
         public string Licencia { get; set; } = null!;
         public string UnidadMedida { get; set; } = null!;
         public string CantidadSacos { get; set; } = null!;
