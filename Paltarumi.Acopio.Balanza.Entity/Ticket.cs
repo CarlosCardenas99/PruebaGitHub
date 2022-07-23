@@ -34,14 +34,14 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
         public int? IdTransporte { get; set; }
-        public int IdConductor { get; set; }
+        public int? IdConductor { get; set; }
         public int IdVehiculo { get; set; }
         public int IdUnidadMedida { get; set; }
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
         public bool Activo { get; set; }
 
-        public virtual Conductor IdConductorNavigation { get; set; } = null!;
+        public virtual Conductor? IdConductorNavigation { get; set; }
         public virtual Maestro IdEstadoTmhCarretaNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTmhNavigation { get; set; } = null!;
         public virtual LoteBalanza IdLoteBalanzaNavigation { get; set; } = null!;

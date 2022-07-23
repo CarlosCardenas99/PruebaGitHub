@@ -1529,7 +1529,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdConductorNavigation)
                     .WithMany(p => p.Tickets)
                     .HasForeignKey(d => d.IdConductor)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_Ticket_idConductor");
 
                 entity.HasOne(d => d.IdEstadoTmhNavigation)
