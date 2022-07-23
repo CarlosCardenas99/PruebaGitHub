@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Config.Empresa;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
@@ -16,6 +17,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
         private readonly IRepository<Entity.Maestro> _maestroRepository;
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
+        private readonly IRepository<Entity.Lote> _loteRepository;
 
         public GetLoteBalanzaQueryHandler(
             IMapper mapper,
@@ -23,13 +25,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             IRepository<Entity.Ticket> ticketRepository,
             IRepository<Entity.Maestro> maestroRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
+            IRepository<Entity.Lote> loteRepository
         ) : base(mapper, validator)
         {
             _ticketRepository = ticketRepository;
             _maestroRepository = maestroRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
             _loteMuestreoRepository = loteMuestreoRepository;
+            _loteRepository = loteRepository;
         }
 
         protected override async Task<ResponseDto<GetLoteBalanzaDto>> HandleQuery(GetLoteBalanzaQuery request, CancellationToken cancellationToken)
@@ -52,6 +56,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             var tipoMineral = loteMuestreo != null ?
                 await _maestroRepository.GetByAsNoTrackingAsync(x => x.IdMaestro == loteMuestreo.IdTipoMineral) : null;
+
+            var lote = await _loteRepository.GetByAsNoTrackingAsync(
+                    x => x.CodigoLote == loteBalanza.CodigoLote,
+                    x => x.IdEmpresaNavigation    
+                );
 
             var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);
 
@@ -78,6 +87,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 loteDto.Tms = loteMuestreo?.Tms;
                 loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
                 loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
+                loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote.IdEmpresaNavigation) ?? null;
 
                 response.UpdateData(loteDto);
             }

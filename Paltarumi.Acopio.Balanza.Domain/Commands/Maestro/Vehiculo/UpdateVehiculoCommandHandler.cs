@@ -67,6 +67,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
                x => x.IdVehiculoMarcaNavigation
            );
 
+            vehiculo = await _vehiculoRepository.GetByAsNoTrackingAsync(
+               x => x.IdVehiculo == vehiculo.IdVehiculo,
+               x => x.IdTipoVehiculoNavigation,
+               x => x.IdVehiculoMarcaNavigation
+             );
+
             var vehiculoDto = _mapper?.Map<GetVehiculoDto>(vehiculo);
             if (vehiculoDto != null) response.UpdateData(vehiculoDto);
 

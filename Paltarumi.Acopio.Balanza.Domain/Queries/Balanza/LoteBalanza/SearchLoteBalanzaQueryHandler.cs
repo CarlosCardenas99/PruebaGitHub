@@ -42,8 +42,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
-                    var fechaDesde = filters.FechaHasta.Value.Date.AddDays(1);
-                    filter = filter.And(x => (x.FechaAcopio < fechaDesde || x.FechaIngreso < fechaDesde));
+                    var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    filter = filter.And(x => (x.FechaAcopio < fechaHasta || x.FechaIngreso < fechaHasta));
                 }
             }
 

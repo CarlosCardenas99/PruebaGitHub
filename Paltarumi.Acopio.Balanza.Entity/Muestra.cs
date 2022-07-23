@@ -9,7 +9,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdTurno { get; set; }
         public string? UserNameSupervisor { get; set; }
         public DateTimeOffset? FechaMuestreo { get; set; }
-        public string CodigoLote { get; set; } = null!;
+        public string CodigoPlanta { get; set; } = null!;
         public int? IdCancha { get; set; }
         public int IdProveedor { get; set; }
         public int? IdDuenoMuestra { get; set; }

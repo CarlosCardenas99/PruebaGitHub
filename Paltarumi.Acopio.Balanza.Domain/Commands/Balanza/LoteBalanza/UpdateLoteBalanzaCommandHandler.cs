@@ -45,19 +45,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
 
-            await CreateLoteOperationsAsync(loteBalanza?.CodigoLote!);
+            var lote = await CreateLoteOperationsAsync(loteBalanza?.CodigoLote!);
 
-            var response = await UpdateLoteBalanza(loteBalanza!, request, cancellationToken);
+            var response = await UpdateLoteBalanza(lote, loteBalanza!, request, cancellationToken);
 
             await CheckStatusOperacionAsync(loteBalanza?.CodigoLote!, response, request);
 
             return response;
         }
 
-        private async Task CreateLoteOperationsAsync(string codigoLote)
+        private async Task<Entity.Lote> CreateLoteOperationsAsync(string codigoLote)
         {
             var lote = await _loteRepository.GetByAsync(x => x.CodigoLote == codigoLote);
-            if (lote == null) return;
+            if (lote == null) return null;
 
             var operacions = await _operacionRepository.FindByAsNoTrackingAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.UPDATE));
             var existingLoteOperacions = await _loteOperacionRepository.FindByAsNoTrackingAsync(x => x.IdLote == lote.IdLote);
@@ -80,9 +80,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             await _loteOperacionRepository.AddAsync(loteOperacions.ToArray());
             await _loteOperacionRepository.SaveAsync();
+
+            return lote;
         }
 
-        public async Task<ResponseDto<GetLoteBalanzaDto>> UpdateLoteBalanza(Entity.LoteBalanza loteBalanza, UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseDto<GetLoteBalanzaDto>> UpdateLoteBalanza(Entity.Lote lote, Entity.LoteBalanza loteBalanza, UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaDto>();
 
@@ -136,7 +138,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 foreach (var newTicket in newTickets)
                 {
-                    newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
+                    newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa)))?.Data ?? string.Empty;
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     newTicket.IdLoteBalanzaNavigation = null!;
                     newTicket.Activo = true;
