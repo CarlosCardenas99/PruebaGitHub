@@ -55,10 +55,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
             // Actualizar la serie harcoded
-            var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1"))!;
+            var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa))!;
             var codigoLote = codeResponse?.Data ?? string.Empty;
 
-            var idLote = await CreateLoteAsync(codigoLote);
+            await CreateLoteAsync(codigoLote, request.CreateDto.IdEmpresa);
             var response = await CreateLoteBalanzaAsync(request, codigoLote);
 
             await CheckStatusOperacionAsync(codigoLote, response, request);
@@ -66,9 +66,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task<int> CreateLoteAsync(string codigoLote)
+        private async Task CreateLoteAsync(string codigoLote, int idEmpresa)
         {
-            var lote = new Entity.Lote { CodigoLote = codigoLote };
+            var lote = new Entity.Lote { CodigoLote = codigoLote, IdEmpresa = idEmpresa };
 
             var operacions = await _operacionRepository.FindByAsNoTrackingAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.CREATE));
             var loteOperacions = new List<Entity.LoteOperacion>();
@@ -90,8 +90,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             await _loteRepository.AddAsync(lote);
             await _loteRepository.SaveAsync();
-
-            return lote.IdLote;
         }
 
         private async Task<ResponseDto<GetLoteBalanzaDto>> CreateLoteBalanzaAsync(CreateLoteBalanzaCommand request, string code)
@@ -110,7 +108,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     //if (request.CreateDto.EsPartido)
                     //    ticket.Numero = string.Empty;
                     //else
-                        ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1")))?.Data ?? string.Empty;
+                        ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa)))?.Data ?? string.Empty;
 
                     ticket.Activo = true;
                     await CreateTransporteVehiculo(ticket.IdTransporte, ticket.IdVehiculo);

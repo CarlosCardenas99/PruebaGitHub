@@ -10,12 +10,17 @@ namespace Paltarumi.Acopio.Balanza.Entity
             Conductors = new HashSet<Conductor>();
             LoteBalanzaIdEstadoNavigations = new HashSet<LoteBalanza>();
             LoteBalanzaIdEstadoTipoMaterialNavigations = new HashSet<LoteBalanza>();
-            LoteCodigos = new HashSet<LoteCodigo>();
+            LoteCodigo1s = new HashSet<LoteCodigo1>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
             MuestraIdCanchaNavigations = new HashSet<Muestra>();
             MuestraIdMuestraCondicionNavigations = new HashSet<Muestra>();
             MuestraIdMuestraEstadoNavigations = new HashSet<Muestra>();
             MuestraIdTurnoNavigations = new HashSet<Muestra>();
+            TicketDocIdEstadoTmhCarretaNavigations = new HashSet<TicketDoc>();
+            TicketDocIdEstadoTmhNavigations = new HashSet<TicketDoc>();
+            TicketDocIdUnidadMedidaNavigations = new HashSet<TicketDoc>();
+            TicketDocIdUsuarioAprobadorPesoBrutoCarretaNavigations = new HashSet<TicketDoc>();
+            TicketDocIdUsuarioAprobadorPesoBrutoNavigations = new HashSet<TicketDoc>();
             TicketIdEstadoTmhCarretaNavigations = new HashSet<Ticket>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
             TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
@@ -34,12 +39,17 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual ICollection<Conductor> Conductors { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoNavigations { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoTipoMaterialNavigations { get; set; }
-        public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
+        public virtual ICollection<LoteCodigo1> LoteCodigo1s { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
         public virtual ICollection<Muestra> MuestraIdCanchaNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdMuestraCondicionNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdMuestraEstadoNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdTurnoNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdEstadoTmhCarretaNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdEstadoTmhNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdUnidadMedidaNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdUsuarioAprobadorPesoBrutoCarretaNavigations { get; set; }
+        public virtual ICollection<TicketDoc> TicketDocIdUsuarioAprobadorPesoBrutoNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhCarretaNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }

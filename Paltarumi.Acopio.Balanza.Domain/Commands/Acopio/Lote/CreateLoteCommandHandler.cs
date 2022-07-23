@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
             var lote = _mapper?.Map<Entity.Lote>(request.CreateDto)!;
 
             // Actualizar la serie harcoded
-            var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1"))!;
+            var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa))!;
             var code = codeResponse?.Data ?? string.Empty;
 
             lote.CodigoLote = code;
