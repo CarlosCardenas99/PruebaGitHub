@@ -1,4 +1,5 @@
 ﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Config.Empresa;
 using Paltarumi.Acopio.Maestro.Dto.Concesion;
 using Paltarumi.Acopio.Maestro.Dto.Maestro;
 using Paltarumi.Acopio.Maestro.Dto.Proveedor;
@@ -10,6 +11,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public int IdLoteBalanza { get; set; }
         public float? Humedad { get; set; }
         public float? Tms { get; set; }
+        public GetEmpresaDto? Empresa { get; set; }
         public GetConcesionDto? Concesion { get; set; }
         public GetMaestroDto? EstadoTipoMaterial { get; set; }
         public GetMaestroDto? TipoMineral { get; set; }
