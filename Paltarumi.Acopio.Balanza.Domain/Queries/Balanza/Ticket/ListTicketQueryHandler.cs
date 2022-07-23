@@ -24,6 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             var tickets = await _ticketRepository.FindByAsync(
                 x => x.IdLoteBalanza == request.IdLoteBalanza,
                 x => x.IdConductorNavigation,
+                x => x.IdConductorNavigation.IdTipoLicenciaNavigation,
                 x => x.IdTransporteNavigation,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdEstadoTmhCarretaNavigation,

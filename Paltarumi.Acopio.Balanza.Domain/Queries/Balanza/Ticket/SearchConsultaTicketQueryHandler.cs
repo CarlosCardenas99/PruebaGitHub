@@ -130,6 +130,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 sorts,
                 filter,
                 x => x.IdConductorNavigation,
+                x => x.IdConductorNavigation.IdTipoLicenciaNavigation,
                 x => x.IdTransporteNavigation,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,

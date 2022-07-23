@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
         public string? Numero { get; set; }
         public bool Activo { get; set; }
         public string Conductor { get; set; } = null!;
+        public string ConductorTipoLicencia { get; set; } = null!;
         public string ConductorLicencia { get; set; } = null!;
         public string ConductorDni { get; set; } = null!;
         public string Transporte { get; set; } = null!;

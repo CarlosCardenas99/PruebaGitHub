@@ -17,9 +17,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
                 .ReverseMap();
 
             CreateMap<Entity.Conductor, GetConductorDto>()
+                .ForMember(x => x.TipoLicencia, opt => opt.MapFrom(x => x.IdTipoLicenciaNavigation != null ? x.IdTipoLicenciaNavigation.Descripcion : string.Empty))
                 .ReverseMap();
 
             CreateMap<Entity.Conductor, SearchConductorDto>()
+                .ForMember(x => x.TipoLicencia, opt => opt.MapFrom(x => x.IdTipoLicenciaNavigation != null ? x.IdTipoLicenciaNavigation.Descripcion : string.Empty))
                 .ReverseMap();
         }
     }

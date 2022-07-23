@@ -3,5 +3,6 @@
     public class ListConductorDto : ConductorDto
     {
         public int? IdConductor { get; set; }
+        public string? TipoLicencia { get; set; }
     }
 }
