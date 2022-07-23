@@ -37,6 +37,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Conductor
                 await _conductorRepository.SaveAsync();
             }
 
+            conductor = await _conductorRepository.GetByAsNoTrackingAsync(
+                x => x.IdConductor == conductor.IdConductor,
+                x => x.IdTipoLicenciaNavigation
+            );
+
             var conductorDto = _mapper?.Map<GetConductorDto>(conductor);
             if (conductorDto != null) response.UpdateData(conductorDto);
 
