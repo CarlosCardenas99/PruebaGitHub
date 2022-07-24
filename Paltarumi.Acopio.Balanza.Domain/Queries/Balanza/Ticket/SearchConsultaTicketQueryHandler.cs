@@ -60,7 +60,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     (x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(p) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(p)));
                 });
             }
-
+            //concesion
             if (!string.IsNullOrEmpty(filters?.Concesion))
             {
                 var concesiones = filters.Concesion.Split(" ");
@@ -72,21 +72,32 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             }
 
             //vehiculo
-            filters.Vehiculo = filters.Vehiculo.ToUpper();
+            if (!string.IsNullOrEmpty(filters?.Vehiculo)) 
+            {
+                filters.Vehiculo = filters.Vehiculo.ToUpper();
+                if (filters.Vehiculo.Length == 6) filters.Vehiculo = filters.Vehiculo.Insert(3, "-");
 
-            if (filters.Vehiculo.Length == 6) filters.Vehiculo = filters.Vehiculo.Insert(3, "-");
-
-            if (!string.IsNullOrEmpty(filters?.Vehiculo))
-                filter = filter.And(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculo));
-
+                filter = filter.And(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculo) || x.IdVehiculoNavigation.PlacaCarreta.Contains(filters.Vehiculo));
+            }
             //conductor
             if (!string.IsNullOrEmpty(filters?.Conductor))
                 filter = filter.And(x => (x.IdConductorNavigation.Nombres.Contains(filters.Conductor) || x.IdConductorNavigation.Licencia.Contains(filters.Conductor) || x.IdConductorNavigation.Numero.Contains(filters.Conductor)));
 
             //tara
-            if (filters?.TaraVehiculo > 0)
-                filter = filter.And(x => x.Tara == filters.TaraVehiculo);
+            if (filters?.TaraInicial > 0 || filters?.TaraFinal > 0)
+            {
+                if (filters?.TaraInicial > 0)
+                {
+                    var taraInicial = filters.TaraInicial;
+                    filter = filter.And(x => x.Tara >= taraInicial);
+                }
 
+                if (filters?.TaraFinal > 0)
+                {
+                    var taraFinal = filters.TaraFinal;
+                    filter = filter.And(x => x.Tara <= taraFinal );
+                }
+            }
             //guias
             if (!string.IsNullOrEmpty(filters?.GuiaRemisionRemitente))
             {
@@ -107,8 +118,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     (x.Grt.Contains(p)));
                 });
             }
-            //if (!string.IsNullOrEmpty(filters?.GuiasGR))
-            //    filter = filter.And(x => (x.Grr.Contains(filters.GuiasGR) || x.Grt.Contains(filters.GuiasGR)));
+            //estadoLote
+            if (filters?.idEstado.HasValue == true)
+                filter = filter.And(x => x.IdLoteBalanzaNavigation.IdEstado == filters.idEstado);
+
+            //transportista
+            if (!string.IsNullOrEmpty(filters?.Transporte))
+                 filter = filter.And(x => (x.IdTransporteNavigation!.Ruc.Contains(filters.Transporte) || x.IdTransporteNavigation.RazonSocial.Contains(filters.Transporte)));
+
+            //filtros vacios
+            if (filters?.ConductorVacio == true)
+                filter = filter.And(x => x.IdConductor.Value == null);
+
+            if (filters?.TransporteVacio == true)
+                filter = filter.And(x => x.IdTransporte.Value == null);
 
             //activo
             filter = filter.And(x => x.Activo == true);
@@ -129,9 +152,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 request.SearchParams?.Page?.PageSize ?? 10,
                 sorts,
                 filter,
-                x => x.IdConductorNavigation,
-                x => x.IdConductorNavigation.IdTipoLicenciaNavigation,
-                x => x.IdTransporteNavigation,
+                x => x.IdConductorNavigation!,
+                x => x.IdConductorNavigation!.IdTipoLicenciaNavigation!,
+                x => x.IdTransporteNavigation!,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,
                 x => x.IdLoteBalanzaNavigation.IdProveedorNavigation,

@@ -2,16 +2,21 @@
 {
     public class SearchConsultaTicketFilterDto
     {
-        public DateTimeOffset? FechaDesde { get; set; }//listo
-        public DateTimeOffset? FechaHasta { get; set; }//listo
-        public string? CodigoLote { get; set; }//lote codigo  listo
-        public string? Proveedor { get; set; } //ruc - razon social   listp
-        public string? Concesion { get; set; }//codigo unico - nombre listo
-        public string? Vehiculo { get; set; }//placa-licencia  
-        public string? Conductor { get; set; }//nombre-licencia
-        public int TaraVehiculo { get; set; } //tara
-        public string? GuiaRemisionTransportista { get; set; }//-grt
-        public string? GuiaRemisionRemitente { get; set; }//-grr
+        public DateTimeOffset? FechaDesde { get; set; }
+        public DateTimeOffset? FechaHasta { get; set; }
+        public string? CodigoLote { get; set; }
+        public string? Proveedor { get; set; }
+        public string? Concesion { get; set; }
+        public string? Vehiculo { get; set; }
+        public string? Conductor { get; set; }
+        public int TaraInicial { get; set; }
+        public int TaraFinal { get; set; }
+        public string? Transporte { get; set; }
+        public string? GuiaRemisionTransportista { get; set; }
+        public bool TransporteVacio { get; set; }
+        public bool ConductorVacio { get; set; }
+        public string? GuiaRemisionRemitente { get; set; }
         public bool Activo { get; set; }
+        public int? idEstado { get; set; }
     }
 }
