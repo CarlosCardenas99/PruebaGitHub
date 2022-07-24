@@ -6,13 +6,14 @@ namespace Paltarumi.Acopio.Balanza.Entity
     public partial class LoteCodigo
     {
         public int IdLoteCodigo { get; set; }
-        public int? IdLoteBalanza { get; set; }
+        public int? IdLote { get; set; }
         public int? IdDuenoMuestra { get; set; }
+        public bool EsInterno { get; set; }
         public int IdTipoLoteCodigo { get; set; }
         public DateTimeOffset FechaRecepcion { get; set; }
         public string CodigoPlanta { get; set; } = null!;
-        public string CodigoExterno { get; set; } = null!;
-        public string CodigoHash { get; set; } = null!;
+        public string CodigoPlantaRandom { get; set; } = null!;
+        public string CodigoMuestraProveedor { get; set; } = null!;
         public bool EnsayoLeyAu { get; set; }
         public bool EnsayoLeyAg { get; set; }
         public bool EnsayoPorcentajeRecuperacion { get; set; }
@@ -23,7 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
-        public virtual LoteBalanza? IdLoteBalanzaNavigation { get; set; }
+        public virtual Lote? IdLoteNavigation { get; set; }
         public virtual Maestro IdTipoLoteCodigoNavigation { get; set; } = null!;
     }
 }

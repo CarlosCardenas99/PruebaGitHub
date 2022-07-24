@@ -7,7 +7,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public LoteBalanza()
         {
-            LoteCodigos = new HashSet<LoteCodigo>();
             TicketDocs = new HashSet<TicketDoc>();
             Tickets = new HashSet<Ticket>();
         }
@@ -36,7 +35,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual Maestro IdEstadoNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTipoMaterialNavigation { get; set; } = null!;
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
-        public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<TicketDoc> TicketDocs { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
