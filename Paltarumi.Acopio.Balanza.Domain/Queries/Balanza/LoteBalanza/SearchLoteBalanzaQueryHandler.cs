@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Entity.Base;
@@ -36,13 +37,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             {
                 if (filters?.FechaDesde.HasValue == true)
                 {
-                    DateTimeOffset fechaDesde = filters.FechaDesde.Value.Date;
+                    var fechaDesde = filters.FechaDesde.GetStartDate();
                     filter = filter.And(x => (x.FechaAcopio >= fechaDesde || x.FechaIngreso >= fechaDesde));
                 }
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
-                    DateTimeOffset fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    var fechaHasta = filters.FechaHasta.GetEndDate();
                     filter = filter.And(x => (x.FechaAcopio < fechaHasta || x.FechaIngreso < fechaHasta));
                 }
             }
