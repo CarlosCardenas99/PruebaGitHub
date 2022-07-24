@@ -12,13 +12,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
     public class SearchLoteCodigoQueryHandler : SearchQueryHandlerBase<SearchLoteCodigoQuery, SearchLoteCodigoFilterDto, SearchLoteCodigoDto>
     {
         private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
         public SearchLoteCodigoQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteCodigo> lotecodigoRepository
+            IRepository<Entity.LoteCodigo> lotecodigoRepository,
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository
         ) : base(mapper)
         {
             _lotecodigoRepository = lotecodigoRepository;
+            _loteBalanzaRepository = loteBalanzaRepository;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> HandleQuery(SearchLoteCodigoQuery request, CancellationToken cancellationToken)
@@ -45,13 +48,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
             }
 
             if (!string.IsNullOrEmpty(filters?.CodigoLote))
-                filter = filter.And(x => x.IdLoteBalanzaNavigation.CodigoLote.Contains(filters.CodigoLote));
+                filter = filter.And(x => x.IdLoteNavigation.CodigoLote.Contains(filters.CodigoLote));
 
             if (!string.IsNullOrEmpty(filters?.Proveedor))
             {
-                filter = filter.And(x =>
-                (x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(filters.Proveedor) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(filters.Proveedor)));
+                var loteBalanzasProv = _loteBalanzaRepository.FindByAsNoTrackingAsync(
+                    x => (x.IdProveedorNavigation.RazonSocial.Contains(filters.Proveedor) || x.IdProveedorNavigation.Ruc.Contains(filters.Proveedor)),
+                    x => x.IdProveedorNavigation
+                );
+
+                var CodigoLotesProv = loteBalanzasProv.Result.Select(x => x.CodigoLote).ToList();
+
+                filter = filter.And(x => CodigoLotesProv.Contains(x.IdLoteNavigation.CodigoLote));
             }
+
             var sorts = new List<SortExpression<Entity.LoteCodigo>>();
 
             if (request.SearchParams?.Sort != null)
@@ -68,12 +78,25 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 request.SearchParams?.Page?.PageSize ?? 10,
                 sorts,
                 filter,
-                x => x.IdLoteBalanzaNavigation,
-                x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,
-                x => x.IdLoteBalanzaNavigation.IdProveedorNavigation
+                x => x.IdLoteNavigation
+            );
+
+            var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation.CodigoLote).ToList();
+
+            var loteBalanzas = _loteBalanzaRepository.FindByAsNoTrackingAsync(
+                x => codigoLotes.Contains(x.CodigoLote),
+                x => x.IdEstadoNavigation,
+                x => x.IdProveedorNavigation
             );
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteCodigoDto>>(lotes.Items);
+
+            loteDtos.ToList().ForEach(item =>
+            {
+                var loteBalanza = loteBalanzas.Result.Where(x => x.CodigoLote == item.loteCodigo).FirstOrDefault(new Entity.LoteBalanza());
+                item.Proveedor = loteBalanza.IdProveedorNavigation.RazonSocial;
+                item.Estado = loteBalanza.IdEstadoNavigation.Descripcion;
+            });
 
             var searchResult = new SearchResultDto<SearchLoteCodigoDto>(
                 loteDtos ?? new List<SearchLoteCodigoDto>(),

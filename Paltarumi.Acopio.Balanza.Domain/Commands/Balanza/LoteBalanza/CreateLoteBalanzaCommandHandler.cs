@@ -6,6 +6,7 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
@@ -26,6 +27,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
         private readonly IRepository<Entity.Proveedor> _proveedorRepository;
         private readonly IRepository<Entity.TransporteVehiculo> _transporteVehiculoRepository;
+        private readonly IRepository<Entity.LoteCodigoControl> _loteCodigoControlRepository;
+        private readonly IRepository<Entity.LoteCodigoNomenclatura> _loteCodigoNomenclaturaRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
@@ -39,7 +42,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.DuenoMuestra> duenoMuestraRepository,
             IRepository<Entity.TransporteVehiculo> transporteVehiculoRepository,
             IRepository<Entity.Proveedor> proveedorRepository,
-            IRepository<Entity.Operacion> operacionRepository
+            IRepository<Entity.Operacion> operacionRepository,
+            IRepository<Entity.LoteCodigoControl> loteCodigoControlRepository,
+            IRepository<Entity.LoteCodigoNomenclatura> loteCodigoNomenclaturaRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteRepository = loteRepository;
@@ -50,6 +55,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             _duenoMuestraRepository = duenoMuestraRepository;
             _proveedorRepository = proveedorRepository;
             _operacionRepository = operacionRepository;
+            _loteCodigoControlRepository = loteCodigoControlRepository;
+            _loteCodigoNomenclaturaRepository = loteCodigoNomenclaturaRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -58,7 +65,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa))!;
             var codigoLote = codeResponse?.Data ?? string.Empty;
 
-            await CreateLoteAsync(codigoLote, request.CreateDto.IdEmpresa);
+            var lote = await CreateLoteAsync(codigoLote, request.CreateDto.IdEmpresa);
+
+            await createCodigoLoteAsync(request, lote);
+
             var response = await CreateLoteBalanzaAsync(request, codigoLote);
 
             await CheckStatusOperacionAsync(codigoLote, response, request);
@@ -66,7 +76,48 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task CreateLoteAsync(string codigoLote, int idEmpresa)
+        private async Task createCodigoLoteAsync(CreateLoteBalanzaCommand request, Entity.Lote lote)
+        {
+            var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
+            var codigoHash = generarCodigoAleatorioAsync().Result;
+            var tipoLoteCodigo = obtenerTipoLoteCodigo().Result;
+            var codigoPlanta = obtenerCodigoPlanta(request.CreateDto.IdEmpresa, lote.CodigoLote, tipoLoteCodigo.IdMaestro).Result;
+            var estado = obtenerEstadoLoteCodigoAsync().Result;
+
+            var loteCodigo = new Entity.LoteCodigo
+            {
+                IdLote = lote.IdLote,
+                IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
+                IdTipoLoteCodigo = tipoLoteCodigo.IdMaestro,
+                FechaRecepcion = DateTimeOffset.Now,
+                CodigoPlanta = codigoPlanta,
+                CodigoPlantaRandom = codigoHash,
+                CodigoMuestraProveedor = String.Empty,
+                EsInterno = true,
+                EnsayoLeyAu = false,
+                EnsayoLeyAg = false,
+                EnsayoPorcentajeRecuperacion = false,
+                EnsayoConsumo = false,
+                IdEstado = estado.IdMaestro,
+                UserNameCreate = string.Empty,
+                CreateDate = DateTimeOffset.Now,
+                Activo = true
+            };
+
+            await _loteCodigoRepository.AddAsync(loteCodigo);
+            await _loteCodigoRepository.SaveAsync();
+        }
+
+        private async Task<Entity.Maestro> obtenerEstadoLoteCodigoAsync()
+        {
+            var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
+                x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_CODIGO_ESTADO &&
+                x.CodigoItem == Constants.Maestro.LoteCodigoEstado.PENDIENTE
+             );
+            return estadoLote;
+        }
+
+        private async Task<Entity.Lote> CreateLoteAsync(string codigoLote, int idEmpresa)
         {
             var lote = new Entity.Lote { CodigoLote = codigoLote, IdEmpresa = idEmpresa };
 
@@ -90,6 +141,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             await _loteRepository.AddAsync(lote);
             await _loteRepository.SaveAsync();
+
+            return lote;
         }
 
         private async Task<ResponseDto<GetLoteBalanzaDto>> CreateLoteBalanzaAsync(CreateLoteBalanzaCommand request, string code)
@@ -97,7 +150,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var response = new ResponseDto<GetLoteBalanzaDto>();
             var loteBalanza = _mapper?.Map<Entity.LoteBalanza>(request.CreateDto) ?? new Entity.LoteBalanza();
             var ticketDetails = request.CreateDto?.TicketDetails;
-            var duenoMuestra = await GetOrCreateDuenoMuestra(loteBalanza.IdProveedor);
 
             if (loteBalanza != null && _mediator != null && request.CreateDto != null)
             {
@@ -105,13 +157,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 foreach (var ticket in loteBalanza.Tickets)
                 {
-                    //if (request.CreateDto.EsPartido)
-                    //    ticket.Numero = string.Empty;
-                    //else
-                        ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa)))?.Data ?? string.Empty;
-
+                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa)))?.Data ?? string.Empty;
                     ticket.Activo = true;
-                    //await CreateTransporteVehiculo(ticket.IdTransporte, ticket.IdVehiculo);
                 }
 
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
@@ -135,35 +182,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
 
-                var codigoCorrelativoAleatorio = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
-                var codigo = new StringCreator(codigoCorrelativoAleatorio).Get(Constants.LoteCodigo.Format.NumeroCaracters);
-                var bytes = System.Text.Encoding.UTF8.GetBytes(codigo);
-
-                var tipoLoteCodigo = obtenerTipoLoteCodigo().Result;
-
-                var loteCodigo = new Entity.LoteCodigo
-                {
-                    //IdLoteCodigo
-                    IdLoteBalanza = loteBalanza.IdLoteBalanza,
-                    IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
-                    IdTipoLoteCodigo = tipoLoteCodigo.IdMaestro,
-                    FechaRecepcion = DateTimeOffset.Now,
-                    CodigoPlanta = loteBalanza.CodigoLote,
-                    CodigoExterno = string.Empty,
-                    CodigoHash = Convert.ToBase64String(bytes),
-                    EnsayoLeyAu = false,
-                    EnsayoLeyAg = false,
-                    EnsayoPorcentajeRecuperacion = false,
-                    EnsayoConsumo = false,
-                    IdEstado = 1,
-                    UserNameCreate = string.Empty,
-                    CreateDate = DateTimeOffset.Now,
-                    Activo = true
-                };
-
-                await _loteCodigoRepository.AddAsync(loteCodigo);
-                await _loteCodigoRepository.SaveAsync();
-
                 var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);
 
                 if (loteDto != null)
@@ -178,10 +196,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
+        private async Task<string> obtenerCodigoPlanta(int idEmpresa, string codigoLote, int idTipoLoteCodigo)
+        {
+            string separador = string.Empty;
+            var loteCodigoNomenclatura = await _loteCodigoNomenclaturaRepository.GetByAsync(x => x.IdEmpresa == idEmpresa && x.EsInterno == true && x.IdTipoLoteCodigo == idTipoLoteCodigo);
+            if (!string.IsNullOrEmpty(loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura))
+                separador = "-";
+
+            return String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, codigoLote);
+        }
+
         private async Task<Entity.Maestro> obtenerTipoLoteCodigo()
         {
             var maestro = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                    x.CodigoTabla == Constants.Maestro.CodigoTabla.TIPO_LOTE_COFIGO &&
+                    x.CodigoTabla == Constants.Maestro.CodigoTabla.TIPO_LOTE_CODIGO &&
                     x.CodigoItem == Constants.LoteCodigo.Tipo.MUESTRA
                  );
             return maestro ?? new Entity.Maestro();
@@ -233,8 +261,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var transporteVehiculo = default(Entity.TransporteVehiculo);
 
             if (idTransporte.HasValue == true && idVehiculo.HasValue == true)
-                transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => (x.IdTransporte == idTransporte) && (x.IdVehiculo== idVehiculo));
-            else 
+                transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => (x.IdTransporte == idTransporte) && (x.IdVehiculo == idVehiculo));
+            else
                 return transporteVehiculo!;
 
             if (transporteVehiculo != null)
@@ -251,6 +279,73 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             await _transporteVehiculoRepository.SaveAsync();
 
             return transporteVehiculo;
+        }
+
+        private async Task<string> generarCodigoAleatorioAsync()
+        {
+            CodigoLoteControlDto controlDto = new CodigoLoteControlDto();
+            string numero = string.Empty;
+
+            var control = await _loteCodigoControlRepository.GetByAsync(x => x.Activo == true);
+
+            if (String.IsNullOrEmpty(control?.BloqueCodigo))
+            {
+                controlDto.cursor = 10000;
+                controlDto.position = 0;
+                controlDto.listNumeros = new int[0];
+            }
+            else
+                controlDto = JsonConvert.DeserializeObject<CodigoLoteControlDto>(control.BloqueCodigo);
+
+            if (controlDto != null)
+            {
+                if ( !(controlDto.position < controlDto.listNumeros.ToList().Count) )
+                {
+                    controlDto.listNumeros = generarListaNumeroAleatorios(controlDto.cursor);
+                    controlDto.position = 0;
+                    controlDto.cursor = controlDto.cursor + controlDto.listNumeros.ToList().Count;
+                }
+
+                controlDto.position++;
+                control.BloqueCodigo = JsonConvert.SerializeObject(controlDto);
+
+                await _loteCodigoControlRepository.UpdateAsync(control);
+                await _loteCodigoControlRepository.SaveAsync();
+
+                numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(numero);
+                numero = Convert.ToBase64String(bytes);
+            }
+
+            return numero;
+        }
+        
+        private int[] generarListaNumeroAleatorios(int cursor)
+        {
+            var rand = new Random();
+            int cantidad = rand.Next(Constants.LoteCodigo.Aleatorio.ValorInicial, Constants.LoteCodigo.Aleatorio.ValorFinal);
+            int[] arreglo = generaListInt(cantidad, cursor);
+            int[] nuevoarreglo = new int[cantidad];
+
+            for (int ctr = cantidad; ctr > 0; ctr--)
+            {
+                int aleatorio = rand.Next(0, ctr);
+                int encontrado = arreglo[aleatorio];
+                nuevoarreglo[cantidad - ctr] = encontrado;
+                arreglo = arreglo.Where(val => val != encontrado).ToArray();
+            }
+
+            return nuevoarreglo;
+        }
+
+        private int[] generaListInt(int cantidad, int cursor)
+        {
+            int[] listInt = new int[cantidad];
+
+            for (int ctr = 0; ctr < cantidad; ctr++)
+                listInt[ctr] = cursor + ctr + 1;
+
+            return listInt;
         }
     }
 }

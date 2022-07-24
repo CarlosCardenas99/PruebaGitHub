@@ -41,7 +41,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<LoteCheckList> LoteCheckLists { get; set; } = null!;
         public virtual DbSet<LoteCodigo> LoteCodigos { get; set; } = null!;
         public virtual DbSet<LoteCodigoControl> LoteCodigoControls { get; set; } = null!;
-        public virtual DbSet<LoteCodigoControl1> LoteCodigoControls1 { get; set; } = null!;
+        public virtual DbSet<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; } = null!;
         public virtual DbSet<LoteMuestreo> LoteMuestreos { get; set; } = null!;
         public virtual DbSet<LoteOperacion> LoteOperacions { get; set; } = null!;
         public virtual DbSet<Maestro> Maestros { get; set; } = null!;
@@ -842,28 +842,28 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
             modelBuilder.Entity<LoteCodigo>(entity =>
             {
                 entity.HasKey(e => e.IdLoteCodigo)
-                    .HasName("PK_balanza_LoteCodigo_idLoteCodigo");
+                    .HasName("PK_acopio_LoteCodigo_idLoteCodigo");
 
-                entity.ToTable("LoteCodigo", "balanza");
+                entity.ToTable("LoteCodigo", "acopio");
 
                 entity.Property(e => e.IdLoteCodigo).HasColumnName("idLoteCodigo");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.CodigoExterno)
+                entity.Property(e => e.CodigoMuestraProveedor)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("codigoExterno");
-
-                entity.Property(e => e.CodigoHash)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("codigoHash");
+                    .HasColumnName("codigoMuestraProveedor");
 
                 entity.Property(e => e.CodigoPlanta)
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("codigoPlanta");
+
+                entity.Property(e => e.CodigoPlantaRandom)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoPlantaRandom");
 
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
@@ -875,13 +875,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.EnsayoPorcentajeRecuperacion).HasColumnName("ensayoPorcentajeRecuperacion");
 
+                entity.Property(e => e.EsInterno).HasColumnName("esInterno");
+
                 entity.Property(e => e.FechaRecepcion).HasColumnName("fechaRecepcion");
 
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
                 entity.Property(e => e.IdEstado).HasColumnName("idEstado");
 
-                entity.Property(e => e.IdLoteBalanza).HasColumnName("idLoteBalanza");
+                entity.Property(e => e.IdLote).HasColumnName("idLote");
 
                 entity.Property(e => e.IdTipoLoteCodigo).HasColumnName("idTipoLoteCodigo");
 
@@ -892,18 +894,18 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
                     .WithMany(p => p.LoteCodigos)
                     .HasForeignKey(d => d.IdDuenoMuestra)
-                    .HasConstraintName("FK_balanza_LoteCodigo_idDuenoMuestra");
+                    .HasConstraintName("FK_acopio_LoteCodigo_idDuenoMuestra");
 
-                entity.HasOne(d => d.IdLoteBalanzaNavigation)
+                entity.HasOne(d => d.IdLoteNavigation)
                     .WithMany(p => p.LoteCodigos)
-                    .HasForeignKey(d => d.IdLoteBalanza)
-                    .HasConstraintName("fk_balanza_LoteCodigo_idLoteBalanza");
+                    .HasForeignKey(d => d.IdLote)
+                    .HasConstraintName("fk_acopio_LoteCodigo_idLote");
 
                 entity.HasOne(d => d.IdTipoLoteCodigoNavigation)
                     .WithMany(p => p.LoteCodigos)
                     .HasForeignKey(d => d.IdTipoLoteCodigo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_balanza_LoteCodigo_idTipoLoteCodigo");
+                    .HasConstraintName("fk_acopio_LoteCodigo_idTipoLoteCodigo");
             });
 
             modelBuilder.Entity<LoteCodigoControl>(entity =>
@@ -928,26 +930,48 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnName("userNameCreate");
             });
 
-            modelBuilder.Entity<LoteCodigoControl1>(entity =>
+            modelBuilder.Entity<LoteCodigoNomenclatura>(entity =>
             {
-                entity.HasKey(e => e.IdLoteCodigoControl)
-                    .HasName("PK_balanza_LoteCodigoControl_idLoteCodigoControl");
+                entity.HasKey(e => e.IdLoteCodigoNomenclatura)
+                    .HasName("PK_acopio_Nomenclatura_idLoteCodigoNomenclatura");
 
-                entity.ToTable("LoteCodigoControl", "balanza");
+                entity.ToTable("LoteCodigoNomenclatura", "acopio");
 
-                entity.Property(e => e.IdLoteCodigoControl).HasColumnName("idLoteCodigoControl");
+                entity.Property(e => e.IdLoteCodigoNomenclatura).HasColumnName("idLoteCodigoNomenclatura");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.BloqueCodigo)
-                    .HasColumnType("text")
-                    .HasColumnName("bloqueCodigo");
+                entity.Property(e => e.EmpresaNomenclatura)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("empresaNomenclatura");
 
-                entity.Property(e => e.CreateDate).HasColumnName("createDate");
+                entity.Property(e => e.EsInterno).HasColumnName("esInterno");
 
-                entity.Property(e => e.UserNameCreate)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameCreate");
+                entity.Property(e => e.EsInternoNomenclatura)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("esInternoNomenclatura");
+
+                entity.Property(e => e.IdEmpresa).HasColumnName("idEmpresa");
+
+                entity.Property(e => e.IdTipoLoteCodigo).HasColumnName("idTipoLoteCodigo");
+
+                entity.Property(e => e.TipoLoteCodigoNomenclatura)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("tipoLoteCodigoNomenclatura");
+
+                entity.HasOne(d => d.IdEmpresaNavigation)
+                    .WithMany(p => p.LoteCodigoNomenclaturas)
+                    .HasForeignKey(d => d.IdEmpresa)
+                    .HasConstraintName("fk_acopio_LoteCodigoNomenclatura_idEmpresa");
+
+                entity.HasOne(d => d.IdTipoLoteCodigoNavigation)
+                    .WithMany(p => p.LoteCodigoNomenclaturas)
+                    .HasForeignKey(d => d.IdTipoLoteCodigo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_acopio_LoteCodigoNomenclatura_idTipoLoteCodigo");
             });
 
             modelBuilder.Entity<LoteMuestreo>(entity =>

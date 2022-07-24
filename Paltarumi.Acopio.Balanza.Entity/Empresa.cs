@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public Empresa()
         {
             Correlativos = new HashSet<Correlativo>();
+            LoteCodigoNomenclaturas = new HashSet<LoteCodigoNomenclatura>();
             Lotes = new HashSet<Lote>();
         }
 
@@ -26,6 +27,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
         public virtual ICollection<Correlativo> Correlativos { get; set; }
+        public virtual ICollection<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; }
         public virtual ICollection<Lote> Lotes { get; set; }
     }
 }
