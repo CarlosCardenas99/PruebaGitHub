@@ -36,13 +36,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             {
                 if (filters?.FechaDesde.HasValue == true)
                 {
-                    var fechaDesde = filters.FechaDesde.Value.Date;
+                    DateTimeOffset fechaDesde = filters.FechaDesde.Value.Date;
                     filter = filter.And(x => (x.FechaAcopio >= fechaDesde || x.FechaIngreso >= fechaDesde));
                 }
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
-                    var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    DateTimeOffset fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
                     filter = filter.And(x => (x.FechaAcopio < fechaHasta || x.FechaIngreso < fechaHasta));
                 }
             }
