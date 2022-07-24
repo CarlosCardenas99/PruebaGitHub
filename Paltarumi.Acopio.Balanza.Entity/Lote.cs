@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public Lote()
         {
+            LoteCodigos = new HashSet<LoteCodigo>();
             LoteOperacions = new HashSet<LoteOperacion>();
         }
 
@@ -17,6 +18,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset CreateDate { get; set; }
 
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
+        public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<LoteOperacion> LoteOperacions { get; set; }
     }
 }
