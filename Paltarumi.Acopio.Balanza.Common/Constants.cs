@@ -37,10 +37,19 @@
             public const string Admin = "Admin";
         }
 
-        public struct LoteCodigo
+        public class LoteCodigo
         {
-            public const string Caracteres = "0123456789";
-            public const int NumeroCaracters = 8;
+            public struct Tipo
+            {
+                public const string MUESTRA = "01";
+                public const string RE_MUESTREO = "02";
+                public const string MUESTRA_REFERENCIAL= "03";
+            }
+            public struct Format
+            {
+                public const string Caracteres = "0123456789";
+                public const int NumeroCaracters = 8;
+            }
         }
 
         public struct TipoDocumento
@@ -93,6 +102,7 @@
                 public const string CHECKLIST_ESTADO = "71";
                 public const string TMH_ESTADO = "72";
                 public const string LOTE_CODIGO_ESTADO = "73";
+                public const string TIPO_LOTE_COFIGO = "11";
             }
 
             public struct UnidadMedida

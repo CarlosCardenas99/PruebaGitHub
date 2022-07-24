@@ -135,15 +135,18 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
 
-                var codigo = new StringCreator(Constants.LoteCodigo.Caracteres).Get(Constants.LoteCodigo.NumeroCaracters);
+                var codigoCorrelativoAleatorio = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
+                var codigo = new StringCreator(codigoCorrelativoAleatorio).Get(Constants.LoteCodigo.Format.NumeroCaracters);
                 var bytes = System.Text.Encoding.UTF8.GetBytes(codigo);
+
+                var tipoLoteCodigo = obtenerTipoLoteCodigo().Result;
 
                 var loteCodigo = new Entity.LoteCodigo
                 {
                     //IdLoteCodigo
                     IdLoteBalanza = loteBalanza.IdLoteBalanza,
                     IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
-                    IdTipoLoteCodigo = 1,
+                    IdTipoLoteCodigo = tipoLoteCodigo.IdMaestro,
                     FechaRecepcion = DateTimeOffset.Now,
                     CodigoPlanta = loteBalanza.CodigoLote,
                     CodigoExterno = string.Empty,
@@ -173,6 +176,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 response.AddOkResult(Resources.Common.CreateSuccessMessage);
             }
             return response;
+        }
+
+        private async Task<Entity.Maestro> obtenerTipoLoteCodigo()
+        {
+            var maestro = await _maestroRepository.GetByAsNoTrackingAsync(x =>
+                    x.CodigoTabla == Constants.Maestro.CodigoTabla.TIPO_LOTE_COFIGO &&
+                    x.CodigoItem == Constants.LoteCodigo.Tipo.MUESTRA
+                 );
+            return maestro ?? new Entity.Maestro();
         }
 
         private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, CreateLoteBalanzaCommand request)
