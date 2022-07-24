@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
@@ -30,16 +31,22 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 
             CodigoLoteControlDto controlDto = JsonConvert.DeserializeObject<CodigoLoteControlDto>(control.BloqueCodigo);
 
-            if (correlativo != null)
+            if(controlDto != null )
             {
-                correlativo.Numero++;
-
-                var numero =  String.Format("{0}{1}", empresa?.Prefijo, $"{correlativo.Numero}");
-
-                await _correlativoRepository.UpdateAsync(correlativo);
-                await _correlativoRepository.SaveAsync();
-
-                response.UpdateData(numero);
+                if (controlDto.position < controlDto.listNumeros.ToList().Count)
+                {
+                    var numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
+                    controlDto.position++;
+                    response.UpdateData(numero);
+                }else
+                {
+                    controlDto.listNumeros = generarListaNumero(); new List<int>();
+                    controlDto.position = 0;
+                    controlDto.cursor = controlDto.cursor + controlDto.listNumeros.ToList().Count;
+                }
+                control.BloqueCodigo = JsonConvert.SerializeObject(controlDto);
+                await _loteCodigoControlRepository.UpdateAsync(control);
+                await _loteCodigoControlRepository.SaveAsync();
             }
 
             return response;
