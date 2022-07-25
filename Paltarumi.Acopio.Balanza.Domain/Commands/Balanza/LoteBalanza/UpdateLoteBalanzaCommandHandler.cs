@@ -145,7 +145,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 foreach (var newTicket in newTickets)
                 {
-                    newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa)))?.Data ?? string.Empty;
+                    if (!request.UpdateDto.EsPartido)
+                        newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa)))?.Data ?? string.Empty;
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     newTicket.IdLoteBalanzaNavigation = null!;
                     newTicket.Activo = true;
