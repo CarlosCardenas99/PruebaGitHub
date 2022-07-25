@@ -173,7 +173,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             {
                 if (!string.IsNullOrEmpty(filters?.Conductor))
                     filter = filter.And(x => (x.IdConductorNavigation.Nombres.Contains(filters.Conductor) || x.IdConductorNavigation.Licencia.Contains(filters.Conductor) || x.IdConductorNavigation.Numero.Contains(filters.Conductor)));
-
             }
         }
         private void filtrarTara(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
