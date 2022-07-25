@@ -32,17 +32,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 
             var filters = request.SearchParams?.Filter;
 
-            filtrarFechas(filters, filter);
-            filtrarCodigoLote(filters, filter);
-            filtrarProveedor(filters, filter);
-            filtrarConcesion(filters, filter);
-            filtrarVehiculo(filters, filter);
-            filtrarConductor(filters, filter);
-            filtrarTara(filters, filter);
-            guiaRemisionRemitente(filters, filter);
-            guiaRemisionTransportista(filters, filter);
-            filtrarTransportista(filters, filter);
-            filtrarEstadoLote(filters, filter);
+            filter = filtrarFechas(filters, filter);
+            filter = filtrarCodigoLote(filters, filter);
+            filter = filtrarProveedor(filters, filter);
+            filter = filtrarConcesion(filters, filter);
+            filter = filtrarVehiculo(filters, filter);
+            filter = filtrarConductor(filters, filter);
+            filter = filtrarTara(filters, filter);
+            filter = guiaRemisionRemitente(filters, filter);
+            filter = guiaRemisionTransportista(filters, filter);
+            filter = filtrarTransportista(filters, filter);
+            filter = filtrarEstadoLote(filters, filter);
 
             filter = filter.And(x => x.Activo == true);
 
@@ -100,7 +100,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             return await Task.FromResult(response);
         }
 
-        private void filtrarFechas(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarFechas(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.FechaDesde.HasValue == true || filters?.FechaHasta.HasValue == true)
             {
@@ -116,13 +116,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     filter = filter.And(x => (x.FechaIngreso < fechahasta || x.FechaSalida < fechahasta));
                 }
             }
+
+            return filter;
         }
-        private void filtrarCodigoLote(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarCodigoLote(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (!string.IsNullOrEmpty(filters?.CodigoLote))
                 filter = filter.And(x => x.IdLoteBalanzaNavigation.CodigoLote.Contains(filters.CodigoLote));
+
+            return filter;
         }
-        private void filtrarProveedor(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarProveedor(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (!string.IsNullOrEmpty(filters?.Proveedor))
             {
@@ -133,8 +137,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     (x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc.Contains(p) || x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial.Contains(p)));
                 });
             }
+
+            return filter;
         }
-        private void filtrarConcesion(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarConcesion(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (!string.IsNullOrEmpty(filters?.Concesion))
             {
@@ -145,8 +151,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     (x.IdLoteBalanzaNavigation.IdConcesionNavigation.CodigoUnico.Contains(p) || x.IdLoteBalanzaNavigation.IdConcesionNavigation.Nombre.Contains(p)));
                 });
             }
+
+            return filter;
         }
-        private void filtrarVehiculo(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarVehiculo(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.VehiculoVacio == true)
                 filter = filter.And(x => x.IdConductor.Value == null);
@@ -160,8 +168,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     filter = filter.And(x => x.IdVehiculoNavigation.Placa.Contains(filters.Vehiculo) || x.IdVehiculoNavigation.PlacaCarreta.Contains(filters.Vehiculo));
                 }
             }
+
+            return filter;
         }
-        private void filtrarConductor(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarConductor(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.ConductorVacio == true)
                 filter = filter.And(x => x.IdConductor.Value == null);
@@ -170,8 +180,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 if (!string.IsNullOrEmpty(filters?.Conductor))
                     filter = filter.And(x => (x.IdConductorNavigation.Nombres.Contains(filters.Conductor) || x.IdConductorNavigation.Licencia.Contains(filters.Conductor) || x.IdConductorNavigation.Numero.Contains(filters.Conductor)));
             }
+
+            return filter;
         }
-        private void filtrarTara(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarTara(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.TaraInicial > 0 || filters?.TaraFinal > 0)
             {
@@ -187,8 +199,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     filter = filter.And(x => x.Tara <= taraFinal);
                 }
             }
+
+            return filter;
         }
-        private void guiaRemisionRemitente(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> guiaRemisionRemitente(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.GuiaRemisionRemitenteVacio == true)
                 filter = filter.And(x => x.Grr == string.Empty);
@@ -204,8 +218,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     });
                 }
             }
+
+            return filter;
         }
-        private void guiaRemisionTransportista(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> guiaRemisionTransportista(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.GuiaRemisionTransportistaVacio == true)
                 filter = filter.And(x => x.Grt == string.Empty);
@@ -221,8 +237,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     });
                 }
             }
+
+            return filter;
         }
-        private void filtrarTransportista(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarTransportista(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.TransporteVacio == true)
                 filter = filter.And(x => x.IdTransporte.Value == null);
@@ -232,11 +250,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                     filter = filter.And(x => (x.IdTransporteNavigation!.Ruc.Contains(filters.Transporte) || x.IdTransporteNavigation.RazonSocial.Contains(filters.Transporte)));
 
             }
+
+            return filter;
         }
-        private void filtrarEstadoLote(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
+        private Expression<Func<Entity.Ticket, bool>> filtrarEstadoLote(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.idEstado.HasValue == true)
                 filter = filter.And(x => x.IdLoteBalanzaNavigation.IdEstado == filters.idEstado);
+
+            return filter;
         }
 
     }
