@@ -16,6 +16,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
         public string VehiculoMarca { get; set; } = null!;
         public string VehiculoTipo { get; set; } = null!;
         public string Placa { get; set; } = null!;
+        public string PlacaCarreta { get; set; } = null!;
         public string EstadoTmh { get; set; } = null!;
         public string EstadoTmhCarreta { get; set; } = null!;
     }
