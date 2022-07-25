@@ -120,6 +120,12 @@
   <data name="Codigo" xml:space="preserve">
     <value>Codigo de lote no encontrada</value>
   </data>
+  <data name="ExcelReportName" xml:space="preserve">
+    <value>LoteBalanza-{0:yyyyMMdd-HHmmss}</value>
+  </data>
+  <data name="ExcelReportTitle" xml:space="preserve">
+    <value>LoteBalanza</value>
+  </data>
   <data name="IdLoteBalanza" xml:space="preserve">
     <value>IdLoteBalanza</value>
   </data>

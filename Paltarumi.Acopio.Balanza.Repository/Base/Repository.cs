@@ -9,12 +9,12 @@ using System.Reflection;
 
 namespace Paltarumi.Acopio.Balanza.Repository.Base
 {
-    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _dbContext;
         protected readonly IUserIdentity _userIdentity;
 
-        public RepositoryBase(DbContext dbContext, IUserIdentity userIdentity)
+        public Repository(DbContext dbContext, IUserIdentity userIdentity)
         {
             _dbContext = dbContext;
             _userIdentity = userIdentity;
@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
         {
             if (entity == null) return null;
 
-            UpdateAuditTrails(entity, true);
+            UpdateAuditTrails(entity);
 
             await _dbContext.Set<TEntity>().AddAsync(entity);
 
@@ -36,7 +36,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             if (entities == null) return null;
             if (!entities.Any()) return entities;
 
-            foreach (var entity in entities) UpdateAuditTrails(entity, true);
+            foreach (var entity in entities) UpdateAuditTrails(entity);
 
             await _dbContext.Set<TEntity>().AddRangeAsync(entities);
 
@@ -47,7 +47,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
         {
             if (entity == null) return null;
 
-            UpdateAuditTrails(entity);
+            UpdateAuditTrails(entity, false);
             _dbContext.Set<TEntity>().Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.Update(entity);
@@ -62,7 +62,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
 
             entities.ToList().ForEach(entity =>
             {
-                UpdateAuditTrails(entity);
+                UpdateAuditTrails(entity, false);
                 _dbContext.Set<TEntity>().Attach(entity);
                 _dbContext.Entry(entity).State = EntityState.Modified;
             });
@@ -242,13 +242,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
                     {
                         var entitiesEnumerator = entities.GetEnumerator();
                         while (entitiesEnumerator.MoveNext())
-                            UpdateAuditTrailsDetails(entitiesEnumerator.Current, baseTypes);
+                            UpdateAuditTrailsDetails(entitiesEnumerator.Current, baseTypes, creation);
                     }
 
                     continue;
                 }
 
-                UpdateAuditTrailsDetails(propertyValue, baseTypes);
+                UpdateAuditTrailsDetails(propertyValue, baseTypes, creation);
             }
         }
 

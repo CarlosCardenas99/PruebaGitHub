@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LoteBalanza {
+    public class LoteBalanza {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         ///   Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paltarumi.Acopio.Balanza.Domain.Resources.Balanza.LoteBalanza", typeof(LoteBalanza).Assembly);
@@ -51,7 +51,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         ///   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,16 +63,34 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         /// <summary>
         ///   Busca una cadena traducida similar a Codigo de lote no encontrada.
         /// </summary>
-        internal static string Codigo {
+        public static string Codigo {
             get {
                 return ResourceManager.GetString("Codigo", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a LoteBalanza-{0:yyyyMMdd-HHmmss}.
+        /// </summary>
+        public static string ExcelReportName {
+            get {
+                return ResourceManager.GetString("ExcelReportName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a LoteBalanza.
+        /// </summary>
+        public static string ExcelReportTitle {
+            get {
+                return ResourceManager.GetString("ExcelReportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a IdLoteBalanza.
         /// </summary>
-        internal static string IdLoteBalanza {
+        public static string IdLoteBalanza {
             get {
                 return ResourceManager.GetString("IdLoteBalanza", resourceCulture);
             }
@@ -81,7 +99,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         /// <summary>
         ///   Busca una cadena traducida similar a La suma de peso tickets no concide con original.
         /// </summary>
-        internal static string PesoTicketNoConcideConOriginal {
+        public static string PesoTicketNoConcideConOriginal {
             get {
                 return ResourceManager.GetString("PesoTicketNoConcideConOriginal", resourceCulture);
             }
@@ -90,7 +108,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         /// <summary>
         ///   Busca una cadena traducida similar a El tipo de vehículo no fue encontrado.
         /// </summary>
-        internal static string TipoVehiculoNotFound {
+        public static string TipoVehiculoNotFound {
             get {
                 return ResourceManager.GetString("TipoVehiculoNotFound", resourceCulture);
             }
@@ -99,7 +117,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         /// <summary>
         ///   Busca una cadena traducida similar a La marca de vehículo no fue encontrada.
         /// </summary>
-        internal static string VehiculoMarcaNotFound {
+        public static string VehiculoMarcaNotFound {
             get {
                 return ResourceManager.GetString("VehiculoMarcaNotFound", resourceCulture);
             }

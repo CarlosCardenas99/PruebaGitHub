@@ -138,6 +138,15 @@
   <data name="DuplicateRucRecord" xml:space="preserve">
     <value>El Ruc ya fue registrado</value>
   </data>
+  <data name="ExcelFormatFecha" xml:space="preserve">
+    <value>dd/MM/yyyy HH:mm:ss</value>
+  </data>
+  <data name="ExcelReportAuthor" xml:space="preserve">
+    <value>Paltarumi</value>
+  </data>
+  <data name="ExcelReportEmpty" xml:space="preserve">
+    <value>No se econtraron registros</value>
+  </data>
   <data name="FieldMaxLength" xml:space="preserve">
     <value>El campo {0} debe tener como máximo {1} caracteres</value>
     <comment>0: Field, 1: Caracteres</comment>

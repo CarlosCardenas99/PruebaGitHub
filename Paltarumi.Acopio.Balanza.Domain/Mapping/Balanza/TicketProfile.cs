@@ -1,5 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Balanza.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
 {
@@ -14,6 +15,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, UpdateTicketDto>()
+                .ReverseMap();
+
+            CreateMap<Entity.Ticket, TicketBackup>()
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, GetTicketDto>()
