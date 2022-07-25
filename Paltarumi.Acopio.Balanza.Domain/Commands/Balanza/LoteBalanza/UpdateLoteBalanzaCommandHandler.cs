@@ -91,7 +91,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             var response = new ResponseDto<GetLoteBalanzaDto>();
 
-            var tickets = await _ticketRepository.FindByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
+            var tickets = await _ticketRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var ticketDetails = request.UpdateDto?.TicketDetails?.Where(x => x.Activo).ToList();
 
             if (loteBalanza != null && _mediator != null)

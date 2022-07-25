@@ -242,13 +242,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
                     {
                         var entitiesEnumerator = entities.GetEnumerator();
                         while (entitiesEnumerator.MoveNext())
-                            UpdateAuditTrailsDetails(entitiesEnumerator.Current, baseTypes);
+                            UpdateAuditTrailsDetails(entitiesEnumerator.Current, baseTypes, creation);
                     }
 
                     continue;
                 }
 
-                UpdateAuditTrailsDetails(propertyValue, baseTypes);
+                UpdateAuditTrailsDetails(propertyValue, baseTypes, creation);
             }
         }
 
