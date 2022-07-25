@@ -6,6 +6,7 @@
         public int IdVehiculoMarca { get; set; }
         public string Placa { get; set; } = null!;
         public string PlacaCarreta { get; set; } = null!;
+        public decimal CargaUtil { get; set; }
         public decimal Tara { get; set; }
     }
 }

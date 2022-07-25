@@ -10,8 +10,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
             Conductors = new HashSet<Conductor>();
             LoteBalanzaIdEstadoNavigations = new HashSet<LoteBalanza>();
             LoteBalanzaIdEstadoTipoMaterialNavigations = new HashSet<LoteBalanza>();
+            LoteCodigoNomenclaturas = new HashSet<LoteCodigoNomenclatura>();
             LoteCodigos = new HashSet<LoteCodigo>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
+            Lotes = new HashSet<Lote>();
             MuestraIdCanchaNavigations = new HashSet<Muestra>();
             MuestraIdMuestraCondicionNavigations = new HashSet<Muestra>();
             MuestraIdMuestraEstadoNavigations = new HashSet<Muestra>();
@@ -39,8 +41,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual ICollection<Conductor> Conductors { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoNavigations { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoTipoMaterialNavigations { get; set; }
+        public virtual ICollection<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
+        public virtual ICollection<Lote> Lotes { get; set; }
         public virtual ICollection<Muestra> MuestraIdCanchaNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdMuestraCondicionNavigations { get; set; }
         public virtual ICollection<Muestra> MuestraIdMuestraEstadoNavigations { get; set; }

@@ -8,7 +8,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
     public class UpdateLoteBalanzaCommandValidator : CommandValidatorBase<UpdateLoteBalanzaCommand>
     {
         private readonly IRepository<Entity.LoteBalanza> _repositoryBase;
-        public UpdateLoteBalanzaCommandValidator(IRepository<Entity.LoteBalanza> repositoryBase)
+
+        public UpdateLoteBalanzaCommandValidator(
+            IRepository<Entity.LoteBalanza> repositoryBase
+        )
         {
             _repositoryBase = repositoryBase;
 
@@ -26,8 +29,18 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         protected async Task<bool> ValidateExistenceAsync(UpdateLoteBalanzaCommand command, int id, ValidationContext<UpdateLoteBalanzaCommand> context, CancellationToken cancellationToken)
         {
+            if (command.UpdateDto.EsPartido)
+            {
+                var loteBalanza = _repositoryBase.GetByAsNoTrackingAsync(x => x.IdLoteBalanza == id);
+                var sumaPeso = command.UpdateDto.TicketDetails.Sum(x => x.PesoNeto100);
+                if (sumaPeso != loteBalanza.Result.Tmh100)
+                    return CustomValidationMessage(context, Resources.Balanza.LoteBalanza.PesoTicketNoConcideConOriginal);
+            }
+
             var exists = await _repositoryBase.FindAll().Where(x => x.IdLoteBalanza == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
+
+
             return true;
         }
     }
