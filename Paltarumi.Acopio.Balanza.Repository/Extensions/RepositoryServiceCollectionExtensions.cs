@@ -19,7 +19,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Extensions
 
             services.AddScoped<DbContext, AcopioDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork<DbContext>>();
-            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             return services;
         }

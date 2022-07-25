@@ -9,12 +9,12 @@ using System.Reflection;
 
 namespace Paltarumi.Acopio.Balanza.Repository.Base
 {
-    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _dbContext;
         protected readonly IUserIdentity _userIdentity;
 
-        public RepositoryBase(DbContext dbContext, IUserIdentity userIdentity)
+        public Repository(DbContext dbContext, IUserIdentity userIdentity)
         {
             _dbContext = dbContext;
             _userIdentity = userIdentity;
