@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
         {
             if (entity == null) return null;
 
-            UpdateAuditTrails(entity, true);
+            UpdateAuditTrails(entity);
 
             await _dbContext.Set<TEntity>().AddAsync(entity);
 
@@ -36,7 +36,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             if (entities == null) return null;
             if (!entities.Any()) return entities;
 
-            foreach (var entity in entities) UpdateAuditTrails(entity, true);
+            foreach (var entity in entities) UpdateAuditTrails(entity);
 
             await _dbContext.Set<TEntity>().AddRangeAsync(entities);
 
@@ -47,7 +47,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
         {
             if (entity == null) return null;
 
-            UpdateAuditTrails(entity);
+            UpdateAuditTrails(entity, false);
             _dbContext.Set<TEntity>().Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.Update(entity);
@@ -62,7 +62,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
 
             entities.ToList().ForEach(entity =>
             {
-                UpdateAuditTrails(entity);
+                UpdateAuditTrails(entity, false);
                 _dbContext.Set<TEntity>().Attach(entity);
                 _dbContext.Entry(entity).State = EntityState.Modified;
             });
