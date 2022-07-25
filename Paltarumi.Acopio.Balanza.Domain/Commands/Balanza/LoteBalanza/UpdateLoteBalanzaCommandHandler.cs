@@ -111,6 +111,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.Tickets = tickesTmp;
 
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);
+                await _loteBalanzaRepository.SaveAsync();
 
                 #region Update / Disable Existing
 
@@ -124,8 +125,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                         ticket.Activo = false;
 
                     await _ticketRepository.UpdateAsync(ticket);
+                    await _ticketRepository.SaveAsync();
                 }
-
+                
                 #endregion
 
                 #region Add Non Existing
@@ -148,14 +150,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 };
 
                 await _ticketRepository.AddAsync(newTickets.ToArray());
+                await _ticketRepository.SaveAsync();
 
                 #endregion
 
-                var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);
+                var recuprarloteBalanza = await _loteBalanzaRepository.GetByAsNoTrackingAsync(
+                    x => x.IdLoteBalanza == loteBalanza.IdLoteBalanza,
+                    x => x.Tickets
+                );
+
+                var loteDto = _mapper?.Map<GetLoteBalanzaDto>(recuprarloteBalanza);
                 if (loteDto != null)
                 {
-                    loteDto.TicketDetails =
-                        _mapper?.Map<IEnumerable<ListTicketDto>>(loteBalanza?.Tickets) ?? new List<ListTicketDto>();
+                    loteDto.TicketDetails = 
+                        _mapper?.Map<IEnumerable<ListTicketDto>>(recuprarloteBalanza?.Tickets.Where(x => x.Activo == true)) ?? new List<ListTicketDto>();
 
                     response.UpdateData(loteDto);
                     response.AddOkResult(Resources.Common.UpdateSuccessMessage);
