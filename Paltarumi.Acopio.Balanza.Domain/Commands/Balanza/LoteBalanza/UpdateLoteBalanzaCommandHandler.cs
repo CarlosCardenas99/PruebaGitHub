@@ -46,6 +46,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         }
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
+            await registrarBackupTicket(request);
+
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
 
             var lote = await CreateLoteOperationsAsync(loteBalanza?.CodigoLote!);
@@ -189,15 +191,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             if (request.UpdateDto.EsPartido)
             {
-                var exsteBackup = _backupRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
-                if (exsteBackup == null)
+                var exsteBackup = await _backupRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
+                if (exsteBackup == null || exsteBackup.ToList().Count == 0)
                 {
                     var tickets = _ticketRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
                     var backups = _mapper?.Map<IEnumerable<Entity.TicketBackup>>(tickets);
-                    foreach (var backup in backups)
-                    {
-                        await _backupRepository.AddAsync(backup);
-                    }
+
+                    await _backupRepository.AddAsync(backups.ToArray());
                     await _backupRepository.SaveAsync();
                 }
             }
