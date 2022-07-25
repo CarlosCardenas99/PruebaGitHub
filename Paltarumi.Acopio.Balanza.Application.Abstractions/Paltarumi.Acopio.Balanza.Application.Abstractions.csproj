@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Muestreo\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Domain\Paltarumi.Acopio.Balanza.Domain.csproj" />
   </ItemGroup>
 

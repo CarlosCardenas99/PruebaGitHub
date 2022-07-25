@@ -36,6 +36,16 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Base
             return filePath;
         }
 
+        protected async Task<FileResult> DownloadFile(byte[] bytes, string fileName)
+        {
+            bytes = bytes ?? new byte[0];
+            var fileResult = File(bytes, MediaTypeNames.Application.Octet, fileName);
+
+            Response.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+            return await Task.FromResult(fileResult);
+        }
+
         protected async Task<FileResult> DownloadFile(ResponseDto<byte[]> reponseDto, string fileName)
         {
             byte[] bytes = reponseDto?.Data ?? new byte[0];

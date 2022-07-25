@@ -124,6 +124,33 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dd/MM/yyyy HH:mm:ss.
+        /// </summary>
+        internal static string ExcelFormatFecha {
+            get {
+                return ResourceManager.GetString("ExcelFormatFecha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paltarumi.
+        /// </summary>
+        internal static string ExcelReportAuthor {
+            get {
+                return ResourceManager.GetString("ExcelReportAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se econtraron registros.
+        /// </summary>
+        internal static string ExcelReportEmpty {
+            get {
+                return ResourceManager.GetString("ExcelReportEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to El campo {0} debe tener como máximo {1} caracteres.
         /// </summary>
         internal static string FieldMaxLength {
