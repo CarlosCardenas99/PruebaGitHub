@@ -147,6 +147,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 {
                     if (!request.UpdateDto.EsPartido)
                         newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa)))?.Data ?? string.Empty;
+                    
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     newTicket.IdLoteBalanzaNavigation = null!;
                     newTicket.Activo = true;
@@ -195,7 +196,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var exsteBackup = await _backupRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
                 if (exsteBackup == null || exsteBackup.ToList().Count == 0)
                 {
-                    var tickets = _ticketRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
+                    var tickets = await _ticketRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
                     var backups = _mapper?.Map<IEnumerable<Entity.TicketBackup>>(tickets);
 
                     await _backupRepository.AddAsync(backups.ToArray());
