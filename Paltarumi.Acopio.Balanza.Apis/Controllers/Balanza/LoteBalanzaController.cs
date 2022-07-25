@@ -49,6 +49,13 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()
             => await _loteBalanzaApplication.List();
 
+        [HttpPost("export")]
+        public async Task<FileResult> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
+            => await DownloadFile(
+                (await _loteBalanzaApplication.Export(searchParams)).Data?.Items?.ToArray() ?? new byte[0],
+                string.Format($"{Domain.Resources.Balanza.LoteBalanza.ExcelReportName}.xlsx", DateTimeOffset.Now)
+            );
+
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
             => await _loteBalanzaApplication.Search(searchParams);
