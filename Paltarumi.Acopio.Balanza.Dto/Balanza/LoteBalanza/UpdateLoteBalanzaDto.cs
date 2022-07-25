@@ -12,6 +12,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public int? IdUsuarioUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
+        public bool EsPartido { get; set; }
         public IEnumerable<UpdateTicketDto>? TicketDetails { get; set; }
     }
 }

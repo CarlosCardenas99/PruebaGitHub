@@ -123,6 +123,9 @@
   <data name="IdLoteBalanza" xml:space="preserve">
     <value>IdLoteBalanza</value>
   </data>
+  <data name="PesoTicketNoConcideConOriginal" xml:space="preserve">
+    <value>La suma de peso tickets no concide con original</value>
+  </data>
   <data name="TipoVehiculoNotFound" xml:space="preserve">
     <value>El tipo de vehículo no fue encontrado</value>
   </data>

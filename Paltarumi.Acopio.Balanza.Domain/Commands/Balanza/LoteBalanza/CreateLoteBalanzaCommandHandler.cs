@@ -67,7 +67,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var lote = await CreateLoteAsync(codigoLote, request.CreateDto.IdEmpresa);
 
-            await createCodigoLoteAsync(request, lote);
+            await CreateCodigoLoteAsync(request, lote);
 
             var response = await CreateLoteBalanzaAsync(request, codigoLote);
 
@@ -76,7 +76,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task createCodigoLoteAsync(CreateLoteBalanzaCommand request, Entity.Lote lote)
+        private async Task CreateCodigoLoteAsync(CreateLoteBalanzaCommand request, Entity.Lote lote)
         {
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = generarCodigoAleatorioAsync().Result;
@@ -119,7 +119,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task<Entity.Lote> CreateLoteAsync(string codigoLote, int idEmpresa)
         {
-            var lote = new Entity.Lote { CodigoLote = codigoLote, IdEmpresa = idEmpresa };
+            var estado = await _maestroRepository.GetByAsNoTrackingAsync(x => x.CodigoTabla.Equals(Constants.Maestro.CodigoTabla.LOTE_ESTADO) && x.CodigoItem.Equals(Constants.Maestro.LoteEstado.EN_ESPERA));
+
+            var lote = new Entity.Lote { 
+                CodigoLote = codigoLote, 
+                IdEmpresa = idEmpresa,
+                IdEstado = estado.IdMaestro,
+                UserNameCreate = string.Empty,
+                CreateDate = DateTimeOffset.Now
+            };
 
             var operacions = await _operacionRepository.FindByAsNoTrackingAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.CREATE));
             var loteOperacions = new List<Entity.LoteOperacion>();
@@ -164,7 +172,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
                     x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_ESTADO &&
                     x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
-                 );
+                );
 
                 loteBalanza.CodigoLote = code;
                 loteBalanza.Enable();

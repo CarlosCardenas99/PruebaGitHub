@@ -53,6 +53,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<ProveedorConcesion> ProveedorConcesions { get; set; } = null!;
         public virtual DbSet<SystemDataType> SystemDataTypes { get; set; } = null!;
         public virtual DbSet<Ticket> Tickets { get; set; } = null!;
+        public virtual DbSet<TicketBackup> TicketBackups { get; set; } = null!;
         public virtual DbSet<TicketDoc> TicketDocs { get; set; } = null!;
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; } = null!;
         public virtual DbSet<Transporte> Transportes { get; set; } = null!;
@@ -661,15 +662,31 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdEmpresa).HasColumnName("idEmpresa");
 
+                entity.Property(e => e.IdEstado)
+                    .HasColumnName("idEstado")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
+
                 entity.Property(e => e.UserNameCreate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameCreate");
+
+                entity.Property(e => e.UserNameUpdate)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameUpdate");
 
                 entity.HasOne(d => d.IdEmpresaNavigation)
                     .WithMany(p => p.Lotes)
                     .HasForeignKey(d => d.IdEmpresa)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_acopio_Lote_idEmpresa");
+
+                entity.HasOne(d => d.IdEstadoNavigation)
+                    .WithMany(p => p.Lotes)
+                    .HasForeignKey(d => d.IdEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_acopio_Lote_idEstado");
             });
 
             modelBuilder.Entity<LoteBalanza>(entity =>
@@ -1599,6 +1616,98 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasForeignKey(d => d.IdVehiculo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_Ticket_idVehiculo");
+            });
+
+            modelBuilder.Entity<TicketBackup>(entity =>
+            {
+                entity.HasKey(e => e.IdTicket)
+                    .HasName("PK_balanza_TicketBackup_idTicket");
+
+                entity.ToTable("TicketBackup", "balanza");
+
+                entity.Property(e => e.IdTicket)
+                    .ValueGeneratedNever()
+                    .HasColumnName("idTicket");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CantidadUnidadMedida).HasColumnName("cantidadUnidadMedida");
+
+                entity.Property(e => e.FechaIngreso).HasColumnName("fechaIngreso");
+
+                entity.Property(e => e.FechaSalida).HasColumnName("fechaSalida");
+
+                entity.Property(e => e.Grr)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("grr");
+
+                entity.Property(e => e.Grt)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("grt");
+
+                entity.Property(e => e.IdConductor).HasColumnName("idConductor");
+
+                entity.Property(e => e.IdEstadoTmh).HasColumnName("idEstadoTmh");
+
+                entity.Property(e => e.IdEstadoTmhCarreta).HasColumnName("idEstadoTmhCarreta");
+
+                entity.Property(e => e.IdLoteBalanza).HasColumnName("idLoteBalanza");
+
+                entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
+
+                entity.Property(e => e.IdUnidadMedida).HasColumnName("idUnidadMedida");
+
+                entity.Property(e => e.IdUsuarioAprobadorPesoBruto).HasColumnName("idUsuarioAprobadorPesoBruto");
+
+                entity.Property(e => e.IdUsuarioAprobadorPesoBrutoCarreta).HasColumnName("idUsuarioAprobadorPesoBrutoCarreta");
+
+                entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
+
+                entity.Property(e => e.Numero)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("numero");
+
+                entity.Property(e => e.Observacion)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("observacion");
+
+                entity.Property(e => e.PesoBruto).HasColumnName("pesoBruto");
+
+                entity.Property(e => e.PesoBruto100).HasColumnName("pesoBruto100");
+
+                entity.Property(e => e.PesoBrutoBase).HasColumnName("pesoBrutoBase");
+
+                entity.Property(e => e.PesoBrutoCarreta).HasColumnName("pesoBrutoCarreta");
+
+                entity.Property(e => e.PesoBrutoCarreta100).HasColumnName("pesoBrutoCarreta100");
+
+                entity.Property(e => e.PesoBrutoCarretaBase).HasColumnName("pesoBrutoCarretaBase");
+
+                entity.Property(e => e.PesoBrutoCarretaEdit).HasColumnName("pesoBrutoCarretaEdit");
+
+                entity.Property(e => e.PesoBrutoEdit).HasColumnName("pesoBrutoEdit");
+
+                entity.Property(e => e.PesoNeto).HasColumnName("pesoNeto");
+
+                entity.Property(e => e.PesoNeto100).HasColumnName("pesoNeto100");
+
+                entity.Property(e => e.PesoNetoBase).HasColumnName("pesoNetoBase");
+
+                entity.Property(e => e.PesoNetoCarreta).HasColumnName("pesoNetoCarreta");
+
+                entity.Property(e => e.PesoNetoCarreta100).HasColumnName("pesoNetoCarreta100");
+
+                entity.Property(e => e.PesoNetoCarretaBase).HasColumnName("pesoNetoCarretaBase");
+
+                entity.Property(e => e.PesoNetoTotal).HasColumnName("pesoNetoTotal");
+
+                entity.Property(e => e.Tara).HasColumnName("tara");
+
+                entity.Property(e => e.TaraCarreta).HasColumnName("taraCarreta");
             });
 
             modelBuilder.Entity<TicketDoc>(entity =>
