@@ -9,6 +9,7 @@
         public string CantidadSacos { get; set; } = null!;
         public DateTimeOffset? FechaIngreso { get; set; }
         public string CodigoLote { get; set; } = null!;
+        public string CodigoEstado { get; set; } = null!;
         public string? NombreProveedor { get; set; }
         public string? NombreEstadoTipoMaterial { get; set; }
         public float Tmh { get; set; }
