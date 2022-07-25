@@ -79,6 +79,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La suma de peso tickets no concide con original.
+        /// </summary>
+        internal static string PesoTicketNoConcideConOriginal {
+            get {
+                return ResourceManager.GetString("PesoTicketNoConcideConOriginal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El tipo de vehículo no fue encontrado.
         /// </summary>
         internal static string TipoVehiculoNotFound {
