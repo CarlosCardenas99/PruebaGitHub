@@ -117,13 +117,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 }
             }
         }
-
         private void filtrarCodigoLote(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (!string.IsNullOrEmpty(filters?.CodigoLote))
                 filter = filter.And(x => x.IdLoteBalanzaNavigation.CodigoLote.Contains(filters.CodigoLote));
         }
-
         private void filtrarProveedor(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (!string.IsNullOrEmpty(filters?.Proveedor))
@@ -136,7 +134,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 });
             }
         }
-
         private void filtrarConcesion(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (!string.IsNullOrEmpty(filters?.Concesion))
@@ -149,7 +146,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 });
             }
         }
-
         private void filtrarVehiculo(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
             if (filters?.VehiculoVacio == true)
