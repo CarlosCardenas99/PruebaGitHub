@@ -63,7 +63,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1995,6 +1994,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.IdVehiculo).HasColumnName("idVehiculo");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CargaUtil)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("cargaUtil");
 
                 entity.Property(e => e.IdTipoVehiculo).HasColumnName("idTipoVehiculo");
 
