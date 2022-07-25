@@ -70,6 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,
                 x => x.IdLoteBalanzaNavigation.IdProveedorNavigation,
                 x => x.IdLoteBalanzaNavigation,
+                x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,
                 x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,

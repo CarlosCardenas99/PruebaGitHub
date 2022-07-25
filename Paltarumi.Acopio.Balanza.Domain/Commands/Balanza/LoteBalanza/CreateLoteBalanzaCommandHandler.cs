@@ -314,14 +314,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     controlDto.cursor = controlDto.cursor + controlDto.listNumeros.ToList().Count;
                 }
 
+                numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(numero);
+
                 controlDto.position++;
                 control.BloqueCodigo = JsonConvert.SerializeObject(controlDto);
 
                 await _loteCodigoControlRepository.UpdateAsync(control);
                 await _loteCodigoControlRepository.SaveAsync();
 
-                numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
-                var bytes = System.Text.Encoding.UTF8.GetBytes(numero);
                 numero = Convert.ToBase64String(bytes);
             }
 
