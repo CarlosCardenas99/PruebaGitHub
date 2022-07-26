@@ -28,6 +28,9 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
             => await Get<GetLoteBalanzaDto>($"/{id}")!;
 
+        public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> exportParams)
+            => await Post<SearchParamsDto<SearchLoteBalanzaFilterDto>, SearchResultDto<SearchLoteBalanzaDto>>("/export", exportParams)!;
+
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> filter)
             => await Post<SearchParamsDto<SearchLoteBalanzaFilterDto>, SearchResultDto<SearchLoteBalanzaDto>>("/search", filter)!;
     }
