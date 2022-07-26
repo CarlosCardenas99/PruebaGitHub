@@ -34,5 +34,6 @@
         public string CantidadSacos { get; set; } = null!;
         public float? PorcentajeHumedad { get; set; }
         public string CantidadUnidadMedida { get; set; } = null!;
+        public bool Activo { get; set; }
     }
 }
