@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Paltarumi.Acopio.Balanza.Apis.Controllers.Base;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Dto.Base;
@@ -7,11 +8,11 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 {
     [ApiController]
     [Route("api/ticket")]
-    public class TicketController
+    public class TicketController : ApiControllerBase
     {
         private readonly ITicketApplication _ticketApplication;
 
-        public TicketController(ITicketApplication ticketApplication)
+        public TicketController(IServiceProvider serviceProvider, ITicketApplication ticketApplication) : base(serviceProvider)
             => _ticketApplication = ticketApplication;
 
         [HttpPost]
@@ -34,9 +35,9 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLoteBalanza)
             => await _ticketApplication.List(idLoteBalanza);
 
-        [HttpGet("ListItem/{idTicket}")]
-        public async Task<ResponseDto<ListTicketDto>> ListItem(int idTicket)
-            => await _ticketApplication.ListItem(idTicket);
+        [HttpGet("listitem/{id}")]
+        public async Task<ResponseDto<ListTicketDto>> ListItem(int id)
+            => await _ticketApplication.ListItem(id);
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchTicketDto>>> Search(SearchParamsDto<SearchTicketFilterDto> searchParams)
@@ -45,6 +46,13 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         [HttpPost("searchBy")]
         public async Task<ResponseDto<SearchResultDto<SearchConsultaTicketDto>>> SearchQuery(SearchParamsDto<SearchConsultaTicketFilterDto> searchParams)
            => await _ticketApplication.SearchQuery(searchParams);
+
+        [HttpPost("exportExcel")]
+        public async Task<FileResult> Export(SearchParamsDto<SearchConsultaTicketFilterDto> searchParams)
+            => await DownloadFile(
+                (await _ticketApplication.Export(searchParams)).Data?.Items?.ToArray() ?? new byte[0],
+                string.Format($"{Domain.Resources.Balanza.Ticket.ExcelReportName}.xlsx", DateTimeOffset.Now)
+            );
 
     }
 }

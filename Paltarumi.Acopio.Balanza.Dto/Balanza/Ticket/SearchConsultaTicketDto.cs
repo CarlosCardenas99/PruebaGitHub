@@ -26,7 +26,7 @@
         public string Placa { get; set; } = null!;
         public string VehiculoMarca { get; set; } = null!;
         public string TipoVehiculo { get; set; } = null!;
-        public string VehiculoTara { get; set; } = null!;
+        public float? VehiculoTara { get; set; }
         public string Conductor { get; set; } = null!;//conductor
         public string ConductorTipoLicencia { get; set; } = null!;
         public string Licencia { get; set; } = null!;

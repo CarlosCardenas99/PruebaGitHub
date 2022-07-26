@@ -17,7 +17,7 @@ namespace Paltarumi.Acopio.Balanza.Entity.Extensions
             => loteBalanza.FechaIngreso = loteBalanza?.Tickets?.Any() == false ? DateTimeOffset.Now : loteBalanza?.Tickets?.Min(x => x.FechaIngreso) ?? DateTimeOffset.Now;
 
         public static void UpdateFechaAcopio(this LoteBalanza loteBalanza)
-            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Any() == false ? null : loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? DateTimeOffset.Now;
+            => loteBalanza.FechaAcopio = loteBalanza?.Tickets?.Any() == false ? null : loteBalanza?.Tickets?.Max(x => x.FechaSalida) ?? null;
 
         //TMH
         public static void UpdateTmh(this LoteBalanza loteBalanza)
