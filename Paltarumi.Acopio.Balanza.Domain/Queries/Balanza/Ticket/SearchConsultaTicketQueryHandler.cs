@@ -45,6 +45,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             filter = filtrarEstadoLote(filters, filter);
 
             //filter = filter.And(x => x.Activo == true);
+            filter = filter.And(x => x.Activo==filters.Activo);
+
 
             var sorts = new List<SortExpression<Entity.Ticket>>();
 

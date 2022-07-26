@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
         {
             var response = new ResponseDto<IEnumerable<ListTicketDto>>();
             var tickets = await _ticketRepository.FindByAsync(
-                x => x.IdLoteBalanza == request.IdLoteBalanza,
+                x => x.IdLoteBalanza == request.IdLoteBalanza && x.Activo,
                 x => x.IdConductorNavigation,
                 x => x.IdConductorNavigation.IdTipoLicenciaNavigation,
                 x => x.IdTransporteNavigation,

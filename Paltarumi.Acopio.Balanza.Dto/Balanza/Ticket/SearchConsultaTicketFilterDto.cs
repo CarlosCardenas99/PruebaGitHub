@@ -28,6 +28,8 @@
         public int TaraFinal { get; set; }
 
         public int? idEstado { get; set; }
-        
+
+        public bool Activo { get; set; }
+
     }
 }
