@@ -77,6 +77,10 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
                 return response;
             }
         }
+        protected async Task<TResponse>? PostNotDto<TRequest, TResponse>(string resource = "", TRequest? body = default)
+        {
+            return await PostEntity<TRequest, TResponse>(resource, body)!;
+        }
 
         protected async Task<TResponse>? PostEntity<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
