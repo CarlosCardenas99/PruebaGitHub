@@ -33,7 +33,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             ExcelNamedStyleXml styleHeader = excelPackage.Workbook.Styles.CreateNamedStyle("StyleHeader");
 
             styleHeader.Style.Font.Bold = true;
-            styleHeader.Style.Font.Color.SetColor(System.Drawing.Color.White);
+            styleHeader.Style.Font.Color.SetColor(System.Drawing.Color.Black);
             styleHeader.Style.Border.Top.Style = ExcelBorderStyle.Thin;
             styleHeader.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
             styleHeader.Style.Border.Right.Style = ExcelBorderStyle.Thin;
@@ -47,7 +47,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             ExcelNamedStyleXml styleHeaderAlt = excelPackage.Workbook.Styles.CreateNamedStyle("StyleHeaderAlt");
             styleHeaderAlt.Style.Font.Bold = true;
-            styleHeaderAlt.Style.Font.Color.SetColor(System.Drawing.Color.White);
+            styleHeaderAlt.Style.Font.Color.SetColor(System.Drawing.Color.Black);
             styleHeaderAlt.Style.Border.Top.Style = ExcelBorderStyle.Thin;
             styleHeaderAlt.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
             styleHeaderAlt.Style.Border.Right.Style = ExcelBorderStyle.Thin;
@@ -58,6 +58,52 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             styleHeaderAlt.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
             styleHeaderAlt.Style.Fill.PatternType = ExcelFillStyle.Solid;
             styleHeaderAlt.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(191, 143, 0));
+
+            ExcelNamedStyleXml styleHeaderBackgroundYellow = excelPackage.Workbook.Styles.CreateNamedStyle("styleHeaderBackgroundYellow");
+            styleHeaderBackgroundYellow.Style.Font.Bold = true;
+            styleHeaderBackgroundYellow.Style.Font.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundYellow.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundYellow.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundYellow.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundYellow.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundYellow.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundYellow.Style.Border.Bottom.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundYellow.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundYellow.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundYellow.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            styleHeaderBackgroundYellow.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(255, 255, 0));
+
+            //color fondo Blue
+            ExcelNamedStyleXml styleHeaderBackgroundBlue = excelPackage.Workbook.Styles.CreateNamedStyle("styleHeaderBackgroundBlue");
+            styleHeaderBackgroundBlue.Style.Font.Bold = true;
+            styleHeaderBackgroundBlue.Style.Font.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundBlue.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundBlue.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundBlue.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundBlue.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundBlue.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundBlue.Style.Border.Bottom.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundBlue.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundBlue.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundBlue.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            styleHeaderBackgroundBlue.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(0, 176, 240));
+
+            //color de fondo naranjaOscuro
+            ExcelNamedStyleXml styleHeaderBackgroundOrange = excelPackage.Workbook.Styles.CreateNamedStyle("styleHeaderBackgroundOrange");
+            styleHeaderBackgroundOrange.Style.Font.Bold = true;
+            styleHeaderBackgroundOrange.Style.Font.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundOrange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundOrange.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundOrange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundOrange.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundOrange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundOrange.Style.Border.Bottom.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundOrange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            styleHeaderBackgroundOrange.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
+            styleHeaderBackgroundOrange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            styleHeaderBackgroundOrange.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(198, 89, 17));
+
+
 
             ExcelNamedStyleXml styleCellText = excelPackage.Workbook.Styles.CreateNamedStyle("StyleCellText");
             styleCellText.Style.Numberformat.Format = "@";
@@ -111,10 +157,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             );
 
             _worksheet.Cells[headerRow, 02].Value = "Estado";
-            _worksheet.Cells[headerRow, 02].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 02].StyleName = "styleHeaderBackgroundOrange";
 
             _worksheet.Cells[headerRow, 03].Value = "CodigoLote";
-            _worksheet.Cells[headerRow, 03].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 03].StyleName = "styleHeaderBackgroundYellow";
 
             _worksheet.Cells[headerRow, 04].Value = "NombreConcesion";
             _worksheet.Cells[headerRow, 04].StyleName = "StyleHeader";
@@ -123,7 +169,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             _worksheet.Cells[headerRow, 05].StyleName = "StyleHeader";
 
             _worksheet.Cells[headerRow, 06].Value = "FechaIngreso";
-            _worksheet.Cells[headerRow, 06].StyleName = "StyleHeaderAlt";
+            _worksheet.Cells[headerRow, 06].StyleName = "StyleHeader";
 
             _worksheet.Cells[headerRow, 07].Value = "FechaAcopio";
             _worksheet.Cells[headerRow, 07].StyleName = "StyleHeader";
@@ -144,7 +190,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             _worksheet.Cells[headerRow, 12].StyleName = "StyleHeader";
 
             _worksheet.Cells[headerRow, 13].Value = "NumeroTickets";
-            _worksheet.Cells[headerRow, 13].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 13].StyleName = "styleHeaderBackgroundYellow";
 
             if (searchResult.IsValid && itemsToExport.Any())
             {
