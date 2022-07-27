@@ -12,7 +12,6 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         {
 
         }
-
         public async Task<ResponseDto<GetTicketDto>> Insert(CreateTicketDto createDto)
             => await Post<CreateTicketDto, GetTicketDto>(string.Empty, createDto)!;
 
