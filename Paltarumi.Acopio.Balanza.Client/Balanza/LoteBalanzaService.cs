@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Paltarumi.Acopio.Balanza.Client.Base;
+﻿using Paltarumi.Acopio.Balanza.Client.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
 
@@ -29,8 +28,8 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
             => await Get<GetLoteBalanzaDto>($"/{id}")!;
 
-        public async Task<FileResult> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> exportParams)
-            => await PostNotDto<SearchParamsDto<SearchLoteBalanzaFilterDto>, FileResult>("/export", exportParams)!;
+        public async Task<HttpResponseMessage> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> exportParams)
+            => await PostFile("/export", exportParams)!;
 
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> filter)
             => await Post<SearchParamsDto<SearchLoteBalanzaFilterDto>, SearchResultDto<SearchLoteBalanzaDto>>("/search", filter)!;
