@@ -12,7 +12,6 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         {
 
         }
-
         public async Task<ResponseDto<GetTicketDto>> Insert(CreateTicketDto createDto)
             => await Post<CreateTicketDto, GetTicketDto>(string.Empty, createDto)!;
 
@@ -30,6 +29,9 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         public async Task<ResponseDto<ListTicketDto>> ListItem(int id)
             => await Get<ListTicketDto>($"/listitem/{id}")!;
+
+        public async Task<HttpResponseMessage> Export(SearchParamsDto<SearchConsultaTicketFilterDto> exportParams)
+            => await PostFile("/exportExcel", exportParams)!;
 
         public async Task<ResponseDto<SearchResultDto<SearchTicketDto>>> Search(SearchParamsDto<SearchTicketFilterDto> filter)
             => await Post<SearchParamsDto<SearchTicketFilterDto>, SearchResultDto<SearchTicketDto>>("/search", filter)!;

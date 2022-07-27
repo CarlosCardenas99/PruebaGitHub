@@ -81,6 +81,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             styleNumericTwoDecimals.Style.Border.Left.Style = ExcelBorderStyle.Thin;
             styleNumericTwoDecimals.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
 
+            ExcelNamedStyleXml StyleNumericTheeDecimals = excelPackage.Workbook.Styles.CreateNamedStyle("StyleNumericTheeDecimals");
+            StyleNumericTheeDecimals.Style.Numberformat.Format = "#,###,##0.000";
+            StyleNumericTheeDecimals.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            StyleNumericTheeDecimals.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
+            StyleNumericTheeDecimals.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            StyleNumericTheeDecimals.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);
+            StyleNumericTheeDecimals.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            StyleNumericTheeDecimals.Style.Border.Bottom.Color.SetColor(System.Drawing.Color.Black);
+            StyleNumericTheeDecimals.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            StyleNumericTheeDecimals.Style.Border.Left.Color.SetColor(System.Drawing.Color.Black);
+
             ExcelNamedStyleXml styleCellDate = excelPackage.Workbook.Styles.CreateNamedStyle("StyleCellDate");
             styleCellDate.Style.Numberformat.Format = Resources.Common.ExcelFormatFecha;
             styleCellDate.Style.Border.Top.Style = ExcelBorderStyle.Thin;
@@ -99,44 +110,41 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 string.Format(Resources.Balanza.LoteBalanza.ExcelReportName, DateTimeOffset.Now)
             );
 
-            _worksheet.Cells[headerRow, 02].Value = "IdLoteBalanza";
+            _worksheet.Cells[headerRow, 02].Value = "Estado";
             _worksheet.Cells[headerRow, 02].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 03].Value = "Estado";
+            _worksheet.Cells[headerRow, 03].Value = "CodigoLote";
             _worksheet.Cells[headerRow, 03].StyleName = "StyleHeader";
 
             _worksheet.Cells[headerRow, 04].Value = "NombreConcesion";
             _worksheet.Cells[headerRow, 04].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 05].Value = "FechaAcopio";
+            _worksheet.Cells[headerRow, 05].Value = "NombreProveedor";
             _worksheet.Cells[headerRow, 05].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 06].Value = "CantidadSacos";
-            _worksheet.Cells[headerRow, 06].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 06].Value = "FechaIngreso";
+            _worksheet.Cells[headerRow, 06].StyleName = "StyleHeaderAlt";
 
-            _worksheet.Cells[headerRow, 07].Value = "FechaIngreso";
-            _worksheet.Cells[headerRow, 07].StyleName = "StyleHeaderAlt";
+            _worksheet.Cells[headerRow, 07].Value = "FechaAcopio";
+            _worksheet.Cells[headerRow, 07].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 08].Value = "CodigoLote";
+            _worksheet.Cells[headerRow, 08].Value = "NombreEstadoTipoMaterial";
             _worksheet.Cells[headerRow, 08].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 09].Value = "NombreProveedor";
+            _worksheet.Cells[headerRow, 09].Value = "CantidadSacos";
             _worksheet.Cells[headerRow, 09].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 10].Value = "NombreEstadoTipoMaterial";
+            _worksheet.Cells[headerRow, 10].Value = "Tmh";
             _worksheet.Cells[headerRow, 10].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 11].Value = "Tmh";
-            _worksheet.Cells[headerRow, 11].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 11].Value = "Humedad";
+            _worksheet.Cells[headerRow, 11].StyleName = "StyleHeaderAlt";
 
-            _worksheet.Cells[headerRow, 12].Value = "Humedad";
+            _worksheet.Cells[headerRow, 12].Value = "Tms";
             _worksheet.Cells[headerRow, 12].StyleName = "StyleHeader";
 
-            _worksheet.Cells[headerRow, 13].Value = "Tms";
-            _worksheet.Cells[headerRow, 13].StyleName = "StyleHeaderAlt";
-
-            _worksheet.Cells[headerRow, 14].Value = "NumeroTickets";
-            _worksheet.Cells[headerRow, 14].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 13].Value = "NumeroTickets";
+            _worksheet.Cells[headerRow, 13].StyleName = "StyleHeader";
 
             if (searchResult.IsValid && itemsToExport.Any())
             {
@@ -144,44 +152,41 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 {
                     var formatoFecha = "{0:format}";
 
-                    _worksheet.Cells[contentDataRow, 02].Value = lote.IdLoteBalanza;
+                    _worksheet.Cells[contentDataRow, 02].Value = lote.Estado;
                     _worksheet.Cells[contentDataRow, 02].StyleName = "StyleCellText";
 
-                    _worksheet.Cells[contentDataRow, 03].Value = lote.Estado;
+                    _worksheet.Cells[contentDataRow, 03].Value = lote.CodigoLote;
                     _worksheet.Cells[contentDataRow, 03].StyleName = "StyleCellText";
 
                     _worksheet.Cells[contentDataRow, 04].Value = lote.NombreConcesion;
                     _worksheet.Cells[contentDataRow, 04].StyleName = "StyleCellText";
 
-                    _worksheet.Cells[contentDataRow, 05].Value = string.Format(formatoFecha.Replace("format", Resources.Common.ExcelFormatFecha), lote.FechaAcopio);
-                    _worksheet.Cells[contentDataRow, 05].StyleName = "StyleCellDate";
+                    _worksheet.Cells[contentDataRow, 05].Value = lote.NombreProveedor;
+                    _worksheet.Cells[contentDataRow, 05].StyleName = "StyleCellText";
 
-                    _worksheet.Cells[contentDataRow, 06].Value = lote.CantidadSacos;
-                    _worksheet.Cells[contentDataRow, 06].StyleName = "StyleCellText";
+                    _worksheet.Cells[contentDataRow, 06].Value = string.Format(formatoFecha.Replace("format", Resources.Common.ExcelFormatFecha), lote.FechaIngreso);
+                    _worksheet.Cells[contentDataRow, 06].StyleName = "StyleCellDate";
 
-                    _worksheet.Cells[contentDataRow, 07].Value = string.Format(formatoFecha.Replace("format", Resources.Common.ExcelFormatFecha), lote.FechaIngreso);
+                    _worksheet.Cells[contentDataRow, 07].Value = string.Format(formatoFecha.Replace("format", Resources.Common.ExcelFormatFecha), lote.FechaAcopio);
                     _worksheet.Cells[contentDataRow, 07].StyleName = "StyleCellDate";
 
-                    _worksheet.Cells[contentDataRow, 08].Value = lote.CodigoLote;
+                    _worksheet.Cells[contentDataRow, 08].Value = lote.NombreEstadoTipoMaterial;
                     _worksheet.Cells[contentDataRow, 08].StyleName = "StyleCellText";
 
-                    _worksheet.Cells[contentDataRow, 09].Value = lote.NombreProveedor;
+                    _worksheet.Cells[contentDataRow, 09].Value = lote.CantidadSacos;
                     _worksheet.Cells[contentDataRow, 09].StyleName = "StyleCellText";
 
-                    _worksheet.Cells[contentDataRow, 10].Value = lote.NombreEstadoTipoMaterial;
-                    _worksheet.Cells[contentDataRow, 10].StyleName = "StyleCellText";
+                    _worksheet.Cells[contentDataRow, 10].Value = lote.Tmh;
+                    _worksheet.Cells[contentDataRow, 10].StyleName = "StyleNumericTheeDecimals";
 
-                    _worksheet.Cells[contentDataRow, 11].Value = lote.Tmh;
+                    _worksheet.Cells[contentDataRow, 11].Value = lote.Humedad;
                     _worksheet.Cells[contentDataRow, 11].StyleName = "StyleNumericTwoDecimals";
 
-                    _worksheet.Cells[contentDataRow, 12].Value = lote.Humedad;
-                    _worksheet.Cells[contentDataRow, 12].StyleName = "StyleNumericTwoDecimals";
+                    _worksheet.Cells[contentDataRow, 12].Value = lote.Tms;
+                    _worksheet.Cells[contentDataRow, 12].StyleName = "StyleNumericTheeDecimals";
 
-                    _worksheet.Cells[contentDataRow, 13].Value = lote.Tms;
-                    _worksheet.Cells[contentDataRow, 13].StyleName = "StyleNumericTwoDecimals";
-
-                    _worksheet.Cells[contentDataRow, 14].Value = lote.NumeroTickets;
-                    _worksheet.Cells[contentDataRow, 14].StyleName = "StyleCellText";
+                    _worksheet.Cells[contentDataRow, 13].Value = lote.NumeroTickets;
+                    _worksheet.Cells[contentDataRow, 13].StyleName = "StyleCellText";
 
                     contentDataRow++;
                 }
@@ -196,7 +201,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 contentDataRow++;
             }
 
-            for (int col = 1; col <= 14; col++)
+            for (int col = 1; col <= 13; col++)
                 _worksheet.Column(col).AutoFit();
 
             _worksheet.Calculate();

@@ -136,7 +136,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             _worksheet.Cells[headerRow, 09].StyleName = "StyleHeader";
 
             _worksheet.Cells[headerRow, 10].Value = "Estado Tmh";
-            _worksheet.Cells[headerRow, 10].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 10].StyleName = "StyleHeaderAlt";
 
             _worksheet.Cells[headerRow, 11].Value = "Peso Bruto";
             _worksheet.Cells[headerRow, 11].StyleName = "StyleHeader";
@@ -148,7 +148,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             _worksheet.Cells[headerRow, 13].StyleName = "StyleHeader";
 
             _worksheet.Cells[headerRow, 14].Value = "Estado Tmh Carreta";
-            _worksheet.Cells[headerRow, 14].StyleName = "StyleHeader";
+            _worksheet.Cells[headerRow, 14].StyleName = "StyleHeaderAlt";
 
             _worksheet.Cells[headerRow, 15].Value = "Peso Bruto Carreta";
             _worksheet.Cells[headerRow, 15].StyleName = "StyleHeader";

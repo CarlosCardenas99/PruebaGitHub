@@ -78,6 +78,23 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             }
         }
 
+        protected async Task<HttpResponseMessage>? PostFile<TRequest>(string resource = "", TRequest? body = default)
+        {
+            return await PostResponse(resource, body)!;
+        }
+
+        protected async Task<HttpResponseMessage>? PostResponse<TRequest>(string resource = "", TRequest? body = default)
+        {
+            var http = GetHttpClient();
+            var response = await http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", body);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                throw new Exception(responseString);
+            }
+            return response!;
+        }
+
         protected async Task<TResponse>? PostEntity<TRequest, TResponse>(string resource = "", TRequest? body = default)
         {
             var http = GetHttpClient();
