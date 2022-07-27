@@ -30,6 +30,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             excelPackage.Workbook.Properties.Title = Resources.Balanza.LoteBalanza.ExcelReportTitle;
             excelPackage.Workbook.Properties.Author = Resources.Common.ExcelReportAuthor;
 
+            #region Estilos del EXCEL
             ExcelNamedStyleXml styleHeader = excelPackage.Workbook.Styles.CreateNamedStyle("StyleHeader");
 
             styleHeader.Style.Font.Bold = true;
@@ -151,6 +152,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             var headerRow = 2;
             var contentDataRow = 3;
+            #endregion
 
             ExcelWorksheet _worksheet = excelPackage.Workbook.Worksheets.Add(
                 string.Format(Resources.Balanza.LoteBalanza.ExcelReportName, DateTimeOffset.Now)
