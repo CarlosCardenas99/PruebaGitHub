@@ -169,7 +169,7 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Balanza\Ticket.resx">
       <LastGenOutput>Ticket.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Common.resx">
       <Generator>ResXFileCodeGenerator</Generator>
