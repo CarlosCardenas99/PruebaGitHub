@@ -126,4 +126,7 @@
   <data name="IdTicket" xml:space="preserve">
     <value>IdTicket</value>
   </data>
+  <data name="UpdateTicketNumberFailed" xml:space="preserve">
+    <value>No se pudo generar el número de ticket porque ya tiene asignado uno</value>
+  </data>
 </root>

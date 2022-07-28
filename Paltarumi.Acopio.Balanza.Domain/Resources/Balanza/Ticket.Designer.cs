@@ -59,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Busca una cadena traducida similar a LoteTickets-{0:yyyyMMdd-HHmmss}.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 return ResourceManager.GetString("ExcelReportName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Busca una cadena traducida similar a Modulo Balanza.
         /// </summary>
@@ -84,6 +84,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         public static string IdTicket {
             get {
                 return ResourceManager.GetString("IdTicket", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo generar el número de ticket porque ya tiene asignado uno.
+        /// </summary>
+        public static string UpdateTicketNumberFailed {
+            get {
+                return ResourceManager.GetString("UpdateTicketNumberFailed", resourceCulture);
             }
         }
     }
