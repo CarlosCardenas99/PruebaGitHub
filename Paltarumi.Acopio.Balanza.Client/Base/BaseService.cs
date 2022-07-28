@@ -10,6 +10,13 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
         protected Dictionary<string, string> Headers { get; }
         protected virtual string ApiController { get; } = null!;
 
+        private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
+        {
+            DateFormatHandling = DateFormatHandling.IsoDateFormat,
+            DateTimeZoneHandling = DateTimeZoneHandling.Local,
+            DateParseHandling = DateParseHandling.DateTimeOffset
+        };
+
         public BaseService(ServiceOptions options)
         {
             BaseUrl = options?.BaseUrl ?? string.Empty;
@@ -48,7 +55,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var response = await http.GetAsync($"{BaseUrl}{ApiController}{resource}");
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
-            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!, serializerSettings);
             return resultado!;
         }
 
@@ -101,7 +108,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var response = await http.PostAsJsonAsync($"{BaseUrl}{ApiController}{resource}", body);
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
-            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!, serializerSettings);
             return resultado!;
         }
 
@@ -137,7 +144,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var response = await http.PutAsJsonAsync($"{BaseUrl}{ApiController}{resource}", body);
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
-            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!, serializerSettings);
             return resultado!;
         }
 
@@ -173,7 +180,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var response = await http.PatchAsync($"{BaseUrl}{ApiController}{resource}", body);
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
-            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!, serializerSettings);
             return resultado!;
         }
 
@@ -209,7 +216,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
             var response = await http.DeleteAsync($"{BaseUrl}{ApiController}{resource}");
             var responseString = await response.Content.ReadAsStringAsync();
             if (response.StatusCode != System.Net.HttpStatusCode.OK) throw new Exception(responseString);
-            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!);
+            var resultado = JsonConvert.DeserializeObject<TResponse>(responseString!, serializerSettings);
             return resultado!;
         }
 
