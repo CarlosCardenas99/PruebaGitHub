@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Entity.Base;
@@ -110,13 +111,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             {
                 if (filters?.FechaDesde.HasValue == true)
                 {
-                    var fechaDesde = filters.FechaDesde.Value.Date;
+                    var fechaDesde = filters.FechaDesde.GetStartDate();
                     filter = filter.And(x => (x.FechaIngreso >= fechaDesde || x.FechaSalida >= fechaDesde));
                 }
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
-                    var fechahasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    var fechahasta = filters.FechaHasta.GetEndDate();
                     filter = filter.And(x => (x.FechaIngreso < fechahasta || x.FechaSalida < fechahasta));
                 }
             }
