@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Ticket {
+    internal class Ticket {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         ///   Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paltarumi.Acopio.Balanza.Domain.Resources.Balanza.Ticket", typeof(Ticket).Assembly);
@@ -51,7 +51,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         ///   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -59,20 +59,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Busca una cadena traducida similar a LoteTickets-{0:yyyyMMdd-HHmmss}.
         /// </summary>
-        public static string ExcelReportName {
+        internal static string ExcelReportName {
             get {
                 return ResourceManager.GetString("ExcelReportName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Busca una cadena traducida similar a Modulo Balanza.
         /// </summary>
-        public static string ExcelReportTitle {
+        internal static string ExcelReportTitle {
             get {
                 return ResourceManager.GetString("ExcelReportTitle", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         /// <summary>
         ///   Busca una cadena traducida similar a IdTicket.
         /// </summary>
-        public static string IdTicket {
+        internal static string IdTicket {
             get {
                 return ResourceManager.GetString("IdTicket", resourceCulture);
             }
