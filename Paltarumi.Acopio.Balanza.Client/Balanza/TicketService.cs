@@ -18,7 +18,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         public async Task<ResponseDto<GetTicketDto>> Update(UpdateTicketDto updateDto)
             => await Put<UpdateTicketDto, GetTicketDto>(string.Empty, updateDto)!;
 
-        public async Task<ResponseDto<GetTicketDto>> UpdateStatus(UpdateTicketCodigoDto updateDto)
+        public async Task<ResponseDto<GetTicketDto>> UpdateNumero(UpdateTicketCodigoDto updateDto)
             => await Put<UpdateTicketCodigoDto, GetTicketDto>("/updateNumero", updateDto)!;
 
         public async Task<ResponseDto> Delete(int id)
