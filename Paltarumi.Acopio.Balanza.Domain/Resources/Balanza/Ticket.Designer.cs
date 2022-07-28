@@ -59,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Busca una cadena traducida similar a LoteTickets-{0:yyyyMMdd-HHmmss}.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 return ResourceManager.GetString("ExcelReportName", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Busca una cadena traducida similar a Modulo Balanza.
         /// </summary>
