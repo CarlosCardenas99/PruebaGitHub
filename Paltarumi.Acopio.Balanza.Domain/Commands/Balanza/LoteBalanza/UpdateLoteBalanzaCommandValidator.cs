@@ -32,7 +32,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (command.UpdateDto.EsPartido)
             {
                 var loteBalanza = _repositoryBase.GetByAsNoTrackingAsync(x => x.IdLoteBalanza == id);
-                var sumaPeso = command.UpdateDto.TicketDetails.Sum(x => x.PesoNeto100);
+                var sumaPeso = command.UpdateDto.TicketDetails.Sum(x => x.PesoNeto100)+ command.UpdateDto.TicketDetails.Sum(x => x.PesoNetoCarreta100);
                 if (sumaPeso != loteBalanza.Result.Tmh100)
                     return CustomValidationMessage(context, Resources.Balanza.LoteBalanza.PesoTicketNoConcideConOriginal);
             }
@@ -45,3 +45,4 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         }
     }
 }
+//=> loteBalanza.Tmh = loteBalanza?.Tickets?.Sum(x => x.PesoNeto) + loteBalanza?.Tickets?.Sum(x => x.PesoNetoCarreta) ?? 0;

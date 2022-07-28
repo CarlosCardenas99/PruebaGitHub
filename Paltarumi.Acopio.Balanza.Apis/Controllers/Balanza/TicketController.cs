@@ -23,6 +23,10 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetTicketDto>> Update(UpdateTicketDto updateDto)
             => await _ticketApplication.Update(updateDto);
 
+        [HttpPut("updateNumero")]
+        public async Task<ResponseDto<GetTicketDto>> UpdateNumero(UpdateTicketCodigoDto updateDto)
+            => await _ticketApplication.UpdateNumero(updateDto);
+
         [HttpDelete("{id}")]
         public async Task<ResponseDto> Delete(int id)
             => await _ticketApplication.Delete(id);

@@ -86,5 +86,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 return ResourceManager.GetString("IdTicket", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo generar el número de ticket porque ya tiene asignado uno.
+        /// </summary>
+        public static string UpdateTicketNumberFailed {
+            get {
+                return ResourceManager.GetString("UpdateTicketNumberFailed", resourceCulture);
+            }
+        }
     }
 }

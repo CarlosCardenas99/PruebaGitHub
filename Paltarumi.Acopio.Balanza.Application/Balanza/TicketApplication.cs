@@ -22,6 +22,9 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
         public async Task<ResponseDto<GetTicketDto>> Update(UpdateTicketDto updateDto)
             => await _mediator.Send(new UpdateTicketCommand(updateDto));
 
+        public async Task<ResponseDto<GetTicketDto>> UpdateNumero(UpdateTicketCodigoDto updateDto)
+            => await _mediator.Send(new UpdateTicketCodigoCommand(updateDto));
+
         public async Task<ResponseDto> Delete(int id)
             => await _mediator.Send(new DeleteTicketCommand(id));
 
