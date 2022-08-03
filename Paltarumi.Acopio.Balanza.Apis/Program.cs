@@ -46,6 +46,10 @@ builder.Services.UseRegion(configuration);
 #region App
 
 var app = builder.Build();
+var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+
+// Logging
+loggerFactory.AddLog4Net();
 
 // CustomExceptionHandler
 app.UseCustomExceptionHandler();
