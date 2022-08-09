@@ -7,7 +7,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public Conductor()
         {
-            TicketDocs = new HashSet<TicketDoc>();
             Tickets = new HashSet<Ticket>();
         }
 
@@ -26,7 +25,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
         public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
         public virtual Maestro? IdTipoLicenciaNavigation { get; set; }
-        public virtual ICollection<TicketDoc> TicketDocs { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }
