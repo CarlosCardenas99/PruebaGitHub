@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -12,15 +13,18 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
         protected override bool UseTransaction => false;
 
         private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public CreateLoteCodigoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLoteCodigoCommandValidator validator,
-            IRepository<Entity.LoteCodigo> lotecodigoRepository
+            IRepository<Entity.LoteCodigo> lotecodigoRepository,
+            IRepository<Entity.Maestro> maestroRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _lotecodigoRepository = lotecodigoRepository;
+            _maestroRepository = maestroRepository;
         }
 
         public override async Task<ResponseDto<GetLoteCodigoDto>> HandleCommand(CreateLoteCodigoCommand request, CancellationToken cancellationToken)
@@ -32,6 +36,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             {
                 lotecodigo.Activo = true;
 
+                var LoteCodigoEstado = await _maestroRepository.GetByAsNoTrackingAsync(
+                    x => x.CodigoTabla.Equals(Constants.Maestro.CodigoTabla.LOTE_CODIGO_ESTADO) && 
+                    x.CodigoItem.Equals(Constants.Maestro.LoteCodigoEstado.PENDIENTE));
+
+                lotecodigo.IdEstado = LoteCodigoEstado.IdMaestro;
 
                 await _lotecodigoRepository.AddAsync(lotecodigo);
                 await _lotecodigoRepository.SaveAsync();

@@ -62,10 +62,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.UseCollation("Modern_Spanish_CI_AS");
+
             modelBuilder.Entity<AspNetRole>(entity =>
             {
                 entity.Property(e => e.IdModulo).HasColumnName("idModulo");
@@ -871,6 +874,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdLoteCodigoEnsayo).HasColumnName("idLoteCodigoEnsayo");
 
+                entity.Property(e => e.IdOrigenEnsayo).HasColumnName("idOrigenEnsayo");
+
                 entity.Property(e => e.LeyAgGt).HasColumnName("leyAgGt");
 
                 entity.Property(e => e.LeyAgOzTc).HasColumnName("leyAgOzTc");
@@ -988,7 +993,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdTurnoNavigation)
                     .WithMany(p => p.LoteCodigoMuestraIdTurnoNavigations)
                     .HasForeignKey(d => d.IdTurno)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idTurno");
             });
 

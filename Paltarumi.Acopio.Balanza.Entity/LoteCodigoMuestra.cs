@@ -6,7 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     public partial class LoteCodigoMuestra
     {
         public int IdLoteCodigoMuestra { get; set; }
-        public int IdTurno { get; set; }
+        public int? IdTurno { get; set; }
         public string? UserNameSupervisor { get; set; }
         public DateTimeOffset? FechaMuestreo { get; set; }
         public string CodigoPlanta { get; set; } = null!;
@@ -29,6 +29,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual Maestro? IdMuestraCondicionNavigation { get; set; }
         public virtual Maestro? IdMuestraEstadoNavigation { get; set; }
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
-        public virtual Maestro IdTurnoNavigation { get; set; } = null!;
+        public virtual Maestro? IdTurnoNavigation { get; set; }
     }
 }
