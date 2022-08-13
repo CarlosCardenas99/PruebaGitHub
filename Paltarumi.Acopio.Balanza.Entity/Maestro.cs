@@ -14,8 +14,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
             LoteCodigoMuestraIdMuestraCondicionNavigations = new HashSet<LoteCodigoMuestra>();
             LoteCodigoMuestraIdMuestraEstadoNavigations = new HashSet<LoteCodigoMuestra>();
             LoteCodigoMuestraIdTurnoNavigations = new HashSet<LoteCodigoMuestra>();
-            LoteCodigoNomenclaturas = new HashSet<LoteCodigoNomenclatura>();
-            LoteCodigos = new HashSet<LoteCodigo>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
             Lotes = new HashSet<Lote>();
             TicketIdEstadoTmhCarretaNavigations = new HashSet<Ticket>();
@@ -40,8 +38,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual ICollection<LoteCodigoMuestra> LoteCodigoMuestraIdMuestraCondicionNavigations { get; set; }
         public virtual ICollection<LoteCodigoMuestra> LoteCodigoMuestraIdMuestraEstadoNavigations { get; set; }
         public virtual ICollection<LoteCodigoMuestra> LoteCodigoMuestraIdTurnoNavigations { get; set; }
-        public virtual ICollection<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; }
-        public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
         public virtual ICollection<Lote> Lotes { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhCarretaNavigations { get; set; }

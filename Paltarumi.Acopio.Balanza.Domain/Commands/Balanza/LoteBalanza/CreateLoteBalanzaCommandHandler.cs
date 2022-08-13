@@ -80,15 +80,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = generarCodigoAleatorioAsync().Result;
-            var tipoLoteCodigo = obtenerTipoLoteCodigo().Result;
-            var codigoPlanta = obtenerCodigoPlanta(request.CreateDto.IdEmpresa, lote.CodigoLote, tipoLoteCodigo.IdMaestro).Result;
+            var codigoPlanta = obtenerCodigoPlanta(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA).Result;
             var estado = obtenerEstadoLoteCodigoAsync().Result;
 
             var loteCodigo = new Entity.LoteCodigo
             {
                 IdLote = lote.IdLote,
                 IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
-                IdTipoLoteCodigo = tipoLoteCodigo.IdMaestro,
+                IdLoteCodigoTipo = Constants.LoteCodigo.Tipo.MUESTRA,
                 FechaRecepcion = DateTimeOffset.Now,
                 CodigoPlanta = codigoPlanta,
                 CodigoPlantaRandom = codigoHash,
@@ -204,23 +203,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task<string> obtenerCodigoPlanta(int idEmpresa, string codigoLote, int idTipoLoteCodigo)
+        private async Task<string> obtenerCodigoPlanta(int idEmpresa, string codigoLote, string IdLoteCodigoTipo)
         {
             string separador = string.Empty;
-            var loteCodigoNomenclatura = await _loteCodigoNomenclaturaRepository.GetByAsync(x => x.IdEmpresa == idEmpresa && x.EsInterno == true && x.IdTipoLoteCodigo == idTipoLoteCodigo);
+            var loteCodigoNomenclatura = await _loteCodigoNomenclaturaRepository.GetByAsync(x => x.IdEmpresa == idEmpresa && x.IdLoteCodigoTipo == IdLoteCodigoTipo);
             if (!string.IsNullOrEmpty(loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura))
                 separador = "-";
 
             return String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, codigoLote);
-        }
-
-        private async Task<Entity.Maestro> obtenerTipoLoteCodigo()
-        {
-            var maestro = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                    x.CodigoTabla == Constants.Maestro.CodigoTabla.TIPO_LOTE_CODIGO &&
-                    x.CodigoItem == Constants.LoteCodigo.Tipo.MUESTRA
-                 );
-            return maestro ?? new Entity.Maestro();
         }
 
         private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, CreateLoteBalanzaCommand request)

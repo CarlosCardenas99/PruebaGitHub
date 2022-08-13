@@ -6,7 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
         public int? IdLote { get; set; }
         public int? IdDuenoMuestra { get; set; }
         public bool EsInterno { get; set; }
-        public int IdTipoLoteCodigo { get; set; }
+        public string IdLoteCodigoTipo { get; set; } = null!;
         public DateTimeOffset FechaRecepcion { get; set; }
         public string CodigoPlanta { get; set; } = null!;
         public string CodigoPlantaRandom { get; set; } = null!;

@@ -9,7 +9,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int? IdLote { get; set; }
         public int? IdDuenoMuestra { get; set; }
         public bool EsInterno { get; set; }
-        public int IdTipoLoteCodigo { get; set; }
+        public string IdLoteCodigoTipo { get; set; } = null!;
         public DateTimeOffset FechaRecepcion { get; set; }
         public string CodigoPlanta { get; set; } = null!;
         public string CodigoPlantaRandom { get; set; } = null!;
@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
+        public virtual LoteCodigoTipo IdLoteCodigoTipoNavigation { get; set; } = null!;
         public virtual Lote? IdLoteNavigation { get; set; }
-        public virtual Maestro IdTipoLoteCodigoNavigation { get; set; } = null!;
     }
 }

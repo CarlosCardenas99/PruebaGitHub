@@ -7,7 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public int IdLoteCodigoEnsayoDetalle { get; set; }
         public int IdLoteCodigoEnsayo { get; set; }
-        public int IdOrigenEnsayo { get; set; }
+        public string IdLoteCodigoEnsayoOrigen { get; set; } = null!;
         public float? WMuestra { get; set; }
         public float? WDore { get; set; }
         public float? WAu { get; set; }
