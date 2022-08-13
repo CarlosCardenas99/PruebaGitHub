@@ -79,8 +79,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         private async Task CreateCodigoLoteAsync(CreateLoteBalanzaCommand request, Entity.Lote lote)
         {
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
-            var codigoHash = generarCodigoAleatorioAsync().Result;
-            var codigoPlanta = obtenerCodigoPlanta(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA).Result;
+            var codigoHash = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
+            var codigoPlanta = (await _mediator.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA)))?.Data ?? string.Empty;  
             var estado = obtenerEstadoLoteCodigoAsync().Result;
 
             var loteCodigo = new Entity.LoteCodigo
@@ -92,7 +92,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 CodigoPlanta = codigoPlanta,
                 CodigoPlantaRandom = codigoHash,
                 CodigoMuestraProveedor = String.Empty,
-                EsInterno = true,
                 EnsayoLeyAu = false,
                 EnsayoLeyAg = false,
                 EnsayoPorcentajeRecuperacion = false,
@@ -203,15 +202,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task<string> obtenerCodigoPlanta(int idEmpresa, string codigoLote, string IdLoteCodigoTipo)
-        {
-            string separador = string.Empty;
-            var loteCodigoNomenclatura = await _loteCodigoNomenclaturaRepository.GetByAsync(x => x.IdEmpresa == idEmpresa && x.IdLoteCodigoTipo == IdLoteCodigoTipo);
-            if (!string.IsNullOrEmpty(loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura))
-                separador = "-";
-
-            return String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, codigoLote);
-        }
 
         private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, CreateLoteBalanzaCommand request)
         {
@@ -279,72 +269,5 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return transporteVehiculo;
         }
 
-        private async Task<string> generarCodigoAleatorioAsync()
-        {
-            CodigoLoteControlDto controlDto = new CodigoLoteControlDto();
-            string numero = string.Empty;
-
-            var control = await _loteCodigoControlRepository.GetByAsync(x => x.Activo == true);
-
-            if (String.IsNullOrEmpty(control?.BloqueCodigo))
-            {
-                controlDto.cursor = 10000;
-                controlDto.position = 0;
-                controlDto.listNumeros = new int[0];
-            }
-            else
-                controlDto = JsonConvert.DeserializeObject<CodigoLoteControlDto>(control.BloqueCodigo);
-
-            if (controlDto != null)
-            {
-                if ( !(controlDto.position < controlDto.listNumeros.ToList().Count) )
-                {
-                    controlDto.listNumeros = generarListaNumeroAleatorios(controlDto.cursor);
-                    controlDto.position = 0;
-                    controlDto.cursor = controlDto.cursor + controlDto.listNumeros.ToList().Count;
-                }
-
-                numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
-                var bytes = System.Text.Encoding.UTF8.GetBytes(numero);
-
-                controlDto.position++;
-                control.BloqueCodigo = JsonConvert.SerializeObject(controlDto);
-
-                await _loteCodigoControlRepository.UpdateAsync(control);
-                await _loteCodigoControlRepository.SaveAsync();
-
-                numero = Convert.ToBase64String(bytes);
-            }
-
-            return numero;
-        }
-        
-        private int[] generarListaNumeroAleatorios(int cursor)
-        {
-            var rand = new Random();
-            int cantidad = rand.Next(Constants.LoteCodigo.Aleatorio.ValorInicial, Constants.LoteCodigo.Aleatorio.ValorFinal);
-            int[] arreglo = generaListInt(cantidad, cursor);
-            int[] nuevoarreglo = new int[cantidad];
-
-            for (int ctr = cantidad; ctr > 0; ctr--)
-            {
-                int aleatorio = rand.Next(0, ctr);
-                int encontrado = arreglo[aleatorio];
-                nuevoarreglo[cantidad - ctr] = encontrado;
-                arreglo = arreglo.Where(val => val != encontrado).ToArray();
-            }
-
-            return nuevoarreglo;
-        }
-
-        private int[] generaListInt(int cantidad, int cursor)
-        {
-            int[] listInt = new int[cantidad];
-
-            for (int ctr = 0; ctr < cantidad; ctr++)
-                listInt[ctr] = cursor + ctr + 1;
-
-            return listInt;
-        }
     }
 }

@@ -4,8 +4,7 @@
     {
         public int? IdLote { get; set; }
         public int? IdDuenoMuestra { get; set; }
-        public bool EsInterno { get; set; }
-        public int IdTipoLoteCodigo { get; set; }
+        public string IdLoteCodigoTipo { get; set; } = null!;
         public DateTimeOffset FechaRecepcion { get; set; }
         public string CodigoMuestraProveedor { get; set; } = null!;
         public bool EnsayoLeyAu { get; set; }

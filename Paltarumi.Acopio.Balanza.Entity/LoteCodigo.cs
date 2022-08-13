@@ -8,7 +8,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdLoteCodigo { get; set; }
         public int? IdLote { get; set; }
         public int? IdDuenoMuestra { get; set; }
-        public bool EsInterno { get; set; }
         public string IdLoteCodigoTipo { get; set; } = null!;
         public DateTimeOffset FechaRecepcion { get; set; }
         public string CodigoPlanta { get; set; } = null!;
