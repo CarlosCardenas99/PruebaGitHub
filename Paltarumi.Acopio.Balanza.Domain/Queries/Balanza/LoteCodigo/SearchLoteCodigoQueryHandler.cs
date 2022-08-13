@@ -81,7 +81,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 x => x.IdLoteNavigation
             );
 
-            var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation.CodigoLote).ToList();
+            var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation == null ? string.Empty : x.IdLoteNavigation.CodigoLote).ToList();
 
             var loteBalanzas = _loteBalanzaRepository.FindByAsNoTrackingAsync(
                 x => codigoLotes.Contains(x.CodigoLote),
@@ -94,8 +94,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
             loteDtos.ToList().ForEach(item =>
             {
                 var loteBalanza = loteBalanzas.Result.Where(x => x.CodigoLote == item.loteCodigo).FirstOrDefault(new Entity.LoteBalanza());
-                item.Proveedor = loteBalanza.IdProveedorNavigation.RazonSocial;
-                item.Estado = loteBalanza.IdEstadoNavigation.Descripcion;
+                if(loteBalanza.IdLoteBalanza > 0)
+                {
+                    item.Proveedor = loteBalanza.IdProveedorNavigation.RazonSocial;
+                    item.Estado = loteBalanza.IdEstadoNavigation.Descripcion;
+                }
             });
 
             var searchResult = new SearchResultDto<SearchLoteCodigoDto>(

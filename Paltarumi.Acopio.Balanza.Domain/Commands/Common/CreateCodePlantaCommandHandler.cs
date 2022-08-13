@@ -29,7 +29,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             var response = new ResponseDto<string>();
             string separador = string.Empty;
             var loteCodigoNomenclatura = await _loteCodigoNomenclaturaRepository.GetByAsync(x => x.IdEmpresa == request.IdEmpresa && x.IdLoteCodigoTipo == request.IdLoteCodigoTipo);
-            if (!string.IsNullOrEmpty(loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura))
+
+            if (!string.IsNullOrEmpty(loteCodigoNomenclatura?.EmpresaNomenclatura) && !string.IsNullOrEmpty(loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura))
                 separador = "-";
 
             if(request.IdLoteCodigoTipo.Equals(Constants.LoteCodigo.Tipo.MUESTRA_REFERENCIAL))
