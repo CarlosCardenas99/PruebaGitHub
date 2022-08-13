@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using MediatR;
+using Newtonsoft.Json;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -14,8 +17,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
     
         public CreateCodeRandomCorrelativeCommandHandler(
             IUnitOfWork unitOfWork,
+            IMapper mapper,
+            IMediator mediator,
             IRepository<Entity.LoteCodigoControl> loteCodigoControlRepository
-        ) : base(unitOfWork)
+        ) : base(unitOfWork, mapper, mediator)
         {
             _loteCodigoControlRepository = loteCodigoControlRepository;
         }
@@ -23,10 +28,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
         public override async Task<ResponseDto<string>> HandleCommand(CreateCodeRandomCorrelativeCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<string>();
-
-            var control = await _loteCodigoControlRepository.GetByAsync(x => x.Activo == true );
-
             CodigoLoteControlDto controlDto = new CodigoLoteControlDto();
+            string numero = string.Empty;
+
+            var control = await _loteCodigoControlRepository.GetByAsync(x => x.Activo == true);
+
             if (String.IsNullOrEmpty(control?.BloqueCodigo))
             {
                 controlDto.cursor = 10000;
@@ -38,24 +44,25 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 
             if (controlDto != null)
             {
-                if (controlDto.position < controlDto.listNumeros.ToList().Count)
-                {
-                    var numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
-                    controlDto.position++;
-                    response.UpdateData(numero);
-                }
-                else
+                if (!(controlDto.position < controlDto.listNumeros.ToList().Count))
                 {
                     controlDto.listNumeros = generarListaNumeroAleatorios(controlDto.cursor);
                     controlDto.position = 0;
                     controlDto.cursor = controlDto.cursor + controlDto.listNumeros.ToList().Count;
                 }
+
+                numero = $"{controlDto.listNumeros.ToList()[controlDto.position]}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(numero);
+
+                controlDto.position++;
                 control.BloqueCodigo = JsonConvert.SerializeObject(controlDto);
+
                 await _loteCodigoControlRepository.UpdateAsync(control);
                 await _loteCodigoControlRepository.SaveAsync();
+
+                numero = Convert.ToBase64String(bytes);
+                response.UpdateData(numero);
             }
-            else
-                response.AddErrorResult("Error no se obtuvo CodigoLoteControl");
 
             return response;
         }
@@ -63,7 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
         private int[] generarListaNumeroAleatorios(int cursor)
         {
             var rand = new Random();
-            int cantidad = rand.Next(20, 30);
+            int cantidad = rand.Next(Constants.LoteCodigo.Aleatorio.ValorInicial, Constants.LoteCodigo.Aleatorio.ValorFinal);
             int[] arreglo = generaListInt(cantidad, cursor);
             int[] nuevoarreglo = new int[cantidad];
 
