@@ -81,7 +81,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
             var codigoPlanta = (await _mediator.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA)))?.Data ?? string.Empty;  
-            var estado = obtenerEstadoLoteCodigoAsync().Result;
 
             var loteCodigo = new Entity.LoteCodigo
             {
@@ -96,7 +95,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 EnsayoLeyAg = false,
                 EnsayoPorcentajeRecuperacion = false,
                 EnsayoConsumo = false,
-                IdEstado = estado.IdMaestro,
+                IdLoteCodigoEstado = Constants.Maestro.LoteCodigoEstado.PENDIENTE,
                 UserNameCreate = string.Empty,
                 CreateDate = DateTimeOffset.Now,
                 Activo = true
@@ -104,15 +103,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             await _loteCodigoRepository.AddAsync(loteCodigo);
             await _loteCodigoRepository.SaveAsync();
-        }
-
-        private async Task<Entity.Maestro> obtenerEstadoLoteCodigoAsync()
-        {
-            var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_CODIGO_ESTADO &&
-                x.CodigoItem == Constants.Maestro.LoteCodigoEstado.PENDIENTE
-             );
-            return estadoLote;
         }
 
         private async Task<Entity.Lote> CreateLoteAsync(string codigoLote, int idEmpresa)
@@ -138,8 +128,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     IdOperacion = operacion.IdOperacion,
                     Status = Constants.Operaciones.Status.PENDING,
                     Attempts = 0,
-                    Body = "",
-                    Message = ""
+                    Body = string.Empty,
+                    Message = string.Empty
                 });
             }
 

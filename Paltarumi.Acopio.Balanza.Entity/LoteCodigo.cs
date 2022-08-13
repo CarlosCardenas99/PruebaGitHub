@@ -17,12 +17,13 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool EnsayoLeyAg { get; set; }
         public bool EnsayoPorcentajeRecuperacion { get; set; }
         public bool EnsayoConsumo { get; set; }
-        public int IdEstado { get; set; }
+        public string IdLoteCodigoEstado { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public bool Activo { get; set; }
 
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
+        public virtual LoteCodigoEstado IdLoteCodigoEstadoNavigation { get; set; } = null!;
         public virtual LoteCodigoTipo IdLoteCodigoTipoNavigation { get; set; } = null!;
         public virtual Lote? IdLoteNavigation { get; set; }
     }

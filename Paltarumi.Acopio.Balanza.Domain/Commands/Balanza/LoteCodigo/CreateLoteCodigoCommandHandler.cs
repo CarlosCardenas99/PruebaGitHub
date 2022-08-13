@@ -42,11 +42,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             {
                 lotecodigo.Activo = true;
 
-                var LoteCodigoEstado = await _maestroRepository.GetByAsNoTrackingAsync(
-                    x => x.CodigoTabla.Equals(Constants.Maestro.CodigoTabla.LOTE_CODIGO_ESTADO) && 
-                    x.CodigoItem.Equals(Constants.Maestro.LoteCodigoEstado.PENDIENTE));
-
-                lotecodigo.IdEstado = LoteCodigoEstado.IdMaestro;
+                lotecodigo.IdLoteCodigoEstado = Constants.Maestro.LoteCodigoEstado.PENDIENTE;
 
                 string codigoLote = string.Empty;
                 if(request.CreateDto.IdLote != null)

@@ -44,6 +44,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<LoteCodigoEnsayo> LoteCodigoEnsayos { get; set; } = null!;
         public virtual DbSet<LoteCodigoEnsayoDetalle> LoteCodigoEnsayoDetalles { get; set; } = null!;
         public virtual DbSet<LoteCodigoEnsayoOrigen> LoteCodigoEnsayoOrigens { get; set; } = null!;
+        public virtual DbSet<LoteCodigoEstado> LoteCodigoEstados { get; set; } = null!;
         public virtual DbSet<LoteCodigoMuestra> LoteCodigoMuestras { get; set; } = null!;
         public virtual DbSet<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; } = null!;
         public virtual DbSet<LoteCodigoPm> LoteCodigoPms { get; set; } = null!;
@@ -844,9 +845,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
-                entity.Property(e => e.IdEstado).HasColumnName("idEstado");
-
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
+
+                entity.Property(e => e.IdLoteCodigoEstado)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idLoteCodigoEstado")
+                    .IsFixedLength();
 
                 entity.Property(e => e.IdLoteCodigoTipo)
                     .HasMaxLength(2)
@@ -867,6 +872,12 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .WithMany(p => p.LoteCodigos)
                     .HasForeignKey(d => d.IdLote)
                     .HasConstraintName("fk_acopio_LoteCodigo_idLoteBalanza");
+
+                entity.HasOne(d => d.IdLoteCodigoEstadoNavigation)
+                    .WithMany(p => p.LoteCodigos)
+                    .HasForeignKey(d => d.IdLoteCodigoEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_acopio_LoteCodigo_idLoteCodigoEstado");
 
                 entity.HasOne(d => d.IdLoteCodigoTipoNavigation)
                     .WithMany(p => p.LoteCodigos)
@@ -1028,6 +1039,29 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("idLoteCodigoEnsayoOrigen")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Orden).HasColumnName("orden");
+            });
+
+            modelBuilder.Entity<LoteCodigoEstado>(entity =>
+            {
+                entity.HasKey(e => e.IdLoteCodigoEstado)
+                    .HasName("PK_acopio_LoteCodigoEstado_idLoteCodigoEstado");
+
+                entity.ToTable("LoteCodigoEstado", "acopio");
+
+                entity.Property(e => e.IdLoteCodigoEstado)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idLoteCodigoEstado")
                     .IsFixedLength();
 
                 entity.Property(e => e.Activo).HasColumnName("activo");

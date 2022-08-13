@@ -78,7 +78,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 request.SearchParams?.Page?.PageSize ?? 10,
                 sorts,
                 filter,
-                x => x.IdLoteNavigation
+                x => x.IdLoteNavigation,
+                x => x.IdLoteCodigoEstadoNavigation
             );
 
             var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation == null ? string.Empty : x.IdLoteNavigation.CodigoLote).ToList();
@@ -97,8 +98,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 if(loteBalanza.IdLoteBalanza > 0)
                 {
                     item.Proveedor = loteBalanza.IdProveedorNavigation.RazonSocial;
-                    item.Estado = loteBalanza.IdEstadoNavigation.Descripcion;
-                }
+                };
             });
 
             var searchResult = new SearchResultDto<SearchLoteCodigoDto>(
