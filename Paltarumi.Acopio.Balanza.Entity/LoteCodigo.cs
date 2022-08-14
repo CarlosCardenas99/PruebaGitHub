@@ -21,6 +21,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string IdLoteCodigoEstado { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
+        public string? UserNameUpdate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
 
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }

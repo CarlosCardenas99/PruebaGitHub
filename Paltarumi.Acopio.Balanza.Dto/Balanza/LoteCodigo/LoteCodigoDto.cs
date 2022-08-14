@@ -4,6 +4,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
     public class LoteCodigoDto
     {
         public int? IdLote { get; set; }
+        public int? IdProveedor { get; set; }
         public int? IdDuenoMuestra { get; set; }
         public string IdLoteCodigoTipo { get; set; } = null!;
         public DateTimeOffset FechaRecepcion { get; set; }
@@ -17,6 +18,8 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
         public string IdLoteCodigoEstado { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
+        public string? UserNameUpdate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
 
     }
 }

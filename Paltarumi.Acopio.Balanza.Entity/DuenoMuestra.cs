@@ -7,7 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public DuenoMuestra()
         {
-            LoteCodigoMuestras = new HashSet<LoteCodigoMuestra>();
+            LoteCodigoMuestreos = new HashSet<LoteCodigoMuestreo>();
             LoteCodigos = new HashSet<LoteCodigo>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
         }
@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual TipoDocumento CodigoTipoDocumentoNavigation { get; set; } = null!;
-        public virtual ICollection<LoteCodigoMuestra> LoteCodigoMuestras { get; set; }
+        public virtual ICollection<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
     }
