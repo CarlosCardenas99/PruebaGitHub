@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    public partial class Cancha
+    public partial class MuestraCondicion
     {
-        public Cancha()
+        public MuestraCondicion()
         {
             LoteCodigoMuestreos = new HashSet<LoteCodigoMuestreo>();
         }
 
-        public string IdCancha { get; set; } = null!;
+        public string IdMuestraCondicion { get; set; } = null!;
         public string Nombre { get; set; } = null!;
         public byte Orden { get; set; }
         public bool Activo { get; set; }

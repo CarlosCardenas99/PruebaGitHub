@@ -45,7 +45,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<LoteCodigoEnsayoDetalle> LoteCodigoEnsayoDetalles { get; set; } = null!;
         public virtual DbSet<LoteCodigoEnsayoOrigen> LoteCodigoEnsayoOrigens { get; set; } = null!;
         public virtual DbSet<LoteCodigoEstado> LoteCodigoEstados { get; set; } = null!;
-        public virtual DbSet<LoteCodigoMuestra> LoteCodigoMuestras { get; set; } = null!;
+        public virtual DbSet<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; } = null!;
         public virtual DbSet<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; } = null!;
         public virtual DbSet<LoteCodigoPm> LoteCodigoPms { get; set; } = null!;
         public virtual DbSet<LoteCodigoTipo> LoteCodigoTipos { get; set; } = null!;
@@ -55,6 +55,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<Mapa> Mapas { get; set; } = null!;
         public virtual DbSet<MineralCondicion> MineralCondicions { get; set; } = null!;
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
+        public virtual DbSet<MuestraCondicion> MuestraCondicions { get; set; } = null!;
+        public virtual DbSet<MuestraEstado> MuestraEstados { get; set; } = null!;
         public virtual DbSet<Operacion> Operacions { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
         public virtual DbSet<ProveedorConcesion> ProveedorConcesions { get; set; } = null!;
@@ -69,6 +71,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+          
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -860,9 +863,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
+                entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
+
                 entity.Property(e => e.UserNameCreate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameCreate");
+
+                entity.Property(e => e.UserNameUpdate)
+                    .HasMaxLength(256)
+                    .HasColumnName("userNameUpdate");
 
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
                     .WithMany(p => p.LoteCodigos)
@@ -1080,16 +1089,21 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.Orden).HasColumnName("orden");
             });
 
-            modelBuilder.Entity<LoteCodigoMuestra>(entity =>
+            modelBuilder.Entity<LoteCodigoMuestreo>(entity =>
             {
-                entity.HasKey(e => e.IdLoteCodigoMuestra)
-                    .HasName("PK_muestreo_LoteCodigo_idLoteCodigoMuestra");
+                entity.HasKey(e => e.IdLoteCodigoMuestreo)
+                    .HasName("PK_muestreo_LoteCodigoMuestreo_idLoteCodigoMuestreo");
 
-                entity.ToTable("LoteCodigoMuestra", "muestreo");
+                entity.ToTable("LoteCodigoMuestreo", "muestreo");
 
-                entity.Property(e => e.IdLoteCodigoMuestra).HasColumnName("idLoteCodigoMuestra");
+                entity.Property(e => e.IdLoteCodigoMuestreo).HasColumnName("idLoteCodigoMuestreo");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.CodigoAum)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoAum");
 
                 entity.Property(e => e.CodigoPlanta)
                     .HasMaxLength(10)
@@ -1101,17 +1115,34 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("codigoPlantaRandom");
 
+                entity.Property(e => e.CodigoTrujillo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoTrujillo");
+
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
                 entity.Property(e => e.FechaMuestreo).HasColumnName("fechaMuestreo");
 
-                entity.Property(e => e.IdCancha).HasColumnName("idCancha");
+                entity.Property(e => e.IdCancha)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idCancha")
+                    .IsFixedLength();
 
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
-                entity.Property(e => e.IdMuestraCondicion).HasColumnName("idMuestraCondicion");
+                entity.Property(e => e.IdMuestraCondicion)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idMuestraCondicion")
+                    .IsFixedLength();
 
-                entity.Property(e => e.IdMuestraEstado).HasColumnName("idMuestraEstado");
+                entity.Property(e => e.IdMuestraEstado)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idMuestraEstado")
+                    .IsFixedLength();
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
 
@@ -1127,44 +1158,39 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(256)
                     .HasColumnName("userNameCreate");
 
-                entity.Property(e => e.UserNameSupervisor)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameSupervisor");
-
                 entity.Property(e => e.UserNameUpdate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameUpdate");
 
                 entity.HasOne(d => d.IdCanchaNavigation)
-                    .WithMany(p => p.LoteCodigoMuestraIdCanchaNavigations)
+                    .WithMany(p => p.LoteCodigoMuestreos)
                     .HasForeignKey(d => d.IdCancha)
-                    .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idCancha");
+                    .HasConstraintName("fk_muestreo_LoteCodigoMuestreo_idCancha");
 
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
-                    .WithMany(p => p.LoteCodigoMuestras)
+                    .WithMany(p => p.LoteCodigoMuestreos)
                     .HasForeignKey(d => d.IdDuenoMuestra)
-                    .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idDuenoMuestra");
+                    .HasConstraintName("fk_muestreo_LoteCodigoMuestreo_idDuenoMuestra");
 
                 entity.HasOne(d => d.IdMuestraCondicionNavigation)
-                    .WithMany(p => p.LoteCodigoMuestraIdMuestraCondicionNavigations)
+                    .WithMany(p => p.LoteCodigoMuestreos)
                     .HasForeignKey(d => d.IdMuestraCondicion)
-                    .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idMuestraCondicion");
+                    .HasConstraintName("fk_muestreo_LoteCodigoMuestreo_idMuestraCondicion");
 
                 entity.HasOne(d => d.IdMuestraEstadoNavigation)
-                    .WithMany(p => p.LoteCodigoMuestraIdMuestraEstadoNavigations)
+                    .WithMany(p => p.LoteCodigoMuestreos)
                     .HasForeignKey(d => d.IdMuestraEstado)
-                    .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idMuestraEstado");
+                    .HasConstraintName("fk_muestreo_LoteCodigoMuestreo_idMuestraEstado");
 
                 entity.HasOne(d => d.IdProveedorNavigation)
-                    .WithMany(p => p.LoteCodigoMuestras)
+                    .WithMany(p => p.LoteCodigoMuestreos)
                     .HasForeignKey(d => d.IdProveedor)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idProveedor");
+                    .HasConstraintName("fk_muestreo_LoteCodigoMuestreo_idProveedor");
 
                 entity.HasOne(d => d.IdTurnoNavigation)
-                    .WithMany(p => p.LoteCodigoMuestraIdTurnoNavigations)
+                    .WithMany(p => p.LoteCodigoMuestreos)
                     .HasForeignKey(d => d.IdTurno)
-                    .HasConstraintName("fk_muestreo_LoteCodigoMuestra_idTurno");
+                    .HasConstraintName("fk_muestreo_LoteCodigoMuestreo_idTurno");
             });
 
             modelBuilder.Entity<LoteCodigoNomenclatura>(entity =>
@@ -1292,7 +1318,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
             modelBuilder.Entity<LoteMuestreo>(entity =>
             {
                 entity.HasKey(e => e.IdLoteMuestreo)
-                    .HasName("PK_muestreo_idLoteMuestreo");
+                    .HasName("PK_LoteMuestreo_idLoteMuestreo");
 
                 entity.ToTable("LoteMuestreo", "muestreo");
 
@@ -1547,6 +1573,52 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(64)
                     .IsUnicode(false)
                     .HasColumnName("nombre");
+            });
+
+            modelBuilder.Entity<MuestraCondicion>(entity =>
+            {
+                entity.HasKey(e => e.IdMuestraCondicion)
+                    .HasName("PK_muestreo_MuestraCondicion_idMuestraCondicion");
+
+                entity.ToTable("MuestraCondicion", "muestreo");
+
+                entity.Property(e => e.IdMuestraCondicion)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idMuestraCondicion")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Orden).HasColumnName("orden");
+            });
+
+            modelBuilder.Entity<MuestraEstado>(entity =>
+            {
+                entity.HasKey(e => e.IdMuestraEstado)
+                    .HasName("PK_muestreo_MuestraEstado_idMuestraEstado");
+
+                entity.ToTable("MuestraEstado", "muestreo");
+
+                entity.Property(e => e.IdMuestraEstado)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idMuestraEstado")
+                    .IsFixedLength();
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.Orden).HasColumnName("orden");
             });
 
             modelBuilder.Entity<Operacion>(entity =>
