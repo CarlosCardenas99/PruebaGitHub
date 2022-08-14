@@ -89,6 +89,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdLoteCodigoTipo = Constants.LoteCodigo.Tipo.MUESTRA,
                 FechaRecepcion = DateTimeOffset.Now,
                 CodigoPlanta = codigoPlanta,
+                IdProveedor= request.CreateDto.IdProveedor,
                 CodigoPlantaRandom = codigoHash,
                 CodigoMuestraProveedor = String.Empty,
                 EnsayoLeyAu = false,

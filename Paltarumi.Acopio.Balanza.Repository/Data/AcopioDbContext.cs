@@ -69,7 +69,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -859,6 +858,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnName("idLoteCodigoTipo")
                     .IsFixedLength();
 
+                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
+
                 entity.Property(e => e.UserNameCreate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameCreate");
@@ -884,6 +885,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasForeignKey(d => d.IdLoteCodigoTipo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_acopio_LoteCodigo_idLoteCodigoTipo");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany(p => p.LoteCodigos)
+                    .HasForeignKey(d => d.IdProveedor)
+                    .HasConstraintName("FK_acopio_LoteCodigo_idProveedor");
             });
 
             modelBuilder.Entity<LoteCodigoControl>(entity =>
@@ -1321,6 +1327,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(200)
                     .IsUnicode(false)
                     .HasColumnName("observacion");
+
+                entity.Property(e => e.PesoHumedo).HasColumnName("pesoHumedo");
+
+                entity.Property(e => e.PesoSeco).HasColumnName("pesoSeco");
 
                 entity.Property(e => e.ReportadoProveedor).HasColumnName("reportadoProveedor");
 

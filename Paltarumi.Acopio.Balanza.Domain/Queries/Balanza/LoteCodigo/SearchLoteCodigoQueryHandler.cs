@@ -80,27 +80,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 filter,
                 x => x.IdLoteNavigation,
                 x => x.IdLoteCodigoEstadoNavigation,
-                x => x.IdDuenoMuestraNavigation
-            );
-
-            var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation == null ? string.Empty : x.IdLoteNavigation.CodigoLote).ToList();
-
-            var loteBalanzas = _loteBalanzaRepository.FindByAsNoTrackingAsync(
-                x => codigoLotes.Contains(x.CodigoLote),
-                x => x.IdEstadoNavigation,
+                x => x.IdDuenoMuestraNavigation,
                 x => x.IdProveedorNavigation
             );
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteCodigoDto>>(lotes.Items);
-
-            loteDtos.ToList().ForEach(item =>
-            {
-                var loteBalanza = loteBalanzas.Result.Where(x => x.CodigoLote == item.loteCodigo).FirstOrDefault(new Entity.LoteBalanza());
-                if(loteBalanza.IdLoteBalanza > 0)
-                {
-                    item.Proveedor = loteBalanza.IdProveedorNavigation.RazonSocial;
-                };
-            });
 
             var searchResult = new SearchResultDto<SearchLoteCodigoDto>(
                 loteDtos ?? new List<SearchLoteCodigoDto>(),

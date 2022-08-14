@@ -33,27 +33,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 x => x.IdLoteCodigo == request.Id,
                 x => x.IdLoteNavigation,
                 x => x.IdLoteCodigoEstadoNavigation,
-                x => x.IdDuenoMuestraNavigation
+                x => x.IdDuenoMuestraNavigation,
+                x => x.IdProveedorNavigation
                 );
 
             var lotecodigoDto = _mapper?.Map<GetLoteCodigoDto>(lotecodigo);
 
-            if (lotecodigo.IdLote != null) {
-
-                var lote = await _loteRepository.GetByAsNoTrackingAsync(x => x.IdLote == lotecodigo.IdLote);
-
-                var loteBalanzas = await _loteBalanzaRepository.GetByAsNoTrackingAsync(
-                    x => x.CodigoLote.Equals(lote.CodigoLote),
-                    x => x.IdEstadoNavigation,
-                    x => x.IdProveedorNavigation
-                );
-
-                lotecodigoDto.Proveedor = loteBalanzas.IdProveedorNavigation.RazonSocial;
-            }
-
             if (lotecodigo != null && lotecodigoDto != null)
             {
-                //lotecodigoDto.Proveedor=
                 response.UpdateData(lotecodigoDto);
             }
 
