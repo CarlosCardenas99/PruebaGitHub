@@ -17,6 +17,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.LoteCodigo, GetLoteCodigoDto>()
+                .ForMember(x => x.loteCodigo, opt => opt.MapFrom(x => x.IdLoteNavigation != null ? x.IdLoteNavigation.CodigoLote : string.Empty))
+                .ForMember(x => x.NombreDuenoMuestra, opt => opt.MapFrom(x => x.IdDuenoMuestraNavigation != null ? x.IdDuenoMuestraNavigation.Nombres : string.Empty))
+                .ForMember(x => x.NumeroDuenoMuestra, opt => opt.MapFrom(x => x.IdDuenoMuestraNavigation != null ? x.IdDuenoMuestraNavigation.Numero : string.Empty))
                 .ReverseMap();
 
             CreateMap<Entity.LoteCodigo, SearchLoteCodigoDto>()

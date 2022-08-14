@@ -79,7 +79,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 sorts,
                 filter,
                 x => x.IdLoteNavigation,
-                x => x.IdLoteCodigoEstadoNavigation
+                x => x.IdLoteCodigoEstadoNavigation,
+                x => x.IdDuenoMuestraNavigation
             );
 
             var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation == null ? string.Empty : x.IdLoteNavigation.CodigoLote).ToList();
