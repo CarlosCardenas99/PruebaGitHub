@@ -2,6 +2,10 @@
 {
     public class Constants
     {
+        public struct Empresa
+        {
+            public const int PALTARUMI = 1;
+        }
         public class Operaciones
         {
             public struct Status
@@ -47,8 +51,9 @@
             public struct Tipo
             {
                 public const string MUESTRA = "01";
-                public const string RE_MUESTREO = "02";
-                public const string MUESTRA_REFERENCIAL= "03";
+                public const string MUESTRA_REFERENCIAL = "02";
+                public const string REMUESTREO_CANCHA= "03";
+                public const string REMUESTREO_BOLSA = "04";
             }
             public struct Format
             {
@@ -71,6 +76,7 @@
             public const string NOTA_DE_DEBITO = "08";
             public const string LOTE = "50";
             public const string TICKET = "51";
+            public const string LOTE_REFERENCIAL = "52";
         }
         public class Config
         {

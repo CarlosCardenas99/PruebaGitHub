@@ -4,9 +4,9 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
     public class LoteCodigoDto
     {
         public int? IdLote { get; set; }
+        public int? IdProveedor { get; set; }
         public int? IdDuenoMuestra { get; set; }
-        public bool EsInterno { get; set; }
-        public int IdTipoLoteCodigo { get; set; }
+        public string IdLoteCodigoTipo { get; set; } = null!;
         public DateTimeOffset FechaRecepcion { get; set; }
         public string CodigoPlanta { get; set; } = null!;
         public string CodigoPlantaRandom { get; set; } = null!;
@@ -15,9 +15,11 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
         public bool EnsayoLeyAg { get; set; }
         public bool EnsayoPorcentajeRecuperacion { get; set; }
         public bool EnsayoConsumo { get; set; }
-        public int IdEstado { get; set; }
+        public string IdLoteCodigoEstado { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
+        public string? UserNameUpdate { get; set; }
+        public DateTimeOffset? UpdateDate { get; set; }
 
     }
 }

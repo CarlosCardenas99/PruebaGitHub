@@ -8,8 +8,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public Proveedor()
         {
             LoteBalanzas = new HashSet<LoteBalanza>();
+            LoteChancados = new HashSet<LoteChancado>();
+            LoteCodigoMuestreos = new HashSet<LoteCodigoMuestreo>();
+            LoteCodigos = new HashSet<LoteCodigo>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
-            Muestras = new HashSet<Muestra>();
             ProveedorConcesions = new HashSet<ProveedorConcesion>();
         }
 
@@ -24,8 +26,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
+        public virtual ICollection<LoteChancado> LoteChancados { get; set; }
+        public virtual ICollection<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; }
+        public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
-        public virtual ICollection<Muestra> Muestras { get; set; }
         public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }
     }
 }

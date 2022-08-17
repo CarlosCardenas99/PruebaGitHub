@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Entity.Base;
@@ -36,13 +37,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
             {
                 if (filters?.FechaDesde.HasValue == true)
                 {
-                    var fechaDesde = filters.FechaDesde.Value.Date;
+                    var fechaDesde = filters.FechaDesde.GetStartDate();
                     filter = filter.And(x => (x.FechaRecepcion >= fechaDesde));
                 }
 
                 if (filters?.FechaHasta.HasValue == true)
                 {
-                    var fechaHasta = filters.FechaHasta.Value.Date.AddDays(1);
+                    var fechaHasta = filters.FechaHasta.GetEndDate();
                     filter = filter.And(x => (x.FechaRecepcion < fechaHasta));
                 }
             }
@@ -78,25 +79,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                 request.SearchParams?.Page?.PageSize ?? 10,
                 sorts,
                 filter,
-                x => x.IdLoteNavigation
-            );
-
-            var codigoLotes = lotes.Items.Select(x => x.IdLoteNavigation.CodigoLote).ToList();
-
-            var loteBalanzas = _loteBalanzaRepository.FindByAsNoTrackingAsync(
-                x => codigoLotes.Contains(x.CodigoLote),
-                x => x.IdEstadoNavigation,
+                x => x.IdLoteNavigation,
+                x => x.IdLoteCodigoEstadoNavigation,
+                x => x.IdDuenoMuestraNavigation,
                 x => x.IdProveedorNavigation
             );
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteCodigoDto>>(lotes.Items);
-
-            loteDtos.ToList().ForEach(item =>
-            {
-                var loteBalanza = loteBalanzas.Result.Where(x => x.CodigoLote == item.loteCodigo).FirstOrDefault(new Entity.LoteBalanza());
-                item.Proveedor = loteBalanza.IdProveedorNavigation.RazonSocial;
-                item.Estado = loteBalanza.IdEstadoNavigation.Descripcion;
-            });
 
             var searchResult = new SearchResultDto<SearchLoteCodigoDto>(
                 loteDtos ?? new List<SearchLoteCodigoDto>(),

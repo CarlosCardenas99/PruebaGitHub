@@ -195,6 +195,9 @@
   <data name="SortDirectionNotValid" xml:space="preserve">
     <value>Las direcciones de ordenamiento solo pueden ser 'asc' o 'desc'</value>
   </data>
+  <data name="UpdateLoteCodigo" xml:space="preserve">
+    <value>Se requiere el IdLote para continuar</value>
+  </data>
   <data name="UpdateRecordNotFound" xml:space="preserve">
     <value>El registro a actualizar no fue encontrado</value>
   </data>

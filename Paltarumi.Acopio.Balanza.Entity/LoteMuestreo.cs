@@ -10,6 +10,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset? Fecha { get; set; }
         public string UserNameSupervisor { get; set; } = null!;
         public float Tmh { get; set; }
+        public float? PesoHumedo { get; set; }
+        public float? PesoSeco { get; set; }
         public float? Humedad100 { get; set; }
         public float? HumedadBase { get; set; }
         public float? Humedad { get; set; }
