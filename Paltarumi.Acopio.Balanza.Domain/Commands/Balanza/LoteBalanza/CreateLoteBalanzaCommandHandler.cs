@@ -4,10 +4,13 @@ using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
+using Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteCodigoMuestreo;
@@ -35,6 +38,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
         private readonly IRepository<Entity.LoteCodigoMuestreo> _muestraRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entity.LoteChancado> _loteChancadoRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
@@ -53,7 +58,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.LoteCodigoNomenclatura> loteCodigoNomenclaturaRepository,
 
             IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
-            IRepository<Entity.LoteCodigoMuestreo> muestraRepository
+            IRepository<Entity.LoteCodigoMuestreo> muestraRepository,
+            IRepository<Entity.Ticket> ticketRepository,
+            IRepository<Entity.LoteChancado> loteChancadoRepository
 
         ) : base(unitOfWork, mapper, mediator, validator)
         {
@@ -70,6 +77,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             _loteMuestreoRepository = loteMuestreoRepository;
             _muestraRepository = muestraRepository;
+            _ticketRepository = ticketRepository;
+            _loteChancadoRepository = loteChancadoRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -83,6 +92,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var loteCodigoRegistrado = await CreateCodigoLoteAsync(request, lote);
 
             var response = await CreateLoteBalanzaAsync(request, codigoLote);
+
+            await CreateLoteChancadoAsync(response);
 
             var loteMuestreoRegistrado = await CreateLoteMuestreo(response);
 
@@ -216,6 +227,45 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 response.AddOkResult(Resources.Common.CreateSuccessMessage);
             }
             return response;
+        }
+
+        private async Task CreateLoteChancadoAsync(ResponseDto<GetLoteBalanzaDto> response)
+        {
+            var ticket = await _ticketRepository.GetByAsync(
+                   x => x.IdLoteBalanza == response.Data.IdLoteBalanza,
+                   x => x.IdVehiculoNavigation
+                );
+
+            var createDto = new CreateLoteChancadoDto
+            {
+                CodigoLote = response.Data.CodigoLote,
+                IdProveedor = response.Data.IdProveedor,
+                //FechaRecepcion = encontrado.FechaIngreso,
+                Placa = ticket.IdVehiculoNavigation != null ? ticket.IdVehiculoNavigation.Placa : string.Empty,
+                PlacaCarreta = ticket.IdVehiculoNavigation != null ? ticket.IdVehiculoNavigation.PlacaCarreta : string.Empty,
+                CreateDate = DateTimeOffset.Now,
+                UserNameCreate = "Admin"
+            };
+
+            var loteChancado = _mapper?.Map<Entity.LoteChancado>(createDto);
+
+            if (loteChancado != null)
+            {
+                loteChancado.Activo = true;
+                loteChancado.UserNameCreate = string.Empty;
+
+                await _loteChancadoRepository.AddAsync(loteChancado);
+                await _loteChancadoRepository.SaveAsync();
+
+            }
+
+            var nuevoMapa = await _mediator!.Send(new CreateMapaCommand(new CreateMapaDto
+            {
+                IdLoteChancado = loteChancado.IdLoteChancado,
+                UserNameCreate = "Admin",
+                CreateDate = DateTimeOffset.Now,
+            }));
+
         }
 
         private async Task<ResponseDto<GetLoteMuestreoDto>> CreateLoteMuestreo(ResponseDto<GetLoteBalanzaDto> response)
