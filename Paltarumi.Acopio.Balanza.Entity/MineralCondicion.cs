@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public MineralCondicion()
         {
             LoteChancados = new HashSet<LoteChancado>();
+            LoteMuestreos = new HashSet<LoteMuestreo>();
         }
 
         public string IdMineralCondicion { get; set; } = null!;
@@ -16,5 +17,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual ICollection<LoteChancado> LoteChancados { get; set; }
+        public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
     }
 }

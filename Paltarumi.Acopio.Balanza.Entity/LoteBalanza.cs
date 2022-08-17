@@ -12,6 +12,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public int IdLoteBalanza { get; set; }
         public string CodigoLote { get; set; } = null!;
+        public string CodigoTrujillo { get; set; } = null!;
+        public string CodigoAum { get; set; } = null!;
         public int IdConcesion { get; set; }
         public int IdProveedor { get; set; }
         public DateTimeOffset FechaIngreso { get; set; }

@@ -5,6 +5,11 @@ namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class LoteChancado
     {
+        public LoteChancado()
+        {
+            Mapas = new HashSet<Mapa>();
+        }
+
         public int IdLoteChancado { get; set; }
         public string CodigoLote { get; set; } = null!;
         public DateTimeOffset? FechaRecepcion { get; set; }
@@ -22,5 +27,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual LoteChancadoEstado? IdLoteChancadoEstadoNavigation { get; set; }
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
+        public virtual ICollection<Mapa> Mapas { get; set; }
     }
 }
