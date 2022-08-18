@@ -37,7 +37,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             {
                 correlativo.Numero++;
 
-                var numero =  String.Format("{0}{1}", empresa?.Prefijo, $"{correlativo.Numero}");
+                var numero =  string.Format("{0}{1}", empresa?.Prefijo, $"{correlativo.Numero}");
 
                 await _correlativoRepository.UpdateAsync(correlativo);
                 await _correlativoRepository.SaveAsync();

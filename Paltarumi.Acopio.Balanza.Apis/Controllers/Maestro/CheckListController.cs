@@ -9,21 +9,14 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Maestro
     [Route("api/checklist")]
     public class CheckListController
     {
-        private readonly ILogger<CheckListController> _logger;
         private readonly ICheckListApplication _checklistApplication;
 
-        public CheckListController(ILogger<CheckListController> logger, ICheckListApplication checklistApplication)
-        {
-            _logger = logger;
-            _checklistApplication = checklistApplication;
-        }
+        public CheckListController(ICheckListApplication checklistApplication)
+            => _checklistApplication = checklistApplication;
 
         [HttpPost]
         public async Task<ResponseDto<GetCheckListDto>> Create(CreateCheckListDto createDto)
-        {
-            _logger.LogInformation("Creating checklist...");
-            return await _checklistApplication.Create(createDto);
-        }
+            => await _checklistApplication.Create(createDto);
 
         [HttpPut]
         public async Task<ResponseDto<GetCheckListDto>> Update(UpdateCheckListDto updateDto)

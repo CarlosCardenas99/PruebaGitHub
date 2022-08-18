@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CodigoGenerationError" xml:space="preserve">
-    <value>Hubo un error generando el código del lote</value>
-  </data>
-  <data name="IdLote" xml:space="preserve">
-    <value>IdLote</value>
-  </data>
-  <data name="IdLoteCodigo" xml:space="preserve">
-    <value>IdLoteCodigo</value>
-  </data>
-  <data name="IdLoteCodigoTipo" xml:space="preserve">
-    <value>IdLoteCodigoTipo</value>
+  <data name="LoteChancadoRequired" xml:space="preserve">
+    <value>La información del lote de chancado es requerida</value>
   </data>
 </root>
