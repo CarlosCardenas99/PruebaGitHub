@@ -210,7 +210,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteChancado.Placa = ticket!.IdVehiculoNavigation != null ? ticket.IdVehiculoNavigation.Placa : string.Empty;
                 loteChancado.PlacaCarreta = ticket.IdVehiculoNavigation != null ? ticket.IdVehiculoNavigation.PlacaCarreta : string.Empty;
                 loteChancado.UpdateDate = DateTimeOffset.Now;
-                loteChancado.UserNameUpdate = "Admin";
+                loteChancado.UserNameUpdate = string.Empty;
 
                 await _loteChancadoRepository.UpdateAsync(loteChancado);
                 await _loteChancadoRepository.SaveAsync();
@@ -230,7 +230,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 lotemuestreo.CodigoAum = response.Data.CodigoAum;
                 lotemuestreo.CodigoTrujillo = response.Data.CodigoTrujillo;
                 lotemuestreo.UpdateDate = DateTimeOffset.Now;
-                lotemuestreo.UserNameUpdate = "Admin";
+                lotemuestreo.UserNameUpdate = string.Empty;
 
                 await _loteMuestreoRepository.UpdateAsync(lotemuestreo);
                 await _loteMuestreoRepository.SaveAsync();

@@ -285,7 +285,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (lotemuestreo != null)
             {
                 lotemuestreo.Activo = true;
-                lotemuestreo.UserNameSupervisor = string.Empty;
+                lotemuestreo.UserNameCreate = string.Empty;
 
                 await _loteMuestreoRepository.AddAsync(lotemuestreo);
                 await _loteMuestreoRepository.SaveAsync();

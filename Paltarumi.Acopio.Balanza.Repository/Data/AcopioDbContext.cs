@@ -1379,10 +1379,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(256)
                     .HasColumnName("userNameCreate");
 
-                entity.Property(e => e.UserNameSupervisor)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameSupervisor");
-
                 entity.Property(e => e.UserNameUpdate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameUpdate");
