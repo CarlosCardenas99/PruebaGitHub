@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
 
-namespace Paltarumi.Acopio.Balanza.Entity
+namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteCodigoMuestreo
 {
-    public partial class LoteCodigoMuestreo
+    public class LoteCodigoMuestreoDto
     {
-        public int IdLoteCodigoMuestreo { get; set; }
         public int IdLoteMuestreo { get; set; }
         public int? IdTurno { get; set; }
         public DateTimeOffset? FechaMuestreo { get; set; }
@@ -18,11 +15,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
-        public bool Activo { get; set; }
 
-        public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
-        public virtual LoteMuestreo IdLoteMuestreoNavigation { get; set; } = null!;
-        public virtual MuestraCondicion? IdMuestraCondicionNavigation { get; set; }
-        public virtual Maestro? IdTurnoNavigation { get; set; }
     }
 }

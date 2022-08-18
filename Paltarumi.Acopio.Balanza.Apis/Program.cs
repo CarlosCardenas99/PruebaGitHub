@@ -1,6 +1,7 @@
 ﻿using Paltarumi.Acopio.Balanza.Apis.Documentation;
 using Paltarumi.Acopio.Balanza.Apis.Endpoints;
 using Paltarumi.Acopio.Balanza.Apis.Exception;
+using Paltarumi.Acopio.Balanza.Apis.Logging;
 using Paltarumi.Acopio.Balanza.Apis.Region;
 using Paltarumi.Acopio.Balanza.Apis.Security;
 using Paltarumi.Acopio.Balanza.Application.Extensions;
@@ -41,6 +42,9 @@ builder.Services.UseEmailClient(configuration);
 // Region
 builder.Services.UseRegion(configuration);
 
+// RequestLogger
+builder.Services.UseRequestLogger();
+
 #endregion
 
 #region App
@@ -53,6 +57,9 @@ loggerFactory.AddLog4Net();
 
 // CustomExceptionHandler
 app.UseCustomExceptionHandler();
+
+// RequestLogger
+app.UseRequestLogger();
 
 // Documentation
 app.UseSwaggerDocumentation(configuration);

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
 
-namespace Paltarumi.Acopio.Balanza.Entity
+namespace Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa
 {
-    public partial class Mapa
+    public class MapaDto
     {
-        public int IdMapa { get; set; }
         public int? IdMapaPadre { get; set; }
         public int IdLoteChancado { get; set; }
         public string? IdLoteChancadoGrupo { get; set; }
@@ -18,10 +15,5 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
-        public bool Activo { get; set; }
-
-        public virtual Cancha? IdCanchaNavigation { get; set; }
-        public virtual LoteChancadoGrupo? IdLoteChancadoGrupoNavigation { get; set; }
-        public virtual LoteChancado IdLoteChancadoNavigation { get; set; } = null!;
     }
 }

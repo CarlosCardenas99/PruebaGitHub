@@ -3,6 +3,8 @@
     public class LoteBalanzaDto
     {
         public string? CodigoLote { get; set; }
+        public string CodigoTrujillo { get; set; } = null!;
+        public string CodigoAum { get; set; } = null!;
         public int IdConcesion { get; set; }
         public int IdProveedor { get; set; }
         public DateTimeOffset FechaIngreso { get; set; }

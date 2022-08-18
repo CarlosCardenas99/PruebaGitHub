@@ -8,6 +8,7 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
+using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
@@ -24,6 +25,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         private readonly IRepository<Entity.Ticket> _ticketRepository;
         private readonly IRepository<Entity.TicketBackup> _backupRepository;
 
+        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
+        private readonly IRepository<Entity.LoteChancado> _loteChancadoRepository;
+        private readonly IRepository<Entity.Mapa> _mapaRepository;
+
         public UpdateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
@@ -34,7 +39,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.LoteOperacion> loteOperacionRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
             IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.TicketBackup> backupRepository
+            IRepository<Entity.TicketBackup> backupRepository,
+
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
+            IRepository<Entity.LoteChancado> loteChancadoRepository,
+            IRepository<Entity.Mapa> mapaRepository
+
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteRepository = loteRepository;
@@ -43,6 +53,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             _loteBalanzaRepository = loteBalanzaRepository;
             _ticketRepository = ticketRepository;
             _backupRepository = backupRepository;
+
+            _loteMuestreoRepository = loteMuestreoRepository;
+            _loteChancadoRepository = loteChancadoRepository;
+            _mapaRepository = mapaRepository;
         }
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
@@ -53,6 +67,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var lote = await CreateLoteOperationsAsync(loteBalanza?.CodigoLote!);
 
             var response = await UpdateLoteBalanza(lote, loteBalanza!, request, cancellationToken);
+
+            await UpdateLoteChancadoAsync(response);
+
+            var loteMuestreoRegistrado = await UpdateLoteMuestreoAsync(response);
 
             await CheckStatusOperacionAsync(loteBalanza?.CodigoLote!, response, request);
 
@@ -129,7 +147,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     await _ticketRepository.UpdateAsync(ticket);
                     await _ticketRepository.SaveAsync();
                 }
-                
+
                 #endregion
 
                 #region Add Non Existing
@@ -147,7 +165,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 {
                     if (!request.UpdateDto.EsPartido)
                         newTicket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa)))?.Data ?? string.Empty;
-                    
+
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     newTicket.IdLoteBalanzaNavigation = null!;
                     newTicket.Activo = true;
@@ -166,7 +184,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var loteDto = _mapper?.Map<GetLoteBalanzaDto>(recuprarloteBalanza);
                 if (loteDto != null)
                 {
-                    loteDto.TicketDetails = 
+                    loteDto.TicketDetails =
                         _mapper?.Map<IEnumerable<ListTicketDto>>(recuprarloteBalanza?.Tickets.Where(x => x.Activo == true)) ?? new List<ListTicketDto>();
 
                     response.UpdateData(loteDto);
@@ -175,6 +193,53 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             }
 
             return response;
+        }
+
+        private async Task UpdateLoteChancadoAsync(ResponseDto<GetLoteBalanzaDto> response)
+        {
+            var loteChancado = await _loteChancadoRepository.GetByAsync(x => x.CodigoLote == response.Data!.CodigoLote);
+
+            var ticket = await _ticketRepository.GetByAsync(
+                   x => x.IdLoteBalanza == response.Data!.IdLoteBalanza,
+                   x => x.IdVehiculoNavigation
+                );
+
+            if (loteChancado != null)
+            {
+                loteChancado.IdProveedor = response.Data!.IdProveedor;
+                loteChancado.Placa = ticket!.IdVehiculoNavigation != null ? ticket.IdVehiculoNavigation.Placa : string.Empty;
+                loteChancado.PlacaCarreta = ticket.IdVehiculoNavigation != null ? ticket.IdVehiculoNavigation.PlacaCarreta : string.Empty;
+                loteChancado.UpdateDate = DateTimeOffset.Now;
+                loteChancado.UserNameUpdate = string.Empty;
+
+                await _loteChancadoRepository.UpdateAsync(loteChancado);
+                await _loteChancadoRepository.SaveAsync();
+            }
+        }
+
+        private async Task<ResponseDto<GetLoteMuestreoDto>> UpdateLoteMuestreoAsync(ResponseDto<GetLoteBalanzaDto> response)
+        {
+            var loteMuestreoRegistrado = new ResponseDto<GetLoteMuestreoDto>();
+
+            var lotemuestreo = await _loteMuestreoRepository.GetByAsync(x => x.CodigoLote == response.Data!.CodigoLote);
+
+            if (lotemuestreo != null)
+            {
+                lotemuestreo.IdProveedor = response.Data.IdProveedor;
+                lotemuestreo.Tmh = response.Data.Tmh;
+                lotemuestreo.CodigoAum = response.Data.CodigoAum;
+                lotemuestreo.CodigoTrujillo = response.Data.CodigoTrujillo;
+                lotemuestreo.UpdateDate = DateTimeOffset.Now;
+                lotemuestreo.UserNameUpdate = string.Empty;
+
+                await _loteMuestreoRepository.UpdateAsync(lotemuestreo);
+                await _loteMuestreoRepository.SaveAsync();
+
+                var loteMuestreo = _mapper?.Map<GetLoteMuestreoDto>(lotemuestreo);
+
+                loteMuestreoRegistrado.UpdateData(loteMuestreo);
+            }
+            return loteMuestreoRegistrado;
         }
 
         private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, UpdateLoteBalanzaCommand request)
