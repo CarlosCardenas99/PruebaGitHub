@@ -227,6 +227,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteCodigoDto?.CodigoPlantaRandom!,
                 new CreateLoteMuestreoDto
                 {
+                    FechaAcopio = loteBalanzaDto.FechaAcopio,
                     CodigoLote = loteBalanzaDto.CodigoLote!,
                     IdProveedor = loteBalanzaDto.IdProveedor,
                     Tmh = loteBalanzaDto.Tmh,

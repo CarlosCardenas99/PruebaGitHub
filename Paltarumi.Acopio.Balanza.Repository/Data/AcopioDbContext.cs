@@ -70,6 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -591,8 +592,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.CodigoAum)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("codigoAum")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("codigoAum");
 
                 entity.Property(e => e.CodigoLote)
                     .HasMaxLength(10)
@@ -602,8 +602,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.CodigoTrujillo)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("codigoTrujillo")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("codigoTrujillo");
 
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
@@ -673,9 +672,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasName("PK_chancado_LoteChancado_idLoteChacado");
 
                 entity.ToTable("LoteChancado", "chancado");
-
-                entity.HasIndex(e => e.CodigoLote, "UC_chancado_LoteChancado_codigoLote")
-                    .IsUnique();
 
                 entity.Property(e => e.IdLoteChancado).HasColumnName("idLoteChancado");
 
@@ -1302,9 +1298,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.ToTable("LoteMuestreo", "muestreo");
 
-                entity.HasIndex(e => e.CodigoLote, "UC_muestreo_LoteMuestreo_codigoLote")
-                    .IsUnique();
-
                 entity.Property(e => e.IdLoteMuestreo).HasColumnName("idLoteMuestreo");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
@@ -1327,6 +1320,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
                 entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.FechaAcopio)
+                    .HasColumnName("fechaAcopio")
+                    .HasDefaultValueSql("('18/08/2022')");
 
                 entity.Property(e => e.Firmado).HasColumnName("firmado");
 
