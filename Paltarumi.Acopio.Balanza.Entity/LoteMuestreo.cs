@@ -14,6 +14,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string CodigoLote { get; set; } = null!;
         public string? CodigoTrujillo { get; set; }
         public string? CodigoAum { get; set; }
+        public DateTimeOffset? FechaAcopio { get; set; }
         public DateTimeOffset? Fecha { get; set; }
         public float Tmh { get; set; }
         public float? PesoHumedo { get; set; }
