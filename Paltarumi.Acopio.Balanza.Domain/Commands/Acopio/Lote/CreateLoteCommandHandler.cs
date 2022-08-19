@@ -53,14 +53,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
                 return response;
             }
 
-            var loteOperacions = new List<Entity.LoteOperacion>();
+            var loteOperaciones = new List<Entity.LoteOperacion>();
             var operaciones = await _operacionRepository.FindByAsNoTrackingAsync(x =>
                 x.Codigo.Equals(Constants.Operaciones.Operacion.CREATE)
             );
 
             foreach (var operacion in operaciones)
             {
-                loteOperacions.Add(new Entity.LoteOperacion
+                loteOperaciones.Add(new Entity.LoteOperacion
                 {
                     IdOperacionNavigation = null!,
                     IdOperacion = operacion.IdOperacion,
@@ -72,7 +72,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
             }
 
             lote.IdEstado = estado.IdMaestro;
-            lote.LoteOperacions = loteOperacions;
+            lote.LoteOperacions = loteOperaciones;
 
             await _loteRepository.AddAsync(lote);
             await _loteRepository.SaveAsync();

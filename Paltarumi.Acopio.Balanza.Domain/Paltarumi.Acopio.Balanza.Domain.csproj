@@ -146,6 +146,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Conductor.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Muestreo\LoteMuestreo.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LoteMuestreo.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Security\User.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -245,6 +250,10 @@
     <EmbeddedResource Update="Resources\Maestro\Conductor.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Conductor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Muestreo\LoteMuestreo.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoteMuestreo.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Security\User.resx">
       <Generator>ResXFileCodeGenerator</Generator>

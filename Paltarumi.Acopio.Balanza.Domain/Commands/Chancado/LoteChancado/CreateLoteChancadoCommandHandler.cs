@@ -1,4 +1,5 @@
 using AutoMapper;
+using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
@@ -17,10 +18,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
         public CreateLoteChancadoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IMediator mediator,
             CreateLoteChancadoCommandValidator validator,
             IRepository<Entity.Ticket> ticketRepository,
             IRepository<Entity.LoteChancado> lotechancadoRepository
-        ) : base(unitOfWork, mapper, validator)
+        ) : base(unitOfWork, mapper, mediator, validator)
         {
             _ticketRepository = ticketRepository;
             _lotechancadoRepository = lotechancadoRepository;

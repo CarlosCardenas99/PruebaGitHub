@@ -7,13 +7,13 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteCodigoMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -24,114 +24,110 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class CreateLoteBalanzaCommandHandler : CommandHandlerBase<CreateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
+        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
         private readonly IRepository<Entity.LoteCodigo> _loteCodigoRepository;
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.Maestro> _maestroRepository;
         private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
-        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
-        private readonly IRepository<Entity.TransporteVehiculo> _transporteVehiculoRepository;
-        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
-        private readonly IRepository<Entity.LoteCodigoMuestreo> _muestraRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             CreateLoteBalanzaCommandValidator validator,
+            IRepository<Entity.Maestro> maestroRepository,
+            IRepository<Entity.Proveedor> proveedorRepository,
             IRepository<Entity.LoteCodigo> loteCodigoRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.Maestro> maestroRepository,
-            IRepository<Entity.DuenoMuestra> duenoMuestraRepository,
-            IRepository<Entity.TransporteVehiculo> transporteVehiculoRepository,
-            IRepository<Entity.Proveedor> proveedorRepository,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
-            IRepository<Entity.LoteCodigoMuestreo> muestraRepository
+            IRepository<Entity.DuenoMuestra> duenoMuestraRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _maestroRepository = maestroRepository;
+            _proveedorRepository = proveedorRepository;
             _loteCodigoRepository = loteCodigoRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
-            _maestroRepository = maestroRepository;
-            _transporteVehiculoRepository = transporteVehiculoRepository;
             _duenoMuestraRepository = duenoMuestraRepository;
-            _proveedorRepository = proveedorRepository;
-            _loteMuestreoRepository = loteMuestreoRepository;
-            _muestraRepository = muestraRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaDto>();
 
-            #region Lote Código
-            var createCodeResponse = await _mediator?.Send(// Actualizar la serie harcoded
+            var loteCodigoResponse = await CreateLoteCodigo(request, cancellationToken, response);
+            if (!response.IsValid) return response;
+
+            var codigoLote = loteCodigoResponse.Data ?? string.Empty;
+
+            var loteResponse = await CreateLote(request, cancellationToken, response, codigoLote);
+            if (!response.IsValid) return response;
+
+            var codigoLoteResponse = await CreateCodigoLoteAsync(request, cancellationToken, response, loteResponse?.Data);
+            if (!response.IsValid) return response;
+
+            await CreateLoteBalanza(request, response, codigoLote);
+            if (!response.IsValid) return response;
+
+            await CreateLoteChancado(cancellationToken, response, response.Data!);
+            if (!response.IsValid) return response;
+
+            await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!);
+            if (!response.IsValid) return response;
+
+            await CreateLoteOperacion(request, cancellationToken, response, codigoLote);
+            if (!response.IsValid) return response;
+
+            return response;
+        }
+
+        private async Task<ResponseDto<string>> CreateLoteCodigo(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response)
+        {
+            var createResponse = await _mediator?.Send(// Actualizar la serie harcoded
                 new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa),
                 cancellationToken
             )!;
 
-            if (createCodeResponse?.IsValid == false)
-            {
-                response.AttachResults(createCodeResponse);
-                return response;
-            }
-
-            if (string.IsNullOrEmpty(createCodeResponse?.Data))
+            if (createResponse == null)
             {
                 response.AddErrorResult(Resources.Balanza.LoteCodigo.CodigoGenerationError);
-                return response;
+                return createResponse!;
             }
 
-            var codigoLote = createCodeResponse.Data;
-            #endregion
+            if (string.IsNullOrEmpty(createResponse.Data))
+            {
+                response.AddErrorResult(Resources.Balanza.LoteCodigo.CodigoGenerationError);
+                return createResponse;
+            }
 
-            #region Lote
-            var loteResponse = await _mediator?.Send(new CreateLoteCommand(new CreateLoteDto
+            if (createResponse.IsValid == false)
+            {
+                response.AttachResults(createResponse);
+                return createResponse;
+            }
+
+            return createResponse;
+        }
+
+        private async Task<ResponseDto<GetLoteDto>> CreateLote(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, string codigoLote)
+        {
+            var createResponse = await _mediator?.Send(new CreateLoteCommand(new CreateLoteDto
             {
                 CodigoLote = codigoLote,
                 IdEmpresa = request.CreateDto.IdEmpresa
             }), cancellationToken)!;
 
-            if (loteResponse?.IsValid == false)
-            {
-                response.AttachResults(loteResponse);
-                return response;
-            }
-            #endregion
+            if (createResponse?.IsValid == false)
+                response.AttachResults(createResponse);
 
-            var loteCodigoRegistrado = await CreateCodigoLoteAsync(request, loteResponse?.Data);
-
-            response = await CreateLoteBalanzaAsync(request, codigoLote);
-
-            #region Lote Chancado
-            var loteChancadoResponse = await _mediator.Send(new CreateLoteChancadoCommand(new CreateLoteChancadoDto
-            {
-                IdLoteBalanza = response.Data.IdLoteBalanza,
-                CodigoLote = response.Data.CodigoLote,
-                IdProveedor = response.Data.IdProveedor
-            }));
-
-            if (loteChancadoResponse?.IsValid == false)
-            {
-                response.AttachResults(loteChancadoResponse);
-                return response;
-            }
-            #endregion
-
-            var loteMuestreoRegistrado = await CreateLoteMuestreo(response);
-
-            await CreateLoteCodigoMuestreo(loteCodigoRegistrado, loteMuestreoRegistrado);
-
-            await CheckStatusOperacionAsync(codigoLote, response, request);
-
-            return response;
+            return createResponse!;
         }
 
-        private async Task<ResponseDto<GetLoteCodigoDto>> CreateCodigoLoteAsync(CreateLoteBalanzaCommand request, GetLoteDto? lote)
+        private async Task<ResponseDto<GetLoteCodigoDto>> CreateCodigoLoteAsync(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteDto? lote)
         {
             var loteCodigoRegistrado = new ResponseDto<GetLoteCodigoDto>();
 
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
-            var codigoHash = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
-            var codigoPlanta = (await _mediator.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA)))?.Data ?? string.Empty;
+            var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken))?.Data ?? string.Empty;
+            var codigoPlanta = (await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA), cancellationToken))?.Data ?? string.Empty;
 
             var loteCodigo = new Entity.LoteCodigo
             {
@@ -162,9 +158,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return loteCodigoRegistrado;
         }
 
-        private async Task<ResponseDto<GetLoteBalanzaDto>> CreateLoteBalanzaAsync(CreateLoteBalanzaCommand request, string code)
+        private async Task CreateLoteBalanza(CreateLoteBalanzaCommand request, ResponseDto<GetLoteBalanzaDto> response, string codigoLote)
         {
-            var response = new ResponseDto<GetLoteBalanzaDto>();
             var loteBalanza = _mapper?.Map<Entity.LoteBalanza>(request.CreateDto) ?? new Entity.LoteBalanza();
             var ticketDetails = request.CreateDto?.TicketDetails;
 
@@ -183,7 +178,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
                 );
 
-                loteBalanza.CodigoLote = code;
+                loteBalanza.CodigoLote = codigoLote;
                 loteBalanza.Enable();
                 loteBalanza.UpdateCreation();
                 loteBalanza.UpdateCantidadSacos();
@@ -210,70 +205,52 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 response.AddOkResult(Resources.Common.CreateSuccessMessage);
             }
-            return response;
         }
 
-        private async Task<ResponseDto<GetLoteMuestreoDto>> CreateLoteMuestreo(ResponseDto<GetLoteBalanzaDto> response)
+        private async Task CreateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
         {
-            var loteMuestreoRegistrado = new ResponseDto<GetLoteMuestreoDto>();
-
-            var createDto = new CreateLoteMuestreoDto
+            var createResponse = await _mediator?.Send(new CreateLoteChancadoCommand(new CreateLoteChancadoDto
             {
-                CodigoLote = response.Data.CodigoLote,
-                IdProveedor = response.Data.IdProveedor,
-                Tmh = response.Data.Tmh,
-                CodigoAum = response.Data.CodigoAum,
-                CodigoTrujillo = response.Data.CodigoTrujillo
-            };
-            var lotemuestreo = _mapper?.Map<Entity.LoteMuestreo>(createDto);
+                IdLoteBalanza = loteBalanzaDto.IdLoteBalanza,
+                CodigoLote = loteBalanzaDto.CodigoLote!,
+                IdProveedor = loteBalanzaDto.IdProveedor
+            }), cancellationToken)!;
 
-            if (lotemuestreo != null)
-            {
-                lotemuestreo.Activo = true;
-                lotemuestreo.UserNameCreate = string.Empty;
-
-                await _loteMuestreoRepository.AddAsync(lotemuestreo);
-                await _loteMuestreoRepository.SaveAsync();
-
-                var loteMuestreo = _mapper?.Map<GetLoteMuestreoDto>(lotemuestreo);
-
-                loteMuestreoRegistrado.UpdateData(loteMuestreo);
-            }
-            return loteMuestreoRegistrado;
+            if (createResponse?.IsValid == false)
+                response.AttachResults(createResponse);
         }
 
-        private async Task CreateLoteCodigoMuestreo(ResponseDto<GetLoteCodigoDto> loteCodigoRegistrado, ResponseDto<GetLoteMuestreoDto> loteMuestreoRegistrado)
+        private async Task CreateLoteMuestreo(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, GetLoteCodigoDto loteCodigoDto)
         {
-            var createDto = new CreateLoteCodigoMuestreoDto
-            {
-                IdLoteMuestreo = loteMuestreoRegistrado.Data.IdLoteMuestreo,
-                CodigoPlanta = loteCodigoRegistrado.Data.CodigoPlanta,
-                CodigoPlantaRandom = loteCodigoRegistrado.Data.CodigoPlantaRandom
-            };
+            var createResponse = await _mediator?.Send(new CreateLoteMuestreoCommand(
+                loteCodigoDto?.CodigoPlanta!,
+                loteCodigoDto?.CodigoPlantaRandom!,
+                new CreateLoteMuestreoDto
+                {
+                    CodigoLote = loteBalanzaDto.CodigoLote!,
+                    IdProveedor = loteBalanzaDto.IdProveedor,
+                    Tmh = loteBalanzaDto.Tmh,
+                    CodigoAum = loteBalanzaDto.CodigoAum,
+                    CodigoTrujillo = loteBalanzaDto.CodigoTrujillo
+                }), cancellationToken)!;
 
-            var loteCodigoMuestreo = _mapper?.Map<Entity.LoteCodigoMuestreo>(createDto);
-
-            if (loteCodigoMuestreo != null)
-            {
-                loteCodigoMuestreo.Activo = true;
-                loteCodigoMuestreo.UserNameCreate = string.Empty;
-                loteCodigoMuestreo.CreateDate = DateTimeOffset.Now;
-
-                await _muestraRepository.AddAsync(loteCodigoMuestreo);
-                await _muestraRepository.SaveAsync();
-            }
+            if (createResponse?.IsValid == false)
+                response.AttachResults(createResponse);
         }
 
-        private async Task CheckStatusOperacionAsync(string codigoLote, ResponseDto<GetLoteBalanzaDto> response, CreateLoteBalanzaCommand request)
+        private async Task CreateLoteOperacion(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, string codigoLote)
         {
-            await _mediator?.Send(new CreateOrUpdateLoteOperacionCommand(new CreateOrUpdateLoteOperacionDto
+            var createResponse = await _mediator?.Send(new CreateOrUpdateLoteOperacionCommand(new CreateOrUpdateLoteOperacionDto
             {
                 CodigoLote = codigoLote,
                 Modulo = Constants.Operaciones.Modulo.BALANZA,
                 Operacion = Constants.Operaciones.Operacion.CREATE,
                 Body = JsonConvert.SerializeObject(request.CreateDto),
                 Exception = response.IsValid ? null! : new Exception(response.GetFormattedApiResponse())
-            }))!;
+            }), cancellationToken)!;
+
+            if (createResponse?.IsValid == false)
+                response.AttachResults(createResponse);
         }
 
         private async Task<Entity.DuenoMuestra> GetOrCreateDuenoMuestra(int? idProveedor)
@@ -282,8 +259,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
 
             if (proveedor != null)
-                duenoMuestra = await _duenoMuestraRepository.GetByAsNoTrackingAsync(x => x.Numero == proveedor.Ruc &&
-                                                                                    x.CodigoTipoDocumento == Constants.TipoDocumento.RUC);
+                duenoMuestra = await _duenoMuestraRepository.GetByAsNoTrackingAsync(x
+                    => x.Numero == proveedor.Ruc && x.CodigoTipoDocumento == Constants.TipoDocumento.RUC
+                );
 
             if (duenoMuestra != null)
                 return duenoMuestra;
@@ -304,31 +282,5 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             return duenoMuestra;
         }
-
-        private async Task<Entity.TransporteVehiculo> CreateTransporteVehiculo(int? idTransporte, int? idVehiculo)
-        {
-            var transporteVehiculo = default(Entity.TransporteVehiculo);
-
-            if (idTransporte.HasValue == true && idVehiculo.HasValue == true)
-                transporteVehiculo = await _transporteVehiculoRepository.GetByAsNoTrackingAsync(x => (x.IdTransporte == idTransporte) && (x.IdVehiculo == idVehiculo));
-            else
-                return transporteVehiculo!;
-
-            if (transporteVehiculo != null)
-                return transporteVehiculo;
-
-            transporteVehiculo = new Entity.TransporteVehiculo
-            {
-                IdTransporte = idTransporte ?? 0,
-                IdVehiculo = idVehiculo ?? 0,
-                Activo = true
-            };
-
-            await _transporteVehiculoRepository.AddAsync(transporteVehiculo);
-            await _transporteVehiculoRepository.SaveAsync();
-
-            return transporteVehiculo;
-        }
-
     }
 }

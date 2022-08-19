@@ -7,7 +7,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 {
     public class CreateCodeCommandHandler : CommandHandlerBase<CreateCodeCommand, string>
     {
-
         private readonly IRepository<Entity.Correlativo> _correlativoRepository;
         private readonly IRepository<Entity.Empresa> _empresaRepository;
 
