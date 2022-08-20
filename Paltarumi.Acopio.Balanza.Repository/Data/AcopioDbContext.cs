@@ -703,12 +703,27 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.Placa)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("placa");
+                    .HasColumnName("placa")
+                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.PlacaCarreta)
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("placaCarreta");
+
+                entity.Property(e => e.PlacasCarretaTicket)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("placasCarretaTicket")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.PlacasTicket)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("placasTicket")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Tmh).HasColumnName("tmh");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 

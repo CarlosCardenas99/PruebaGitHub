@@ -34,10 +34,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
                 return response;
             }
 
-            loteMuestreo.IdProveedor = request.UpdateDto.IdProveedor;
-            loteMuestreo.Tmh = request.UpdateDto.Tmh;
-            loteMuestreo.CodigoAum = request.UpdateDto.CodigoAum;
-            loteMuestreo.CodigoTrujillo = request.UpdateDto.CodigoTrujillo;
+            _mapper?.Map(request.UpdateDto, loteMuestreo);
 
             await _loteMuestreoRepository.UpdateAsync(loteMuestreo);
             await _loteMuestreoRepository.SaveAsync();

@@ -39,14 +39,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
                 return response;
             }
 
-            var ticket = await _ticketRepository.GetByAsync(
-                x => x.IdLoteBalanza == request.CreateDto.IdLoteBalanza,
-                x => x.IdVehiculoNavigation
-            );
-
-            loteChancado.Placa = ticket?.IdVehiculoNavigation?.Placa ?? string.Empty;
-            loteChancado.PlacaCarreta = ticket?.IdVehiculoNavigation?.PlacaCarreta ?? string.Empty;
-
             await _loteChancadoRepository.AddAsync(loteChancado);
             await _loteChancadoRepository.SaveAsync();
 

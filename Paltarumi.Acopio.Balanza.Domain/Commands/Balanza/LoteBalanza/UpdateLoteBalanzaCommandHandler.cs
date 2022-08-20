@@ -212,9 +212,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             var updateResponse = await _mediator?.Send(new UpdateLoteChancadoCommand(new UpdateLoteChancadoDto
             {
-                IdLoteBalanza = loteBalanzaDto.IdLoteBalanza,
                 CodigoLote = loteBalanzaDto.CodigoLote!,
-                IdProveedor = loteBalanzaDto.IdProveedor
+                IdProveedor = loteBalanzaDto.IdProveedor,
+                Tmh = loteBalanzaDto.Tmh,
+                PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa)),
+                PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta))
             }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)
@@ -226,13 +228,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var updateResponse = await _mediator?.Send(new UpdateLoteMuestreoCommand(
                 new UpdateLoteMuestreoDto
                 {
+                    FechaAcopio = loteBalanzaDto.FechaAcopio,
                     CodigoLote = loteBalanzaDto.CodigoLote!,
                     IdProveedor = loteBalanzaDto.IdProveedor,
                     Tmh = loteBalanzaDto.Tmh,
                     CodigoAum = loteBalanzaDto.CodigoAum,
                     CodigoTrujillo = loteBalanzaDto.CodigoTrujillo
                 }), cancellationToken)!;
-
+            
             if (updateResponse?.IsValid == false)
                 response.AttachResults(updateResponse);
         }

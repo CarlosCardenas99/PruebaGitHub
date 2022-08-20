@@ -211,9 +211,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             var createResponse = await _mediator?.Send(new CreateLoteChancadoCommand(new CreateLoteChancadoDto
             {
-                IdLoteBalanza = loteBalanzaDto.IdLoteBalanza,
                 CodigoLote = loteBalanzaDto.CodigoLote!,
-                IdProveedor = loteBalanzaDto.IdProveedor
+                IdProveedor = loteBalanzaDto.IdProveedor,
+                Tmh = loteBalanzaDto.Tmh,
+                PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa)),
+                PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta))
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)
