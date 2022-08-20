@@ -13,16 +13,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
     public class SearchLoteBalanzaQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaQuery, SearchLoteBalanzaFilterDto, SearchLoteBalanzaDto>
     {
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
 
         public SearchLoteBalanzaQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
-            _loteMuestreoRepository = loteMuestreoRepository;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> HandleQuery(SearchLoteBalanzaQuery request, CancellationToken cancellationToken)
@@ -94,17 +91,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             );
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);
-
-            var codigoLotes = loteDtos?.Select(x => x.CodigoLote) ?? new List<string>();
-            var loteMuestreos = await _loteMuestreoRepository.FindByAsNoTrackingAsync(x => codigoLotes.Contains(x.CodigoLote));
-
-            if (loteDtos != null)
-                loteDtos.ToList().ForEach(item =>
-                {
-                    var loteMuestreo = loteMuestreos.Where(x => x.CodigoLote.Equals(item.CodigoLote)).FirstOrDefault(new Entity.LoteMuestreo());
-                    item.Humedad = loteMuestreo?.Humedad ?? 0;//== null ? 0 : loteMuestreo?.Humedad;
-                    item.Tms = loteMuestreo?.Tms ?? 0;
-                });
 
             var searchResult = new SearchResultDto<SearchLoteBalanzaDto>(
                 loteDtos ?? new List<SearchLoteBalanzaDto>(),

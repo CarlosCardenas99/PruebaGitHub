@@ -15,6 +15,8 @@
         public Single Tmh100 { get; set; }
         public Single TmhBase { get; set; }
         public Single Tmh { get; set; }
+        public float? Humedad { get; set; }
+        public float? Tms { get; set; }
         public int IdEstado { get; set; }
         public string? Observacion { get; set; }
         public int PorcentajeCheckList { get; set; }

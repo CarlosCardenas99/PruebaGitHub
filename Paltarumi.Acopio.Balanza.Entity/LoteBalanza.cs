@@ -23,6 +23,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public float Tmh100 { get; set; }
         public float TmhBase { get; set; }
         public float Tmh { get; set; }
+        public float? Humedad { get; set; }
+        public float? Tms { get; set; }
         public int IdEstado { get; set; }
         public string Observacion { get; set; } = null!;
         public int PorcentajeCheckList { get; set; }

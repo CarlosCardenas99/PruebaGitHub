@@ -610,6 +610,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.FechaIngreso).HasColumnName("fechaIngreso");
 
+                entity.Property(e => e.Humedad).HasColumnName("humedad");
+
                 entity.Property(e => e.IdConcesion).HasColumnName("idConcesion");
 
                 entity.Property(e => e.IdEstado).HasColumnName("idEstado");
@@ -630,6 +632,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.Tmh100).HasColumnName("tmh100");
 
                 entity.Property(e => e.TmhBase).HasColumnName("tmhBase");
+
+                entity.Property(e => e.Tms).HasColumnName("tms");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
