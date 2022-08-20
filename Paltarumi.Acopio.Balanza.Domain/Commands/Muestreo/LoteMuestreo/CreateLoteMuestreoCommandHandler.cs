@@ -11,17 +11,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
 {
     public class CreateLoteMuestreoCommandHandler : CommandHandlerBase<CreateLoteMuestreoCommand, GetLoteMuestreoDto>
     {
-        private readonly IRepository<Entity.LoteMuestreo> _lotemuestreoRepository;
+        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
 
         public CreateLoteMuestreoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             CreateLoteMuestreoCommandValidator validator,
-            IRepository<Entity.LoteMuestreo> lotemuestreoRepository
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
-            _lotemuestreoRepository = lotemuestreoRepository;
+            _loteMuestreoRepository = loteMuestreoRepository;
         }
 
         public override async Task<ResponseDto<GetLoteMuestreoDto>> HandleCommand(CreateLoteMuestreoCommand request, CancellationToken cancellationToken)
@@ -35,8 +35,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
                 return response;
             }
 
-            await _lotemuestreoRepository.AddAsync(loteMuestreo);
-            await _lotemuestreoRepository.SaveAsync();
+            await _loteMuestreoRepository.AddAsync(loteMuestreo);
+            await _loteMuestreoRepository.SaveAsync();
 
             var lotemuestreoDto = _mapper?.Map<GetLoteMuestreoDto>(loteMuestreo);
             if (lotemuestreoDto != null) response.UpdateData(lotemuestreoDto);

@@ -13,7 +13,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
     public class CreateLoteChancadoCommandHandler : CommandHandlerBase<CreateLoteChancadoCommand, GetLoteChancadoDto>
     {
         private readonly IRepository<Entity.Ticket> _ticketRepository;
-        private readonly IRepository<Entity.LoteChancado> _lotechancadoRepository;
+        private readonly IRepository<Entity.LoteChancado> _loteChancadoRepository;
 
         public CreateLoteChancadoCommandHandler(
             IUnitOfWork unitOfWork,
@@ -21,11 +21,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             IMediator mediator,
             CreateLoteChancadoCommandValidator validator,
             IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.LoteChancado> lotechancadoRepository
+            IRepository<Entity.LoteChancado> loteChancadoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _ticketRepository = ticketRepository;
-            _lotechancadoRepository = lotechancadoRepository;
+            _loteChancadoRepository = loteChancadoRepository;
         }
 
         public override async Task<ResponseDto<GetLoteChancadoDto>> HandleCommand(CreateLoteChancadoCommand request, CancellationToken cancellationToken)
@@ -47,8 +47,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             loteChancado.Placa = ticket?.IdVehiculoNavigation?.Placa ?? string.Empty;
             loteChancado.PlacaCarreta = ticket?.IdVehiculoNavigation?.PlacaCarreta ?? string.Empty;
 
-            await _lotechancadoRepository.AddAsync(loteChancado);
-            await _lotechancadoRepository.SaveAsync();
+            await _loteChancadoRepository.AddAsync(loteChancado);
+            await _loteChancadoRepository.SaveAsync();
 
             var createMapaDto = new CreateMapaDto { IdLoteChancado = loteChancado.IdLoteChancado };
             var createMapaResponse = await _mediator?.Send(new CreateMapaCommand(createMapaDto), cancellationToken)!;

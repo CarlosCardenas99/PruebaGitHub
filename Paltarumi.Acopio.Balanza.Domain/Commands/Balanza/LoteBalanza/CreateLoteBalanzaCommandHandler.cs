@@ -61,7 +61,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var loteResponse = await CreateLote(request, cancellationToken, response, codigoLote);
             if (!response.IsValid) return response;
 
-            var codigoLoteResponse = await CreateCodigoLoteAsync(request, cancellationToken, response, loteResponse?.Data);
+            var codigoLoteResponse = await CreateCodigoLote(request, cancellationToken, response, loteResponse?.Data);
             if (!response.IsValid) return response;
 
             await CreateLoteBalanza(request, response, codigoLote);
@@ -121,7 +121,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return createResponse!;
         }
 
-        private async Task<ResponseDto<GetLoteCodigoDto>> CreateCodigoLoteAsync(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteDto? lote)
+        private async Task<ResponseDto<GetLoteCodigoDto>> CreateCodigoLote(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteDto? lote)
         {
             var loteCodigoRegistrado = new ResponseDto<GetLoteCodigoDto>();
 

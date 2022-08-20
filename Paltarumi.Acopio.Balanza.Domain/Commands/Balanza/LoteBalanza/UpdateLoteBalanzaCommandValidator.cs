@@ -7,13 +7,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandValidator : CommandValidatorBase<UpdateLoteBalanzaCommand>
     {
-        private readonly IRepository<Entity.LoteBalanza> _repositoryBase;
+        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
-        public UpdateLoteBalanzaCommandValidator(
-            IRepository<Entity.LoteBalanza> repositoryBase
-        )
+        public UpdateLoteBalanzaCommandValidator(IRepository<Entity.LoteBalanza> loteBalanzaRepository)
         {
-            _repositoryBase = repositoryBase;
+            _loteBalanzaRepository = loteBalanzaRepository;
 
             RequiredInformation(x => x.UpdateDto).DependentRules(() =>
             {
@@ -31,10 +29,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         {
             if (command.UpdateDto.EsPartido)
             {
-                var loteBalanza = _repositoryBase.GetByAsNoTrackingAsync(x => x.IdLoteBalanza == id);
+                var loteBalanza = _loteBalanzaRepository.GetByAsNoTrackingAsync(x => x.IdLoteBalanza == id);
 
                 var sumaPeso =
-                    command.UpdateDto.TicketDetails?.Where(y => y.Activo == true).Sum(x => x.PesoNeto100) 
+                    command.UpdateDto.TicketDetails?.Where(y => y.Activo == true).Sum(x => x.PesoNeto100)
                     +
                     command.UpdateDto.TicketDetails?.Where(y => y.Activo == true).Sum(x => x.PesoNetoCarreta100);
 
@@ -43,9 +41,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             }
 
-            var exists = await _repositoryBase.FindAll().Where(x => x.IdLoteBalanza == id).AnyAsync(cancellationToken);
+            var exists = await _loteBalanzaRepository.FindAll().Where(x => x.IdLoteBalanza == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
-
 
             return true;
         }
