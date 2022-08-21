@@ -16,7 +16,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 
         private readonly IRepository<Entity.Lote> _loteRepository;
         private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
-        private readonly IRepository<Entity.Maestro> _maestroRepository;
 
         public CreateLoteCodigoCommandHandler(
             IUnitOfWork unitOfWork,
@@ -24,13 +23,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             IMapper mapper,
             CreateLoteCodigoCommandValidator validator,
             IRepository<Entity.Lote> loteRepository,
-            IRepository<Entity.LoteCodigo> lotecodigoRepository,
-            IRepository<Entity.Maestro> maestroRepository
+            IRepository<Entity.LoteCodigo> lotecodigoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
-            _lotecodigoRepository = lotecodigoRepository;
-            _maestroRepository = maestroRepository;
             _loteRepository = loteRepository;
+            _lotecodigoRepository = lotecodigoRepository;
         }
 
         public override async Task<ResponseDto<GetLoteCodigoDto>> HandleCommand(CreateLoteCodigoCommand request, CancellationToken cancellationToken)

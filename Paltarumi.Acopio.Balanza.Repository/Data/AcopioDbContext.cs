@@ -70,6 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -591,8 +592,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.CodigoAum)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("codigoAum")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("codigoAum");
 
                 entity.Property(e => e.CodigoLote)
                     .HasMaxLength(10)
@@ -602,14 +602,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.CodigoTrujillo)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("codigoTrujillo")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("codigoTrujillo");
 
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
                 entity.Property(e => e.FechaAcopio).HasColumnName("fechaAcopio");
 
                 entity.Property(e => e.FechaIngreso).HasColumnName("fechaIngreso");
+
+                entity.Property(e => e.Humedad).HasColumnName("humedad");
 
                 entity.Property(e => e.IdConcesion).HasColumnName("idConcesion");
 
@@ -631,6 +632,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.Tmh100).HasColumnName("tmh100");
 
                 entity.Property(e => e.TmhBase).HasColumnName("tmhBase");
+
+                entity.Property(e => e.Tms).HasColumnName("tms");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
@@ -674,9 +677,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.ToTable("LoteChancado", "chancado");
 
-                entity.HasIndex(e => e.CodigoLote, "UC_chancado_LoteChancado_codigoLote")
-                    .IsUnique();
-
                 entity.Property(e => e.IdLoteChancado).HasColumnName("idLoteChancado");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
@@ -707,12 +707,27 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.Placa)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("placa");
+                    .HasColumnName("placa")
+                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.PlacaCarreta)
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("placaCarreta");
+
+                entity.Property(e => e.PlacasCarretaTicket)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("placasCarretaTicket")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.PlacasTicket)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("placasTicket")
+                    .HasDefaultValueSql("('')");
+
+                entity.Property(e => e.Tmh).HasColumnName("tmh");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
@@ -1302,9 +1317,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.ToTable("LoteMuestreo", "muestreo");
 
-                entity.HasIndex(e => e.CodigoLote, "UC_muestreo_LoteMuestreo_codigoLote")
-                    .IsUnique();
-
                 entity.Property(e => e.IdLoteMuestreo).HasColumnName("idLoteMuestreo");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
@@ -1327,6 +1339,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
                 entity.Property(e => e.Fecha).HasColumnName("fecha");
+
+                entity.Property(e => e.FechaAcopio)
+                    .HasColumnName("fechaAcopio")
+                    .HasDefaultValueSql("('18/08/2022')");
 
                 entity.Property(e => e.Firmado).HasColumnName("firmado");
 

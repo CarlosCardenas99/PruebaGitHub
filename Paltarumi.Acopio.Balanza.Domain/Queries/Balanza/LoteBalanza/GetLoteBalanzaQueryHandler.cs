@@ -83,8 +83,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
                 loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
-                loteDto.Humedad = loteMuestreo?.Humedad;
-                loteDto.Tms = loteMuestreo?.Tms;
                 loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
                 loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
                 loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote.IdEmpresaNavigation) ?? null;

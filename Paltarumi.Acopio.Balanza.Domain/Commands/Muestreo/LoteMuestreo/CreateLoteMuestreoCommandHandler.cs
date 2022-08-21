@@ -1,5 +1,7 @@
 using AutoMapper;
+using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
+using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteCodigoMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
@@ -9,36 +11,49 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
 {
     public class CreateLoteMuestreoCommandHandler : CommandHandlerBase<CreateLoteMuestreoCommand, GetLoteMuestreoDto>
     {
-        protected override bool UseTransaction => false;
-
-        private readonly IRepository<Entity.LoteMuestreo> _lotemuestreoRepository;
+        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
 
         public CreateLoteMuestreoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IMediator mediator,
             CreateLoteMuestreoCommandValidator validator,
-            IRepository<Entity.LoteMuestreo> lotemuestreoRepository
-        ) : base(unitOfWork, mapper, validator)
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
+        ) : base(unitOfWork, mapper, mediator, validator)
         {
-            _lotemuestreoRepository = lotemuestreoRepository;
+            _loteMuestreoRepository = loteMuestreoRepository;
         }
 
         public override async Task<ResponseDto<GetLoteMuestreoDto>> HandleCommand(CreateLoteMuestreoCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteMuestreoDto>();
-            var lotemuestreo = _mapper?.Map<Entity.LoteMuestreo>(request.CreateDto);
 
-            if (lotemuestreo != null)
+            var loteMuestreo = _mapper?.Map<Entity.LoteMuestreo>(request.CreateDto);
+            if (loteMuestreo == null)
             {
-                lotemuestreo.Activo = true;
-
-
-                await _lotemuestreoRepository.AddAsync(lotemuestreo);
-                await _lotemuestreoRepository.SaveAsync();
+                response.AddErrorResult(Resources.Muestreo.LoteMuestreo.LoteMuestreoRequired);
+                return response;
             }
 
-            var lotemuestreoDto = _mapper?.Map<GetLoteMuestreoDto>(lotemuestreo);
+            await _loteMuestreoRepository.AddAsync(loteMuestreo);
+            await _loteMuestreoRepository.SaveAsync();
+
+            var lotemuestreoDto = _mapper?.Map<GetLoteMuestreoDto>(loteMuestreo);
             if (lotemuestreoDto != null) response.UpdateData(lotemuestreoDto);
+
+            var loteCodigoMuestreoResponse = await _mediator?.Send(new CreateLoteCodigoMuestreoCommand(
+                new CreateLoteCodigoMuestreoDto
+                {
+                    IdLoteMuestreo = loteMuestreo.IdLoteMuestreo,
+                    CodigoPlanta = request.CodigoPlanta,
+                    CodigoPlantaRandom = request.CodigoPlantaRandom
+                }), cancellationToken)!;
+
+            if (loteCodigoMuestreoResponse?.IsValid == false)
+            {
+                response.AttachResults(loteCodigoMuestreoResponse);
+                return response;
+            }
 
             response.AddOkResult(Resources.Common.CreateSuccessMessage);
 

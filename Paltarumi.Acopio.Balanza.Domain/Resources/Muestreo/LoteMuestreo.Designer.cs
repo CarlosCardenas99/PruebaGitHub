@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
+namespace Paltarumi.Acopio.Balanza.Domain.Resources.Muestreo {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LoteCodigo {
+    internal class LoteMuestreo {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LoteCodigo() {
+        internal LoteMuestreo() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paltarumi.Acopio.Balanza.Domain.Resources.Balanza.LoteCodigo", typeof(LoteCodigo).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Paltarumi.Acopio.Balanza.Domain.Resources.Muestreo.LoteMuestreo", typeof(LoteMuestreo).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,38 +61,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hubo un error generando el código del lote.
+        ///   Looks up a localized string similar to La información del código de lote de muestreo es requerida.
         /// </summary>
-        internal static string CodigoGenerationError {
+        internal static string LoteCodigoMuestreoRequired {
             get {
-                return ResourceManager.GetString("CodigoGenerationError", resourceCulture);
+                return ResourceManager.GetString("LoteCodigoMuestreoRequired", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IdLote.
+        ///   Looks up a localized string similar to La información del lote de muestreo es requerida.
         /// </summary>
-        internal static string IdLote {
+        internal static string LoteMuestreoRequired {
             get {
-                return ResourceManager.GetString("IdLote", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IdLoteCodigo.
-        /// </summary>
-        internal static string IdLoteCodigo {
-            get {
-                return ResourceManager.GetString("IdLoteCodigo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IdLoteCodigoTipo.
-        /// </summary>
-        internal static string IdLoteCodigoTipo {
-            get {
-                return ResourceManager.GetString("IdLoteCodigoTipo", resourceCulture);
+                return ResourceManager.GetString("LoteMuestreoRequired", resourceCulture);
             }
         }
     }

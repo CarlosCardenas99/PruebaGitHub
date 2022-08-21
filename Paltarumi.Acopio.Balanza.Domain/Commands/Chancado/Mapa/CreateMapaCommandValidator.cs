@@ -6,11 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa
     {
         public CreateMapaCommandValidator()
         {
-            RequiredInformation(x => x.CreateDto).DependentRules(() =>
-            {
-                //RequiredString(x => x.CreateDto.Codigo, Resources.Chancado.Mapa.Codigo, 5, 10);
-                //RequiredField(x => x.CreateDto.FechaIngreso, Resources.Chancado.Mapa.FechaIngreso);
-            });
+            RequiredInformation(x => x.CreateDto);
         }
     }
 }
