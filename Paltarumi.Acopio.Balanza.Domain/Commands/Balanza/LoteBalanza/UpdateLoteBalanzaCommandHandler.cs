@@ -210,13 +210,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task UpdateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
         {
+            var placas = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa).ToList());
+            var placasCarrteas = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta).ToList());
+
             var updateResponse = await _mediator?.Send(new UpdateLoteChancadoCommand(new UpdateLoteChancadoDto
             {
                 CodigoLote = loteBalanzaDto.CodigoLote!,
                 IdProveedor = loteBalanzaDto.IdProveedor,
                 Tmh = loteBalanzaDto.Tmh,
-                PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa)),
-                PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta))
+                PlacasTicket = placas,
+                PlacasCarretaTicket = placasCarrteas
             }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)
