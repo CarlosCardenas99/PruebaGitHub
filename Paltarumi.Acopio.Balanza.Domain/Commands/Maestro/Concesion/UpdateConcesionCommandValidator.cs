@@ -30,6 +30,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Concesion
         {
             var exists = await _repositoryBase.FindAll().Where(x => x.IdConcesion == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
+
+            var existsCodigoUnico = await _repositoryBase.FindAll().Where(x => x.IdConcesion != command.UpdateDto.IdConcesion && x.CodigoUnico == command.UpdateDto.CodigoUnico && x.Activo == true).AnyAsync(cancellationToken);
+            if (existsCodigoUnico) return CustomValidationMessage(context, Resources.Common.DuplicateCodigoUnicoConcesionRecord);
+
             return true;
         }
     }
