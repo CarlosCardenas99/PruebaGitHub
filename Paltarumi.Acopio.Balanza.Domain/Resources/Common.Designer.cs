@@ -106,7 +106,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El código único ya fue registrado.
+        ///   Busca una cadena traducida similar a Ya existe una Concesión con el código único ingresado.
         /// </summary>
         internal static string DuplicateCodigoUnicoConcesionRecord {
             get {
