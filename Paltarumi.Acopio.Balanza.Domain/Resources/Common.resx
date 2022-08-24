@@ -132,6 +132,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>El registro fue eliminado correctamente</value>
   </data>
+  <data name="DuplicateCodigoUnicoConcesionRecord" xml:space="preserve">
+    <value>El código único ya fue registrado</value>
+  </data>
   <data name="DuplicateRecord" xml:space="preserve">
     <value>El registro fue creado anteriormente</value>
   </data>

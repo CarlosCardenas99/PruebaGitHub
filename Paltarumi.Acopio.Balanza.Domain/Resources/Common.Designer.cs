@@ -106,6 +106,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El código único ya fue registrado.
+        /// </summary>
+        internal static string DuplicateCodigoUnicoConcesionRecord {
+            get {
+                return ResourceManager.GetString("DuplicateCodigoUnicoConcesionRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El registro fue creado anteriormente.
         /// </summary>
         internal static string DuplicateRecord {
