@@ -12,14 +12,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Concesion
         public CreateConcesionCommandValidator(IRepository<Entity.Concesion> repositoryBase)
         {
             _repositoryBase = repositoryBase;
-            RequiredInformation(x => x.CreateDto).DependentRules(() =>
-            {
-                RuleFor(x => x.CreateDto)
-                    .MustAsync(ValidateExistenceAsync)
-                    .WithCustomValidationMessage();
-                //RequiredString(x => x.CreateDto.Codigo, Resources.Maestro.Concesion.Codigo, 5, 10);
-                //RequiredField(x => x.CreateDto.FechaIngreso, Resources.Maestro.Concesion.FechaIngreso);
-            });
+
+            RequiredInformation(x => x.CreateDto)
+                .DependentRules(() =>
+                {
+                    RuleFor(x => x.CreateDto)
+                        .MustAsync(ValidateExistenceAsync)
+                        .WithCustomValidationMessage();
+                    //RequiredString(x => x.CreateDto.Codigo, Resources.Maestro.Concesion.Codigo, 5, 10);
+                    //RequiredField(x => x.CreateDto.FechaIngreso, Resources.Maestro.Concesion.FechaIngreso);
+                });
         }
 
         protected async Task<bool> ValidateExistenceAsync(CreateConcesionCommand command, CreateConcesionDto createDto, ValidationContext<CreateConcesionCommand> context, CancellationToken cancellationToken)

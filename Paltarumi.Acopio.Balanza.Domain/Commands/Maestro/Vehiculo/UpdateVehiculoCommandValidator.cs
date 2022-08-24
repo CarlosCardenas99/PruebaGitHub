@@ -68,6 +68,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Maestro.Vehiculo
         {
             var exists = await _vehiculoRepositoryBase.FindAll().Where(x => x.IdVehiculo == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
+
+            var existsPlaca = await _vehiculoRepositoryBase.FindAll().Where(x => x.IdVehiculo != command.UpdateDto.IdVehiculo && x.Placa == command.UpdateDto.Placa && x.Activo == true).AnyAsync(cancellationToken);
+            if (existsPlaca) return CustomValidationMessage(context, Resources.Common.DuplicatePlacaVehiculoRecord);
+
             return true;
         }
 

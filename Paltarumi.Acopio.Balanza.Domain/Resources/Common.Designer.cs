@@ -115,6 +115,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Existe un vehiculo registrado con esta placa.
+        /// </summary>
+        internal static string DuplicatePlacaVehiculoRecord {
+            get {
+                return ResourceManager.GetString("DuplicatePlacaVehiculoRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El registro fue creado anteriormente.
         /// </summary>
         internal static string DuplicateRecord {
