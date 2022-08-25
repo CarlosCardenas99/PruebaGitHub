@@ -214,8 +214,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 CodigoLote = loteBalanzaDto.CodigoLote!,
                 IdProveedor = loteBalanzaDto.IdProveedor,
                 Tmh = loteBalanzaDto.Tmh,
-                PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa)),
-                PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta))
+                PlacasTicket = string.Empty,//String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa)),
+                PlacasCarretaTicket = string.Empty //String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta))
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)

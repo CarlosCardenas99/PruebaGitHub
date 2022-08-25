@@ -70,7 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -534,6 +534,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.ToTable("Lote", "acopio");
 
+                entity.HasIndex(e => e.CodigoLote, "UC_acopio_Lote_codigoLote")
+                    .IsUnique();
+
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
 
                 entity.Property(e => e.CodigoLote)
@@ -584,10 +587,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
 
-                entity.Property(e => e.CantidadSacos)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("cantidadSacos");
+                entity.Property(e => e.CantidadSacos).HasColumnName("cantidadSacos");
 
                 entity.Property(e => e.CodigoAum)
                     .HasMaxLength(20)
@@ -677,6 +677,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.ToTable("LoteChancado", "chancado");
 
+                entity.HasIndex(e => e.CodigoLote, "UC_chancado_LoteChancado_codigoLote")
+                    .IsUnique();
+
                 entity.Property(e => e.IdLoteChancado).HasColumnName("idLoteChancado");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
@@ -707,8 +710,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.Placa)
                     .HasMaxLength(20)
                     .IsUnicode(false)
-                    .HasColumnName("placa")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("placa");
 
                 entity.Property(e => e.PlacaCarreta)
                     .HasMaxLength(20)
@@ -718,14 +720,12 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.PlacasCarretaTicket)
                     .HasMaxLength(100)
                     .IsUnicode(false)
-                    .HasColumnName("placasCarretaTicket")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("placasCarretaTicket");
 
                 entity.Property(e => e.PlacasTicket)
                     .HasMaxLength(100)
                     .IsUnicode(false)
-                    .HasColumnName("placasTicket")
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("placasTicket");
 
                 entity.Property(e => e.Tmh).HasColumnName("tmh");
 
@@ -1019,6 +1019,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.ToTable("LoteCodigoEnsayoDetalle", "laboratorio");
 
                 entity.Property(e => e.IdLoteCodigoEnsayoDetalle).HasColumnName("idLoteCodigoEnsayoDetalle");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
 
                 entity.Property(e => e.AuFinoEnsayo).HasColumnName("auFinoEnsayo");
 
@@ -1317,6 +1319,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.ToTable("LoteMuestreo", "muestreo");
 
+                entity.HasIndex(e => e.CodigoLote, "UC_muestreo_LoteMuestreo_codigoLote")
+                    .IsUnique();
+
                 entity.Property(e => e.IdLoteMuestreo).HasColumnName("idLoteMuestreo");
 
                 entity.Property(e => e.Activo).HasColumnName("activo");
@@ -1340,9 +1345,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.Fecha).HasColumnName("fecha");
 
-                entity.Property(e => e.FechaAcopio)
-                    .HasColumnName("fechaAcopio")
-                    .HasDefaultValueSql("('18/08/2022')");
+                entity.Property(e => e.FechaAcopio).HasColumnName("fechaAcopio");
 
                 entity.Property(e => e.Firmado).HasColumnName("firmado");
 
