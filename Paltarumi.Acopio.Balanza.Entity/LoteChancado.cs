@@ -18,6 +18,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdProveedor { get; set; }
         public string PlacasTicket { get; set; } = null!;
         public string PlacasCarretaTicket { get; set; } = null!;
+        public string ObservacionBalanza { get; set; } = null!;
         public string? Placa { get; set; }
         public string? PlacaCarreta { get; set; }
         public string? IdLoteChancadoEstado { get; set; }

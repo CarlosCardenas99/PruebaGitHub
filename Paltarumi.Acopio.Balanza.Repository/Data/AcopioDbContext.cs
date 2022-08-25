@@ -70,7 +70,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -706,6 +705,12 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsFixedLength();
 
                 entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
+
+                entity.Property(e => e.ObservacionBalanza)
+                    .HasMaxLength(200)
+                    .IsUnicode(false)
+                    .HasColumnName("observacionBalanza")
+                    .HasDefaultValueSql("('')");
 
                 entity.Property(e => e.Placa)
                     .HasMaxLength(20)
