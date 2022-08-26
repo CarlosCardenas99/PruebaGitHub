@@ -22,14 +22,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Sunat
                 Url = "https://dniruc.apisperu.com/api/v1",
                 PathRuc = "/ruc/{ruc}?token={token}",
                 PathDni = "/dni/{dni}?token={token}",
-                Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNyZWF0aXZlLnN0b3JlLnRpZ3JlZG9yYWRvQGdtYWlsLmNvbSJ9.9oLsNwlFccNP160Ox8kXRPriBbdnShX3Gj1h2ATmNKE"
+                Token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImNyZWF0aXZlLnN0b3JlLnBhbHRhcnVtaUBnbWFpbC5jb20ifQ.ocVpoFaQU-1sNAkEWVEGTmaZm4UcFsRXwigiY4zFkm0"
             },
             new SunatService {
                 Code = "apiperu",
                 Url = "https://apiperu.dev/api",
                 PathRuc = "/ruc/{ruc}",
                 PathDni = "/dni/{dni}",
-                Token = "961ecd96a2e13e7b523267f28b29cffbdbd4b147904a39520fd3374cd68b7774"
+                Token = "c8656a462c9902d00b7430f2d5460ca888f1f5f0d790a003ba560af75eef1e8d"
             },
             new SunatService {
                 Code = "optimizeperu",
