@@ -21,6 +21,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, GetTicketDto>()
+                //.ForMember(x =>x.Vehiculo, opt => opt.MapFrom(x =>x.IdVehiculoNavigation))
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, ListTicketDto>()
@@ -58,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ForMember(x => x.CodigoEstado, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdEstadoNavigation != null ? x.IdLoteBalanzaNavigation.IdEstadoNavigation.CodigoItem : string.Empty))
                 .ForMember(x => x.CodigoLote, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CodigoLote : string.Empty))
-                .ForMember(x => x.CantidadSacos, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CantidadSacos : string.Empty))
+                .ForMember(x => x.CantidadSacos, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CantidadSacos : 0))
                 .ForMember(x => x.VehiculoTara, opt => opt.MapFrom(x => x.IdVehiculoNavigation != null ? x.IdVehiculoNavigation.Tara.ToString() : string.Empty))
                 .ForMember(x => x.Conductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
                 .ForMember(x => x.Licencia, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Licencia : string.Empty))

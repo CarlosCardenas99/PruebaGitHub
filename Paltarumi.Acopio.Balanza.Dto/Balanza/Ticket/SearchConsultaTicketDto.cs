@@ -31,7 +31,7 @@
         public string ConductorTipoLicencia { get; set; } = null!;
         public string Licencia { get; set; } = null!;
         public string UnidadMedida { get; set; } = null!;
-        public string CantidadSacos { get; set; } = null!;
+        public int CantidadSacos { get; set; }
         public float? PorcentajeHumedad { get; set; }
         public string CantidadUnidadMedida { get; set; } = null!;
         public bool Activo { get; set; }

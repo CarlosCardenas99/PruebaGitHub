@@ -11,6 +11,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado
         public string Placa { get; set; } = null!;
         public string PlacaCarreta { get; set; } = null!;
         public string? IdLoteChancadoEstado { get; set; }
+        public string ObservacionBalanza { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }

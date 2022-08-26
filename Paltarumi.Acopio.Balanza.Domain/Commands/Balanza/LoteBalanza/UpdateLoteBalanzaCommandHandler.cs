@@ -197,8 +197,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var loteDto = _mapper?.Map<GetLoteBalanzaDto>(recuprarloteBalanza);
                 if (loteDto != null)
                 {
+                    var idTickets = loteBalanza.Tickets.Select(x => x.IdTicket);
+                    var Nticket = await _ticketRepository.FindByAsNoTrackingAsync(
+                        x => idTickets.Contains(x.IdTicket),
+                        x => x.IdEstadoTmhNavigation,
+                        x => x.IdVehiculoNavigation
+                        );
+
                     loteDto.TicketDetails =
-                        _mapper?.Map<IEnumerable<ListTicketDto>>(recuprarloteBalanza?.Tickets.Where(x => x.Activo == true)) ?? new List<ListTicketDto>();
+                        _mapper?.Map<IEnumerable<ListTicketDto>>(Nticket.Where(x => x.Activo == true)) ?? new List<ListTicketDto>();
 
                     response.UpdateData(loteDto);
                     response.AddOkResult(Resources.Common.UpdateSuccessMessage);
@@ -210,8 +217,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task UpdateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
         {
-            var placas = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa).ToList());
-            var placasCarrteas = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta).ToList());
+            var placas = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.Placa).ToList().Distinct());
+            var placasCarretas = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).ToList().Distinct());
 
             var updateResponse = await _mediator?.Send(new UpdateLoteChancadoCommand(new UpdateLoteChancadoDto
             {
@@ -219,7 +226,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdProveedor = loteBalanzaDto.IdProveedor,
                 Tmh = loteBalanzaDto.Tmh,
                 PlacasTicket = placas,
-                PlacasCarretaTicket = placasCarrteas
+                PlacasCarretaTicket = placasCarretas,
+                ObservacionBalanza = loteBalanzaDto.Observacion!
             }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)
@@ -238,7 +246,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     CodigoAum = loteBalanzaDto.CodigoAum,
                     CodigoTrujillo = loteBalanzaDto.CodigoTrujillo
                 }), cancellationToken)!;
-            
+
             if (updateResponse?.IsValid == false)
                 response.AttachResults(updateResponse);
         }

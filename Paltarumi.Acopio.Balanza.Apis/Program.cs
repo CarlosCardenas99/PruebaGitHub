@@ -56,7 +56,7 @@ var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
 loggerFactory.AddLog4Net();
 
 // CustomExceptionHandler
-app.UseCustomExceptionHandler();
+app.UseCustomExceptionHandler(loggerFactory);
 
 // RequestLogger
 app.UseRequestLogger();
