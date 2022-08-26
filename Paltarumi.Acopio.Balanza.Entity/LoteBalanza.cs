@@ -19,7 +19,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset FechaIngreso { get; set; }
         public DateTimeOffset? FechaAcopio { get; set; }
         public int IdEstadoTipoMaterial { get; set; }
-        public string CantidadSacos { get; set; } = null!;
+        public int CantidadSacos { get; set; }
         public float Tmh100 { get; set; }
         public float TmhBase { get; set; }
         public float Tmh { get; set; }

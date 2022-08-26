@@ -29,12 +29,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         private readonly IRepository<Entity.LoteCodigo> _loteCodigoRepository;
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
+        private readonly IRepository<Entity.Ticket> _ticketRepository;
 
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             CreateLoteBalanzaCommandValidator validator,
+            IRepository<Entity.Ticket> ticketRepository,
             IRepository<Entity.Maestro> maestroRepository,
             IRepository<Entity.Proveedor> proveedorRepository,
             IRepository<Entity.LoteCodigo> loteCodigoRepository,
@@ -42,6 +44,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.DuenoMuestra> duenoMuestraRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _ticketRepository = ticketRepository;
             _maestroRepository = maestroRepository;
             _proveedorRepository = proveedorRepository;
             _loteCodigoRepository = loteCodigoRepository;
@@ -198,7 +201,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 if (loteDto != null)
                 {
-                    loteDto.TicketDetails = _mapper?.Map<List<ListTicketDto>>(loteBalanza.Tickets) ?? new List<ListTicketDto>();
+                    var idTickets = loteBalanza.Tickets.Select(x => x.IdTicket);
+                    var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
+                        x => idTickets.Contains(x.IdTicket),
+                        x => x.IdEstadoTmhNavigation,
+                        x => x.IdVehiculoNavigation
+                        );
+
+                    loteDto.TicketDetails = _mapper?.Map<List<ListTicketDto>>(tickets) ?? new List<ListTicketDto>();
 
                     response.UpdateData(loteDto);
                 }
@@ -209,13 +219,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task CreateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
         {
+            var placa = loteBalanzaDto.TicketDetails!.Select(x => x.Placa).FirstOrDefault(string.Empty);
+            var placaCarreta = loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).FirstOrDefault(string.Empty);
+
             var createResponse = await _mediator?.Send(new CreateLoteChancadoCommand(new CreateLoteChancadoDto
             {
                 CodigoLote = loteBalanzaDto.CodigoLote!,
                 IdProveedor = loteBalanzaDto.IdProveedor,
                 Tmh = loteBalanzaDto.Tmh,
-                PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.Placa)),
-                PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails.Select(x => x.PlacaCarreta))
+                PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.Placa).Distinct()),
+                PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).Distinct()),
+                Placa = placa,
+                PlacaCarreta = placaCarreta,
+                ObservacionBalanza=loteBalanzaDto.Observacion!
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)

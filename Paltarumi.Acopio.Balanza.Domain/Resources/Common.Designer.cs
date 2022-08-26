@@ -106,6 +106,24 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ya existe una Concesión con el código único ingresado.
+        /// </summary>
+        internal static string DuplicateCodigoUnicoConcesionRecord {
+            get {
+                return ResourceManager.GetString("DuplicateCodigoUnicoConcesionRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Existe un vehiculo registrado con esta placa.
+        /// </summary>
+        internal static string DuplicatePlacaVehiculoRecord {
+            get {
+                return ResourceManager.GetString("DuplicatePlacaVehiculoRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El registro fue creado anteriormente.
         /// </summary>
         internal static string DuplicateRecord {

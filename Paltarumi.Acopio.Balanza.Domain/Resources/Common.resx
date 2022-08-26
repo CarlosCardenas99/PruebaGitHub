@@ -132,6 +132,12 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>El registro fue eliminado correctamente</value>
   </data>
+  <data name="DuplicateCodigoUnicoConcesionRecord" xml:space="preserve">
+    <value>Ya existe una Concesión con el código único ingresado</value>
+  </data>
+  <data name="DuplicatePlacaVehiculoRecord" xml:space="preserve">
+    <value>Existe un vehiculo registrado con esta placa</value>
+  </data>
   <data name="DuplicateRecord" xml:space="preserve">
     <value>El registro fue creado anteriormente</value>
   </data>

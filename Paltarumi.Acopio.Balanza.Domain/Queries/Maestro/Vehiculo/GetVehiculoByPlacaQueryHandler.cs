@@ -13,8 +13,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
 
         public GetVehiculoByPlacaQueryHandler(
             IMapper mapper,
+            GetVehiculoByPlacaQueryValidator validator,
             IRepository<Entity.Vehiculo> vehiculoRepository
-        ) : base(mapper)
+        ) : base(mapper, validator)
         {
             _vehiculoRepository = vehiculoRepository;
         }
@@ -23,12 +24,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.Vehiculo
         {
             var response = new ResponseDto<GetVehiculoDto>();
 
+            request.Placa = request.Placa.Replace(" ", string.Empty);
             request.Placa=request.Placa.ToUpper();
 
-            if (request.Placa.Length ==6)
-            {
-                request.Placa = request.Placa.Insert(3, "-");
-            }
+            if (request.Placa.Length ==6) request.Placa = request.Placa.Insert(3, "-");
 
             var vehiculo = await _vehiculoRepository.GetByAsync(
                 x => x.Placa.Equals(request.Placa),
