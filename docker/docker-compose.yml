@@ -19,8 +19,13 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    volumes: 
+      - paltarumi-log:/Logs
     networks:
       - paltarumi-red
 networks:
     paltarumi-red:
       name: paltarumi-red
+volumes:
+    paltarumi-log:
+        name: paltarumi-log
