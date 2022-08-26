@@ -18,7 +18,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdProveedor { get; set; }
         public string PlacasTicket { get; set; } = null!;
         public string PlacasCarretaTicket { get; set; } = null!;
-        public string ObservacionBalanza { get; set; } = null!;
         public string? Placa { get; set; }
         public string? PlacaCarreta { get; set; }
         public string? IdLoteChancadoEstado { get; set; }
@@ -27,6 +26,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
+        public string ObservacionBalanza { get; set; } = null!;
 
         public virtual LoteChancadoEstado? IdLoteChancadoEstadoNavigation { get; set; }
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }

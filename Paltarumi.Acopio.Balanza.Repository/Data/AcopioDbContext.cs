@@ -1025,8 +1025,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdLoteCodigoEnsayoDetalle).HasColumnName("idLoteCodigoEnsayoDetalle");
 
-                entity.Property(e => e.Activo).HasColumnName("activo");
-
                 entity.Property(e => e.AuFinoEnsayo).HasColumnName("auFinoEnsayo");
 
                 entity.Property(e => e.AuGruesoEnsayo).HasColumnName("auGruesoEnsayo");
@@ -1539,6 +1537,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasMaxLength(2)
                     .IsUnicode(false)
                     .HasColumnName("idLoteChancadoGrupo")
+                    .HasDefaultValueSql("('01')")
                     .IsFixedLength();
 
                 entity.Property(e => e.IdMapaPadre).HasColumnName("idMapaPadre");
@@ -1548,7 +1547,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("numero");
 
-                entity.Property(e => e.Tms).HasColumnName("tms");
+                entity.Property(e => e.Tmh).HasColumnName("tmh");
 
                 entity.Property(e => e.UbicacionX).HasColumnName("ubicacionX");
 

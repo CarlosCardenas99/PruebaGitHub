@@ -1,7 +1,9 @@
 using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
+using Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
@@ -41,6 +43,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
 
             await _loteChancadoRepository.UpdateAsync(loteChancado);
             await _loteChancadoRepository.SaveAsync();
+
+            var updateMapaDto = new UpdateMapaDto { IdLoteChancado = loteChancado.IdLoteChancado, Tmh = loteChancado.Tmh };
+            var updateMapaResponse = await _mediator?.Send(new UpdateMapaCommand(updateMapaDto), cancellationToken)!;
+
+            if (updateMapaResponse?.IsValid == false)
+            {
+                response.AttachResults(updateMapaResponse);
+                return response;
+            }
 
             return await Task.FromResult(response);
         }

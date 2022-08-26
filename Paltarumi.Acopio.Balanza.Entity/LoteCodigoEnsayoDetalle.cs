@@ -26,7 +26,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public float? LeyOzTc { get; set; }
         public float? PorcentajeFino { get; set; }
         public float? PorcentajeGrueso { get; set; }
-        public bool Activo { get; set; }
 
         public virtual LoteCodigoEnsayoOrigen IdLoteCodigoEnsayoOrigenNavigation { get; set; } = null!;
     }

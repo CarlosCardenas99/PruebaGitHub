@@ -6,6 +6,12 @@
         {
             public const int PALTARUMI = 1;
         }
+        public struct GrupoLoteChancado
+        {
+            public const string LOTE= "01";
+            public const string BLENDING = "02";
+            public const string CAMPANIA = "03";
+        }
         public class Operaciones
         {
             public struct Status
