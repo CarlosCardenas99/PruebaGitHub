@@ -7,7 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Exception
 {
     public static class ExceptionApplicationBuilderExtensions
     {
-        public static void UseCustomExceptionHandler(this IApplicationBuilder app)
+        public static void UseCustomExceptionHandler(this IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -34,6 +34,9 @@ namespace Paltarumi.Acopio.Balanza.Apis.Exception
                             new ApplicationMessageDto { MessageType = ApplicationMessageType.Error, Message = contextFeature.Error.Message }
                         }
                     };
+
+                    var logger = loggerFactory.CreateLogger("Error");
+                    logger.LogError("************************ ERROR END ************************");
 
                     await context.Response.WriteAsync(JsonConvert.SerializeObject(errorResponse));
                 });
