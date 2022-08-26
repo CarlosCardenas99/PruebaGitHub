@@ -20,12 +20,12 @@ services:
       context: ./
       dockerfile: Dockerfile
     volumes: 
-      - paltarumi-log:/Logs
+      - paltarumi-balanza-log:/Logs
     networks:
       - paltarumi-red
 networks:
     paltarumi-red:
       name: paltarumi-red
 volumes:
-    paltarumi-log:
-        name: paltarumi-log
+    paltarumi-balanza-log:
+        name: paltarumi-balanza-log
