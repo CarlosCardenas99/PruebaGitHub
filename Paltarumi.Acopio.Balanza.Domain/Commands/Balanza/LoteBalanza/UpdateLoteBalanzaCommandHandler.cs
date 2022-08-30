@@ -21,6 +21,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
+        private readonly IRepository<Entity.Maestro> _maestroRepository;
         private readonly IRepository<Entity.Lote> _loteRepository;
         private readonly IRepository<Entity.Ticket> _ticketRepository;
         private readonly IRepository<Entity.Operacion> _operacionRepository;
@@ -34,6 +35,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IMediator mediator,
             UpdateLoteBalanzaCommandValidator validator,
             IRepository<Entity.Lote> loteRepository,
+            IRepository<Entity.Maestro> maestroRepository,
             IRepository<Entity.Ticket> ticketRepository,
             IRepository<Entity.Operacion> operacionRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
@@ -43,6 +45,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteRepository = loteRepository;
+            _maestroRepository = maestroRepository;
             _ticketRepository = ticketRepository;
             _operacionRepository = operacionRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
@@ -132,6 +135,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var tickesTmp = loteBalanza.Tickets;
 
                 loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
+                
+               // var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
+               //    x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_ESTADO &&
+               //    x.CodigoItem == request.UpdateDto.idEstado//Constants.Maestro.LoteEstado.EN_ESPERA
+               //);
 
                 loteBalanza.UpdateCantidadSacos();
                 loteBalanza.UpdateFechaIngreso();
@@ -140,6 +148,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateTmh100();
                 loteBalanza.UpdateTmhBase();
                 loteBalanza.Tickets = tickesTmp;
+
+                //if (estadoLote != null) loteBalanza.IdEstado = estadoLote.IdMaestro;
 
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
