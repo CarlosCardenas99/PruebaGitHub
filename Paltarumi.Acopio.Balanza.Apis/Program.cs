@@ -24,7 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.UseSwaggerDocumentation(configuration);
 
 // Repositories
-builder.Services.UseRepositories(configuration);
+builder.Services.UseRepositories(configuration, "Paltarumi.Acopio.Balanza.Apis");
 
 // Domain Services
 builder.Services.UseDomainServices();
