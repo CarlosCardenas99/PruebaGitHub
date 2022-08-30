@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Paltarumi.Acopio.Balanza.Entity.Audit;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
+    [Auditable]
     public partial class Transporte
     {
         public Transporte()
