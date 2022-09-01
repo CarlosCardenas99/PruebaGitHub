@@ -86,7 +86,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation,
-                x => x.Tickets,
+                x => x.Tickets.Where(x =>x.Activo==true),
                 x => x.IdEstadoNavigation
             );
 
