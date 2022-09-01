@@ -1,8 +1,5 @@
-﻿using Paltarumi.Acopio.Balanza.Entity.Audit;
-
-namespace Paltarumi.Acopio.Balanza.Entity
+﻿namespace Paltarumi.Acopio.Balanza.Entity
 {
-    [Auditable]
     public partial class Usuario
     {
         public int IdUsuario { get; set; }

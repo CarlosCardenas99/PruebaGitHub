@@ -1,8 +1,8 @@
-﻿using Paltarumi.Acopio.Balanza.Entity.Audit;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    [Auditable]
     public partial class ItemCheck
     {
         public ItemCheck()

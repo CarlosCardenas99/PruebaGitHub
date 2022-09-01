@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Security;
 using Paltarumi.Acopio.Balanza.Repository.Data;
+using Paltarumi.Acopio.Balanza.Repository.Security;
 using System.Text;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Security

@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Entity.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Audit;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Security;
 using Paltarumi.Acopio.Balanza.Repository.Extensions;
+using Paltarumi.Acopio.Balanza.Repository.Security;
 using System.Collections;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -14,13 +13,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
     {
         protected readonly DbContext _dbContext;
         protected readonly IUserIdentity _userIdentity;
-        protected readonly IAuditService _auditService;
 
-        public Repository(DbContext dbContext, IUserIdentity userIdentity, IAuditService auditService)
+        public Repository(DbContext dbContext, IUserIdentity userIdentity)
         {
             _dbContext = dbContext;
             _userIdentity = userIdentity;
-            _auditService = auditService;
         }
 
         public async Task<TEntity?> AddAsync(TEntity entity)
@@ -30,8 +27,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             UpdateAuditTrails(entity);
 
             await _dbContext.Set<TEntity>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
-            await _auditService.AuditEntity(Operation.Create, entity);
 
             return await Task.FromResult(entity);
         }
@@ -44,8 +39,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             foreach (var entity in entities) UpdateAuditTrails(entity);
 
             await _dbContext.Set<TEntity>().AddRangeAsync(entities);
-            await _dbContext.SaveChangesAsync();
-            await _auditService.AuditEntity(Operation.Create, entities);
 
             return await Task.FromResult(entities);
         }
@@ -55,12 +48,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             if (entity == null) return null;
 
             UpdateAuditTrails(entity, false);
-
             _dbContext.Set<TEntity>().Attach(entity);
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.Update(entity);
-
-            await _auditService.AuditEntity(Operation.Update, entity);
 
             return await Task.FromResult(entity);
         }
@@ -79,8 +69,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
 
             _dbContext.Set<TEntity>().UpdateRange(entities);
 
-            await _auditService.AuditEntity(Operation.Update, entities);
-
             return await Task.FromResult(entities);
         }
 
@@ -90,8 +78,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
 
             _dbContext.Set<TEntity>().Attach(entity);
             _dbContext.Set<TEntity>().Remove(entity);
-
-            await _auditService.AuditEntity(Operation.Delete, entity);
 
             return await Task.FromResult(default(int));
         }
@@ -104,8 +90,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Base
             entities.ToList().ForEach(entity => _dbContext.Set<TEntity>().Attach(entity));
 
             _dbContext.Set<TEntity>().RemoveRange(entities);
-
-            await _auditService.AuditEntity(Operation.Delete, entities);
 
             return await Task.FromResult(default(int));
         }
