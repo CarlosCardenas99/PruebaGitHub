@@ -227,7 +227,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 Tmh = loteBalanzaDto.Tmh,
                 PlacasTicket = placas,
                 PlacasCarretaTicket = placasCarretas,
-                ObservacionBalanza = loteBalanzaDto.Observacion!
+                ObservacionBalanza = loteBalanzaDto.Observacion!,
+                IdLoteEstado = loteBalanzaDto.IdLoteEstado,
             }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)
@@ -244,7 +245,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     IdProveedor = loteBalanzaDto.IdProveedor,
                     Tmh = loteBalanzaDto.Tmh,
                     CodigoAum = loteBalanzaDto.CodigoAum,
-                    CodigoTrujillo = loteBalanzaDto.CodigoTrujillo
+                    CodigoTrujillo = loteBalanzaDto.CodigoTrujillo,
+                    IdLoteEstado= loteBalanzaDto.IdLoteEstado,
                 }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)

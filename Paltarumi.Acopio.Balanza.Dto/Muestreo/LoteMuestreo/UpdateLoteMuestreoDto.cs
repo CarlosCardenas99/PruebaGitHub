@@ -6,6 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo
         public DateTimeOffset? FechaAcopio { get; set; }
         public float Tmh { get; set; }
         public int IdProveedor { get; set; }
+        public string IdLoteEstado { get; set; } = null!;
         public string? CodigoTrujillo { get; set; }
         public string? CodigoAum { get; set; }
     }
