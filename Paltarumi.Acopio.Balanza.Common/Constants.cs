@@ -135,5 +135,15 @@
                 public const int BIG_BAG = 8;
             }
         }
+        public class acopio
+        {
+            public struct LoteEstado
+            {
+                public const string PENDIENTE = "01";
+                public const string PESADO = "02";
+                public const string RETIRADO = "98";
+                public const string ANULADO = "99";
+            }
+        }
     }
 }

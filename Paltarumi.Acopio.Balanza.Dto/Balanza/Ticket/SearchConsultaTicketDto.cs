@@ -5,7 +5,7 @@
         public int IdLoteBalanza { get; set; }
         public int? IdTicket { get; set; }
         public string CodigoLote { get; set; } = null!;//lote
-        public string CodigoEstado { get; set; } = null!;
+        public string IdLoteEstado { get; set; } = null!;
         public string Numero { get; set; } = null!;
         public DateTimeOffset? FechaIngreso { get; set; }
         public DateTimeOffset? FechaSalida { get; set; }

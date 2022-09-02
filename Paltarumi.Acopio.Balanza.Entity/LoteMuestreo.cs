@@ -19,6 +19,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public float Tmh { get; set; }
         public float? PesoHumedo { get; set; }
         public float? PesoSeco { get; set; }
+        public int? Porcentaje { get; set; }
         public float? Humedad100 { get; set; }
         public float? HumedadBase { get; set; }
         public float? Humedad { get; set; }
@@ -38,9 +39,11 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
+        public string? IdLoteEstado { get; set; }
 
         public virtual Cancha? IdCanchaNavigation { get; set; }
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
+        public virtual LoteEstado? IdLoteEstadoNavigation { get; set; }
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual Maestro? IdTipoMineralNavigation { get; set; }

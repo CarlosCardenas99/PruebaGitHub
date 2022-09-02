@@ -200,7 +200,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 {
                     var formatoFecha = "{0:format}";
 
-                    _worksheet.Cells[contentDataRow, 02].Value = lote.Estado;
+                    _worksheet.Cells[contentDataRow, 02].Value = lote.LoteEstado;
                     _worksheet.Cells[contentDataRow, 02].StyleName = "StyleCellText";
 
                     _worksheet.Cells[contentDataRow, 03].Value = lote.CodigoLote;

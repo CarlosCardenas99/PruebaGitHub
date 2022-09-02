@@ -175,11 +175,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa)))?.Data ?? string.Empty;
                     ticket.Activo = true;
                 }
-
-                var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                    x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_ESTADO &&
-                    x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
-                );
+                // TO DO : BORRAR
+                //var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
+                //    x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_ESTADO &&
+                //    x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
+                //);
 
                 loteBalanza.CodigoLote = codigoLote;
                 loteBalanza.Enable();
@@ -192,7 +192,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateTmhBase();
                 loteBalanza.UserNameCreate = "";
 
-                if (estadoLote != null) loteBalanza.IdEstado = estadoLote.IdMaestro;
+                loteBalanza.IdLoteEstado = Constants.acopio.LoteEstado.PENDIENTE;
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
@@ -231,7 +231,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).Distinct()),
                 Placa = placa,
                 PlacaCarreta = placaCarreta,
-                ObservacionBalanza=loteBalanzaDto.Observacion!
+                ObservacionBalanza=loteBalanzaDto.Observacion!,
+                IdLoteEstado=loteBalanzaDto.IdLoteEstado
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)
@@ -250,7 +251,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     IdProveedor = loteBalanzaDto.IdProveedor,
                     Tmh = loteBalanzaDto.Tmh,
                     CodigoAum = loteBalanzaDto.CodigoAum,
-                    CodigoTrujillo = loteBalanzaDto.CodigoTrujillo
+                    CodigoTrujillo = loteBalanzaDto.CodigoTrujillo,
+                    IdLoteEstado = loteBalanzaDto.IdLoteEstado
                 }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)

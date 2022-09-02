@@ -59,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 filter,
                 x => x.IdProveedorNavigation,
                 x => x.Tickets,
-                x => x.IdEstadoNavigation
+                x => x.IdLoteEstadoNavigation
             );
 
             var checkLists = new List<Entity.CheckList>();

@@ -27,8 +27,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
         public string ObservacionBalanza { get; set; } = null!;
+        public string? IdLoteEstado { get; set; }
 
         public virtual LoteChancadoEstado? IdLoteChancadoEstadoNavigation { get; set; }
+        public virtual LoteEstado? IdLoteEstadoNavigation { get; set; }
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual ICollection<Mapa> Mapas { get; set; }
