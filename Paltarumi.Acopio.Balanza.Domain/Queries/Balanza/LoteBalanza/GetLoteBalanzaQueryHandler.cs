@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
+using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Config.Empresa;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
@@ -43,7 +44,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(
                 x => x.IdLoteBalanza == request.Id,
                 x => x.Tickets,
-                x => x.IdEstadoNavigation,
+                x => x.IdLoteEstadoNavigation,
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation
@@ -66,7 +67,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             if (loteBalanza != null && loteDto != null)
             {
-                loteDto.Estado = loteBalanza.IdEstadoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(loteBalanza.IdEstadoNavigation);
+                loteDto.LoteEstado = loteBalanza.IdLoteEstadoNavigation == null ? null : _mapper?.Map<GetLoteEstadoDto>(loteBalanza.IdLoteEstadoNavigation);
                 loteDto.Concesion = loteBalanza.IdConcesionNavigation == null ? null : _mapper?.Map<GetConcesionDto>(loteBalanza.IdConcesionNavigation);
                 loteDto.Proveedor = loteBalanza.IdProveedorNavigation == null ? null : _mapper?.Map<GetProveedorDto>(loteBalanza.IdProveedorNavigation);
                 loteDto.EstadoTipoMaterial = loteBalanza.IdEstadoTipoMaterialNavigation == null ? null : _mapper?.Map<GetMaestroDto>(loteBalanza.IdEstadoTipoMaterialNavigation);
@@ -74,8 +75,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 var idTickets = loteBalanza.Tickets.Select(x => x.IdTicket);
                 var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
                     x => idTickets.Contains(x.IdTicket),
-                    x => x.IdConductorNavigation,
-                    x => x.IdTransporteNavigation,
+                    x => x.IdConductorNavigation!,
+                    x => x.IdTransporteNavigation!,
                     x => x.IdEstadoTmhNavigation,
                     x => x.IdUnidadMedidaNavigation,
                     x => x.IdVehiculoNavigation
@@ -83,7 +84,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
                 loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
-                loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
+                //loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
                 loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
                 loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote.IdEmpresaNavigation) ?? null;
 

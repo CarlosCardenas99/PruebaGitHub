@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
+using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -30,8 +31,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(
                 x => x.CodigoLote == request.CodigoLote,
-                x => x.Tickets,
-                x => x.IdEstadoNavigation,
+                x => x.Tickets.Where(x =>x.Activo==true),
+                x => x.IdLoteEstadoNavigation,
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation
@@ -41,7 +42,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 
             if (loteBalanza != null && loteDto != null)
             {
-                loteDto.Estado = loteBalanza.IdEstadoNavigation == null ? null : _mapper?.Map<GetMaestroDto>(loteBalanza.IdEstadoNavigation);
+                loteDto.Estado = loteBalanza.IdLoteEstadoNavigation == null ? null : _mapper?.Map<GetLoteEstadoDto>(loteBalanza.IdLoteEstadoNavigation);
                 loteDto.Concesion = loteBalanza.IdConcesionNavigation == null ? null : _mapper?.Map<GetConcesionDto>(loteBalanza.IdConcesionNavigation);
                 loteDto.Proveedor = loteBalanza.IdProveedorNavigation == null ? null : _mapper?.Map<GetProveedorDto>(loteBalanza.IdProveedorNavigation);
                 loteDto.EstadoTipoMaterial = loteBalanza.IdEstadoTipoMaterialNavigation == null ? null : _mapper?.Map<GetMaestroDto>(loteBalanza.IdEstadoTipoMaterialNavigation);
@@ -49,8 +50,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 var idTickets = loteBalanza.Tickets.Select(x => x.IdTicket);
                 var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
                     x => idTickets.Contains(x.IdTicket),
-                    x => x.IdConductorNavigation,
-                    x => x.IdTransporteNavigation,
+                    x => x.IdConductorNavigation!,
+                    x => x.IdTransporteNavigation!,
                     x => x.IdEstadoTmhNavigation,
                     x => x.IdUnidadMedidaNavigation,
                     x => x.IdVehiculoNavigation

@@ -8,8 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public Maestro()
         {
             Conductors = new HashSet<Conductor>();
-            LoteBalanzaIdEstadoNavigations = new HashSet<LoteBalanza>();
-            LoteBalanzaIdEstadoTipoMaterialNavigations = new HashSet<LoteBalanza>();
+            LoteBalanzas = new HashSet<LoteBalanza>();
             LoteCodigoMuestreos = new HashSet<LoteCodigoMuestreo>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
             Lotes = new HashSet<Lote>();
@@ -29,8 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual ICollection<Conductor> Conductors { get; set; }
-        public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoNavigations { get; set; }
-        public virtual ICollection<LoteBalanza> LoteBalanzaIdEstadoTipoMaterialNavigations { get; set; }
+        public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
         public virtual ICollection<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
         public virtual ICollection<Lote> Lotes { get; set; }

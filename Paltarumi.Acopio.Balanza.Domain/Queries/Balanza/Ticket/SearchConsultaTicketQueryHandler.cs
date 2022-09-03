@@ -70,10 +70,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
                 x => x.IdTransporteNavigation!,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,
-                x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,
+                x => x.IdLoteBalanzaNavigation.IdLoteEstadoNavigation,
                 x => x.IdLoteBalanzaNavigation.IdProveedorNavigation,
                 x => x.IdLoteBalanzaNavigation,
-                x => x.IdLoteBalanzaNavigation.IdEstadoNavigation,
                 x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdVehiculoNavigation.IdVehiculoMarcaNavigation,
@@ -260,8 +259,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
         }
         private Expression<Func<Entity.Ticket, bool>> filtrarEstadoLote(SearchConsultaTicketFilterDto? filters, Expression<Func<Entity.Ticket, bool>> filter)
         {
-            if (filters?.idEstado.HasValue == true)
-                filter = filter.And(x => x.IdLoteBalanzaNavigation.IdEstado == filters.idEstado);
+            if (!string.IsNullOrEmpty(filters?.IdLoteEstado))
+                filter = filter.And(x => x.IdLoteBalanzaNavigation.IdLoteEstado == filters.IdLoteEstado);
 
             return filter;
         }

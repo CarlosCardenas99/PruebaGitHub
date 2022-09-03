@@ -27,7 +27,7 @@
         public int TaraInicial { get; set; }
         public int TaraFinal { get; set; }
 
-        public int? idEstado { get; set; }
+        public string IdLoteEstado { get; set; } = null!;
 
         public bool Activo { get; set; }
 

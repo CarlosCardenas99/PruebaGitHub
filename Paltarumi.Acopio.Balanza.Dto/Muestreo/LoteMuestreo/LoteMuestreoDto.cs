@@ -11,6 +11,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo
         public float Tmh { get; set; }
         public float? PesoHumedo { get; set; }
         public float? PesoSeco { get; set; }
+        public int? Porcentaje { get; set; }
         public float? Humedad100 { get; set; }
         public float? HumedadBase { get; set; }
         public float? Humedad { get; set; }
@@ -29,5 +30,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
+        public string? IdLoteEstado { get; set; }
     }
 }

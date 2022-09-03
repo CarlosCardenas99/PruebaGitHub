@@ -6,6 +6,12 @@
         {
             public const int PALTARUMI = 1;
         }
+        public struct GrupoLoteChancado
+        {
+            public const string LOTE= "01";
+            public const string BLENDING = "02";
+            public const string CAMPANIA = "03";
+        }
         public class Operaciones
         {
             public struct Status
@@ -127,6 +133,16 @@
                 public const int GRANEL = 6;
                 public const int SACOS = 7;
                 public const int BIG_BAG = 8;
+            }
+        }
+        public class acopio
+        {
+            public struct LoteEstado
+            {
+                public const string PENDIENTE = "01";
+                public const string PESADO = "02";
+                public const string RETIRADO = "98";
+                public const string ANULADO = "99";
             }
         }
     }

@@ -3,8 +3,8 @@
     public class SearchLoteBalanzaDto
     {
         public int IdLoteBalanza { get; set; }
-        public string? Estado { get; set; }
-        public string CodigoEstado { get; set; } = null!;
+        public string? LoteEstado { get; set; }
+        public string IdLoteEstado { get; set; } = null!;
         public string? NombreConcesion { get; set; }
         public DateTimeOffset? FechaAcopio { get; set; }
         public int CantidadSacos { get; set; }

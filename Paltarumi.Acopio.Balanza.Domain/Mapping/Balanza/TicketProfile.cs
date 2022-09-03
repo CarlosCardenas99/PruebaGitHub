@@ -57,7 +57,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
             CreateMap<Entity.Ticket, SearchConsultaTicketDto>()
                 .ForMember(x => x.Concesion, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdConcesionNavigation != null ? x.IdLoteBalanzaNavigation.IdConcesionNavigation.Nombre : string.Empty))
                 .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
-                .ForMember(x => x.CodigoEstado, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdEstadoNavigation != null ? x.IdLoteBalanzaNavigation.IdEstadoNavigation.CodigoItem : string.Empty))
+                .ForMember(x => x.IdLoteEstado, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdLoteEstadoNavigation != null ? x.IdLoteBalanzaNavigation.IdLoteEstadoNavigation.IdLoteEstado : string.Empty))
                 .ForMember(x => x.CodigoLote, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CodigoLote : string.Empty))
                 .ForMember(x => x.CantidadSacos, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation != null ? x.IdLoteBalanzaNavigation.CantidadSacos : 0))
                 .ForMember(x => x.VehiculoTara, opt => opt.MapFrom(x => x.IdVehiculoNavigation != null ? x.IdVehiculoNavigation.Tara.ToString() : string.Empty))

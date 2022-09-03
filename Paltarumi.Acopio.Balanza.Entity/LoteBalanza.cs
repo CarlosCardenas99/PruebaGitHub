@@ -25,18 +25,18 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public float Tmh { get; set; }
         public float? Humedad { get; set; }
         public float? Tms { get; set; }
-        public int IdEstado { get; set; }
         public string Observacion { get; set; } = null!;
         public int PorcentajeCheckList { get; set; }
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
+        public string IdLoteEstado { get; set; } = null!;
         public bool Activo { get; set; }
 
         public virtual Concesion IdConcesionNavigation { get; set; } = null!;
-        public virtual Maestro IdEstadoNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTipoMaterialNavigation { get; set; } = null!;
+        public virtual LoteEstado IdLoteEstadoNavigation { get; set; } = null!;
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

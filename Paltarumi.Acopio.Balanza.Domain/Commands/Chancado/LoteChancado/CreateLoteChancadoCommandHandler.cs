@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
@@ -42,7 +43,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             await _loteChancadoRepository.AddAsync(loteChancado);
             await _loteChancadoRepository.SaveAsync();
 
-            var createMapaDto = new CreateMapaDto { IdLoteChancado = loteChancado.IdLoteChancado };
+            var createMapaDto = new CreateMapaDto 
+            { 
+                IdLoteChancado = loteChancado.IdLoteChancado, 
+                Tmh = loteChancado.Tmh, 
+                IdLoteChancadoGrupo = Constants.GrupoLoteChancado.LOTE
+            };
             var createMapaResponse = await _mediator?.Send(new CreateMapaCommand(createMapaDto), cancellationToken)!;
 
             if (createMapaResponse?.IsValid == false)
