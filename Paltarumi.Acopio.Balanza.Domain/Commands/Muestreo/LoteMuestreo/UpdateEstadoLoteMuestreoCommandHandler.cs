@@ -2,8 +2,6 @@
 using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteCodigoMuestreo;
-using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteCodigoMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
@@ -47,26 +45,26 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
             await _loteMuestreoRepository.UpdateAsync(loteMuestreo);
             await _loteMuestreoRepository.SaveAsync();
 
-            //______________________________________________________________________
-            var loteCodigoMuestreos = await _loteCodigoMuestreoRepository.FindByAsNoTrackingAsync(x => x.IdLoteMuestreo == loteMuestreo.IdLoteMuestreo);
+            //________________UPDATE ESTADO LOTECODIGOMUESTREO_________________________
+            //var loteCodigoMuestreos = await _loteCodigoMuestreoRepository.FindByAsNoTrackingAsync(x => x.IdLoteMuestreo == loteMuestreo.IdLoteMuestreo);
 
-            foreach (var loteCodigoMuestreo in (loteCodigoMuestreos ?? new List<Entity.LoteCodigoMuestreo>()))
-            {
-                var loteCodigoMuestreoDto = loteMuestreo.LoteCodigoMuestreos?.FirstOrDefault(x => x.IdLoteCodigoMuestreo == loteCodigoMuestreo.IdLoteCodigoMuestreo);
+            //foreach (var loteCodigoMuestreo in (loteCodigoMuestreos ?? new List<Entity.LoteCodigoMuestreo>()))
+            //{
+            //    var loteCodigoMuestreoDto = loteMuestreo.LoteCodigoMuestreos?.FirstOrDefault(x => x.IdLoteCodigoMuestreo == loteCodigoMuestreo.IdLoteCodigoMuestreo);
 
-                if (loteCodigoMuestreoDto != null)
-                {
-                    var updateResponse = await _mediator?.Send(new UpdateLoteCodigoMuestreoCommand(
-                        new UpdateLoteCodigoMuestreoDto
-                        {
-                            IdLoteCodigoMuestreo = loteCodigoMuestreoDto.IdLoteCodigoMuestreo,
-                            Activo = false,
-                        }), cancellationToken)!;
+            //    if (loteCodigoMuestreoDto != null)
+            //    {
+            //        var updateResponse = await _mediator?.Send(new UpdateLoteCodigoMuestreoCommand(
+            //            new UpdateLoteCodigoMuestreoDto
+            //            {
+            //                IdLoteCodigoMuestreo = loteCodigoMuestreoDto.IdLoteCodigoMuestreo,
+            //                Activo = false,
+            //            }), cancellationToken)!;
 
-                    if (updateResponse?.IsValid == false)
-                        response.AttachResults(updateResponse);
-                }
-            }
+            //        if (updateResponse?.IsValid == false)
+            //            response.AttachResults(updateResponse);
+            //    }
+            //}
             //________________________________________________________________________
             return await Task.FromResult(response);
         }

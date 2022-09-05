@@ -71,7 +71,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 if (updateEstadoChancado?.IsValid == false)
                     response.AttachResults(updateEstadoChancado);
 
-                //update estado lote chancado
+                //update estado lote Muestreo
                 var updateEstadoMuestreo = await _mediator?.Send(new UpdateEstadoLoteMuestreoCommand(new UpdateEstadoLoteMuestreoDto
                 {
                     CodigoLote = loteBalanza.CodigoLote!,

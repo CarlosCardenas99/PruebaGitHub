@@ -8,22 +8,21 @@ using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa
 {
-    public class UpdateMapaCommandHandler : CommandHandlerBase<UpdateMapaCommand, GetMapaDto>
+    public class UpdateMapaEstadoCommandHandler : CommandHandlerBase<UpdateMapaEstadoCommand, GetMapaDto>
     {
         private readonly IRepository<Entity.Mapa> _mapaRepository;
 
-        public UpdateMapaCommandHandler(
+        public UpdateMapaEstadoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
-            UpdateMapaCommandValidator validator,
             IRepository<Entity.Mapa> mapaRepository
-        ) : base(unitOfWork, mapper, mediator, validator)
+        ) : base(unitOfWork, mapper, mediator)
         {
             _mapaRepository = mapaRepository;
         }
 
-        public override async Task<ResponseDto<GetMapaDto>> HandleCommand(UpdateMapaCommand request, CancellationToken cancellationToken)
+        public override async Task<ResponseDto<GetMapaDto>> HandleCommand(UpdateMapaEstadoCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetMapaDto>();
 

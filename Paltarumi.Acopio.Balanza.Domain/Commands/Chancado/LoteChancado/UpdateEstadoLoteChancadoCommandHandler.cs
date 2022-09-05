@@ -39,6 +39,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             await _loteChancadoRepository.UpdateAsync(loteChancado);
             await _loteChancadoRepository.SaveAsync();
 
+            //___________________________Update Estado Mapa_____________________
+            //var updateMapaEstado = await _mediator?.Send(new UpdateMapaEstadoCommand(new UpdateMapaEstadoDto
+            //{
+            //    IdLoteChancado = loteChancado.IdLoteChancado,
+            //    Activo = false,
+            //}), cancellationToken)!;
+
+            //if (updateMapaEstado?.IsValid == false)
+            //    response.AttachResults(updateMapaEstado);
+            //_________________________________________________________________
+
             return await Task.FromResult(response);
         }
     }
