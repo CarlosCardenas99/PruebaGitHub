@@ -8,6 +8,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado
         public int IdProveedor { get; set; }
         public string IdLoteEstado { get; set; } = null!;
         public string ObservacionBalanza { get; set; } = null!;
-        public float Tmh { get; set; }
+        public decimal Tmh { get; set; }
     }
 }

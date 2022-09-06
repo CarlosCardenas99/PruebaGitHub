@@ -9,7 +9,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado
         public string PlacaCarreta { get; set; } = null!;
         public int IdProveedor { get; set; }
         public string ObservacionBalanza { get; set; } = null!;
-        public float Tmh { get; set; }
+        public decimal Tmh { get; set; }
         public string? IdLoteEstado { get; set; }
     }
 }

@@ -23,8 +23,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; } = null!;
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; } = null!;
         public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
-        public virtual DbSet<AuditDetail> AuditDetails { get; set; } = null!;
-        public virtual DbSet<AuditHeader> AuditHeaders { get; set; } = null!;
         public virtual DbSet<Cancha> Canchas { get; set; } = null!;
         public virtual DbSet<CheckList> CheckLists { get; set; } = null!;
         public virtual DbSet<Concesion> Concesions { get; set; } = null!;
@@ -50,7 +48,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; } = null!;
         public virtual DbSet<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; } = null!;
         public virtual DbSet<LoteCodigoPm> LoteCodigoPms { get; set; } = null!;
-        public virtual DbSet<LoteCodigoPmControl> LoteCodigoPmControls { get; set; } = null!;
         public virtual DbSet<LoteCodigoTipo> LoteCodigoTipos { get; set; } = null!;
         public virtual DbSet<LoteEstado> LoteEstados { get; set; } = null!;
         public virtual DbSet<LoteMuestreo> LoteMuestreos { get; set; } = null!;
@@ -74,11 +71,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=192.168.0.2;Initial Catalog=AcopioQA;User ID=sa;Password=@SistemaAcopio1;");
-            }
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -152,34 +145,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.AspNetUserTokens)
                     .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AuditDetail>(entity =>
-            {
-                entity.ToTable("AuditDetail");
-
-                entity.HasIndex(e => e.AuditHeaderId, "IX_AuditDetail_AuditHeaderId");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Field).HasMaxLength(255);
-
-                entity.HasOne(d => d.AuditHeader)
-                    .WithMany(p => p.AuditDetails)
-                    .HasForeignKey(d => d.AuditHeaderId);
-            });
-
-            modelBuilder.Entity<AuditHeader>(entity =>
-            {
-                entity.ToTable("AuditHeader");
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Entity).HasMaxLength(255);
-
-                entity.Property(e => e.Identifier).HasMaxLength(255);
-
-                entity.Property(e => e.UserName).HasMaxLength(255);
             });
 
             modelBuilder.Entity<Cancha>(entity =>
@@ -646,7 +611,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.FechaIngreso).HasColumnName("fechaIngreso");
 
-                entity.Property(e => e.Humedad).HasColumnName("humedad");
+                entity.Property(e => e.Humedad)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("humedad");
 
                 entity.Property(e => e.IdConcesion).HasColumnName("idConcesion");
 
@@ -668,13 +635,21 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.PorcentajeCheckList).HasColumnName("porcentajeCheckList");
 
-                entity.Property(e => e.Tmh).HasColumnName("tmh");
+                entity.Property(e => e.Tmh)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmh");
 
-                entity.Property(e => e.Tmh100).HasColumnName("tmh100");
+                entity.Property(e => e.Tmh100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmh100");
 
-                entity.Property(e => e.TmhBase).HasColumnName("tmhBase");
+                entity.Property(e => e.TmhBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmhBase");
 
-                entity.Property(e => e.Tms).HasColumnName("tms");
+                entity.Property(e => e.Tms)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tms");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
@@ -781,7 +756,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("placasTicket");
 
-                entity.Property(e => e.Tmh).HasColumnName("tmh");
+                entity.Property(e => e.Tmh)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmh");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
@@ -801,6 +778,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdLoteEstadoNavigation)
                     .WithMany(p => p.LoteChancados)
                     .HasForeignKey(d => d.IdLoteEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_chancado_LoteChancado_idLoteEstado");
 
                 entity.HasOne(d => d.IdMineralCondicionNavigation)
@@ -1033,23 +1011,35 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.CreateDate).HasColumnName("createDate");
 
-                entity.Property(e => e.Diferencia).HasColumnName("diferencia");
+                entity.Property(e => e.Diferencia)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("diferencia");
 
-                entity.Property(e => e.Dilucion).HasColumnName("dilucion");
+                entity.Property(e => e.Dilucion)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("dilucion");
 
                 entity.Property(e => e.FechaRecepcion).HasColumnName("fechaRecepcion");
 
-                entity.Property(e => e.LeyAuGt).HasColumnName("leyAuGt");
+                entity.Property(e => e.LeyAuGt)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("leyAuGt");
 
-                entity.Property(e => e.LeyAuGt100).HasColumnName("leyAuGt100");
+                entity.Property(e => e.LeyAuGt100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("leyAuGt100");
 
                 entity.Property(e => e.LeyAuGt100Reportado).HasColumnName("leyAuGt100Reportado");
 
                 entity.Property(e => e.LeyAuGtReportado).HasColumnName("leyAuGtReportado");
 
-                entity.Property(e => e.LeyAuOzTc).HasColumnName("leyAuOzTc");
+                entity.Property(e => e.LeyAuOzTc)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("leyAuOzTc");
 
-                entity.Property(e => e.LeyAuOzTc100).HasColumnName("leyAuOzTc100");
+                entity.Property(e => e.LeyAuOzTc100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("leyAuOzTc100");
 
                 entity.Property(e => e.LeyAuOzTc100Reportado).HasColumnName("leyAuOzTc100Reportado");
 
@@ -1057,7 +1047,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.Tms).HasColumnName("tms");
 
-                entity.Property(e => e.Total).HasColumnName("total");
+                entity.Property(e => e.Total)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("total");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
@@ -1078,8 +1070,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.ToTable("LoteCodigoEnsayoDetalle", "laboratorio");
 
                 entity.Property(e => e.IdLoteCodigoEnsayoDetalle).HasColumnName("idLoteCodigoEnsayoDetalle");
-
-                entity.Property(e => e.Activo).HasColumnName("activo");
 
                 entity.Property(e => e.AuFinoEnsayo)
                     .HasColumnType("decimal(18, 3)")
@@ -1138,12 +1128,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnName("wDore");
 
                 entity.Property(e => e.WMuestra).HasColumnName("wMuestra");
-
-                entity.HasOne(d => d.IdLoteCodigoEnsayoNavigation)
-                    .WithMany(p => p.LoteCodigoEnsayoDetalles)
-                    .HasForeignKey(d => d.IdLoteCodigoEnsayo)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_laboratorio_LoteCodigoEnsayoDetalle_idLoteCodigoEnsayo");
 
                 entity.HasOne(d => d.IdLoteCodigoEnsayoOrigenNavigation)
                     .WithMany(p => p.LoteCodigoEnsayoDetalles)
@@ -1319,111 +1303,53 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdLoteCodigoPm).HasColumnName("idLoteCodigoPm");
 
-                entity.Property(e => e.Activo).HasColumnName("activo");
+                entity.Property(e => e.AuFinoEnsayo).HasColumnName("auFinoEnsayo");
 
-                entity.Property(e => e.AguaLt).HasColumnName("aguaLt");
+                entity.Property(e => e.AuGruesoEnsayo).HasColumnName("auGruesoEnsayo");
+
+                entity.Property(e => e.CodigoPlantaRandom)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("codigoPlantaRandom");
 
                 entity.Property(e => e.CodigoPlantaRandomValor)
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("codigoPlantaRandomValor");
 
-                entity.Property(e => e.ConsumoCianuro).HasColumnName("consumoCianuro");
+                entity.Property(e => e.IdLoteCodigoEnsayo).HasColumnName("idLoteCodigoEnsayo");
 
-                entity.Property(e => e.ConsumoSoda).HasColumnName("consumoSoda");
+                entity.Property(e => e.LeyAgGt).HasColumnName("leyAgGt");
 
-                entity.Property(e => e.CreateDate).HasColumnName("createDate");
+                entity.Property(e => e.LeyAgOzTc).HasColumnName("leyAgOzTc");
 
-                entity.Property(e => e.FechaReporte)
-                    .HasColumnType("datetime")
-                    .HasColumnName("fechaReporte");
+                entity.Property(e => e.LeyAuGt).HasColumnName("leyAuGt");
 
-                entity.Property(e => e.IdTipoMineral).HasColumnName("idTipoMineral");
+                entity.Property(e => e.LeyAuOzTc).HasColumnName("leyAuOzTc");
 
-                entity.Property(e => e.LeyAuGt100).HasColumnName("leyAuGt100");
+                entity.Property(e => e.LeyGt).HasColumnName("leyGt");
 
-                entity.Property(e => e.LeyAuGtPm).HasColumnName("leyAuGtPm");
+                entity.Property(e => e.LeyOzTc).HasColumnName("leyOzTc");
 
-                entity.Property(e => e.LeyAuOzTc100).HasColumnName("leyAuOzTc100");
+                entity.Property(e => e.PesoFino).HasColumnName("pesoFino");
 
-                entity.Property(e => e.MineralKg).HasColumnName("mineralKg");
+                entity.Property(e => e.PesoFinoEnsayo).HasColumnName("pesoFinoEnsayo");
 
-                entity.Property(e => e.MuestraPesoGr).HasColumnName("muestraPesoGr");
+                entity.Property(e => e.PesoGrueso).HasColumnName("pesoGrueso");
 
-                entity.Property(e => e.PesoAuMgRelave).HasColumnName("pesoAuMgRelave");
+                entity.Property(e => e.PesoTotal).HasColumnName("pesoTotal");
 
-                entity.Property(e => e.PesoAuMgSolucion).HasColumnName("pesoAuMgSolucion");
+                entity.Property(e => e.PorcentajeFino).HasColumnName("porcentajeFino");
 
-                entity.Property(e => e.PhNatural).HasColumnName("phNatural");
+                entity.Property(e => e.PorcentajeGrueso).HasColumnName("porcentajeGrueso");
 
-                entity.Property(e => e.PorcentajeMalla).HasColumnName("porcentajeMalla");
+                entity.Property(e => e.WAg).HasColumnName("wAg");
 
-                entity.Property(e => e.RecuperacionAu).HasColumnName("recuperacionAu");
+                entity.Property(e => e.WAu).HasColumnName("wAu");
 
-                entity.Property(e => e.RecuperacionAu100).HasColumnName("recuperacionAu100");
+                entity.Property(e => e.WDore).HasColumnName("wDore");
 
-                entity.Property(e => e.ResiduoAuGrTm).HasColumnName("residuoAuGrTm");
-
-                entity.Property(e => e.ResiduoAuOzTc).HasColumnName("residuoAuOzTc");
-
-                entity.Property(e => e.SolucionAuGm3).HasColumnName("solucionAuGm3");
-
-                entity.Property(e => e.TiempoAgitacion).HasColumnName("tiempoAgitacion");
-
-                entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
-
-                entity.Property(e => e.UserNameCreate)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameCreate");
-
-                entity.Property(e => e.UserNameUpdate)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameUpdate");
-
-                entity.Property(e => e.VolumenMl).HasColumnName("volumenMl");
-            });
-
-            modelBuilder.Entity<LoteCodigoPmControl>(entity =>
-            {
-                entity.HasKey(e => e.IdLoteCodigoPmControl)
-                    .HasName("PK_laboratorio_LoteCodigoPmControl_idLoteCodigoPmControl");
-
-                entity.ToTable("LoteCodigoPmControl", "laboratorio");
-
-                entity.Property(e => e.IdLoteCodigoPmControl).HasColumnName("idLoteCodigoPmControl");
-
-                entity.Property(e => e.Activo).HasColumnName("activo");
-
-                entity.Property(e => e.AdicionSoda).HasColumnName("adicionSoda");
-
-                entity.Property(e => e.CreateDate).HasColumnName("createDate");
-
-                entity.Property(e => e.FuerzaCianuro).HasColumnName("fuerzaCianuro");
-
-                entity.Property(e => e.HoraControl).HasColumnName("horaControl");
-
-                entity.Property(e => e.IdLoteCodigoPm).HasColumnName("idLoteCodigoPm");
-
-                entity.Property(e => e.Observacion)
-                    .HasMaxLength(100)
-                    .IsUnicode(false)
-                    .HasColumnName("observacion");
-
-                entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
-
-                entity.Property(e => e.UserNameCreate)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameCreate");
-
-                entity.Property(e => e.UserNameUpdate)
-                    .HasMaxLength(256)
-                    .HasColumnName("userNameUpdate");
-
-                entity.HasOne(d => d.IdLoteCodigoPmNavigation)
-                    .WithMany(p => p.LoteCodigoPmControls)
-                    .HasForeignKey(d => d.IdLoteCodigoPm)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_laboratorio_LoteCodigoPmControl_idLoteCodigoPm");
+                entity.Property(e => e.WMuestra).HasColumnName("wMuestra");
             });
 
             modelBuilder.Entity<LoteCodigoTipo>(entity =>
@@ -1509,11 +1435,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.Firmado).HasColumnName("firmado");
 
-                entity.Property(e => e.Humedad).HasColumnName("humedad");
+                entity.Property(e => e.Humedad)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("humedad");
 
-                entity.Property(e => e.Humedad100).HasColumnName("humedad100");
+                entity.Property(e => e.Humedad100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("humedad100");
 
-                entity.Property(e => e.HumedadBase).HasColumnName("humedadBase");
+                entity.Property(e => e.HumedadBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("humedadBase");
 
                 entity.Property(e => e.IdCancha)
                     .HasMaxLength(2)
@@ -1545,21 +1477,33 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("observacion");
 
-                entity.Property(e => e.PesoHumedo).HasColumnName("pesoHumedo");
+                entity.Property(e => e.PesoHumedo)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoHumedo");
 
-                entity.Property(e => e.PesoSeco).HasColumnName("pesoSeco");
+                entity.Property(e => e.PesoSeco)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoSeco");
 
                 entity.Property(e => e.Porcentaje).HasColumnName("porcentaje");
 
                 entity.Property(e => e.ReportadoProveedor).HasColumnName("reportadoProveedor");
 
-                entity.Property(e => e.Tmh).HasColumnName("tmh");
+                entity.Property(e => e.Tmh)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmh");
 
-                entity.Property(e => e.Tms).HasColumnName("tms");
+                entity.Property(e => e.Tms)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tms");
 
-                entity.Property(e => e.Tms100).HasColumnName("tms100");
+                entity.Property(e => e.Tms100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tms100");
 
-                entity.Property(e => e.TmsBase).HasColumnName("tmsBase");
+                entity.Property(e => e.TmsBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmsBase");
 
                 entity.Property(e => e.UpdateDate).HasColumnName("updateDate");
 
@@ -1584,6 +1528,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdLoteEstadoNavigation)
                     .WithMany(p => p.LoteMuestreos)
                     .HasForeignKey(d => d.IdLoteEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_muestreo_LoteMuestreo_idLoteEstado");
 
                 entity.HasOne(d => d.IdMineralCondicionNavigation)
@@ -1718,7 +1663,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("numero");
 
-                entity.Property(e => e.Tmh).HasColumnName("tmh");
+                entity.Property(e => e.Tmh)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tmh");
 
                 entity.Property(e => e.UbicacionX).HasColumnName("ubicacionX");
 
@@ -2046,39 +1993,69 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("observacion");
 
-                entity.Property(e => e.PesoBruto).HasColumnName("pesoBruto");
+                entity.Property(e => e.PesoBruto)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBruto");
 
-                entity.Property(e => e.PesoBruto100).HasColumnName("pesoBruto100");
+                entity.Property(e => e.PesoBruto100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBruto100");
 
-                entity.Property(e => e.PesoBrutoBase).HasColumnName("pesoBrutoBase");
+                entity.Property(e => e.PesoBrutoBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoBase");
 
-                entity.Property(e => e.PesoBrutoCarreta).HasColumnName("pesoBrutoCarreta");
+                entity.Property(e => e.PesoBrutoCarreta)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoCarreta");
 
-                entity.Property(e => e.PesoBrutoCarreta100).HasColumnName("pesoBrutoCarreta100");
+                entity.Property(e => e.PesoBrutoCarreta100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoCarreta100");
 
-                entity.Property(e => e.PesoBrutoCarretaBase).HasColumnName("pesoBrutoCarretaBase");
+                entity.Property(e => e.PesoBrutoCarretaBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoCarretaBase");
 
                 entity.Property(e => e.PesoBrutoCarretaEdit).HasColumnName("pesoBrutoCarretaEdit");
 
                 entity.Property(e => e.PesoBrutoEdit).HasColumnName("pesoBrutoEdit");
 
-                entity.Property(e => e.PesoNeto).HasColumnName("pesoNeto");
+                entity.Property(e => e.PesoNeto)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNeto");
 
-                entity.Property(e => e.PesoNeto100).HasColumnName("pesoNeto100");
+                entity.Property(e => e.PesoNeto100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNeto100");
 
-                entity.Property(e => e.PesoNetoBase).HasColumnName("pesoNetoBase");
+                entity.Property(e => e.PesoNetoBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoBase");
 
-                entity.Property(e => e.PesoNetoCarreta).HasColumnName("pesoNetoCarreta");
+                entity.Property(e => e.PesoNetoCarreta)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoCarreta");
 
-                entity.Property(e => e.PesoNetoCarreta100).HasColumnName("pesoNetoCarreta100");
+                entity.Property(e => e.PesoNetoCarreta100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoCarreta100");
 
-                entity.Property(e => e.PesoNetoCarretaBase).HasColumnName("pesoNetoCarretaBase");
+                entity.Property(e => e.PesoNetoCarretaBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoCarretaBase");
 
-                entity.Property(e => e.PesoNetoTotal).HasColumnName("pesoNetoTotal");
+                entity.Property(e => e.PesoNetoTotal)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoTotal");
 
-                entity.Property(e => e.Tara).HasColumnName("tara");
+                entity.Property(e => e.Tara)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tara");
 
-                entity.Property(e => e.TaraCarreta).HasColumnName("taraCarreta");
+                entity.Property(e => e.TaraCarreta)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("taraCarreta");
 
                 entity.HasOne(d => d.IdConductorNavigation)
                     .WithMany(p => p.Tickets)
@@ -2188,39 +2165,69 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("observacion");
 
-                entity.Property(e => e.PesoBruto).HasColumnName("pesoBruto");
+                entity.Property(e => e.PesoBruto)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBruto");
 
-                entity.Property(e => e.PesoBruto100).HasColumnName("pesoBruto100");
+                entity.Property(e => e.PesoBruto100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBruto100");
 
-                entity.Property(e => e.PesoBrutoBase).HasColumnName("pesoBrutoBase");
+                entity.Property(e => e.PesoBrutoBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoBase");
 
-                entity.Property(e => e.PesoBrutoCarreta).HasColumnName("pesoBrutoCarreta");
+                entity.Property(e => e.PesoBrutoCarreta)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoCarreta");
 
-                entity.Property(e => e.PesoBrutoCarreta100).HasColumnName("pesoBrutoCarreta100");
+                entity.Property(e => e.PesoBrutoCarreta100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoCarreta100");
 
-                entity.Property(e => e.PesoBrutoCarretaBase).HasColumnName("pesoBrutoCarretaBase");
+                entity.Property(e => e.PesoBrutoCarretaBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoBrutoCarretaBase");
 
                 entity.Property(e => e.PesoBrutoCarretaEdit).HasColumnName("pesoBrutoCarretaEdit");
 
                 entity.Property(e => e.PesoBrutoEdit).HasColumnName("pesoBrutoEdit");
 
-                entity.Property(e => e.PesoNeto).HasColumnName("pesoNeto");
+                entity.Property(e => e.PesoNeto)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNeto");
 
-                entity.Property(e => e.PesoNeto100).HasColumnName("pesoNeto100");
+                entity.Property(e => e.PesoNeto100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNeto100");
 
-                entity.Property(e => e.PesoNetoBase).HasColumnName("pesoNetoBase");
+                entity.Property(e => e.PesoNetoBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoBase");
 
-                entity.Property(e => e.PesoNetoCarreta).HasColumnName("pesoNetoCarreta");
+                entity.Property(e => e.PesoNetoCarreta)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoCarreta");
 
-                entity.Property(e => e.PesoNetoCarreta100).HasColumnName("pesoNetoCarreta100");
+                entity.Property(e => e.PesoNetoCarreta100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoCarreta100");
 
-                entity.Property(e => e.PesoNetoCarretaBase).HasColumnName("pesoNetoCarretaBase");
+                entity.Property(e => e.PesoNetoCarretaBase)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoCarretaBase");
 
-                entity.Property(e => e.PesoNetoTotal).HasColumnName("pesoNetoTotal");
+                entity.Property(e => e.PesoNetoTotal)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("pesoNetoTotal");
 
-                entity.Property(e => e.Tara).HasColumnName("tara");
+                entity.Property(e => e.Tara)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tara");
 
-                entity.Property(e => e.TaraCarreta).HasColumnName("taraCarreta");
+                entity.Property(e => e.TaraCarreta)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("taraCarreta");
             });
 
             modelBuilder.Entity<TipoDocumento>(entity =>

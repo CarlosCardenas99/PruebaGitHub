@@ -12,9 +12,9 @@
         public string CodigoLote { get; set; } = null!;
         public string? NombreProveedor { get; set; }
         public string? NombreEstadoTipoMaterial { get; set; }
-        public float Tmh { get; set; }
-        public float? Humedad { get; set; }
-        public float? Tms { get; set; }
+        public decimal Tmh { get; set; }
+        public decimal? Humedad { get; set; }
+        public decimal? Tms { get; set; }
         public string NumeroTickets { get; set; } = null!;
     }
 }

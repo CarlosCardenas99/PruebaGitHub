@@ -8,8 +8,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdLoteCodigoPmControl { get; set; }
         public int IdLoteCodigoPm { get; set; }
         public int HoraControl { get; set; }
-        public float AdicionSoda { get; set; }
-        public float FuerzaCianuro { get; set; }
+        public decimal AdicionSoda { get; set; }
+        public decimal FuerzaCianuro { get; set; }
         public string Observacion { get; set; } = null!;
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
