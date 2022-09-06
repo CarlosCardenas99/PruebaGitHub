@@ -1,6 +1,8 @@
 using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Common;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Dto;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -41,6 +43,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
 
             await _loteMuestreoRepository.UpdateAsync(loteMuestreo);
             await _loteMuestreoRepository.SaveAsync();
+
+            if (loteMuestreo.Tms != null || loteMuestreo.Tms > 0)
+            {
+                var updateResponse = await _mediator?.Send(new UpdateTmsLoteBalanzaCommand(
+                new UpdateTmsLoteBalanzaDto
+                {
+                    CodigoLote = loteMuestreo.CodigoLote,
+                    Tms = loteMuestreo.Tms
+                }), cancellationToken)!;
+
+                if (updateResponse?.IsValid == false)
+                    response.AttachResults(updateResponse);
+            }
 
             var loteMuestreoDto = _mapper?.Map<GetLoteMuestreoDto>(loteMuestreo);
 

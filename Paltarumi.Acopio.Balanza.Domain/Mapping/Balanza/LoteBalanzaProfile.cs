@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Dto;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
@@ -14,6 +15,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ReverseMap();
 
             CreateMap<Entity.LoteBalanza, UpdateLoteBalanzaDto>()
+                .ReverseMap();
+
+            CreateMap<Entity.LoteBalanza, UpdateTmsLoteBalanzaDto>()
                 .ReverseMap();
 
             CreateMap<Entity.LoteBalanza, GetLoteBalanzaDto>()
