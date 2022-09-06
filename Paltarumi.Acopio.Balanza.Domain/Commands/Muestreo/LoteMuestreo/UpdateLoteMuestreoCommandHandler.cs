@@ -72,9 +72,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
                 var humedadBase = lotemuestreo.HumedadBase!.Value;
                 var humedad = lotemuestreo.Humedad!.Value;
 
-                var tms = LoteMuestreoCalculos.CalcularTms(tmh, humedad);
-                var tms100 = LoteMuestreoCalculos.CalcularTms100(tmh, humedadBase);
-                var tmsbase = LoteMuestreoCalculos.CalcularTmsBase(tmh, humedadBase);
+                var tms = LoteMuestreoCalculos.Tms(tmh, humedad);
+                var tms100 = LoteMuestreoCalculos.Tms100(tmh, humedadBase);
+                var tmsbase = LoteMuestreoCalculos.Tms100(tmh, humedadBase);
 
                 lotemuestreo.TmsBase = tmsbase;
                 lotemuestreo.Tms100 = tms100;
