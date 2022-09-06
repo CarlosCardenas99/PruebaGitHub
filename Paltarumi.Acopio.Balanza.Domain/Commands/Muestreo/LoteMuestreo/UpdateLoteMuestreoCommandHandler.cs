@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -33,9 +34,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
                 response.AddErrorResult(Resources.Muestreo.LoteMuestreo.LoteMuestreoRequired);
                 return response;
             }
-            //var calculos = await CalculoCamposLoteMuestreo(request, loteMuestreo);
 
             _mapper?.Map(request.UpdateDto, loteMuestreo);
+
+            await CalculoCamposLoteMuestreo(request, loteMuestreo);
 
             await _loteMuestreoRepository.UpdateAsync(loteMuestreo);
             await _loteMuestreoRepository.SaveAsync();
@@ -47,28 +49,22 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
             return await Task.FromResult(response);
         }
 
-        //private async Task<CamposCalculadosLoteMuestreoDto> CalculoCamposLoteMuestreo(UpdateLoteMuestreoCommand request, Entity.LoteMuestreo lotemuestreo)
-        //{
-        //    var porcentaje = lotemuestreo.Porcentaje;
-        //    var tmh = lotemuestreo.Tmh;
+        private async Task CalculoCamposLoteMuestreo(UpdateLoteMuestreoCommand request, Entity.LoteMuestreo lotemuestreo)
+        {
+            if (lotemuestreo.PesoSeco != null || lotemuestreo.PesoSeco > 0)
+            {
+                var tmh = lotemuestreo.Tmh;
+                var humedadBase = lotemuestreo.HumedadBase!.Value;
+                var humedad = lotemuestreo.Humedad!.Value;
 
-        //    var humedadBase = LoteMuestreoCalculos.CalcularHumedadBaseOr100(lotemuestreo.PesoHumedo, lotemuestreo.PesoSeco);
-        //    var humedad = LoteMuestreoCalculos.CalcularHumedad(humedadBase, porcentaje);
+                var tms = LoteMuestreoCalculos.CalcularTms(tmh, humedad);
+                var tms100 = LoteMuestreoCalculos.CalcularTms100(tmh, humedadBase);
+                var tmsbase = LoteMuestreoCalculos.CalcularTmsBase(tmh, humedadBase);
 
-        //    var tms = LoteMuestreoCalculos.CalcularTms(tmh, humedad);
-        //    var tms100 = LoteMuestreoCalculos.CalcularTms100(tmh, humedadBase);
-        //    var tmsbase = LoteMuestreoCalculos.CalcularTmsBase(tmh, humedadBase); ;
-
-        //    var Response = new CamposCalculadosLoteMuestreoDto();
-        //    Response.HumedadBase = humedadBase;
-        //    Response.Humedad100 = humedadBase;
-        //    Response.Humedad = humedad;
-
-        //    Response.TmsBase = tmsbase;
-        //    Response.Tms100 = tms100;
-        //    Response.Tms = tms;
-
-        //    return Response;
-        //}
+                lotemuestreo.TmsBase = tmsbase;
+                lotemuestreo.Tms100 = tms100;
+                lotemuestreo.Tms = tms;
+            }
+        }
     }
 }
