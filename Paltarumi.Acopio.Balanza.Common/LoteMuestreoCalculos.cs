@@ -3,7 +3,7 @@
     public class LoteMuestreoCalculos
     {
         public static decimal CalcularHumedadBaseOr100(decimal pesoHumedo, decimal pesoSeco)
-            => (pesoHumedo - pesoSeco) / pesoHumedo * 100;
+            => (pesoHumedo - pesoSeco) / (pesoHumedo == 0 ? 1 : pesoHumedo) * 100;
 
         public static decimal CalcularHumedad(decimal HumedadBase, int porcentaje)
             => HumedadBase + (HumedadBase * porcentaje / 100);
