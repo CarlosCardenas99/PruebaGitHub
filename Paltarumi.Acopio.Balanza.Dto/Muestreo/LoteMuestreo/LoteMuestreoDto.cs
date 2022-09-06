@@ -8,16 +8,16 @@ namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo
         public string? CodigoAum { get; set; }
         public DateTimeOffset? FechaAcopio { get; set; }
         public DateTimeOffset? Fecha { get; set; }
-        public float Tmh { get; set; }
-        public float? PesoHumedo { get; set; }
-        public float? PesoSeco { get; set; }
+        public decimal Tmh { get; set; }
+        public decimal? PesoHumedo { get; set; }
+        public decimal? PesoSeco { get; set; }
         public int? Porcentaje { get; set; }
-        public float? Humedad100 { get; set; }
-        public float? HumedadBase { get; set; }
-        public float? Humedad { get; set; }
-        public float? Tms100 { get; set; }
-        public float? TmsBase { get; set; }
-        public float? Tms { get; set; }
+        public decimal? Humedad100 { get; set; }
+        public decimal? HumedadBase { get; set; }
+        public decimal? Humedad { get; set; }
+        public decimal? Tms100 { get; set; }
+        public decimal? TmsBase { get; set; }
+        public decimal? Tms { get; set; }
         public int? IdTipoMineral { get; set; }
         public string? IdCancha { get; set; }
         public string? IdMineralCondicion { get; set; }

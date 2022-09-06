@@ -10,8 +10,8 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
     public class GetLoteBalanzaDto : LoteBalanzaDto
     {
         public int IdLoteBalanza { get; set; }
-        public float? Humedad { get; set; }
-        public float? Tms { get; set; }
+        public decimal? Humedad { get; set; }
+        public decimal? Tms { get; set; }
         public GetEmpresaDto? Empresa { get; set; }
         public GetConcesionDto? Concesion { get; set; }
         public GetMaestroDto? EstadoTipoMaterial { get; set; }

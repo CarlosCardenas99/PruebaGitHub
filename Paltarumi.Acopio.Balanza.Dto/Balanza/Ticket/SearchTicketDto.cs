@@ -7,9 +7,9 @@
         public DateTimeOffset? FechaIngreso { get; set; }
         public DateTimeOffset? FechaSalida { get; set; }
         public string EstadoTmh { get; set; } = null!;
-        public float? PesoBruto { get; set; } = null!;
-        public float? Tara { get; set; }
-        public float? PesoNeto { get; set; }
+        public decimal? PesoBruto { get; set; } = null!;
+        public decimal? Tara { get; set; }
+        public decimal? PesoNeto { get; set; }
         public string Grr { get; set; } = null!;
         public string Grt { get; set; } = null!;
         public string Licencia { get; set; } = null!;

@@ -5,7 +5,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado
         public string CodigoLote { get; set; } = null!;
         public DateTimeOffset? FechaRecepcion { get; set; }
         public string? IdMineralCondicion { get; set; }
-        public float Tmh { get; set; }
+        public decimal Tmh { get; set; }
         public int IdProveedor { get; set; }
         public string PlacasTicket { get; set; } = null!;
         public string PlacasCarretaTicket { get; set; } = null!;
