@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Paltarumi.Acopio.Audit.RestClient;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Storage = Microsoft.EntityFrameworkCore.Storage;
 
@@ -11,8 +13,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
         private readonly TContext _dbContext;
         private DbContext Context => _dbContext;
 
-        public UnitOfWork(TContext dbContext)
-            => _dbContext = dbContext;
+        protected readonly IAuditService _auditService;
+        private readonly ILogger<UnitOfWork<TContext>> _logger;
+
+        public UnitOfWork(TContext dbContext, IAuditService auditService, ILogger<UnitOfWork<TContext>> logger)
+        {
+            _dbContext = dbContext;
+            _auditService = auditService;
+            _logger = logger;
+        }
 
         public ITransaction BeginTransaction()
             => new Transaction(Context.Database.BeginTransaction());
@@ -189,7 +198,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
             {
                 var result = operation.Invoke(state);
                 transaction.Commit();
-
                 return result;
             }
             catch (ResultException<TResult> rex)
@@ -197,7 +205,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 transaction.Rollback();
                 return rex.Result;
             }
-
             catch (Exception)
             {
                 transaction.Rollback();
@@ -218,7 +225,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
             {
                 var result = await operation.Invoke(state, cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
-
                 return result;
             }
             catch (ResultException<TResult> rex)
@@ -226,7 +232,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 transaction.Rollback();
                 return rex.Result;
             }
-
             catch (Exception)
             {
                 await transaction.RollbackAsync(cancellationToken);
@@ -242,6 +247,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
         public async Task CommitAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        public void SendAudit()
+        {
+            new Thread(async () =>
+            {
+                try { var resp = await _auditService.SaveChanges(); }
+                catch (Exception ex) { _logger.LogError(ex, ex.Message); }
+            }).Start();
         }
     }
 }

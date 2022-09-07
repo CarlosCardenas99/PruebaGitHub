@@ -1,4 +1,6 @@
-﻿using Paltarumi.Acopio.Balanza.Apis.Documentation;
+﻿using Paltarumi.Acopio.Audit.RestClient.Base;
+using Paltarumi.Acopio.Audit.RestClient.Extensions;
+using Paltarumi.Acopio.Balanza.Apis.Documentation;
 using Paltarumi.Acopio.Balanza.Apis.Endpoints;
 using Paltarumi.Acopio.Balanza.Apis.Exception;
 using Paltarumi.Acopio.Balanza.Apis.Logging;
@@ -44,6 +46,12 @@ builder.Services.UseRegion(configuration);
 
 // RequestLogger
 builder.Services.UseRequestLogger();
+
+// Audit
+builder.Services.UseAuditServices(new ServiceOptions
+{
+    BaseUrl = configuration.GetValue<string>("AuditOptions:ApiUrl") ?? string.Empty
+}); ;
 
 #endregion
 
