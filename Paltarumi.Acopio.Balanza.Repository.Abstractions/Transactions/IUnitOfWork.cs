@@ -14,5 +14,6 @@
         Task<TResult> ExecuteInTransactionAsync<TState, TResult>(TState state, Func<TState, CancellationToken, Task<TResult>> operation, Func<TState, CancellationToken, Task<IExecutionResult<TResult>>> verifySucceeded, CancellationToken cancellationToken = default);
         void Commit();
         Task CommitAsync();
+        void SendAudit();
     }
 }

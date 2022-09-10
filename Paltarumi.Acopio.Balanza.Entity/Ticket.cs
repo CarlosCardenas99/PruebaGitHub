@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Paltarumi.Acopio.Audit.Entity.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
+    [Auditable]
     public partial class Ticket
     {
         public int IdTicket { get; set; }

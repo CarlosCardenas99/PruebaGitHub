@@ -44,19 +44,27 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Base
                     if (_unitOfWork == null)
                         throw new ArgumentNullException(nameof(_unitOfWork));
 
-                    return await _unitOfWork.ExecuteInTransactionAsync(request, async (requestParam, cancellationTokenParam) =>
+                    var responseTransaction = await _unitOfWork.ExecuteInTransactionAsync(request, async (requestParam, cancellationTokenParam) =>
                     {
                         return await ValidateAndHandle(requestParam, cancellationTokenParam);
                     }, null, cancellationToken);
+
+                    if (responseTransaction.IsValid) _unitOfWork.SendAudit();
+
+                    return responseTransaction;
                 }
 
                 if (_unitOfWork == null)
                     throw new ArgumentNullException(nameof(_unitOfWork));
 
-                return await _unitOfWork.ExecuteAsync(request, async (requestParam, cancellationTokenParam) =>
+                var response = await _unitOfWork.ExecuteAsync(request, async (requestParam, cancellationTokenParam) =>
                 {
                     return await ValidateAndHandle(requestParam, cancellationTokenParam);
                 }, null, cancellationToken);
+
+                if (response.IsValid) _unitOfWork.SendAudit();
+
+                return response;
             }
             catch (ResultException<TResponse> rex)
             {
