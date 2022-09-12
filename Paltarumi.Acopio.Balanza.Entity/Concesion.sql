@@ -1,0 +1,1 @@
+﻿ALTER TABLE [maestro].[Concesion] ADD [RowVersion] rowversion;

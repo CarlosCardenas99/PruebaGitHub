@@ -1,6 +1,6 @@
 ﻿dotnet new tool-manifest
 dotnet tool restore
-dotnet tool install dotnet-ef
+dotnet tool install dotnet-ef --version 6.0.5
 
 dotnet ef migrations add AcopioMigration_00 --context AcopioDbContext
 dotnet ef database update --context AcopioDbContext
