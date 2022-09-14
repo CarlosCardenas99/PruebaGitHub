@@ -246,7 +246,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     Tmh = loteBalanzaDto.Tmh,
                     CodigoAum = loteBalanzaDto.CodigoAum,
                     CodigoTrujillo = loteBalanzaDto.CodigoTrujillo,
-                    IdLoteEstado= loteBalanzaDto.IdLoteEstado,
+                    IdLoteEstado = loteBalanzaDto.IdLoteEstado,
+                    ObservacionBalanza = loteBalanzaDto.Observacion
                 }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)

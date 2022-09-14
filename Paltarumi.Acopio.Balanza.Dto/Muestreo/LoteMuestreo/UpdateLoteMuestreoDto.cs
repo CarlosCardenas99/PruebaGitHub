@@ -9,5 +9,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo
         public string IdLoteEstado { get; set; } = null!;
         public string? CodigoTrujillo { get; set; }
         public string? CodigoAum { get; set; }
+        public string ObservacionBalanza { get; set; } = null!;
     }
 }

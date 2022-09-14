@@ -31,5 +31,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public string? IdLoteEstado { get; set; }
+        public string ObservacionBalanza { get; set; } = null!;
     }
 }
