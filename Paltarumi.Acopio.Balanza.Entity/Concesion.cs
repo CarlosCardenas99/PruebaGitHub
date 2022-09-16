@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Paltarumi.Acopio.Audit.Entity.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
+    [Auditable]
     public partial class Concesion
     {
         public Concesion()
@@ -16,6 +17,9 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string Nombre { get; set; } = null!;
         public string? CodigoUbigeo { get; set; }
         public bool Activo { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; } = null!;
 
         public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
         public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }

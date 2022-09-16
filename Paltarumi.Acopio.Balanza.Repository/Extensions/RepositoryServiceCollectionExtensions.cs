@@ -15,7 +15,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Extensions
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            services.AddSqlServer<AcopioDbContext>(connectionString);
+            services.AddSqlServer<AcopioDbContext>(connectionString, b => b.MigrationsAssembly("Paltarumi.Acopio.Balanza.Apis"));
 
             services.AddScoped<DbContext, AcopioDbContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork<DbContext>>();

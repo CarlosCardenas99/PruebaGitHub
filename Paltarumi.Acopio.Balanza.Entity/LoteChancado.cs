@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Paltarumi.Acopio.Audit.Entity.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
+    [Auditable]
     public partial class LoteChancado
     {
         public LoteChancado()
@@ -28,6 +29,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
         public string ObservacionBalanza { get; set; } = null!;
         public string IdLoteEstado { get; set; } = null!;
+
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; } = null!;
 
         public virtual LoteChancadoEstado? IdLoteChancadoEstadoNavigation { get; set; }
         public virtual LoteEstado IdLoteEstadoNavigation { get; set; } = null!;
