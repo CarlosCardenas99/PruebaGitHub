@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using Paltarumi.Acopio.Audit.Entity.Attributes;
+using System.ComponentModel.DataAnnotations;
 namespace Paltarumi.Acopio.Balanza.Entity
 {
+    [Auditable]
     public partial class LoteCodigo
     {
         public int IdLoteCodigo { get; set; }
@@ -24,6 +24,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; } = null!;
+
 
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
         public virtual LoteCodigoEstado IdLoteCodigoEstadoNavigation { get; set; } = null!;
