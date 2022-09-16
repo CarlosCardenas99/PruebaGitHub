@@ -160,9 +160,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 state,
                 (context, stateIn) =>
                 {
-                    var result = operation.Invoke(stateIn);
-                    Commit();
-                    return result;
+                    try
+                    {
+                        var result = operation.Invoke(stateIn);
+                        Commit();
+                        return result;
+                    }
+                    catch (Exception)
+                    {
+                        ClearChangeTracker();
+                        throw;
+                    }
                 },
                 (context, stateIn) => verifySucceeded.Invoke(stateIn)
             );
@@ -176,9 +184,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 state,
                 async (context, stateIn, cancellationTokenIn) =>
                 {
-                    var result = await operation.Invoke(stateIn, cancellationTokenIn);
-                    await CommitAsync();
-                    return result;
+                    try
+                    {
+                        var result = await operation.Invoke(stateIn, cancellationTokenIn);
+                        await CommitAsync();
+                        return result;
+                    }
+                    catch (Exception)
+                    {
+                        ClearChangeTracker();
+                        throw;
+                    }
                 },
                 async (context, stateIn, cancellationTokenIn) => await verifySucceeded.Invoke(stateIn, cancellationTokenIn),
                 cancellationToken
@@ -203,11 +219,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
             catch (ResultException<TResult> rex)
             {
                 transaction.Rollback();
+                ClearChangeTracker();
                 return rex.Result;
             }
             catch (Exception)
             {
                 transaction.Rollback();
+                ClearChangeTracker();
                 throw;
             }
         }
@@ -230,11 +248,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
             catch (ResultException<TResult> rex)
             {
                 transaction.Rollback();
+                ClearChangeTracker();
                 return rex.Result;
             }
             catch (Exception)
             {
                 await transaction.RollbackAsync(cancellationToken);
+                ClearChangeTracker();
                 throw;
             }
         }
@@ -256,6 +276,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 try { var resp = await _auditService.SaveChanges(); }
                 catch (Exception ex) { _logger.LogError(ex, ex.Message); }
             }).Start();
+        }
+
+        private void ClearChangeTracker()
+        {
+            Context.ChangeTracker.Clear();
         }
     }
 }
