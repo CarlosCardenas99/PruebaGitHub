@@ -34,7 +34,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
         public string IdLoteEstado { get; set; } = null!;
-
         [Timestamp]
         public byte[] RowVersion { get; set; } = null!;
 

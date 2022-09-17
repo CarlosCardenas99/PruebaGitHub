@@ -26,7 +26,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal? Tms100 { get; set; }
         public decimal? TmsBase { get; set; }
         public decimal? Tms { get; set; }
-        public int? IdTipoMineral { get; set; }
+        public string? IdTipoMineral { get; set; }
         public string? IdCancha { get; set; }
         public string? IdMineralCondicion { get; set; }
         public bool? ReportadoProveedor { get; set; }
@@ -41,17 +41,16 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
         public int? Porcentaje { get; set; }
         public string IdLoteEstado { get; set; } = null!;
-        public string ObservacionBalanza { get; set; } = null!;
-
         [Timestamp]
         public byte[] RowVersion { get; set; } = null!;
+        public string ObservacionBalanza { get; set; } = null!;
 
         public virtual Cancha? IdCanchaNavigation { get; set; }
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
         public virtual LoteEstado IdLoteEstadoNavigation { get; set; } = null!;
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
-        public virtual Maestro? IdTipoMineralNavigation { get; set; }
+        public virtual TipoMineral? IdTipoMineralNavigation { get; set; }
         public virtual ICollection<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; }
     }
 }

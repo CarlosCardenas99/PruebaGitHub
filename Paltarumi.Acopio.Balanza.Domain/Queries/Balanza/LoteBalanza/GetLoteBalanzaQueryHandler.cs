@@ -50,13 +50,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdEstadoTipoMaterialNavigation
                 );
 
-            var loteMuestreo = loteBalanza != null ? await _loteMuestreoRepository
-                .GetByAsNoTrackingAsync(
-                    x => x.CodigoLote == loteBalanza.CodigoLote
-                ) : null;
+            //var loteMuestreo = loteBalanza != null ? await _loteMuestreoRepository
+            //    .GetByAsNoTrackingAsync(
+            //        x => x.CodigoLote == loteBalanza.CodigoLote
+            //    ) : null;
 
-            var tipoMineral = loteMuestreo != null ?
-                await _maestroRepository.GetByAsNoTrackingAsync(x => x.IdMaestro == loteMuestreo.IdTipoMineral) : null;
+            //var tipoMineral = loteMuestreo != null ?
+               // await _maestroRepository.GetByAsNoTrackingAsync(x => x.IdMaestro == loteMuestreo.IdTipoMineral) : null;
 
             var lote = await _loteRepository.GetByAsNoTrackingAsync(
                     x => x.CodigoLote == loteBalanza.CodigoLote,
@@ -85,7 +85,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
                 //loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
-                loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
+                //loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
                 loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote.IdEmpresaNavigation) ?? null;
 
                 response.UpdateData(loteDto);

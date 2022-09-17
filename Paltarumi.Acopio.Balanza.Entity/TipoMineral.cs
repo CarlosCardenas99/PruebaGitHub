@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    public partial class Monedum
+    public partial class TipoMineral
     {
-        public Monedum()
+        public TipoMineral()
         {
-            Gastos = new HashSet<Gasto>();
+            LoteMuestreos = new HashSet<LoteMuestreo>();
         }
 
-        public string IdMoneda { get; set; } = null!;
+        public string IdTipoMineral { get; set; } = null!;
         public string Nombre { get; set; } = null!;
         public byte Orden { get; set; }
         public bool Activo { get; set; }
 
-        public virtual ICollection<Gasto> Gastos { get; set; }
+        public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
     }
 }

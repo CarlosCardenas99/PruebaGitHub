@@ -28,7 +28,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public float? PorcentajeGrueso { get; set; }
         public bool? Activo { get; set; }
 
-        public virtual LoteCodigoEnsayo IdLoteCodigoEnsayoNavigation { get; set; } = null!;
         public virtual LoteCodigoEnsayoOrigen IdLoteCodigoEnsayoOrigenNavigation { get; set; } = null!;
     }
 }

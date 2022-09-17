@@ -29,8 +29,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
         public string ObservacionBalanza { get; set; } = null!;
         public string IdLoteEstado { get; set; } = null!;
-
-
         [Timestamp]
         public byte[] RowVersion { get; set; } = null!;
 
