@@ -13,9 +13,9 @@ services:
       DOTNET_VERSION: 6.0
       ASPNET_VERSION: 6.0
       LOGGING__CONSOLE__FORMATTERNAME: Json
-      CN_ACOPIO_BALANZA: "Data Source=192.168.0.2;Initial Catalog=AcopioQA;User ID=sa; Password=@SistemaAcopio1;"
-      URL_SERVICE_AUDIT: "http://192.168.0.2:8090/"
-      URL_SERVICE_SECURITY: "http://192.168.0.2:8091/"
+      CN_ACOPIO_BALANZA: "Data Source=192.168.8.24;Initial Catalog=AcopioQA;User ID=sa; Password=@SistemaAcopio1;"
+      URL_SERVICE_AUDIT: "http://192.168.8.24:8090/"
+      URL_SERVICE_SECURITY: "http://192.168.8.24:8091/"
     ports:
       - 8080:80
     build:
