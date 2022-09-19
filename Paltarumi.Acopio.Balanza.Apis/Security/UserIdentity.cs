@@ -15,7 +15,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
             => _httpContextAccessor.HttpContext?.User?.Claims ?? new List<Claim>();
 
         private string GetUserNameClaim()
-            => GetCurrentUserClaims()?.FirstOrDefault(x => x.Type == "sub" || x.Type == "UserName")?.Value!;
+            => GetCurrentUserClaims()?.FirstOrDefault(x => x.Type == "DisplayName" || x.Type == "UserName")?.Value!;
 
         public string GetCurrentUser()
             => GetUserNameClaim() ?? Constants.Security.User.Admin;

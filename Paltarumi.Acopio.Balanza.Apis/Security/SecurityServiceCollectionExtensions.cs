@@ -64,7 +64,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
             #endregion
 
             #region Authentication
-            var validIssuer = configuration.GetValue<string>("SecurityOptions:Issuer");
+            var validIssuer = Environment.GetEnvironmentVariable("URL_SERVICE_SECURITY") ?? string.Empty;
             var validAudience = configuration.GetValue<string>("SecurityOptions:Audience");
             var securityKey = configuration.GetValue<string>("SecurityOptions:SecurityKey");
 

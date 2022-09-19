@@ -29,7 +29,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Security.Token
         public override async Task<ResponseDto<AccessTokenDto>> HandleCommand(GenerateTokenCommand request, CancellationToken cancellationToken)
         {
             var now = DateTimeOffset.UtcNow;
-            var issuer = _configuration.GetValue<string>("SecurityOptions:Issuer");
+            var issuer = Environment.GetEnvironmentVariable("URL_SERVICE_SECURITY") ?? string.Empty;
             var audience = _configuration.GetValue<string>("SecurityOptions:Audience");
             var expiration = _configuration.GetValue<int>("SecurityOptions:ExpirationInSeconds");
             var securityKey = _configuration.GetValue<string>("SecurityOptions:SecurityKey");
