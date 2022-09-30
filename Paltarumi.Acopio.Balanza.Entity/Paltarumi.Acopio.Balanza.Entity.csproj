@@ -13,7 +13,6 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.5" />
-		<PackageReference Include="Paltarumi.Acopio.Audit.RestClient" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
