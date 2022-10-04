@@ -1,10 +1,8 @@
-﻿using Paltarumi.Acopio.Audit.Entity.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    [Auditable]
     public partial class Lote
     {
         public Lote()

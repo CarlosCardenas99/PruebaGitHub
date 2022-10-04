@@ -3,21 +3,20 @@ using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    public partial class Monedum
+    public partial class TipoGasto
     {
-        public Monedum()
+        public TipoGasto()
         {
             LoteLiquidacionGastos = new HashSet<LoteLiquidacionGasto>();
-            TipoCostos = new HashSet<TipoCosto>();
-            TipoGastos = new HashSet<TipoGasto>();
         }
 
+        public string IdTipoGasto { get; set; } = null!;
+        public string Concepto { get; set; } = null!;
         public string IdMoneda { get; set; } = null!;
-        public string Descripcion { get; set; } = null!;
+        public decimal? Costo { get; set; }
         public bool Activo { get; set; }
 
+        public virtual Monedum IdMonedaNavigation { get; set; } = null!;
         public virtual ICollection<LoteLiquidacionGasto> LoteLiquidacionGastos { get; set; }
-        public virtual ICollection<TipoCosto> TipoCostos { get; set; }
-        public virtual ICollection<TipoGasto> TipoGastos { get; set; }
     }
 }

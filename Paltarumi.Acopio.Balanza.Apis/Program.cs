@@ -53,6 +53,9 @@ builder.Services.UseAuditServices(new ServiceOptions
     BaseUrl = Environment.GetEnvironmentVariable("URL_SERVICE_AUDIT") ?? configuration.GetValue<string>("AuditOptions:ApiUrl")
 });
 
+// HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
 #endregion
 
 #region App
