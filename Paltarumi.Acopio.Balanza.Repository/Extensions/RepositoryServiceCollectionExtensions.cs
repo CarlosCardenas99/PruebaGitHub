@@ -11,9 +11,9 @@ namespace Paltarumi.Acopio.Balanza.Repository.Extensions
 {
     public static class RepositoryServiceCollectionExtensions
     {
-        public static IServiceCollection UseRepositories(this IServiceCollection services)
+        public static IServiceCollection UseRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_BALANZA") ??string.Empty;
+            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_BALANZA") ?? configuration.GetConnectionString("DefaultConnection");
 
             services.AddSqlServer<AcopioDbContext>(connectionString, b => b.MigrationsAssembly("Paltarumi.Acopio.Balanza.Apis"));
 

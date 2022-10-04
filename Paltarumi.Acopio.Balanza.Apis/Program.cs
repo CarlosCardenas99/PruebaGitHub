@@ -26,7 +26,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.UseSwaggerDocumentation(configuration);
 
 // Repositories
-builder.Services.UseRepositories();
+builder.Services.UseRepositories(configuration);
 
 // Domain Services
 builder.Services.UseDomainServices();
@@ -50,8 +50,8 @@ builder.Services.UseRequestLogger();
 // Audit
 builder.Services.UseAuditServices(new ServiceOptions
 {
-    BaseUrl = Environment.GetEnvironmentVariable("URL_SERVICE_AUDIT") ?? string.Empty
-}); ;
+    BaseUrl = Environment.GetEnvironmentVariable("URL_SERVICE_AUDIT") ?? configuration.GetValue<string>("AuditOptions:ApiUrl")
+});
 
 #endregion
 
