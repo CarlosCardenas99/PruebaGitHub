@@ -1,9 +1,8 @@
-﻿using Paltarumi.Acopio.Audit.Entity.Attributes;
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    [Auditable]
     public partial class LoteMuestreo
     {
         public LoteMuestreo()
@@ -41,7 +40,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
         public int? Porcentaje { get; set; }
         public string IdLoteEstado { get; set; } = null!;
-        [Timestamp]
         public byte[] RowVersion { get; set; } = null!;
         public string ObservacionBalanza { get; set; } = null!;
 

@@ -10,6 +10,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
             LoteBalanzas = new HashSet<LoteBalanza>();
             LoteChancados = new HashSet<LoteChancado>();
             LoteCodigos = new HashSet<LoteCodigo>();
+            LoteLiquidacions = new HashSet<LoteLiquidacion>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
             ProveedorConcesions = new HashSet<ProveedorConcesion>();
         }
@@ -27,6 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
         public virtual ICollection<LoteChancado> LoteChancados { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
+        public virtual ICollection<LoteLiquidacion> LoteLiquidacions { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
         public virtual ICollection<ProveedorConcesion> ProveedorConcesions { get; set; }
     }

@@ -38,6 +38,10 @@
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Repository\Paltarumi.Acopio.Balanza.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

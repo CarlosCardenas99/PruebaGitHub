@@ -12,10 +12,6 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
     {
         public static IServiceCollection UseSecurity(this IServiceCollection services, IConfiguration configuration)
         {
-            #region SecurityDbContext
-            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_SECURITY") ?? configuration.GetConnectionString("DefaultConnection");
-            services.AddSqlServer<SecurityDbContext>(connectionString, b => b.MigrationsAssembly("Paltarumi.Acopio.Balanza.Apis"));
-            #endregion
 
             #region IdentityOptions
             services.Configure<IdentityOptions>(options =>
@@ -52,19 +48,8 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
             });
             #endregion
 
-            #region Identity
-            services
-                .AddIdentity<Entity.ApplicationUser, Entity.ApplicationRole>(config =>
-                {
-                    //config.Tokens.PasswordResetTokenProvider = ResetPasswordTokenProvider.ProviderKey;
-                    config.SignIn.RequireConfirmedEmail = false;
-                })
-                .AddEntityFrameworkStores<SecurityDbContext>()
-                .AddDefaultTokenProviders();
-            #endregion
-
             #region Authentication
-            var validIssuer = Environment.GetEnvironmentVariable("URL_SERVICE_SECURITY") ?? string.Empty;
+            var validIssuer = Environment.GetEnvironmentVariable("URL_SERVICE_SECURITY") ?? configuration.GetValue<string>("SecurityOptions:Issuer");
             var validAudience = configuration.GetValue<string>("SecurityOptions:Audience");
             var securityKey = configuration.GetValue<string>("SecurityOptions:SecurityKey");
 
