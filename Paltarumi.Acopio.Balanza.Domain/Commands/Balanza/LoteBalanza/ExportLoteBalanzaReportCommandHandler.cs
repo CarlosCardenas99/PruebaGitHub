@@ -29,7 +29,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var report = default(Report);
             var reportPackager = new ReportPackager();
-            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_BALANZA") ?? string.Empty;
+            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_BALANZA") ?? _configuration.GetConnectionString("DefaultConnection");
 
             using (var sourceStream = File.OpenRead(request.ReportPath))
             {

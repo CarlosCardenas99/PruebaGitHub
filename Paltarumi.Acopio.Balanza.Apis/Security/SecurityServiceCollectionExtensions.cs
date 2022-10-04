@@ -13,7 +13,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
         public static IServiceCollection UseSecurity(this IServiceCollection services, IConfiguration configuration)
         {
             #region SecurityDbContext
-            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_SECURITY") ?? string.Empty;
+            var connectionString = Environment.GetEnvironmentVariable("CN_ACOPIO_SECURITY") ?? configuration.GetConnectionString("DefaultConnection");
             services.AddSqlServer<SecurityDbContext>(connectionString, b => b.MigrationsAssembly("Paltarumi.Acopio.Balanza.Apis"));
             #endregion
 
