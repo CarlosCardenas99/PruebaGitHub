@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Paltarumi.Acopio.Balanza.Entity
+﻿namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class LoteBalanza
     {
