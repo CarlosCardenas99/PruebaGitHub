@@ -7,11 +7,13 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
+using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
@@ -74,6 +76,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (!response.IsValid) return response;
 
             await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!);
+            if (!response.IsValid) return response;
+
+            await CreateLoteLiquidacion(cancellationToken, response, response.Data!);
             if (!response.IsValid) return response;
 
             await CreateLoteOperacion(request, cancellationToken, response, codigoLote);
@@ -255,6 +260,22 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     IdLoteEstado = loteBalanzaDto.IdLoteEstado,
                     ObservacionBalanza = loteBalanzaDto.Observacion
                 }), cancellationToken)!;
+
+            if (createResponse?.IsValid == false)
+                response.AttachResults(createResponse);
+        }
+
+        private async Task CreateLoteLiquidacion(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
+        {
+            var createResponse = await _mediator?.Send(new CreateLoteLiquidacionCommand(new CreateLoteLiquidacionDto
+            {
+                CodigoLote = loteBalanzaDto.CodigoLote!,
+                IdProveedor = loteBalanzaDto.IdProveedor,
+                IdTipoLiquidacion = Constants.Tipo_Liquidacion.LIQUIDACION,
+                FechaIngreso = DateTimeOffset.Now,
+                Tmh100 = loteBalanzaDto.Tmh100,
+                Tmh = loteBalanzaDto.Tmh,
+            }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)
                 response.AttachResults(createResponse);

@@ -9,9 +9,11 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdLoteLiquidacion { get; set; }
         public string IdInsumo { get; set; } = null!;
         public decimal ConsumoKgTm100 { get; set; }
+        public decimal ValorUnitarioKg100 { get; set; }
+        public decimal SubTotalTm100 { get; set; }
+        public string IdPropiedadCalculo { get; set; } = null!;
         public decimal ConsumoKgTm { get; set; }
         public decimal ValorUnitarioKg { get; set; }
-        public decimal SubTotalSinReglaTm { get; set; }
         public decimal SubTotalTm { get; set; }
         public bool Activo { get; set; }
 

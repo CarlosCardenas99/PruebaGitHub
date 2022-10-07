@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Paltarumi.Acopio.Balanza.Entity
+﻿namespace Paltarumi.Acopio.Balanza.Dto.Liquidacion
 {
-    public partial class LoteLiquidacion
+    public class LoteLiquidacionDto
     {
-        public LoteLiquidacion()
-        {
-            LoteCodigoLiquidacions = new HashSet<LoteCodigoLiquidacion>();
-            LoteLiquidacionConsumos = new HashSet<LoteLiquidacionConsumo>();
-            LoteLiquidacionTipoMetals = new HashSet<LoteLiquidacionTipoMetal>();
-        }
-
-        public int IdLoteLiquidacion { get; set; }
         public string IdTipoLiquidacion { get; set; } = null!;
         public string CodigoLote { get; set; } = null!;
         public string? IdTipoMineral { get; set; }
@@ -52,13 +41,5 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal ConsumoCianuro { get; set; }
         public decimal ConsumoSoda { get; set; }
         public decimal? AjusteOculto { get; set; }
-        public bool Activo { get; set; }
-
-        public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
-        public virtual TipoLiquidacion IdTipoLiquidacionNavigation { get; set; } = null!;
-        public virtual TipoMineral? IdTipoMineralNavigation { get; set; }
-        public virtual ICollection<LoteCodigoLiquidacion> LoteCodigoLiquidacions { get; set; }
-        public virtual ICollection<LoteLiquidacionConsumo> LoteLiquidacionConsumos { get; set; }
-        public virtual ICollection<LoteLiquidacionTipoMetal> LoteLiquidacionTipoMetals { get; set; }
     }
 }

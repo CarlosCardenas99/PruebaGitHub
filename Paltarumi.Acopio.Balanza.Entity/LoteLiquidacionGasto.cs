@@ -7,19 +7,14 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public int IdLoteLiquidacionGasto { get; set; }
         public int IdLoteLiquidacion { get; set; }
-        public string IdTipoGasto { get; set; } = null!;
-        public string IdSucursal { get; set; } = null!;
+        public int IdComprobanteDetalleAsignacion { get; set; }
         public decimal TipoCambio { get; set; }
         public string IdMoneda { get; set; } = null!;
-        public decimal ValorUnitarioTmhOriginal { get; set; }
-        public decimal ValorUnitarioTmh { get; set; }
-        public decimal SubTotal { get; set; }
+        public decimal SubTotalSolesProveedor { get; set; }
+        public decimal SubTotalSolesEmpresa { get; set; }
+        public decimal SubTotalDolaresProveedor { get; set; }
+        public decimal SubTotalDolaresEmpresa { get; set; }
         public string Observacion { get; set; } = null!;
         public bool Activo { get; set; }
-
-        public virtual LoteLiquidacion IdLoteLiquidacionNavigation { get; set; } = null!;
-        public virtual Monedum IdMonedaNavigation { get; set; } = null!;
-        public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
-        public virtual TipoGasto IdTipoGastoNavigation { get; set; } = null!;
     }
 }
