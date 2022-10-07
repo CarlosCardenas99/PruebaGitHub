@@ -53,6 +53,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal ConsumoSoda { get; set; }
         public decimal? AjusteOculto { get; set; }
         public bool Activo { get; set; }
+        public byte[] RowVersion { get; set; } = null!;
 
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual TipoLiquidacion IdTipoLiquidacionNavigation { get; set; } = null!;
