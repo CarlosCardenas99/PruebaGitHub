@@ -7,7 +7,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public Monedum()
         {
-            LoteLiquidacionGastos = new HashSet<LoteLiquidacionGasto>();
             TipoCostos = new HashSet<TipoCosto>();
             TipoGastos = new HashSet<TipoGasto>();
         }
@@ -16,7 +15,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string Descripcion { get; set; } = null!;
         public bool Activo { get; set; }
 
-        public virtual ICollection<LoteLiquidacionGasto> LoteLiquidacionGastos { get; set; }
         public virtual ICollection<TipoCosto> TipoCostos { get; set; }
         public virtual ICollection<TipoGasto> TipoGastos { get; set; }
     }

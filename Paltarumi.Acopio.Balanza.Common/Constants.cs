@@ -6,6 +6,12 @@
         {
             public const int PALTARUMI = 1;
         }
+        public struct Tipo_Liquidacion
+        {
+            public const string LIQUIDACION = "01";
+            public const string PRE_LIQUIDACION = "02";
+            public const string REINTEGRO = "03";
+        }
         public struct GrupoLoteChancado
         {
             public const string LOTE= "01";
