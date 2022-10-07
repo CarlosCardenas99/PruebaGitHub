@@ -1621,6 +1621,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("porcentajeUtilidad");
 
+                entity.Property(e => e.RowVersion)
+                    .IsRowVersion()
+                    .IsConcurrencyToken()
+                    .HasColumnName("rowVersion");
+
                 entity.Property(e => e.SubTotal)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotal");
