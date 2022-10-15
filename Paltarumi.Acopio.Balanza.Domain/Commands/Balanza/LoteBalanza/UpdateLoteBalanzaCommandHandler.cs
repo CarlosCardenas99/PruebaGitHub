@@ -23,6 +23,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
+        private readonly IRepository<Entity.Correlativo> _correlativoRepository;
         private readonly IRepository<Entity.Lote> _loteRepository;
         private readonly IRepository<Entity.Ticket> _ticketRepository;
         private readonly IRepository<Entity.Operacion> _operacionRepository;
@@ -40,10 +41,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.Operacion> operacionRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
             IRepository<Entity.TicketBackup> ticketBackupRepository,
-            IRepository<Entity.LoteOperacion> loteOperacionRepository
-
+            IRepository<Entity.LoteOperacion> loteOperacionRepository,
+            IRepository<Entity.Correlativo> correlativoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _correlativoRepository = correlativoRepository;
             _loteRepository = loteRepository;
             _ticketRepository = ticketRepository;
             _operacionRepository = operacionRepository;
@@ -177,11 +179,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var newTickets = _mapper?.Map<IEnumerable<Entity.Ticket>>(newTicketDtos) ??
                     new List<Entity.Ticket>();
 
+                var correlativo = _correlativoRepository.GetByAsNoTrackingAsync(x => x.IdCorrelativo == loteBalanza.IdCorrelativo).Result;
+
                 foreach (var newTicket in newTickets)
                 {
                     if (!request.UpdateDto.EsPartido)
                         newTicket.Numero = (await _mediator
-                            .Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa, request.UpdateDto.IdSucursal)))?
+                            .Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, correlativo.Serie, correlativo.IdEmpresa, correlativo.IdSucursal)))?
                             .Data?.Numero ?? string.Empty;
 
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;

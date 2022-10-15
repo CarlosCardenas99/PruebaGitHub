@@ -91,7 +91,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         private async Task<ResponseDto<CreateCodeDto>> CreateLoteCodigo(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response)
         {
             var createResponse = await _mediator?.Send(// Actualizar la serie harcoded
-                new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal),
+                new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal),
                 cancellationToken
             )!;
 
@@ -178,7 +178,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 foreach (var ticket in loteBalanza.Tickets)
                 {
-                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
+                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
                     ticket.Activo = true;
                 }
                 // TO DO : BORRAR
