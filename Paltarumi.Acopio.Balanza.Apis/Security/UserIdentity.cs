@@ -14,8 +14,11 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
         public IEnumerable<Claim> GetCurrentUserClaims()
             => _httpContextAccessor.HttpContext?.User?.Claims ?? new List<Claim>();
 
+        public string GetIdSucursal()
+            => GetCurrentUserClaims()?.FirstOrDefault(x => x.Type == "IdSucursal")?.Value!;
+
         private string GetUserNameClaim()
-            => GetCurrentUserClaims()?.FirstOrDefault(x => x.Type == "DisplayName" || x.Type == "UserName")?.Value!;
+            => GetCurrentUserClaims()?.FirstOrDefault(x => x.Type == "UserName")?.Value!;
 
         public string GetCurrentUser()
             => GetUserNameClaim() ?? Constants.Security.User.Admin;

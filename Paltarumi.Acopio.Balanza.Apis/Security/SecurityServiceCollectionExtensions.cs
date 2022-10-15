@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Paltarumi.Acopio.Balanza.Repository.Data;
 using Paltarumi.Acopio.Balanza.Repository.Security;
 using System.Text;
 
@@ -12,7 +10,6 @@ namespace Paltarumi.Acopio.Balanza.Apis.Security
     {
         public static IServiceCollection UseSecurity(this IServiceCollection services, IConfiguration configuration)
         {
-
             #region IdentityOptions
             services.Configure<IdentityOptions>(options =>
             {

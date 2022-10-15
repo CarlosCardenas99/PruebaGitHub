@@ -21,6 +21,7 @@ using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
@@ -34,10 +35,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
         private readonly IRepository<Entity.Ticket> _ticketRepository;
 
+        private readonly IUserIdentity _userIdentity;
+
         public CreateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
+            IUserIdentity userIdentity,
             CreateLoteBalanzaCommandValidator validator,
             IRepository<Entity.Ticket> ticketRepository,
             IRepository<Entity.Maestro> maestroRepository,
@@ -53,6 +57,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             _loteCodigoRepository = loteCodigoRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
             _duenoMuestraRepository = duenoMuestraRepository;
+            _userIdentity = userIdentity;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -90,6 +95,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task<ResponseDto<CreateCodeDto>> CreateLoteCodigo(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response)
         {
+            var idSucursal = _userIdentity.GetIdSucursal();
+
             var createResponse = await _mediator?.Send(// Actualizar la serie harcoded
                 new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal),
                 cancellationToken
@@ -239,8 +246,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).Distinct()),
                 Placa = placa,
                 PlacaCarreta = placaCarreta,
-                ObservacionBalanza=loteBalanzaDto.Observacion!,
-                IdLoteEstado=loteBalanzaDto.IdLoteEstado
+                ObservacionBalanza = loteBalanzaDto.Observacion!,
+                IdLoteEstado = loteBalanzaDto.IdLoteEstado
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)
@@ -275,6 +282,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 CodigoLote = loteBalanzaDto.CodigoLote!,
                 IdProveedor = loteBalanzaDto.IdProveedor,
                 IdTipoLiquidacion = Constants.Tipo_Liquidacion.LIQUIDACION,
+                IdLoteLiquidacionEstado = Constants.LoteLiquidacion_Estado.PENDIENTE,
                 FechaIngreso = DateTimeOffset.Now,
                 Tmh100 = loteBalanzaDto.Tmh100,
                 Tmh = loteBalanzaDto.Tmh,

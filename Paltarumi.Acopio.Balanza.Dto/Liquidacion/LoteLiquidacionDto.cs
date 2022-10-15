@@ -3,6 +3,7 @@
     public class LoteLiquidacionDto
     {
         public string IdTipoLiquidacion { get; set; } = null!;
+        public string IdLoteLiquidacionEstado { get; set; } = null!;
         public string CodigoLote { get; set; } = null!;
         public string? IdTipoMineral { get; set; }
         public int IdProveedor { get; set; }

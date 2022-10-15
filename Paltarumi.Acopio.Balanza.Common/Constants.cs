@@ -12,6 +12,12 @@
             public const string PRE_LIQUIDACION = "02";
             public const string REINTEGRO = "03";
         }
+        public struct LoteLiquidacion_Estado
+        {
+            public const string PENDIENTE = "01";
+            public const string LIQUIDADO = "02";
+            public const string ANULADO = "03";
+        }
         public struct GrupoLoteChancado
         {
             public const string LOTE= "01";

@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		
-		<Version>1.0.3.33</Version>
+		<Version>1.0.3.34</Version>
 		
 		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
 		<Authors>Paltarumi</Authors>

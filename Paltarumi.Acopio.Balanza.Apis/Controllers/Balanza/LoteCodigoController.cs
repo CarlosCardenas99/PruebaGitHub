@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Paltarumi.Acopio.Balanza.Apis.Security;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 {
+    [Authorize]
     [ApiController]
     [Route("api/lotecodigo")]
     public class LoteCodigoController
