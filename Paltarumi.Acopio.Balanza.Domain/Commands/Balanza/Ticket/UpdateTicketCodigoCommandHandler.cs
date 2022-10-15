@@ -32,7 +32,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 
             if (ticket != null && _mediator != null)
            {
-                var numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.UpdateDto.IdEmpresa)))?.Data ?? string.Empty;
+                var numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, request.UpdateDto.Serie, request.UpdateDto.IdEmpresa, request.UpdateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
 
                 ticket.Numero = numero ?? string.Empty;
 

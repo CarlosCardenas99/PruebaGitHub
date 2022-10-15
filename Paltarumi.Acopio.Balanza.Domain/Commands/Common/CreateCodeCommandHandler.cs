@@ -1,11 +1,12 @@
 ﻿using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
+using Paltarumi.Acopio.Balanza.Dto.Common;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 {
-    public class CreateCodeCommandHandler : CommandHandlerBase<CreateCodeCommand, string>
+    public class CreateCodeCommandHandler : CommandHandlerBase<CreateCodeCommand, CreateCodeDto>
     {
         private readonly IRepository<Entity.Correlativo> _correlativoRepository;
         private readonly IRepository<Entity.Empresa> _empresaRepository;
@@ -20,28 +21,34 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             _empresaRepository = empresaRepository;
         }
 
-        public override async Task<ResponseDto<string>> HandleCommand(CreateCodeCommand request, CancellationToken cancellationToken)
+        public override async Task<ResponseDto<CreateCodeDto>> HandleCommand(CreateCodeCommand request, CancellationToken cancellationToken)
         {
-            var response = new ResponseDto<string>();
+            var response = new ResponseDto<CreateCodeDto>();
+            var createCodeDto = new CreateCodeDto();
 
             var empresa = await _empresaRepository.GetByAsNoTrackingAsync(x =>
                 x.IdEmpresa == request.IdEmpresa
             );
 
-            var correlativo = await _correlativoRepository.GetByAsync(x =>
-                x.CodigoCorrelativoTipo == request.CodigoCorrelativoTipo && x.Serie == request.Serie && x.IdEmpresa == request.IdEmpresa
+            var correlativo = new Entity.Correlativo();
+
+            correlativo = await _correlativoRepository.GetByAsync(x =>
+                x.CodigoCorrelativoTipo == request.CodigoCorrelativoTipo && x.Serie == request.Serie && x.IdEmpresa == request.IdEmpresa && x.IdSucursal == request.IdSucursal
             );
 
             if (correlativo != null)
             {
                 correlativo.Numero++;
 
-                var numero =  string.Format("{0}{1}", empresa?.Prefijo, $"{correlativo.Numero}");
+                var numero =  string.Format("{0}{1}-{2}{3}", correlativo.IdSucursal, correlativo.Serie, empresa?.Prefijo, $"{correlativo.Numero}");
 
                 await _correlativoRepository.UpdateAsync(correlativo);
                 await _correlativoRepository.SaveAsync();
 
-                response.UpdateData(numero);
+                createCodeDto.Numero = numero;
+                createCodeDto.IdCorrelativo = correlativo.IdCorrelativo;
+
+                response.UpdateData(createCodeDto);
             }
 
             return response;

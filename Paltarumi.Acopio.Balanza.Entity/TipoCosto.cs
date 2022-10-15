@@ -7,10 +7,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public string IdTipoCosto { get; set; } = null!;
         public string Concepto { get; set; } = null!;
-        public string IdMoneda { get; set; } = null!;
+        public string IdDivisa { get; set; } = null!;
         public decimal? Costo { get; set; }
         public bool Activo { get; set; }
 
-        public virtual Monedum IdMonedaNavigation { get; set; } = null!;
+        public virtual Divisa IdDivisaNavigation { get; set; } = null!;
     }
 }

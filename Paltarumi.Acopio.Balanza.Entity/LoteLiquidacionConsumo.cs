@@ -19,5 +19,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual Insumo IdInsumoNavigation { get; set; } = null!;
         public virtual LoteLiquidacion IdLoteLiquidacionNavigation { get; set; } = null!;
+        public virtual PropiedadCalculo IdPropiedadCalculoNavigation { get; set; } = null!;
     }
 }

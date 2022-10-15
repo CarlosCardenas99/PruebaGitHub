@@ -3,18 +3,19 @@ using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    public partial class TipoComprobante
+    public partial class Divisa
     {
-        public TipoComprobante()
+        public Divisa()
         {
             Comprobantes = new HashSet<Comprobante>();
+            TipoCostos = new HashSet<TipoCosto>();
         }
 
-        public string IdTipoComprobante { get; set; } = null!;
-        public string Nombre { get; set; } = null!;
-        public string NombreCorto { get; set; } = null!;
+        public string IdDivisa { get; set; } = null!;
+        public string Descripcion { get; set; } = null!;
         public bool Activo { get; set; }
 
         public virtual ICollection<Comprobante> Comprobantes { get; set; }
+        public virtual ICollection<TipoCosto> TipoCostos { get; set; }
     }
 }

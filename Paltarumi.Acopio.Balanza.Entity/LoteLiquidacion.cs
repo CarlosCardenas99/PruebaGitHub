@@ -8,12 +8,14 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public LoteLiquidacion()
         {
             LoteCodigoLiquidacions = new HashSet<LoteCodigoLiquidacion>();
+            LoteLiquidacionAsignacions = new HashSet<LoteLiquidacionAsignacion>();
             LoteLiquidacionConsumos = new HashSet<LoteLiquidacionConsumo>();
             LoteLiquidacionTipoMetals = new HashSet<LoteLiquidacionTipoMetal>();
         }
 
         public int IdLoteLiquidacion { get; set; }
         public string IdTipoLiquidacion { get; set; } = null!;
+        public string IdLoteLiquidacionEstado { get; set; } = null!;
         public string CodigoLote { get; set; } = null!;
         public string? IdTipoMineral { get; set; }
         public int IdProveedor { get; set; }
@@ -55,10 +57,12 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
         public byte[] RowVersion { get; set; } = null!;
 
+        public virtual LoteLiquidacionEstado IdLoteLiquidacionEstadoNavigation { get; set; } = null!;
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual TipoLiquidacion IdTipoLiquidacionNavigation { get; set; } = null!;
         public virtual TipoMineral? IdTipoMineralNavigation { get; set; }
         public virtual ICollection<LoteCodigoLiquidacion> LoteCodigoLiquidacions { get; set; }
+        public virtual ICollection<LoteLiquidacionAsignacion> LoteLiquidacionAsignacions { get; set; }
         public virtual ICollection<LoteLiquidacionConsumo> LoteLiquidacionConsumos { get; set; }
         public virtual ICollection<LoteLiquidacionTipoMetal> LoteLiquidacionTipoMetals { get; set; }
     }
