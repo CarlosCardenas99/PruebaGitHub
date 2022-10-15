@@ -30,7 +30,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
             var loteLiquidacion = await _loteLiquidacionRepository.GetByAsync(x => x.CodigoLote == request.UpdateDto.CodigoLote);
             if (loteLiquidacion == null)
             {
-                response.AddErrorResult(Resources.Liquidacion.LoteLiquidacion.LoteLiquidacionRequired);
+                //response.AddErrorResult(Resources.Liquidacion.LoteLiquidacion.LoteLiquidacionRequired);
                 return response;
             }
 
