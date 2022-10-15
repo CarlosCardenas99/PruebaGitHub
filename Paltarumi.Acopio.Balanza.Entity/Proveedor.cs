@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public Proveedor()
         {
+            Comprobantes = new HashSet<Comprobante>();
             LoteBalanzas = new HashSet<LoteBalanza>();
             LoteChancados = new HashSet<LoteChancado>();
             LoteCodigos = new HashSet<LoteCodigo>();
@@ -25,6 +26,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual Ubigeo? CodigoUbigeoNavigation { get; set; }
+        public virtual ICollection<Comprobante> Comprobantes { get; set; }
         public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
         public virtual ICollection<LoteChancado> LoteChancados { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }

@@ -181,8 +181,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 {
                     if (!request.UpdateDto.EsPartido)
                         newTicket.Numero = (await _mediator
-                            .Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa), cancellationToken))?
-                            .Data ?? string.Empty;
+                            .Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa, request.UpdateDto.IdSucursal)))?
+                            .Data?.Numero ?? string.Empty;
 
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     newTicket.IdLoteBalanzaNavigation = null!;

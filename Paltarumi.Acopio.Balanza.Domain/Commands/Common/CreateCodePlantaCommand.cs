@@ -13,5 +13,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
         public int IdEmpresa { get; set; }
         public string CodigoLote { get; set; }
         public string IdLoteCodigoTipo { get; set; }
+        public string IdSucursal { get; internal set; }
     }
 }

@@ -11,6 +11,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         }
 
         public int IdLoteBalanza { get; set; }
+        public int IdCorrelativo { get; set; }
         public string CodigoLote { get; set; } = null!;
         public string? CodigoTrujillo { get; set; }
         public string? CodigoAum { get; set; }

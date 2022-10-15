@@ -13,6 +13,7 @@ using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
+using Paltarumi.Acopio.Balanza.Dto.Common;
 using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
@@ -61,7 +62,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var loteCodigoResponse = await CreateLoteCodigo(request, cancellationToken, response);
             if (!response.IsValid) return response;
 
-            var codigoLote = loteCodigoResponse.Data ?? string.Empty;
+            var codigoLote = loteCodigoResponse.Data?.Numero ?? string.Empty;
 
             var loteResponse = await CreateLote(request, cancellationToken, response, codigoLote);
             if (!response.IsValid) return response;
@@ -69,7 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var codigoLoteResponse = await CreateCodigoLote(request, cancellationToken, response, loteResponse?.Data);
             if (!response.IsValid) return response;
 
-            await CreateLoteBalanza(request, response, codigoLote);
+            await CreateLoteBalanza(request, response, loteCodigoResponse.Data);
             if (!response.IsValid) return response;
 
             await CreateLoteChancado(cancellationToken, response, response.Data!);
@@ -87,10 +88,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return response;
         }
 
-        private async Task<ResponseDto<string>> CreateLoteCodigo(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response)
+        private async Task<ResponseDto<CreateCodeDto>> CreateLoteCodigo(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response)
         {
             var createResponse = await _mediator?.Send(// Actualizar la serie harcoded
-                new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa),
+                new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, "1", request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal),
                 cancellationToken
             )!;
 
@@ -100,7 +101,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 return createResponse!;
             }
 
-            if (string.IsNullOrEmpty(createResponse.Data))
+            if (string.IsNullOrEmpty(createResponse.Data?.Numero))
             {
                 response.AddErrorResult(Resources.Balanza.LoteCodigo.CodigoGenerationError);
                 return createResponse;
@@ -166,7 +167,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return loteCodigoRegistrado;
         }
 
-        private async Task CreateLoteBalanza(CreateLoteBalanzaCommand request, ResponseDto<GetLoteBalanzaDto> response, string codigoLote)
+        private async Task CreateLoteBalanza(CreateLoteBalanzaCommand request, ResponseDto<GetLoteBalanzaDto> response, CreateCodeDto createCodeDto)
         {
             var loteBalanza = _mapper?.Map<Entity.LoteBalanza>(request.CreateDto) ?? new Entity.LoteBalanza();
             var ticketDetails = request.CreateDto?.TicketDetails;
@@ -177,7 +178,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 foreach (var ticket in loteBalanza.Tickets)
                 {
-                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa)))?.Data ?? string.Empty;
+                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
                     ticket.Activo = true;
                 }
                 // TO DO : BORRAR
@@ -186,7 +187,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 //    x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
                 //);
 
-                loteBalanza.CodigoLote = codigoLote;
+                loteBalanza.CodigoLote = createCodeDto.Numero;
+                loteBalanza.IdCorrelativo = createCodeDto.IdCorrelativo;
+
                 loteBalanza.Enable();
                 loteBalanza.UpdateCreation();
                 loteBalanza.UpdateCantidadSacos();
