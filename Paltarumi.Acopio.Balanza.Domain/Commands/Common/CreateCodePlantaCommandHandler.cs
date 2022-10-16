@@ -35,7 +35,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 
             if(request.IdLoteCodigoTipo.Equals(Constants.LoteCodigo.Tipo.MUESTRA_REFERENCIAL))
             {
-                var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE_REFERENCIAL, "1", request.IdEmpresa, request.IdSucursal))!;
+                var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE_REFERENCIAL, request.Serie, request.IdEmpresa, request.IdSucursal))!;
                 request.CodigoLote = codeResponse?.Data.Numero ?? string.Empty;
             }
 
