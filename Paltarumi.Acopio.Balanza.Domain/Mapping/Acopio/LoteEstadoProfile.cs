@@ -12,9 +12,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
 
             CreateMap<Entity.LoteEstado, GetLoteEstadoDto>()
                 .ReverseMap();
-
-            CreateMap<Entity.LoteEstado, SelectComboLoteEstadoDto>()
-                .ReverseMap();
         }
     }
 }

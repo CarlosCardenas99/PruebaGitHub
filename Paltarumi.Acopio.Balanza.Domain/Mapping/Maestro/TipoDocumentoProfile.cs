@@ -16,8 +16,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.TipoDocumento, ListTipoDocumentoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.TipoDocumento, SearchTipoDocumentoDto>()
-                .ReverseMap();
         }
     }
 }

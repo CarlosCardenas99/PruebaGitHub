@@ -10,17 +10,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.Transporte, TransporteDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Transporte, CreateTransporteDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Transporte, UpdateTransporteDto>()
-                .ReverseMap();
 
             CreateMap<Entity.Transporte, GetTransporteDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Transporte, SearchTransporteDto>()
-                .ReverseMap();
         }
     }
 }

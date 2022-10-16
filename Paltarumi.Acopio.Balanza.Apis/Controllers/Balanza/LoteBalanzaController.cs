@@ -7,7 +7,7 @@ using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/lotebalanza")]
     public class LoteBalanzaController : ApiControllerBase
@@ -45,7 +45,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetLoteBalanzaCodigoDto>> GetbyCodigo(string codigo)
             => await _loteBalanzaApplication.GetbyCodigo(codigo);
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("list")]
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()
             => await _loteBalanzaApplication.List();

@@ -12,9 +12,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Config
 
             CreateMap<Entity.Empresa, GetEmpresaDto>()
                 .ReverseMap();
-
-            CreateMap<Entity.Empresa, SelectComboEmpresaDto>()
-                .ReverseMap();
         }
     }
 }

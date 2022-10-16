@@ -6,7 +6,7 @@ using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/lotecodigo")]
     public class LoteCodigoController

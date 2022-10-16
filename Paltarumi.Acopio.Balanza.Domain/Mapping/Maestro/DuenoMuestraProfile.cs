@@ -10,17 +10,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.DuenoMuestra, DuenoMuestraDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.DuenoMuestra, CreateDuenoMuestraDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.DuenoMuestra, UpdateDuenoMuestraDto>()
-                .ReverseMap();
 
             CreateMap<Entity.DuenoMuestra, GetDuenoMuestraDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.DuenoMuestra, SearchDuenoMuestraDto>()
-                .ReverseMap();
         }
     }
 }

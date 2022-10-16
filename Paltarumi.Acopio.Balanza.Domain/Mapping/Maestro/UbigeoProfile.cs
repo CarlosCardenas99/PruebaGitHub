@@ -10,16 +10,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.Ubigeo, UbigeoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ubigeo, CreateUbigeoDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Ubigeo, UpdateUbigeoDto>()
-                .ReverseMap();
-
             CreateMap<Entity.Ubigeo, GetUbigeoDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Ubigeo, SearchUbigeoDto>()
                 .ReverseMap();
         }
     }
