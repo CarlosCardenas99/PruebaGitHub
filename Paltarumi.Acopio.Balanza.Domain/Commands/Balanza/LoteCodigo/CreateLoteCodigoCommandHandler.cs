@@ -49,7 +49,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
                 }
 
                 lotecodigo.CodigoPlantaRandom = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
-                lotecodigo.CodigoPlanta = (await _mediator.Send(new CreateCodePlantaCommand(Constants.Empresa.PALTARUMI, codigoLote, request.CreateDto.IdLoteCodigoTipo)))?.Data ?? string.Empty;
+                lotecodigo.CodigoPlanta = (await _mediator.Send(new CreateCodePlantaCommand(Constants.Empresa.PALTARUMI, codigoLote, request.CreateDto.IdLoteCodigoTipo, request.CreateDto.IdSucursal, request.CreateDto.Serie)))?.Data ?? string.Empty;
 
                 await _lotecodigoRepository.AddAsync(lotecodigo);
                 await _lotecodigoRepository.SaveAsync();

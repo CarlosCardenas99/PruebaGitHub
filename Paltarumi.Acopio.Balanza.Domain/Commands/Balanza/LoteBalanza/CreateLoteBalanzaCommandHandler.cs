@@ -143,7 +143,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken))?.Data ?? string.Empty;
-            var codigoPlanta = (await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA), cancellationToken))?.Data ?? string.Empty;
+            var codigoPlanta = (await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken))?.Data ?? string.Empty;
 
             var loteCodigo = new Entity.LoteCodigo
             {
