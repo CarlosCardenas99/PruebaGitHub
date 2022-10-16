@@ -3,8 +3,8 @@ using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LeyReferencial;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Maestro.Dto.DuenoMuestra;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.DuenoMuestra;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LeyReferencial
 {

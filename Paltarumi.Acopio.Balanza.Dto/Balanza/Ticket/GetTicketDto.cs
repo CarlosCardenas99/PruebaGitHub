@@ -1,7 +1,7 @@
-using Paltarumi.Acopio.Maestro.Dto.Conductor;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
-using Paltarumi.Acopio.Maestro.Dto.Transporte;
-using Paltarumi.Acopio.Maestro.Dto.Vehiculo;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Vehiculo;
 
 namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
 {
