@@ -1,5 +1,5 @@
 using AutoMapper;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
 {
@@ -11,9 +11,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
                 .ReverseMap();
 
             CreateMap<Entity.LoteEstado, GetLoteEstadoDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.LoteEstado, SelectComboLoteEstadoDto>()
                 .ReverseMap();
         }
     }

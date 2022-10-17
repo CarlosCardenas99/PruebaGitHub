@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
 
@@ -13,6 +14,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Base
         where TResponse : ResponseDto, new()
     {
         protected virtual bool UseTransaction => true;
+        protected virtual int ConcurrencyAttempts => 3;
+        protected virtual bool ConcurrencyThrowException => false;
 
         private readonly CommandValidatorBase<TRequest>? _validator;
 
@@ -37,37 +40,63 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Base
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
-            try
+            var attempts = 0;
+
+            while(attempts < ConcurrencyAttempts)
             {
-                if (UseTransaction)
+                try
                 {
-                    if (_unitOfWork == null)
-                        throw new ArgumentNullException(nameof(_unitOfWork));
-
-                    return await _unitOfWork.ExecuteInTransactionAsync(request, async (requestParam, cancellationTokenParam) =>
-                    {
-                        return await ValidateAndHandle(requestParam, cancellationTokenParam);
-                    }, null, cancellationToken);
+                    return await HandleAttempt(request, cancellationToken);
                 }
+                catch (DbUpdateConcurrencyException)
+                {
+                    attempts++;
+                    if(ConcurrencyThrowException || attempts == ConcurrencyAttempts) throw;
+                    continue;
+                }
+                catch (ResultException<TResponse> rex)
+                {
+                    return rex.Result;
+                }
+                catch (Exception ex)
+                {
+                    var errorResponse = await OnHandleError(ex);
+                    if (errorResponse != default(TResponse)) return errorResponse;
+                    throw;
+                }
+            }
 
+            return null!;
+        }
+
+        private async Task<TResponse> HandleAttempt(TRequest request, CancellationToken cancellationToken)
+        {
+            if (UseTransaction)
+            {
                 if (_unitOfWork == null)
                     throw new ArgumentNullException(nameof(_unitOfWork));
 
-                return await _unitOfWork.ExecuteAsync(request, async (requestParam, cancellationTokenParam) =>
+                var responseTransaction = await _unitOfWork.ExecuteInTransactionAsync(request, async (requestParam, cancellationTokenParam) =>
                 {
                     return await ValidateAndHandle(requestParam, cancellationTokenParam);
                 }, null, cancellationToken);
+
+                if (responseTransaction.IsValid) _unitOfWork.SendAudit();
+
+                return responseTransaction;
             }
-            catch (ResultException<TResponse> rex)
+
+            if (_unitOfWork == null)
+                throw new ArgumentNullException(nameof(_unitOfWork));
+
+            var response = await _unitOfWork.ExecuteAsync(request, async (requestParam, cancellationTokenParam) =>
             {
-                return rex.Result;
-            }
-            catch (Exception ex)
-            {
-                var errorResponse = await OnHandleError(ex);
-                if (errorResponse != default(TResponse)) return errorResponse;
-                throw;
-            }
+                return await ValidateAndHandle(requestParam, cancellationTokenParam);
+            }, null, cancellationToken);
+
+            if (response.IsValid) _unitOfWork.SendAudit();
+
+            return response;
         }
 
         private async Task<TResponse> ValidateAndHandle(TRequest request, CancellationToken cancellationToken)

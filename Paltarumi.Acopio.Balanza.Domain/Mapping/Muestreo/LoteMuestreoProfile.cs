@@ -18,6 +18,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Muestreo
 
             CreateMap<Entity.LoteMuestreo, UpdateLoteMuestreoDto>()
                 .ReverseMap();
+
+            CreateMap<Entity.LoteMuestreo, UpdateEstadoLoteMuestreoDto>()
+               .ReverseMap();
+
         }
     }
 }

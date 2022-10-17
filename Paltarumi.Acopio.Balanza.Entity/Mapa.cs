@@ -13,12 +13,12 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? IdCancha { get; set; }
         public int? UbicacionX { get; set; }
         public int? UbicacionY { get; set; }
-        public float Tmh { get; set; }
+        public decimal Tmh { get; set; }
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
-        public bool Activo { get; set; }
+        public bool? Activo { get; set; }
 
         public virtual Cancha? IdCanchaNavigation { get; set; }
         public virtual LoteChancadoGrupo? IdLoteChancadoGrupoNavigation { get; set; }

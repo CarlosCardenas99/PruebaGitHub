@@ -1,5 +1,5 @@
-﻿using Paltarumi.Acopio.Maestro.Dto.DuenoMuestra;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
+﻿using Paltarumi.Acopio.Maestros.Dto.Maestro.DuenoMuestra;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
 
 namespace Paltarumi.Acopio.Balanza.Dto.LeyReferencial
 {

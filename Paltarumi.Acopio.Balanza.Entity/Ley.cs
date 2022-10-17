@@ -9,14 +9,14 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset? Fecha { get; set; }
         public int IdLoteCodigo { get; set; }
         public string CodigoPlanta { get; set; } = null!;
-        public float Tms { get; set; }
-        public float? LeyAuGt100 { get; set; }
-        public float? LeyAuOzTc100 { get; set; }
-        public float? LeyAuGt { get; set; }
-        public float? LeyAuOzTc { get; set; }
-        public float? Dilucion { get; set; }
-        public float? Diferencia { get; set; }
-        public float? Total { get; set; }
+        public decimal Tms { get; set; }
+        public decimal? LeyAuGt100 { get; set; }
+        public decimal? LeyAuOzTc100 { get; set; }
+        public decimal? LeyAuGt { get; set; }
+        public decimal? LeyAuOzTc { get; set; }
+        public decimal? Dilucion { get; set; }
+        public decimal? Diferencia { get; set; }
+        public decimal? Total { get; set; }
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }

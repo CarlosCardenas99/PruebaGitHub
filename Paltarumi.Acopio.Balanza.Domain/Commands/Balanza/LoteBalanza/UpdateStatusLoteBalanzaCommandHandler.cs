@@ -1,7 +1,12 @@
 ﻿using AutoMapper;
+using MediatR;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
+using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
+using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
@@ -18,11 +23,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
         public UpdateStatusLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IMediator mediator,
             IRepository<Entity.Lote> loteRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
             IRepository<Entity.Maestro> maestroRepository,
             IRepository<Entity.LoteEstado> loteEstadoRepository
-        ) : base(unitOfWork, mapper)
+        ) : base(unitOfWork, mapper, mediator)
         {
             _loteRepository = loteRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
@@ -51,6 +57,30 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 lote.UserNameUpdate = "";
                 lote.UpdateDate = DateTimeOffset.Now;
                 //lote.IdEstado = estado.IdLoteEstado;
+
+                // TO DO : PRUEBA
+                //__________________________________________________________________
+
+                //update estado lote chancado
+                var updateEstadoChancado = await _mediator?.Send(new UpdateEstadoLoteChancadoCommand(new UpdateEstadoLoteChancadoDto
+                {
+                    CodigoLote = loteBalanza.CodigoLote!,
+                    IdLoteEstado = loteBalanza.IdLoteEstado
+                }), cancellationToken)!;
+
+                if (updateEstadoChancado?.IsValid == false)
+                    response.AttachResults(updateEstadoChancado);
+
+                //update estado lote Muestreo
+                var updateEstadoMuestreo = await _mediator?.Send(new UpdateEstadoLoteMuestreoCommand(new UpdateEstadoLoteMuestreoDto
+                {
+                    CodigoLote = loteBalanza.CodigoLote!,
+                    IdLoteEstado = loteBalanza.IdLoteEstado
+                }), cancellationToken)!;
+
+                if (updateEstadoMuestreo?.IsValid == false)
+                    response.AttachResults(updateEstadoMuestreo);
+                //__________________________________________________________________
 
                 await _loteRepository.UpdateAsync(lote);
                 await _loteRepository.SaveAsync();

@@ -18,6 +18,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Chancado
 
             CreateMap<Entity.LoteChancado, UpdateLoteChancadoDto>()
                 .ReverseMap();
+
+            CreateMap<Entity.LoteChancado, UpdateEstadoLoteChancadoDto>()
+               .ReverseMap();
         }
     }
 }

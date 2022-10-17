@@ -6,10 +6,12 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
+using Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
+using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
@@ -21,6 +23,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
+        private readonly IRepository<Entity.Correlativo> _correlativoRepository;
         private readonly IRepository<Entity.Lote> _loteRepository;
         private readonly IRepository<Entity.Ticket> _ticketRepository;
         private readonly IRepository<Entity.Operacion> _operacionRepository;
@@ -38,10 +41,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IRepository<Entity.Operacion> operacionRepository,
             IRepository<Entity.LoteBalanza> loteBalanzaRepository,
             IRepository<Entity.TicketBackup> ticketBackupRepository,
-            IRepository<Entity.LoteOperacion> loteOperacionRepository
-
+            IRepository<Entity.LoteOperacion> loteOperacionRepository,
+            IRepository<Entity.Correlativo> correlativoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
+            _correlativoRepository = correlativoRepository;
             _loteRepository = loteRepository;
             _ticketRepository = ticketRepository;
             _operacionRepository = operacionRepository;
@@ -67,6 +71,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (!response.IsValid) return response;
 
             await UpdateLoteMuestreo(cancellationToken, response, response.Data!);
+            if (!response.IsValid) return response;
+
+            await UpdateLoteLiquidacion(cancellationToken, response, response.Data!);
             if (!response.IsValid) return response;
 
             await CheckStatusOperacion(request, response, loteBalanza?.CodigoLote!);
@@ -172,12 +179,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var newTickets = _mapper?.Map<IEnumerable<Entity.Ticket>>(newTicketDtos) ??
                     new List<Entity.Ticket>();
 
+                var correlativo = _correlativoRepository.GetByAsNoTrackingAsync(x => x.IdCorrelativo == loteBalanza.IdCorrelativo).Result;
+
                 foreach (var newTicket in newTickets)
                 {
                     if (!request.UpdateDto.EsPartido)
                         newTicket.Numero = (await _mediator
-                            .Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, "1", lote.IdEmpresa), cancellationToken))?
-                            .Data ?? string.Empty;
+                            .Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, correlativo.Serie, correlativo.IdEmpresa, correlativo.IdSucursal)))?
+                            .Data?.Numero ?? string.Empty;
 
                     newTicket.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     newTicket.IdLoteBalanzaNavigation = null!;
@@ -246,8 +255,23 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     Tmh = loteBalanzaDto.Tmh,
                     CodigoAum = loteBalanzaDto.CodigoAum,
                     CodigoTrujillo = loteBalanzaDto.CodigoTrujillo,
-                    IdLoteEstado= loteBalanzaDto.IdLoteEstado,
+                    IdLoteEstado = loteBalanzaDto.IdLoteEstado,
+                    ObservacionBalanza = loteBalanzaDto.Observacion
                 }), cancellationToken)!;
+
+            if (updateResponse?.IsValid == false)
+                response.AttachResults(updateResponse);
+        }
+
+        private async Task UpdateLoteLiquidacion(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
+        {
+            var updateResponse = await _mediator?.Send(new UpdateLoteLiquidacionCommand(new UpdateLoteLiquidacionDto
+            {
+                CodigoLote = loteBalanzaDto.CodigoLote!,
+                IdProveedor = loteBalanzaDto.IdProveedor,
+                Tmh100 = loteBalanzaDto.Tmh100,
+                Tmh = loteBalanzaDto.Tmh,
+            }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)
                 response.AttachResults(updateResponse);

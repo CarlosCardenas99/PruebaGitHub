@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Paltarumi.Acopio.Dto.Base" Version="1.0.0.3" />
+    <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.7" />
     <PackageReference Include="RandomStringCreator" Version="2.0.0" />
     <PackageReference Include="Scrutor" Version="4.1.0" />
     <PackageReference Include="Telerik.Reporting.Trial" Version="16.1.22.622" />
@@ -90,6 +91,11 @@
       <DependentUpon>Modulo.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Resources\Liquidacion\LoteLiquidacion.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LoteLiquidacion.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\Maestro\CheckList.Designer.cs">
       <DependentUpon>CheckList.resx</DependentUpon>
@@ -206,6 +212,10 @@
     <EmbeddedResource Update="Resources\Config\Modulo.resx">
       <LastGenOutput>Modulo.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Liquidacion\LoteLiquidacion.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LoteLiquidacion.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Maestro\CheckList.resx">
       <LastGenOutput>CheckList.Designer.cs</LastGenOutput>

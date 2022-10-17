@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public int IdCorrelativo { get; set; }
         public int IdEmpresa { get; set; }
+        public string IdSucursal { get; set; } = null!;
         public string CodigoCorrelativoTipo { get; set; } = null!;
         public string Serie { get; set; } = null!;
         public int Numero { get; set; }
@@ -14,5 +15,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual CorrelativoTipo CodigoCorrelativoTipoNavigation { get; set; } = null!;
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
+        public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
     }
 }

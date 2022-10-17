@@ -11,11 +11,11 @@
         public DateTimeOffset? FechaAcopio { get; set; }
         public int IdEstadoTipoMaterial { get; set; }
         public int CantidadSacos { get; set; }
-        public float Tmh100 { get; set; }
-        public float TmhBase { get; set; }
-        public float Tmh { get; set; }
-        public float? Humedad { get; set; }
-        public float? Tms { get; set; }
+        public decimal Tmh100 { get; set; }
+        public decimal TmhBase { get; set; }
+        public decimal Tmh { get; set; }
+        public decimal? Humedad { get; set; }
+        public decimal? Tms { get; set; }
         public string Observacion { get; set; } = null!;
         public int PorcentajeCheckList { get; set; }
         public string UserNameCreate { get; set; } = null!;

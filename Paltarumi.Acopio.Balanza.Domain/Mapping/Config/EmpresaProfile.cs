@@ -1,5 +1,5 @@
 using AutoMapper;
-using Paltarumi.Acopio.Balanza.Dto.Config.Empresa;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.Empresa;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Config
 {
@@ -11,9 +11,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Config
                 .ReverseMap();
 
             CreateMap<Entity.Empresa, GetEmpresaDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Empresa, SelectComboEmpresaDto>()
                 .ReverseMap();
         }
     }

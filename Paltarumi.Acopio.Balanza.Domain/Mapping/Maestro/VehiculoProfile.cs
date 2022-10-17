@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Maestro.Dto.Vehiculo;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Vehiculo;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
 {
@@ -10,18 +10,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.Vehiculo, VehiculoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Vehiculo, CreateVehiculoDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Vehiculo, UpdateVehiculoDto>()
-                .ReverseMap();
-
             CreateMap<Entity.Vehiculo, GetVehiculoDto>()
                 .ForMember(x => x.Marca, opt => opt.MapFrom(x => x.IdVehiculoMarcaNavigation))
                 .ForMember(x => x.TipoVehiculo, opt => opt.MapFrom(x => x.IdTipoVehiculoNavigation))
-                .ReverseMap();
-
-            CreateMap<Entity.Vehiculo, SearchVehiculoDto>()
                 .ReverseMap();
         }
     }

@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Dto.Config.Empresa;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Maestro.Dto.Concesion;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
-using Paltarumi.Acopio.Maestro.Dto.Proveedor;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.Empresa;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 {
@@ -50,16 +50,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdEstadoTipoMaterialNavigation
                 );
 
-            var loteMuestreo = loteBalanza != null ? await _loteMuestreoRepository
-                .GetByAsNoTrackingAsync(
-                    x => x.CodigoLote == loteBalanza.CodigoLote
-                ) : null;
+            //var loteMuestreo = loteBalanza != null ? await _loteMuestreoRepository
+            //    .GetByAsNoTrackingAsync(
+            //        x => x.CodigoLote == loteBalanza.CodigoLote
+            //    ) : null;
 
-            var tipoMineral = loteMuestreo != null ?
-                await _maestroRepository.GetByAsNoTrackingAsync(x => x.IdMaestro == loteMuestreo.IdTipoMineral) : null;
+            //var tipoMineral = loteMuestreo != null ?
+               // await _maestroRepository.GetByAsNoTrackingAsync(x => x.IdMaestro == loteMuestreo.IdTipoMineral) : null;
 
             var lote = await _loteRepository.GetByAsNoTrackingAsync(
-                    x => x.CodigoLote == loteBalanza.CodigoLote,
+                    x => x.CodigoLote == loteBalanza!.CodigoLote,
                     x => x.IdEmpresaNavigation    
                 );
 
@@ -85,8 +85,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
                 //loteDto.IdTipoMineral = tipoMineral?.IdMaestro;
-                loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
-                loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote.IdEmpresaNavigation) ?? null;
+                //loteDto.TipoMineral = tipoMineral != null ? _mapper!.Map<GetMaestroDto>(tipoMineral) : null;
+                loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote!.IdEmpresaNavigation) ?? null;
 
                 response.UpdateData(loteDto);
             }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Paltarumi.Acopio.Audit.RestClient;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Storage = Microsoft.EntityFrameworkCore.Storage;
 
@@ -11,8 +13,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
         private readonly TContext _dbContext;
         private DbContext Context => _dbContext;
 
-        public UnitOfWork(TContext dbContext)
-            => _dbContext = dbContext;
+        protected readonly IAuditService _auditService;
+        private readonly ILogger<UnitOfWork<TContext>> _logger;
+
+        public UnitOfWork(TContext dbContext, IAuditService auditService, ILogger<UnitOfWork<TContext>> logger)
+        {
+            _dbContext = dbContext;
+            _auditService = auditService;
+            _logger = logger;
+        }
 
         public ITransaction BeginTransaction()
             => new Transaction(Context.Database.BeginTransaction());
@@ -151,9 +160,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 state,
                 (context, stateIn) =>
                 {
-                    var result = operation.Invoke(stateIn);
-                    Commit();
-                    return result;
+                    try
+                    {
+                        var result = operation.Invoke(stateIn);
+                        Commit();
+                        return result;
+                    }
+                    catch (Exception)
+                    {
+                        ClearChangeTracker();
+                        throw;
+                    }
                 },
                 (context, stateIn) => verifySucceeded.Invoke(stateIn)
             );
@@ -167,9 +184,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
                 state,
                 async (context, stateIn, cancellationTokenIn) =>
                 {
-                    var result = await operation.Invoke(stateIn, cancellationTokenIn);
-                    await CommitAsync();
-                    return result;
+                    try
+                    {
+                        var result = await operation.Invoke(stateIn, cancellationTokenIn);
+                        await CommitAsync();
+                        return result;
+                    }
+                    catch (Exception)
+                    {
+                        ClearChangeTracker();
+                        throw;
+                    }
                 },
                 async (context, stateIn, cancellationTokenIn) => await verifySucceeded.Invoke(stateIn, cancellationTokenIn),
                 cancellationToken
@@ -189,18 +214,18 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
             {
                 var result = operation.Invoke(state);
                 transaction.Commit();
-
                 return result;
             }
             catch (ResultException<TResult> rex)
             {
                 transaction.Rollback();
+                ClearChangeTracker();
                 return rex.Result;
             }
-
             catch (Exception)
             {
                 transaction.Rollback();
+                ClearChangeTracker();
                 throw;
             }
         }
@@ -218,18 +243,18 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
             {
                 var result = await operation.Invoke(state, cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
-
                 return result;
             }
             catch (ResultException<TResult> rex)
             {
                 transaction.Rollback();
+                ClearChangeTracker();
                 return rex.Result;
             }
-
             catch (Exception)
             {
                 await transaction.RollbackAsync(cancellationToken);
+                ClearChangeTracker();
                 throw;
             }
         }
@@ -242,6 +267,20 @@ namespace Paltarumi.Acopio.Balanza.Repository.Transactions
         public async Task CommitAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        public void SendAudit()
+        {
+            new Thread(async () =>
+            {
+                try { var resp = await _auditService.SaveChanges(); }
+                catch (Exception ex) { _logger.LogError(ex, ex.Message); }
+            }).Start();
+        }
+
+        private void ClearChangeTracker()
+        {
+            Context.ChangeTracker.Clear();
         }
     }
 }

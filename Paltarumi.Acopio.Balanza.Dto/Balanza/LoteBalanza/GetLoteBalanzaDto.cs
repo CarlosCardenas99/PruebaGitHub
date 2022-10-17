@@ -1,17 +1,17 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Dto.Config.Empresa;
-using Paltarumi.Acopio.Maestro.Dto.Concesion;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
-using Paltarumi.Acopio.Maestro.Dto.Proveedor;
+﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.Empresa;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
 {
     public class GetLoteBalanzaDto : LoteBalanzaDto
     {
         public int IdLoteBalanza { get; set; }
-        public float? Humedad { get; set; }
-        public float? Tms { get; set; }
+        public decimal? Humedad { get; set; }
+        public decimal? Tms { get; set; }
         public GetEmpresaDto? Empresa { get; set; }
         public GetConcesionDto? Concesion { get; set; }
         public GetMaestroDto? EstadoTipoMaterial { get; set; }

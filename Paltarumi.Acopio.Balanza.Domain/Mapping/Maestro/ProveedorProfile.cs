@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Maestro.Dto.Proveedor;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
 {
@@ -10,17 +10,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.Proveedor, ProveedorDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Proveedor, CreateProveedorDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Proveedor, UpdateProveedorDto>()
-                .ReverseMap();
 
             CreateMap<Entity.Proveedor, GetProveedorDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Proveedor, SearchProveedorDto>()
-                .ReverseMap();
         }
     }
 }

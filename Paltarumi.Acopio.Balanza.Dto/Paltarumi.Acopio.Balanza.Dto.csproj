@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.7" />
+  </ItemGroup>
+
 </Project>
