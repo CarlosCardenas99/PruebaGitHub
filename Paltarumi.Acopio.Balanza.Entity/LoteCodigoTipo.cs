@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public LoteCodigoTipo()
         {
+            LoteCodigoLiquidacions = new HashSet<LoteCodigoLiquidacion>();
             LoteCodigoNomenclaturas = new HashSet<LoteCodigoNomenclatura>();
             LoteCodigos = new HashSet<LoteCodigo>();
         }
@@ -16,6 +17,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public byte Orden { get; set; }
         public bool Activo { get; set; }
 
+        public virtual ICollection<LoteCodigoLiquidacion> LoteCodigoLiquidacions { get; set; }
         public virtual ICollection<LoteCodigoNomenclatura> LoteCodigoNomenclaturas { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
     }

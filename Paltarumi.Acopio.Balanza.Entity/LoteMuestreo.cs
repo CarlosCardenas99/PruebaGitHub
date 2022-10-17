@@ -16,17 +16,16 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? CodigoAum { get; set; }
         public DateTimeOffset? FechaAcopio { get; set; }
         public DateTimeOffset? Fecha { get; set; }
-        public float Tmh { get; set; }
-        public float? PesoHumedo { get; set; }
-        public float? PesoSeco { get; set; }
-        public int? Porcentaje { get; set; }
-        public float? Humedad100 { get; set; }
-        public float? HumedadBase { get; set; }
-        public float? Humedad { get; set; }
-        public float? Tms100 { get; set; }
-        public float? TmsBase { get; set; }
-        public float? Tms { get; set; }
-        public int? IdTipoMineral { get; set; }
+        public decimal Tmh { get; set; }
+        public decimal? PesoHumedo { get; set; }
+        public decimal? PesoSeco { get; set; }
+        public decimal? Humedad100 { get; set; }
+        public decimal? HumedadBase { get; set; }
+        public decimal? Humedad { get; set; }
+        public decimal? Tms100 { get; set; }
+        public decimal? TmsBase { get; set; }
+        public decimal? Tms { get; set; }
+        public string? IdTipoMineral { get; set; }
         public string? IdCancha { get; set; }
         public string? IdMineralCondicion { get; set; }
         public bool? ReportadoProveedor { get; set; }
@@ -39,14 +38,17 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
-        public string? IdLoteEstado { get; set; }
+        public int? Porcentaje { get; set; }
+        public string IdLoteEstado { get; set; } = null!;
+        public byte[] RowVersion { get; set; } = null!;
+        public string ObservacionBalanza { get; set; } = null!;
 
         public virtual Cancha? IdCanchaNavigation { get; set; }
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
-        public virtual LoteEstado? IdLoteEstadoNavigation { get; set; }
+        public virtual LoteEstado IdLoteEstadoNavigation { get; set; } = null!;
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
-        public virtual Maestro? IdTipoMineralNavigation { get; set; }
+        public virtual TipoMineral? IdTipoMineralNavigation { get; set; }
         public virtual ICollection<LoteCodigoMuestreo> LoteCodigoMuestreos { get; set; }
     }
 }

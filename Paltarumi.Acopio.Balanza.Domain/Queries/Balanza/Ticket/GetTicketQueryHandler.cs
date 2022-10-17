@@ -3,10 +3,10 @@ using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Maestro.Dto.Conductor;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
-using Paltarumi.Acopio.Maestro.Dto.Transporte;
-using Paltarumi.Acopio.Maestro.Dto.Vehiculo;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Conductor;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Transporte;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Vehiculo;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 {
@@ -28,8 +28,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             var response = new ResponseDto<GetTicketDto>();
             var ticket = await _ticketRepository.GetByAsync(
                 x => x.IdTicket == request.Id,
-                x => x.IdConductorNavigation,
-                x => x.IdTransporteNavigation,
+                x => x.IdConductorNavigation!,
+                x => x.IdTransporteNavigation!,
                 x => x.IdEstadoTmhNavigation,
                 x => x.IdUnidadMedidaNavigation,
                 x => x.IdVehiculoNavigation,

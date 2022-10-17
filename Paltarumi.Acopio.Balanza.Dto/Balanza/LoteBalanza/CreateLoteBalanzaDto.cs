@@ -13,5 +13,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         //public bool EsPartido { get; set; }
         public IEnumerable<CreateTicketDto>? TicketDetails { get; set; }
         public int IdEmpresa { get; set; }
+        public string IdSucursal { get; set; }
+        public string Serie { get; set; }
     }
 }

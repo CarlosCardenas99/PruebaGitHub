@@ -1,7 +1,6 @@
 ﻿using Paltarumi.Acopio.Balanza.Client.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Maestro.Dto.Proveedor;
 
 namespace Paltarumi.Acopio.Balanza.Client.Balanza
 {
@@ -29,7 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         public async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<SearchLoteCodigoFilterDto> filter)
             => await Post<SearchParamsDto<SearchLoteCodigoFilterDto>, SearchResultDto<SearchLoteCodigoDto>>("/search", filter)!;
 
-        public async Task<ResponseDto<GetProveedorDto>> ObtenerProveedorPorRuc(string ruc)
-            => await Get<GetProveedorDto>($"/ruc/{ruc}")!;
+        //public async Task<ResponseDto<GetProveedorDto>> ObtenerProveedorPorRuc(string ruc)
+        //    => await Get<GetProveedorDto>($"/ruc/{ruc}")!;
     }
 }

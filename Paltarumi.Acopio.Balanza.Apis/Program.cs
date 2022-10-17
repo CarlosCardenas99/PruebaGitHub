@@ -45,6 +45,9 @@ builder.Services.UseRegion(configuration);
 // RequestLogger
 builder.Services.UseRequestLogger();
 
+// HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
 #endregion
 
 #region App

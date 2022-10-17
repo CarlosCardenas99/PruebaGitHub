@@ -1,8 +1,8 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Maestro.Dto.Concesion;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
-using Paltarumi.Acopio.Maestro.Dto.Proveedor;
+﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
 {

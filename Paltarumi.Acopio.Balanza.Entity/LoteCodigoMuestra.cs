@@ -15,7 +15,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdProveedor { get; set; }
         public int? IdDuenoMuestra { get; set; }
         public bool? LlevaGrueso { get; set; }
-        public float Tmh { get; set; }
+        public decimal Tmh { get; set; }
         public int? IdMuestraCondicion { get; set; }
         public int? IdMuestraEstado { get; set; }
         public string UserNameCreate { get; set; } = null!;

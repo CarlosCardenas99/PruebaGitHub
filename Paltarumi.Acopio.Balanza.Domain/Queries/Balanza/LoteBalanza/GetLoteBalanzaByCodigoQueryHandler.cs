@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteEstado;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Maestro.Dto.Concesion;
-using Paltarumi.Acopio.Maestro.Dto.Maestro;
-using Paltarumi.Acopio.Maestro.Dto.Proveedor;
+using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 {
@@ -51,7 +51,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
                     x => idTickets.Contains(x.IdTicket),
                     x => x.IdConductorNavigation!,
-                    x => x.IdTransporteNavigation!,
+                    x => x.IdTransporteNavigation!, 
                     x => x.IdEstadoTmhNavigation,
                     x => x.IdUnidadMedidaNavigation,
                     x => x.IdVehiculoNavigation

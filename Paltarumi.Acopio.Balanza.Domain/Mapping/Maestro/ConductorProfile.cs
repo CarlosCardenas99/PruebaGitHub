@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Maestro.Dto.Conductor;
+using Paltarumi.Acopio.Maestros.Dto.Maestro.Conductor;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
 {
@@ -10,17 +10,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
             CreateMap<Entity.Conductor, ConductorDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Conductor, CreateConductorDto>()
-                .ReverseMap();
-
-            CreateMap<Entity.Conductor, UpdateConductorDto>()
-                .ReverseMap();
-
             CreateMap<Entity.Conductor, GetConductorDto>()
-                .ForMember(x => x.TipoLicencia, opt => opt.MapFrom(x => x.IdTipoLicenciaNavigation != null ? x.IdTipoLicenciaNavigation.Descripcion : string.Empty))
-                .ReverseMap();
-
-            CreateMap<Entity.Conductor, SearchConductorDto>()
                 .ForMember(x => x.TipoLicencia, opt => opt.MapFrom(x => x.IdTipoLicenciaNavigation != null ? x.IdTipoLicenciaNavigation.Descripcion : string.Empty))
                 .ReverseMap();
         }

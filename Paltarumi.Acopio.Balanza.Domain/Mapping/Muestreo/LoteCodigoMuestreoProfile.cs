@@ -13,8 +13,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Muestreo
             CreateMap<Entity.LoteCodigoMuestreo, CreateLoteCodigoMuestreoDto>()
                 .ReverseMap();
 
-            //CreateMap<Entity.LoteCodigoMuestreo, UpdateLoteCodigoMuestreoDto>()
-            //    .ReverseMap();
+            CreateMap<Entity.LoteCodigoMuestreo, UpdateLoteCodigoMuestreoDto>()
+                .ReverseMap();
 
             //CreateMap<Entity.LoteCodigoMuestreo, GetLoteCodigoMuestreoDto>()
             //    .ReverseMap();
