@@ -207,7 +207,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateTmhBase();
                 loteBalanza.UserNameCreate = "";
 
-                loteBalanza.IdLoteEstado = Constants.acopio.LoteEstado.PENDIENTE;
+                //loteBalanza.IdLoteEstado = Constants.acopio.LoteEstado.PENDIENTE;
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
