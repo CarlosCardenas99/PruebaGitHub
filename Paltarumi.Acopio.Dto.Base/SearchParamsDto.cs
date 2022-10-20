@@ -1,4 +1,6 @@
-﻿namespace Paltarumi.Acopio.Dto.Base
+﻿using System.Collections.Generic;
+
+namespace Paltarumi.Acopio.Dto.Base
 {
     public class SearchParamsDto
     {
@@ -14,6 +16,6 @@
 
     public class SearchParamsDto<TFilter> : SearchParamsDto
     {
-        public TFilter? Filter { get; set; }
+        public TFilter Filter { get; set; }
     }
 }

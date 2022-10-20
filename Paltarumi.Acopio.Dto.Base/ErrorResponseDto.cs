@@ -1,4 +1,6 @@
-﻿namespace Paltarumi.Acopio.Dto.Base
+﻿using System;
+
+namespace Paltarumi.Acopio.Dto.Base
 {
     public class ErrorResponseDto
     {

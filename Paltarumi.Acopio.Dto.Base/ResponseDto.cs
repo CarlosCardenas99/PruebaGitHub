@@ -1,4 +1,7 @@
 ﻿using FluentValidation.Results;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Paltarumi.Acopio.Dto.Base
 {
@@ -95,7 +98,7 @@ namespace Paltarumi.Acopio.Dto.Base
 
     public class ResponseDto<T> : ResponseDto
     {
-        public T? Data { get; set; }
+        public T Data { get; set; }
 
         public ResponseDto() : base()
         {

@@ -1,4 +1,7 @@
-﻿namespace Paltarumi.Acopio.Dto.Base
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Paltarumi.Acopio.Dto.Base
 {
     public class SearchResultDto<TResult>
     {
