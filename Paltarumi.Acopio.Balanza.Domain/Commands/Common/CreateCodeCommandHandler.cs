@@ -32,9 +32,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 
             var correlativo = new Entity.Correlativo();
 
-            correlativo = await _correlativoRepository.GetByAsync(x =>
-                x.CodigoCorrelativoTipo == request.CodigoCorrelativoTipo && x.Serie == request.Serie && x.IdEmpresa == request.IdEmpresa && x.IdSucursal == request.IdSucursal
-            );
+            if(string.IsNullOrEmpty(request.Serie))
+                correlativo = await _correlativoRepository.GetByAsync(x =>
+                    x.CodigoCorrelativoTipo == request.CodigoCorrelativoTipo && x.IdEmpresa == request.IdEmpresa && x.IdSucursal == request.IdSucursal
+                );
+            else
+                correlativo = await _correlativoRepository.GetByAsync(x =>
+                    x.CodigoCorrelativoTipo == request.CodigoCorrelativoTipo && x.IdEmpresa == request.IdEmpresa && x.IdSucursal == request.IdSucursal && x.Serie == request.Serie
+                );
 
             if (correlativo != null)
             {

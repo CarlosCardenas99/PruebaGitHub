@@ -11,7 +11,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         }
 
         public int IdLoteBalanza { get; set; }
-        public int IdCorrelativo { get; set; }
         public string CodigoLote { get; set; } = null!;
         public string? CodigoTrujillo { get; set; }
         public string? CodigoAum { get; set; }
@@ -35,8 +34,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
         public string IdLoteEstado { get; set; } = null!;
         public byte[] RowVersion { get; set; } = null!;
+        public int IdCorrelativo { get; set; }
 
         public virtual Concesion IdConcesionNavigation { get; set; } = null!;
+        public virtual Correlativo IdCorrelativoNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoTipoMaterialNavigation { get; set; } = null!;
         public virtual LoteEstado IdLoteEstadoNavigation { get; set; } = null!;
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
