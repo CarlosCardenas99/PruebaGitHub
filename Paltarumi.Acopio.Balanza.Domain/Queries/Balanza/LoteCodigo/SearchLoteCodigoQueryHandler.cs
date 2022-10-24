@@ -33,7 +33,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
 
         protected override async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> HandleQuery(SearchLoteCodigoQuery request, CancellationToken cancellationToken)
         {
-            var idSucursal = "02"; //_userIdentity.GetIdSucursal();
+            var idSucursal = _userIdentity.GetIdSucursal();
             var response = new ResponseDto<SearchResultDto<SearchLoteCodigoDto>>();
 
             Expression<Func<Entity.LoteCodigo, bool>> filter = x => true;
