@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public TipoDocumento()
         {
+            Comisionista = new HashSet<Comisionistum>();
             Conductors = new HashSet<Conductor>();
             DuenoMuestras = new HashSet<DuenoMuestra>();
             Empresas = new HashSet<Empresa>();
@@ -17,6 +18,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? NombreCorto { get; set; }
         public bool Activo { get; set; }
 
+        public virtual ICollection<Comisionistum> Comisionista { get; set; }
         public virtual ICollection<Conductor> Conductors { get; set; }
         public virtual ICollection<DuenoMuestra> DuenoMuestras { get; set; }
         public virtual ICollection<Empresa> Empresas { get; set; }

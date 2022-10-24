@@ -16,8 +16,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string IdTipoComprobante { get; set; } = null!;
         public string Serie { get; set; } = null!;
         public string Numero { get; set; } = null!;
-        public DateTime FechaEmision { get; set; }
-        public DateTime FechaVencimiento { get; set; }
+        public DateTimeOffset FechaEmision { get; set; }
+        public DateTimeOffset FechaVencimiento { get; set; }
         public int IdProveedor { get; set; }
         public string IdComprobanteEstado { get; set; } = null!;
         public string IdDivisa { get; set; } = null!;
@@ -36,6 +36,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
+        public byte[] RowVersion { get; set; } = null!;
         public bool Activo { get; set; }
 
         public virtual ComprobanteEstado IdComprobanteEstadoNavigation { get; set; } = null!;

@@ -5,6 +5,11 @@ namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class Correlativo
     {
+        public Correlativo()
+        {
+            LoteBalanzas = new HashSet<LoteBalanza>();
+        }
+
         public int IdCorrelativo { get; set; }
         public int IdEmpresa { get; set; }
         public string IdSucursal { get; set; } = null!;
@@ -15,6 +20,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual CorrelativoTipo CodigoCorrelativoTipoNavigation { get; set; } = null!;
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
-        public virtual Sucursal IdSucursalNavigation { get; set; } = null!;
+        public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
     }
 }

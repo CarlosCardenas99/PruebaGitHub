@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public ComprobanteDetalle()
         {
             LoteLiquidacionAsignacions = new HashSet<LoteLiquidacionAsignacion>();
+            LoteLiquidacionComisionAsignacions = new HashSet<LoteLiquidacionComisionAsignacion>();
             LoteLiquidacionGastos = new HashSet<LoteLiquidacionGasto>();
         }
 
@@ -23,6 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal Total { get; set; }
         public string IdComprobanteDetalleEstado { get; set; } = null!;
         public int? IdComprobanteDetalleReferencia { get; set; }
+        public byte[] RowVersion { get; set; } = null!;
         public bool Activo { get; set; }
 
         public virtual ComprobanteConcepto IdComprobanteConceptoNavigation { get; set; } = null!;
@@ -30,6 +32,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual Comprobante IdComprobanteNavigation { get; set; } = null!;
         public virtual PropiedadCalculo IdPropiedadCalculoNavigation { get; set; } = null!;
         public virtual ICollection<LoteLiquidacionAsignacion> LoteLiquidacionAsignacions { get; set; }
+        public virtual ICollection<LoteLiquidacionComisionAsignacion> LoteLiquidacionComisionAsignacions { get; set; }
         public virtual ICollection<LoteLiquidacionGasto> LoteLiquidacionGastos { get; set; }
     }
 }

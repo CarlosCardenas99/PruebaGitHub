@@ -5,6 +5,7 @@ using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Entity.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Extensions;
+using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Dto.Base;
 using System.Linq.Expressions;
 
@@ -14,16 +15,22 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
     {
         private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
 
+        private readonly IUserIdentity _userIdentity;
+
         public SearchLoteBalanzaQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository
+            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IUserIdentity userIdentity
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
+            _userIdentity = userIdentity;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> HandleQuery(SearchLoteBalanzaQuery request, CancellationToken cancellationToken)
         {
+            var idSucursal = _userIdentity.GetIdSucursal();
+
             var response = new ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>();
 
             Expression<Func<Entity.LoteBalanza, bool>> filter = x => true;
@@ -67,6 +74,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             if (!string.IsNullOrEmpty(filters?.NumeroTickets))
                 filter = filter.And(x => x.Tickets.Any(x => x.Numero.Contains(filters.NumeroTickets)));
 
+            if (!string.IsNullOrEmpty(idSucursal))
+                filter = filter.And(x => x.IdCorrelativoNavigation.IdSucursal == idSucursal);
+
             var sorts = new List<SortExpression<Entity.LoteBalanza>>();
 
             if (request.SearchParams?.Sort != null)
@@ -87,7 +97,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation,
                 x => x.Tickets.Where(x =>x.Activo==true),
-                x => x.IdLoteEstadoNavigation
+                x => x.IdLoteEstadoNavigation,
+                x => x.IdCorrelativoNavigation
             );
 
             var loteDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaDto>>(lotes.Items);

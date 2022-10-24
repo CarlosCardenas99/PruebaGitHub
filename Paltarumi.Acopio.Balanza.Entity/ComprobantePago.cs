@@ -9,10 +9,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdComprobante { get; set; }
         public string IdTipoMedioPago { get; set; } = null!;
         public string NumeroBancario { get; set; } = null!;
-        public DateTime FechaPago { get; set; }
+        public DateTimeOffset FechaPago { get; set; }
         public decimal TipoCambio { get; set; }
-        public string IdMoneda { get; set; } = null!;
-        public string IdMonedaCalculo { get; set; } = null!;
+        public string IdDivisa { get; set; } = null!;
+        public string IdDivisaCalculo { get; set; } = null!;
         public decimal SubTotalSoles { get; set; }
         public decimal SubTotalDolares { get; set; }
         public string Observacion { get; set; } = null!;

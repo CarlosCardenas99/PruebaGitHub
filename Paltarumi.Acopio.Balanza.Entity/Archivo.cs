@@ -10,6 +10,9 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int Identificador { get; set; }
         public string DirectoryPath { get; set; } = null!;
         public string FileName { get; set; } = null!;
+        public string FileContentType { get; set; } = null!;
+        public bool DirectorySync { get; set; }
+        public string? DirectorySyncResult { get; set; }
         public bool FtpSync { get; set; }
         public string? FtpSyncResult { get; set; }
         public bool CloudSync { get; set; }

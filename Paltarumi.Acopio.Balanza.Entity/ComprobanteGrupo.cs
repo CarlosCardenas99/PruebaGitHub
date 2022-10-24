@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public ComprobanteGrupo()
         {
+            ComprobanteGrupoDetalles = new HashSet<ComprobanteGrupoDetalle>();
             Comprobantes = new HashSet<Comprobante>();
         }
 
@@ -14,6 +15,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string Nombre { get; set; } = null!;
         public bool Activo { get; set; }
 
+        public virtual ICollection<ComprobanteGrupoDetalle> ComprobanteGrupoDetalles { get; set; }
         public virtual ICollection<Comprobante> Comprobantes { get; set; }
     }
 }
