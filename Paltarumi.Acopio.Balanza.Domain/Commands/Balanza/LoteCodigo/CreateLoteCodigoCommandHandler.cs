@@ -3,9 +3,11 @@ using MediatR;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
+using Paltarumi.Acopio.Balanza.Dto.Common;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
@@ -16,11 +18,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 
         private readonly IRepository<Entity.Lote> _loteRepository;
         private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IUserIdentity _userIdentity;
 
         public CreateLoteCodigoCommandHandler(
             IUnitOfWork unitOfWork,
             IMediator mediator,
             IMapper mapper,
+            IUserIdentity userIdentity,
             CreateLoteCodigoCommandValidator validator,
             IRepository<Entity.Lote> loteRepository,
             IRepository<Entity.LoteCodigo> lotecodigoRepository
@@ -28,10 +32,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
         {
             _loteRepository = loteRepository;
             _lotecodigoRepository = lotecodigoRepository;
+            _userIdentity = userIdentity;
         }
 
         public override async Task<ResponseDto<GetLoteCodigoDto>> HandleCommand(CreateLoteCodigoCommand request, CancellationToken cancellationToken)
         {
+            var idSucursal = _userIdentity.GetIdSucursal();
+
             var response = new ResponseDto<GetLoteCodigoDto>();
             var lotecodigo = _mapper?.Map<Entity.LoteCodigo>(request.CreateDto);
 
@@ -42,14 +49,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
                 lotecodigo.IdLoteCodigoEstado = Constants.Maestro.LoteCodigoEstado.PENDIENTE;
 
                 string codigoLote = string.Empty;
-                if(request.CreateDto.IdLote != null)
+                if (request.CreateDto.IdLote != null)
                 {
                     var lote = await _loteRepository.GetByAsNoTrackingAsync(x => x.IdLote == request.CreateDto.IdLote);
                     codigoLote = lote.CodigoLote;
                 }
 
-                lotecodigo.CodigoPlantaRandom = (await _mediator.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
-                lotecodigo.CodigoPlanta = (await _mediator.Send(new CreateCodePlantaCommand(Constants.Empresa.PALTARUMI, codigoLote, request.CreateDto.IdLoteCodigoTipo, request.CreateDto.IdSucursal, request.CreateDto.Serie)))?.Data ?? string.Empty;
+                lotecodigo.CodigoPlantaRandom = (await _mediator!.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;
+
+                var codeAndCorrelativo = await _mediator.Send(new CreateCodePlantaCommand(Constants.Empresa.PALTARUMI, codigoLote, request.CreateDto.IdLoteCodigoTipo, request.CreateDto.IdSucursal, request.CreateDto.Serie));
+                lotecodigo.CodigoPlanta = codeAndCorrelativo.Data!.Numero;
+                lotecodigo.IdCorrelativo = codeAndCorrelativo.Data!.IdCorrelativo;
 
                 await _lotecodigoRepository.AddAsync(lotecodigo);
                 await _lotecodigoRepository.SaveAsync();

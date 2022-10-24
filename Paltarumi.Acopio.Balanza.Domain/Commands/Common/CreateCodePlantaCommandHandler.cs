@@ -4,13 +4,14 @@ using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Balanza.Dto.Common;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 {
-    public class CreateCodePlantaCommandHandler : CommandHandlerBase<CreateCodePlantaCommand, string>
+    public class CreateCodePlantaCommandHandler : CommandHandlerBase<CreateCodePlantaCommand, CreateCodeDto>
     {
         private readonly IRepository<Entity.LoteCodigoNomenclatura> _loteCodigoNomenclaturaRepository;
     
@@ -24,9 +25,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             _loteCodigoNomenclaturaRepository = loteCodigoNomenclaturaRepository;
         }
 
-        public override async Task<ResponseDto<string>> HandleCommand(CreateCodePlantaCommand request, CancellationToken cancellationToken)
+        public override async Task<ResponseDto<CreateCodeDto>> HandleCommand(CreateCodePlantaCommand request, CancellationToken cancellationToken)
         {
-            var response = new ResponseDto<string>();
+            var response = new ResponseDto<CreateCodeDto>();
+            var createCodeDto = new CreateCodeDto();
+
             string separador = string.Empty;
             var loteCodigoNomenclatura = await _loteCodigoNomenclaturaRepository.GetByAsync(x => x.IdEmpresa == request.IdEmpresa && x.IdLoteCodigoTipo == request.IdLoteCodigoTipo);
 
@@ -37,10 +40,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             {
                 var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE_REFERENCIAL, request.Serie, request.IdEmpresa, request.IdSucursal))!;
                 request.CodigoLote = codeResponse?.Data.Numero ?? string.Empty;
+
+                createCodeDto.IdCorrelativo = codeResponse!.Data!.IdCorrelativo;
+                createCodeDto.Numero = (String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, request.CodigoLote));
+                
+                response.UpdateData(createCodeDto);
             }
 
-            response.UpdateData(String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, request.CodigoLote));
-            
+            //response.UpdateData(String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, request.CodigoLote));
+
             return response;
         }
 

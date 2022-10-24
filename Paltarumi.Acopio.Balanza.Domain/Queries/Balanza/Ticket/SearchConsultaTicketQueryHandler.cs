@@ -5,6 +5,7 @@ using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Entity.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Extensions;
+using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Dto.Base;
 using System.Linq.Expressions;
 
@@ -14,19 +15,24 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
     {
         private readonly IRepository<Entity.Ticket> _ticketRepository;
         private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
+        private readonly IUserIdentity _userIdentity;
 
         public SearchConsultaTicketQueryHandler(
             IMapper mapper,
             IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
+            IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
+            IUserIdentity userIdentity
         ) : base(mapper)
         {
             _ticketRepository = ticketRepository;
             _loteMuestreoRepository = loteMuestreoRepository;
+            _userIdentity = userIdentity;
         }
 
         protected override async Task<ResponseDto<SearchResultDto<SearchConsultaTicketDto>>> HandleQuery(SearchConsultaTicketQuery request, CancellationToken cancellationToken)
         {
+            var idSucursal = _userIdentity.GetIdSucursal();
+
             var response = new ResponseDto<SearchResultDto<SearchConsultaTicketDto>>();
 
             Expression<Func<Entity.Ticket, bool>> filter = x => true;
@@ -47,6 +53,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 
             //filter = filter.And(x => x.Activo == true);
             filter = filter.And(x => x.Activo==filters.Activo);
+
+            if (!string.IsNullOrEmpty(idSucursal))
+                filter = filter.And(x => x.IdLoteBalanzaNavigation.IdCorrelativoNavigation.IdSucursal == idSucursal);
 
 
             var sorts = new List<SortExpression<Entity.Ticket>>();

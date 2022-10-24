@@ -143,7 +143,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken))?.Data ?? string.Empty;
-            var codigoPlanta = (await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken))?.Data ?? string.Empty;
+
+            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken);
 
             var loteCodigo = new Entity.LoteCodigo
             {
@@ -151,7 +152,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
                 IdLoteCodigoTipo = Constants.LoteCodigo.Tipo.MUESTRA,
                 FechaRecepcion = DateTimeOffset.Now,
-                CodigoPlanta = codigoPlanta,
+                CodigoPlanta = codeAndCorrelativo.Data!.Numero,
+                IdCorrelativo = codeAndCorrelativo.Data!.IdCorrelativo,
                 IdProveedor = request.CreateDto.IdProveedor,
                 CodigoPlantaRandom = codigoHash,
                 CodigoMuestraProveedor = string.Empty,

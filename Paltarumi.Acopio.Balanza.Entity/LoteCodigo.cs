@@ -24,7 +24,9 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string? UserNameUpdate { get; set; }
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
+        public int? IdCorrelativo { get; set; }
 
+        public virtual Correlativo? IdCorrelativoNavigation { get; set; }
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
         public virtual LoteCodigoEstado IdLoteCodigoEstadoNavigation { get; set; } = null!;
         public virtual LoteCodigoTipo IdLoteCodigoTipoNavigation { get; set; } = null!;

@@ -98,7 +98,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1523,6 +1522,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.FechaRecepcion).HasColumnName("fechaRecepcion");
 
+                entity.Property(e => e.IdCorrelativo).HasColumnName("idCorrelativo");
+
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
                 entity.Property(e => e.IdLote).HasColumnName("idLote");
@@ -1550,6 +1551,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.UserNameUpdate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameUpdate");
+
+                entity.HasOne(d => d.IdCorrelativoNavigation)
+                    .WithMany(p => p.LoteCodigos)
+                    .HasForeignKey(d => d.IdCorrelativo)
+                    .HasConstraintName("fk_acopio_LoteCodigo_idCorrelativo");
 
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
                     .WithMany(p => p.LoteCodigos)
