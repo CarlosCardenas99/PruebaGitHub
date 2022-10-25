@@ -57,7 +57,9 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal? AjusteOculto { get; set; }
         public bool Activo { get; set; }
         public byte[] RowVersion { get; set; } = null!;
+        public int? IdCorrelativo { get; set; }
 
+        public virtual Correlativo? IdCorrelativoNavigation { get; set; }
         public virtual LoteLiquidacionEstado IdLoteLiquidacionEstadoNavigation { get; set; } = null!;
         public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
         public virtual TipoLiquidacion IdTipoLiquidacionNavigation { get; set; } = null!;

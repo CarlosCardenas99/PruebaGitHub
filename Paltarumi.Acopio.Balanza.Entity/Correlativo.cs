@@ -8,7 +8,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public Correlativo()
         {
             LoteBalanzas = new HashSet<LoteBalanza>();
+            LoteChancados = new HashSet<LoteChancado>();
             LoteCodigos = new HashSet<LoteCodigo>();
+            LoteLiquidacions = new HashSet<LoteLiquidacion>();
+            LoteMuestreos = new HashSet<LoteMuestreo>();
         }
 
         public int IdCorrelativo { get; set; }
@@ -22,6 +25,9 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual CorrelativoTipo CodigoCorrelativoTipoNavigation { get; set; } = null!;
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
         public virtual ICollection<LoteBalanza> LoteBalanzas { get; set; }
+        public virtual ICollection<LoteChancado> LoteChancados { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
+        public virtual ICollection<LoteLiquidacion> LoteLiquidacions { get; set; }
+        public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
     }
 }

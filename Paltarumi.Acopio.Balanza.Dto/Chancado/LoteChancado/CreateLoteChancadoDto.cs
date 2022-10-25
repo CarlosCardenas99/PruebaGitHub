@@ -11,5 +11,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado
         public string ObservacionBalanza { get; set; } = null!;
         public decimal Tmh { get; set; }
         public string? IdLoteEstado { get; set; }
+        public int? IdCorrelativo { get; set; }
     }
 }

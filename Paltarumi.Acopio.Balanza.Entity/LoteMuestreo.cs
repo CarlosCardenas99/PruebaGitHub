@@ -42,8 +42,10 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string IdLoteEstado { get; set; } = null!;
         public byte[] RowVersion { get; set; } = null!;
         public string ObservacionBalanza { get; set; } = null!;
+        public int? IdCorrelativo { get; set; }
 
         public virtual Cancha? IdCanchaNavigation { get; set; }
+        public virtual Correlativo? IdCorrelativoNavigation { get; set; }
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
         public virtual LoteEstado IdLoteEstadoNavigation { get; set; } = null!;
         public virtual MineralCondicion? IdMineralCondicionNavigation { get; set; }

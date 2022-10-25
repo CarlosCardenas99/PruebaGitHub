@@ -78,13 +78,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             await CreateLoteBalanza(request, response, loteCodigoResponse.Data);
             if (!response.IsValid) return response;
 
-            await CreateLoteChancado(cancellationToken, response, response.Data!);
+            await CreateLoteChancado(cancellationToken, response, response.Data!, loteCodigoResponse.Data);
             if (!response.IsValid) return response;
 
-            await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!);
+            await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!, loteCodigoResponse.Data);
             if (!response.IsValid) return response;
 
-            await CreateLoteLiquidacion(cancellationToken, response, response.Data!);
+            await CreateLoteLiquidacion(cancellationToken, response, response.Data!, loteCodigoResponse.Data);
             if (!response.IsValid) return response;
 
             await CreateLoteOperacion(request, cancellationToken, response, codigoLote);
@@ -234,7 +234,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             }
         }
 
-        private async Task CreateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
+        private async Task CreateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, CreateCodeDto createCodeDto)
         {
             var placa = loteBalanzaDto.TicketDetails!.Select(x => x.Placa).FirstOrDefault(string.Empty);
             var placaCarreta = loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).FirstOrDefault(string.Empty);
@@ -247,6 +247,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.Placa).Distinct()),
                 PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).Distinct()),
                 Placa = placa,
+                IdCorrelativo= createCodeDto.IdCorrelativo,
                 PlacaCarreta = placaCarreta,
                 ObservacionBalanza = loteBalanzaDto.Observacion!,
                 IdLoteEstado = loteBalanzaDto.IdLoteEstado
@@ -256,7 +257,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 response.AttachResults(createResponse);
         }
 
-        private async Task CreateLoteMuestreo(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, GetLoteCodigoDto loteCodigoDto)
+        private async Task CreateLoteMuestreo(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, GetLoteCodigoDto loteCodigoDto, CreateCodeDto createCodeDto)
         {
             var createResponse = await _mediator?.Send(new CreateLoteMuestreoCommand(
                 loteCodigoDto?.CodigoPlanta!,
@@ -267,6 +268,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                     CodigoLote = loteBalanzaDto.CodigoLote!,
                     IdProveedor = loteBalanzaDto.IdProveedor,
                     Tmh = loteBalanzaDto.Tmh,
+                    IdCorrelativo = createCodeDto.IdCorrelativo,
                     CodigoAum = loteBalanzaDto.CodigoAum,
                     CodigoTrujillo = loteBalanzaDto.CodigoTrujillo,
                     IdLoteEstado = loteBalanzaDto.IdLoteEstado,
@@ -277,10 +279,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 response.AttachResults(createResponse);
         }
 
-        private async Task CreateLoteLiquidacion(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
+        private async Task CreateLoteLiquidacion(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, CreateCodeDto createCodeDto)
         {
             var createResponse = await _mediator?.Send(new CreateLoteLiquidacionCommand(new CreateLoteLiquidacionDto
             {
+                IdCorrelativo = createCodeDto.IdCorrelativo,
                 CodigoLote = loteBalanzaDto.CodigoLote!,
                 IdProveedor = loteBalanzaDto.IdProveedor,
                 IdTipoLiquidacion = Constants.Tipo_Liquidacion.LIQUIDACION,

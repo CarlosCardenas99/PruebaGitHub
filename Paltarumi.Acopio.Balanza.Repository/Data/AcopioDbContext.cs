@@ -1316,6 +1316,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.FechaRecepcion).HasColumnName("fechaRecepcion");
 
+                entity.Property(e => e.IdCorrelativo).HasColumnName("idCorrelativo");
+
                 entity.Property(e => e.IdLoteChancadoEstado)
                     .HasMaxLength(2)
                     .IsUnicode(false)
@@ -1381,6 +1383,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.UserNameUpdate)
                     .HasMaxLength(256)
                     .HasColumnName("userNameUpdate");
+
+                entity.HasOne(d => d.IdCorrelativoNavigation)
+                    .WithMany(p => p.LoteChancados)
+                    .HasForeignKey(d => d.IdCorrelativo)
+                    .HasConstraintName("fk_chancado_LoteChancado_idCorrelativo");
 
                 entity.HasOne(d => d.IdLoteChancadoEstadoNavigation)
                     .WithMany(p => p.LoteChancados)
@@ -2146,6 +2153,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("humedadMerma");
 
+                entity.Property(e => e.IdCorrelativo).HasColumnName("idCorrelativo");
+
                 entity.Property(e => e.IdLoteLiquidacionEstado)
                     .HasMaxLength(2)
                     .IsUnicode(false)
@@ -2262,6 +2271,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.ValorUnitarioUtilidadTm)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("valorUnitarioUtilidadTm");
+
+                entity.HasOne(d => d.IdCorrelativoNavigation)
+                    .WithMany(p => p.LoteLiquidacions)
+                    .HasForeignKey(d => d.IdCorrelativo)
+                    .HasConstraintName("fk_muestreo_LoteLiquidacion_idCorrelativo");
 
                 entity.HasOne(d => d.IdLoteLiquidacionEstadoNavigation)
                     .WithMany(p => p.LoteLiquidacions)
@@ -2703,6 +2717,8 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnName("idCancha")
                     .IsFixedLength();
 
+                entity.Property(e => e.IdCorrelativo).HasColumnName("idCorrelativo");
+
                 entity.Property(e => e.IdDuenoMuestra).HasColumnName("idDuenoMuestra");
 
                 entity.Property(e => e.IdLoteEstado)
@@ -2784,6 +2800,11 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .WithMany(p => p.LoteMuestreos)
                     .HasForeignKey(d => d.IdCancha)
                     .HasConstraintName("fk_muestreo_LoteMuestreo_idCancha");
+
+                entity.HasOne(d => d.IdCorrelativoNavigation)
+                    .WithMany(p => p.LoteMuestreos)
+                    .HasForeignKey(d => d.IdCorrelativo)
+                    .HasConstraintName("fk_muestreo_LoteMuestreo_idCorrelativo");
 
                 entity.HasOne(d => d.IdDuenoMuestraNavigation)
                     .WithMany(p => p.LoteMuestreos)

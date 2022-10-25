@@ -2,5 +2,6 @@
 {
     public class CreateLoteLiquidacionDto : LoteLiquidacionDto
     {
+        public int? IdCorrelativo { get; set; }
     }
 }
