@@ -72,7 +72,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var loteResponse = await CreateLote(request, cancellationToken, response, codigoLote);
             if (!response.IsValid) return response;
 
-            var codigoLoteResponse = await CreateCodigoLote(request, cancellationToken, response, loteResponse?.Data);
+            var codigoLoteResponse = await CreateCodigoLote(request, cancellationToken, response, loteResponse?.Data, loteCodigoResponse.Data);
             if (!response.IsValid) return response;
 
             await CreateLoteBalanza(request, response, loteCodigoResponse.Data);
@@ -137,14 +137,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             return createResponse!;
         }
 
-        private async Task<ResponseDto<GetLoteCodigoDto>> CreateCodigoLote(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteDto? lote)
+        private async Task<ResponseDto<GetLoteCodigoDto>> CreateCodigoLote(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteDto? lote, CreateCodeDto createCodeDto)
         {
             var loteCodigoRegistrado = new ResponseDto<GetLoteCodigoDto>();
 
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
-            var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken))?.Data ?? string.Empty;
+            var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken)!)?.Data ?? string.Empty;
 
-            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote, Constants.LoteCodigo.Tipo.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken);
+            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote!, Constants.LoteCodigo.Tipo.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken)!;
 
             var loteCodigo = new Entity.LoteCodigo
             {
@@ -153,7 +153,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdLoteCodigoTipo = Constants.LoteCodigo.Tipo.MUESTRA,
                 FechaRecepcion = DateTimeOffset.Now,
                 CodigoPlanta = codeAndCorrelativo.Data!.Numero,
-                IdCorrelativo = codeAndCorrelativo.Data!.IdCorrelativo,
+                IdCorrelativo = createCodeDto.IdCorrelativo,
                 IdProveedor = request.CreateDto.IdProveedor,
                 CodigoPlantaRandom = codigoHash,
                 CodigoMuestraProveedor = string.Empty,

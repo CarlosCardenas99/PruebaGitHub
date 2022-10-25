@@ -42,11 +42,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
                 request.CodigoLote = codeResponse?.Data.Numero ?? string.Empty;
 
                 createCodeDto.IdCorrelativo = codeResponse!.Data!.IdCorrelativo;
-                createCodeDto.Numero = (String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, request.CodigoLote));
                 
-                response.UpdateData(createCodeDto);
             }
+            createCodeDto.Numero = (String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, request.CodigoLote));
 
+            response.UpdateData(createCodeDto);
             //response.UpdateData(String.Format("{0}{1}{2}-{3}", loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura, separador, loteCodigoNomenclatura?.EmpresaNomenclatura, request.CodigoLote));
 
             return response;
