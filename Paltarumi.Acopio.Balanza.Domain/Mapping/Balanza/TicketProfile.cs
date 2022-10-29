@@ -39,7 +39,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.VehiculoTipo, opt => opt.MapFrom(x => x.IdVehiculoNavigation.IdTipoVehiculoNavigation != null ? x.IdVehiculoNavigation.IdTipoVehiculoNavigation.Descripcion : string.Empty))
                 .ForMember(x => x.EstadoTmh, opt => opt.MapFrom(x => x.IdEstadoTmhNavigation != null ? x.IdEstadoTmhNavigation.Descripcion : string.Empty))
                 .ForMember(x => x.EstadoTmhCarreta, opt => opt.MapFrom(x => x.IdEstadoTmhCarretaNavigation != null ? x.IdEstadoTmhCarretaNavigation.Descripcion : string.Empty))
-
+                .ForMember(x => x.CodigoEstadoTmh, opt => opt.MapFrom(x => x.IdEstadoTmhNavigation != null ? x.IdEstadoTmhNavigation.CodigoItem : string.Empty))
+                .ForMember(x => x.CodigoEstadoTmhCarreta, opt => opt.MapFrom(x => x.IdEstadoTmhCarretaNavigation != null ? x.IdEstadoTmhCarretaNavigation.CodigoItem : string.Empty))
                 .ReverseMap();
 
             CreateMap<Entity.Ticket, SearchTicketDto>()
