@@ -98,6 +98,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -3303,6 +3304,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdEstadoTmhCarreta).HasColumnName("idEstadoTmhCarreta");
 
+                entity.Property(e => e.IdEstadoTmhTara).HasColumnName("idEstadoTmhTara");
+
+                entity.Property(e => e.IdEstadoTmhTaraCarreta).HasColumnName("idEstadoTmhTaraCarreta");
+
                 entity.Property(e => e.IdLoteBalanza).HasColumnName("idLoteBalanza");
 
                 entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
@@ -3385,9 +3390,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("tara");
 
+                entity.Property(e => e.Tara100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tara100");
+
                 entity.Property(e => e.TaraCarreta)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("taraCarreta");
+
+                entity.Property(e => e.TaraCarreta100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("taraCarreta100");
 
                 entity.HasOne(d => d.IdConductorNavigation)
                     .WithMany(p => p.Tickets)
@@ -3403,8 +3416,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.HasOne(d => d.IdEstadoTmhCarretaNavigation)
                     .WithMany(p => p.TicketIdEstadoTmhCarretaNavigations)
                     .HasForeignKey(d => d.IdEstadoTmhCarreta)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_balanza_Ticket_idEstadoTmhCarreta");
+
+                entity.HasOne(d => d.IdEstadoTmhTaraNavigation)
+                    .WithMany(p => p.TicketIdEstadoTmhTaraNavigations)
+                    .HasForeignKey(d => d.IdEstadoTmhTara)
+                    .HasConstraintName("fk_balanza_Ticket_idEstadoTmhTara");
+
+                entity.HasOne(d => d.IdEstadoTmhTaraCarretaNavigation)
+                    .WithMany(p => p.TicketIdEstadoTmhTaraCarretaNavigations)
+                    .HasForeignKey(d => d.IdEstadoTmhTaraCarreta)
+                    .HasConstraintName("fk_balanza_Ticket_idEstadoTmhTaraCarreta");
 
                 entity.HasOne(d => d.IdLoteBalanzaNavigation)
                     .WithMany(p => p.Tickets)
@@ -3475,6 +3497,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
                 entity.Property(e => e.IdEstadoTmhCarreta).HasColumnName("idEstadoTmhCarreta");
 
+                entity.Property(e => e.IdEstadoTmhTara).HasColumnName("idEstadoTmhTara");
+
+                entity.Property(e => e.IdEstadoTmhTaraCarreta).HasColumnName("idEstadoTmhTaraCarreta");
+
                 entity.Property(e => e.IdLoteBalanza).HasColumnName("idLoteBalanza");
 
                 entity.Property(e => e.IdTransporte).HasColumnName("idTransporte");
@@ -3557,9 +3583,17 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("tara");
 
+                entity.Property(e => e.Tara100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("tara100");
+
                 entity.Property(e => e.TaraCarreta)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("taraCarreta");
+
+                entity.Property(e => e.TaraCarreta100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("taraCarreta100");
             });
 
             modelBuilder.Entity<TipoComprobante>(entity =>

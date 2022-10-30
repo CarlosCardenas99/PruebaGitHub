@@ -20,7 +20,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal PesoNeto100 { get; set; }
         public decimal PesoNetoBase { get; set; }
         public decimal PesoNeto { get; set; }
-        public int IdEstadoTmhCarreta { get; set; }
+        public int? IdEstadoTmhCarreta { get; set; }
         public decimal PesoBrutoCarreta100 { get; set; }
         public decimal PesoBrutoCarretaBase { get; set; }
         public decimal PesoBrutoCarreta { get; set; }
@@ -40,5 +40,9 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int CantidadUnidadMedida { get; set; }
         public string Observacion { get; set; } = null!;
         public bool Activo { get; set; }
+        public int? IdEstadoTmhTara { get; set; }
+        public int? IdEstadoTmhTaraCarreta { get; set; }
+        public decimal Tara100 { get; set; }
+        public decimal TaraCarreta100 { get; set; }
     }
 }
