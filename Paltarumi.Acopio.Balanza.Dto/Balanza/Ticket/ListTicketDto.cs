@@ -19,7 +19,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
         public string PlacaCarreta { get; set; } = null!;
         public string EstadoTmh { get; set; } = null!;
         public string EstadoTmhCarreta { get; set; } = null!;
-        public string? CodigoEstadoTmh { get; set; }
+        public string CodigoEstadoTmh { get; set; } = null!;
         public string? CodigoEstadoTmhCarreta { get; set; }
         public string? CodigoEstadoTmhTaraCarreta { get; set; }
         public string? CodigoEstadoTmhTara { get; set; }
