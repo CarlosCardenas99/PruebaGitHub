@@ -21,5 +21,9 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
         public string EstadoTmhCarreta { get; set; } = null!;
         public string? CodigoEstadoTmh { get; set; }
         public string? CodigoEstadoTmhCarreta { get; set; }
+        public object CodigoEstadoTmhTaraCarreta { get; set; }
+        public object CodigoEstadoTmhTara { get; set; }
+        public object EstadoTmhTara { get; set; }
+        public object EstadoTmhTaraCarreta { get; set; }
     }
 }
