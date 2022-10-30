@@ -13,6 +13,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
             Lotes = new HashSet<Lote>();
             TicketIdEstadoTmhCarretaNavigations = new HashSet<Ticket>();
             TicketIdEstadoTmhNavigations = new HashSet<Ticket>();
+            TicketIdEstadoTmhTaraCarretaNavigations = new HashSet<Ticket>();
+            TicketIdEstadoTmhTaraNavigations = new HashSet<Ticket>();
             TicketIdUnidadMedidaNavigations = new HashSet<Ticket>();
             TicketIdUsuarioAprobadorPesoBrutoCarretaNavigations = new HashSet<Ticket>();
             TicketIdUsuarioAprobadorPesoBrutoNavigations = new HashSet<Ticket>();
@@ -32,6 +34,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual ICollection<Lote> Lotes { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhCarretaNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdEstadoTmhNavigations { get; set; }
+        public virtual ICollection<Ticket> TicketIdEstadoTmhTaraCarretaNavigations { get; set; }
+        public virtual ICollection<Ticket> TicketIdEstadoTmhTaraNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUnidadMedidaNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUsuarioAprobadorPesoBrutoCarretaNavigations { get; set; }
         public virtual ICollection<Ticket> TicketIdUsuarioAprobadorPesoBrutoNavigations { get; set; }
