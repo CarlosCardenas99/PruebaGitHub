@@ -64,19 +64,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 loteDto.Proveedor = loteBalanza.IdProveedorNavigation == null ? null : _mapper?.Map<GetProveedorDto>(loteBalanza.IdProveedorNavigation);
                 loteDto.EstadoTipoMaterial = loteBalanza.IdEstadoTipoMaterialNavigation == null ? null : _mapper?.Map<GetMaestroDto>(loteBalanza.IdEstadoTipoMaterialNavigation);
 
-                var idTickets = loteBalanza.Tickets.Select(x => x.IdTicket);
-                var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
-                    x => idTickets.Contains(x.IdTicket),
-                    x => x.IdConductorNavigation!,
-                    x => x.IdTransporteNavigation!,
-                    x => x.IdEstadoTmhNavigation,
-                    x => x.IdUnidadMedidaNavigation,
-                    x => x.IdVehiculoNavigation,
-                    x => x.IdEstadoTmhTaraNavigation!,
-                    x => x.IdEstadoTmhTaraCarretaNavigation!
-                    );
+                //var idTickets = loteBalanza.Tickets.Select(x => x.IdTicket);
+                //var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
+                //    x => idTickets.Contains(x.IdTicket),
+                //    x => x.IdConductorNavigation!,
+                //    x => x.IdTransporteNavigation!,
+                //    x => x.IdEstadoTmhNavigation,
+                //    x => x.IdUnidadMedidaNavigation,
+                //    x => x.IdVehiculoNavigation,
+                //    x => x.IdEstadoTmhTaraNavigation!,
+                //    x => x.IdEstadoTmhTaraCarretaNavigation!
+                //    );
 
-                loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
+                //loteDto.TicketDetails = _mapper?.Map<IEnumerable<ListTicketDto>>(tickets);
 
                 loteDto.Empresa = _mapper!.Map<GetEmpresaDto>(lote!.IdEmpresaNavigation) ?? null;
 
