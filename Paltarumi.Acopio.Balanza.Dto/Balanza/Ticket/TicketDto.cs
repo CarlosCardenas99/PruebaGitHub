@@ -4,7 +4,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
     public class TicketDto
     {
         public int IdLoteBalanza { get; set; }
-        public string Numero { get; set; } = null!;
+        public string? Numero { get; set; }
         public DateTimeOffset FechaIngreso { get; set; }
         public DateTimeOffset? FechaSalida { get; set; }
         public int IdEstadoTmh { get; set; }
