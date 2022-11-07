@@ -4,12 +4,11 @@ using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Export.Application.App;
-using Paltarumi.Acopio.Export.Application.Dto;
-using System.Reflection;
+using Paltarumi.Attribute;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 {
-    public class ExportLoteBalanzaQueryHandler : QueryHandlerBase<ExportLoteBalanzaQuery, SearchResultDto<byte>>
+    public class ExportLoteBalanzaQueryHandler : SearchQueryHandlerBase<ExportLoteBalanzaQuery, SearchLoteBalanzaFilterDto, byte>
     {
 
         public ExportLoteBalanzaQueryHandler(
@@ -23,14 +22,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
         protected override async Task<ResponseDto<SearchResultDto<byte>>> HandleQuery(ExportLoteBalanzaQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<SearchResultDto<byte>>();
-            var searchResult = await _mediator?.Send(new SearchLoteBalanzaQuery(request.SearchParams.search))!;
+            var searchResult = await _mediator?.Send(new SearchLoteBalanzaQuery(request.SearchParams))!;
             var itemsToExport = searchResult?.Data?.Items ?? new List<SearchLoteBalanzaDto>();
 
             var app = new ExportApp();
             var lista = (IEnumerable<object>)itemsToExport;
             var rowsData = (await app.getData(lista.ToList())).Data.ToList();
-
-            var ext = app.Export(rowsData, request.SearchParams.infoHeaders!.ToList());
+            var InfoHeaders = request.SearchParams.InfoHeaders != null ? request.SearchParams.InfoHeaders.ToList() : new List<InfoHeader>();
+            var ext = app.Export(rowsData, InfoHeaders);
 
             response.UpdateData(new SearchResultDto<byte>
             {
