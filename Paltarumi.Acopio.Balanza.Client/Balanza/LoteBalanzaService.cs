@@ -1,7 +1,6 @@
 ﻿using Paltarumi.Acopio.Balanza.Client.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Export.Application.Dto;
 
 namespace Paltarumi.Acopio.Balanza.Client.Balanza
 {
@@ -29,7 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Get(int id)
             => await Get<GetLoteBalanzaDto>($"/{id}")!;
 
-        public async Task<HttpResponseMessage> Export(SearchParamsExportDto<SearchLoteBalanzaFilterDto> exportParams)
+        public async Task<HttpResponseMessage> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> exportParams)
             => await PostFile("/export", exportParams)!;
 
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> filter)
