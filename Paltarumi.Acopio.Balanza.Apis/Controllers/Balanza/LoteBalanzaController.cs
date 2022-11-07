@@ -4,6 +4,7 @@ using Paltarumi.Acopio.Balanza.Apis.Security;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Export.Application.Dto;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 {
@@ -51,7 +52,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
             => await _loteBalanzaApplication.List();
 
         [HttpPost("export")]
-        public async Task<FileResult> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
+        public async Task<FileResult> Export(SearchParamsExportDto<SearchLoteBalanzaFilterDto> searchParams)
             => await DownloadFile(
                 (await _loteBalanzaApplication.Export(searchParams)).Data?.Items?.ToArray() ?? new byte[0],
                 string.Format($"{Domain.Resources.Balanza.LoteBalanza.ExcelReportName}.xlsx", DateTimeOffset.Now)

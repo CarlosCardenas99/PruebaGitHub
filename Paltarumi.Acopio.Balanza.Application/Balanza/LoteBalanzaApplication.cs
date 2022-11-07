@@ -6,6 +6,7 @@ using Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Export.Application.Dto;
 
 namespace Paltarumi.Acopio.Balanza.Application.Balanza
 {
@@ -34,7 +35,7 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List()
             => await _mediator.Send(new ListLoteBalanzaQuery());
 
-        public async Task<ResponseDto<SearchResultDto<byte>>> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
+        public async Task<ResponseDto<SearchResultDto<byte>>> Export(SearchParamsExportDto<SearchLoteBalanzaFilterDto> searchParams)
             => await _mediator.Send(new ExportLoteBalanzaQuery(searchParams));
 
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
