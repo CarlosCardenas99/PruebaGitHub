@@ -6,6 +6,7 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
@@ -32,7 +33,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 
             if (ticket != null && _mediator != null)
            {
-                var numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, request.UpdateDto.Serie, request.UpdateDto.IdEmpresa, request.UpdateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
+                var numero = (await _mediator.Send(new CreateCodeCommand(CONST_ACOPIO.CODIGOCORRELATIVO_TIPO.TICKET, request.UpdateDto.Serie, request.UpdateDto.IdEmpresa, request.UpdateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
 
                 ticket.Numero = numero ?? string.Empty;
 

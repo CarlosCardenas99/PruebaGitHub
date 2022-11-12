@@ -25,10 +25,12 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public DateTimeOffset? UpdateDate { get; set; }
         public bool Activo { get; set; }
         public int? IdCorrelativo { get; set; }
+        public string IdLoteCodigoModulo { get; set; } = null!;
 
         public virtual Correlativo? IdCorrelativoNavigation { get; set; }
         public virtual DuenoMuestra? IdDuenoMuestraNavigation { get; set; }
         public virtual LoteCodigoEstado IdLoteCodigoEstadoNavigation { get; set; } = null!;
+        public virtual LoteCodigoModulo IdLoteCodigoModuloNavigation { get; set; } = null!;
         public virtual LoteCodigoTipo IdLoteCodigoTipoNavigation { get; set; } = null!;
         public virtual Lote? IdLoteNavigation { get; set; }
         public virtual Proveedor? IdProveedorNavigation { get; set; }

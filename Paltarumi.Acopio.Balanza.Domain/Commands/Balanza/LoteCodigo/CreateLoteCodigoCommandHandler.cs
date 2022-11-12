@@ -3,11 +3,11 @@ using MediatR;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
-using Paltarumi.Acopio.Balanza.Dto.Common;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Balanza.Repository.Security;
+using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
@@ -46,7 +46,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             {
                 lotecodigo.Activo = true;
 
-                lotecodigo.IdLoteCodigoEstado = Constants.Maestro.LoteCodigoEstado.PENDIENTE;
+                lotecodigo.IdLoteCodigoEstado = CONST_ACOPIO.LOTECODIGO_ESTADO.PENDIENTE;
 
                 string codigoLote = string.Empty;
                 if (request.CreateDto.IdLote != null)

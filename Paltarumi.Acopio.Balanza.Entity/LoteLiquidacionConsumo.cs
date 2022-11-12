@@ -11,14 +11,14 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal ConsumoKgTm100 { get; set; }
         public decimal ValorUnitarioKg100 { get; set; }
         public decimal SubTotalTm100 { get; set; }
-        public string IdPropiedadCalculo { get; set; } = null!;
+        public bool? CalculoPorFactor { get; set; }
+        public decimal Factor { get; set; }
+        public decimal ConsumoKgTmBase { get; set; }
         public decimal ConsumoKgTm { get; set; }
-        public decimal ValorUnitarioKg { get; set; }
         public decimal SubTotalTm { get; set; }
         public bool Activo { get; set; }
 
         public virtual Insumo IdInsumoNavigation { get; set; } = null!;
         public virtual LoteLiquidacion IdLoteLiquidacionNavigation { get; set; } = null!;
-        public virtual PropiedadCalculo IdPropiedadCalculoNavigation { get; set; } = null!;
     }
 }

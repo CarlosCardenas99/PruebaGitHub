@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
-using Microsoft.EntityFrameworkCore;
-using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Constantes;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 {
@@ -29,7 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             var loteCodigoTipo = request.CreateDto.IdLoteCodigoTipo;
             var idLote = request.CreateDto.IdLote;
 
-            if (loteCodigoTipo != Constants.LoteCodigo.Tipo.MUESTRA_REFERENCIAL && idLote == null) return CustomValidationMessage(context, Resources.Common.UpdateLoteCodigo);
+            if (loteCodigoTipo != CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA_REFERENCIAL && idLote == null) return CustomValidationMessage(context, Resources.Common.UpdateLoteCodigo);
 
             return true;
         }
