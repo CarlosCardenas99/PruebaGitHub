@@ -7,6 +7,7 @@ using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
@@ -44,9 +45,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
             }
 
             var estado = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                x.CodigoTabla.Equals(Constants.Maestro.CodigoTabla.LOTE_ESTADO) &&
-                x.CodigoItem.Equals(Constants.Maestro.LoteEstado.EN_ESPERA)
+                x.CodigoTabla.Equals(CONST_MAESTRO.CODIGO_TABLA.LOTE_ESTADO) &&
+                x.CodigoItem.Equals(CONST_MAESTRO.LOTE_ESTADO.PENDIENTE)
             );
+
             if (estado == null)
             {
                 response.AddErrorResult(Resources.Acopio.Lote.EstadoNotFound);

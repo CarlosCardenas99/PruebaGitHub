@@ -8,7 +8,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public PropiedadCalculo()
         {
             ComprobanteDetalles = new HashSet<ComprobanteDetalle>();
-            LoteLiquidacionConsumos = new HashSet<LoteLiquidacionConsumo>();
         }
 
         public string IdPropiedadCalculo { get; set; } = null!;
@@ -17,6 +16,5 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual ICollection<ComprobanteDetalle> ComprobanteDetalles { get; set; }
-        public virtual ICollection<LoteLiquidacionConsumo> LoteLiquidacionConsumos { get; set; }
     }
 }

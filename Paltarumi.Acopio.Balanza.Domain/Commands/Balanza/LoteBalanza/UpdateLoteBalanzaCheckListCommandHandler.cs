@@ -39,7 +39,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (loteBalanza != null)
             {
                 int total = ticketDetails?.Where(x => x.Habilitado == true).ToList().Count ?? 0;
-                int revisados = ticketDetails?.Where(x => x.Habilitado == true && x.IdCheckListEstado == Constants.Maestro.EstadoCheckList.Revisado).ToList().Count ?? 0;
+                int revisados = ticketDetails?.Where(x => x.Habilitado == true && x.IdCheckListEstado == Constants.EstadoCheckList.Revisado).ToList().Count ?? 0;
                 int porcentajeAvance = (revisados * 100) / total;
 
                 loteBalanza.PorcentajeCheckList = porcentajeAvance;

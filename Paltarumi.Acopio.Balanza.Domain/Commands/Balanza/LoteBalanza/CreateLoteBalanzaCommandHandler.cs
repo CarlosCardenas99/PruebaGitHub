@@ -22,6 +22,7 @@ using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Balanza.Repository.Security;
+using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
@@ -98,7 +99,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var idSucursal = _userIdentity.GetIdSucursal();
 
             var createResponse = await _mediator?.Send(// Actualizar la serie harcoded
-                new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal),
+                new CreateCodeCommand(Constantes.CONST_ACOPIO.CODIGOCORRELATIVO_TIPO.LOTE, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal),
                 cancellationToken
             )!;
 
@@ -144,27 +145,25 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken)!)?.Data ?? string.Empty;
 
-            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote!, Constants.LoteCodigo.Tipo.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken)!;
+            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote!, Constantes.CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken)!;
 
             var loteCodigo = new Entity.LoteCodigo
             {
                 IdLote = lote.IdLote,
                 IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
-                IdLoteCodigoTipo = Constants.LoteCodigo.Tipo.MUESTRA,
+                IdLoteCodigoTipo = CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA,
                 FechaRecepcion = DateTimeOffset.Now,
                 CodigoPlanta = codeAndCorrelativo.Data!.Numero,
                 IdCorrelativo = createCodeDto.IdCorrelativo,
                 IdProveedor = request.CreateDto.IdProveedor,
                 CodigoPlantaRandom = codigoHash,
                 CodigoMuestraProveedor = string.Empty,
-                EnsayoLeyAu = false,
-                EnsayoLeyAg = false,
-                EnsayoPorcentajeRecuperacion = false,
-                EnsayoConsumo = false,
-                IdLoteCodigoEstado = Constants.Maestro.LoteCodigoEstado.PENDIENTE,
-                UserNameCreate = string.Empty,
-                CreateDate = DateTimeOffset.Now,
-                Activo = true
+                EnsayoLeyAu = true,
+                EnsayoLeyAg = true,
+                EnsayoPorcentajeRecuperacion = true,
+                EnsayoConsumo = true,
+                IdLoteCodigoEstado = CONST_ACOPIO.LOTECODIGO_ESTADO.PENDIENTE,
+                IdLoteCodigoModulo = CONST_ACOPIO.LOTECODIGO_MODULO.BALANZA
             };
 
             await _loteCodigoRepository.AddAsync(loteCodigo);
@@ -187,14 +186,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 foreach (var ticket in loteBalanza.Tickets)
                 {
-                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.TICKET, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
+                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(CONST_ACOPIO.CODIGOCORRELATIVO_TIPO.TICKET, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
                     ticket.Activo = true;
                 }
-                // TO DO : BORRAR
-                //var estadoLote = await _maestroRepository.GetByAsNoTrackingAsync(x =>
-                //    x.CodigoTabla == Constants.Maestro.CodigoTabla.LOTE_ESTADO &&
-                //    x.CodigoItem == Constants.Maestro.LoteEstado.EN_ESPERA
-                //);
 
                 loteBalanza.CodigoLote = createCodeDto.Numero;
                 loteBalanza.IdCorrelativo = createCodeDto.IdCorrelativo;
@@ -207,9 +201,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 loteBalanza.UpdateTmh();
                 loteBalanza.UpdateTmh100();
                 loteBalanza.UpdateTmhBase();
-                loteBalanza.UserNameCreate = "";
-
-                //loteBalanza.IdLoteEstado = Constants.acopio.LoteEstado.PENDIENTE;
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
@@ -286,8 +277,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdCorrelativo = createCodeDto.IdCorrelativo,
                 CodigoLote = loteBalanzaDto.CodigoLote!,
                 IdProveedor = loteBalanzaDto.IdProveedor,
-                IdTipoLiquidacion = Constants.Tipo_Liquidacion.LIQUIDACION,
-                IdLoteLiquidacionEstado = Constants.LoteLiquidacion_Estado.PENDIENTE,
+                IdTipoLiquidacion = CONST_LIQUIDACION.TIPO_LIQUIDACION.LIQUIDACION,
+                IdLoteLiquidacionEstado = CONST_LIQUIDACION.ESTADO_LOTELIQUIDACION.PENDIENTE,
                 FechaIngreso = DateTimeOffset.Now,
                 Tmh100 = loteBalanzaDto.Tmh100,
                 Tmh = loteBalanzaDto.Tmh,
@@ -319,7 +310,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             if (proveedor != null)
                 duenoMuestra = await _duenoMuestraRepository.GetByAsNoTrackingAsync(x
-                    => x.Numero == proveedor.Ruc && x.CodigoTipoDocumento == Constants.TipoDocumento.RUC
+                    => x.Numero == proveedor.Ruc && x.CodigoTipoDocumento == CONST_MAESTRO.TIPO_DOCUMENTO.CODIGO_RUC
                 );
 
             if (duenoMuestra != null)
@@ -327,7 +318,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             duenoMuestra = new Entity.DuenoMuestra
             {
-                CodigoTipoDocumento = Constants.TipoDocumento.RUC,
+                CodigoTipoDocumento = CONST_MAESTRO.TIPO_DOCUMENTO.CODIGO_RUC,
                 Numero = proveedor?.Ruc ?? string.Empty,
                 Nombres = proveedor?.RazonSocial ?? string.Empty,
                 Direccion = proveedor?.Direccion ?? string.Empty,

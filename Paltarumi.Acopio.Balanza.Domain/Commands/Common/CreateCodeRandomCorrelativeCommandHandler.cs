@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Newtonsoft.Json;
-using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
@@ -70,7 +70,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
         private int[] generarListaNumeroAleatorios(int cursor)
         {
             var rand = new Random();
-            int cantidad = rand.Next(Constants.LoteCodigo.Aleatorio.ValorInicial, Constants.LoteCodigo.Aleatorio.ValorFinal);
+            int cantidad = rand.Next(CONST_ACOPIO.NUMERO_ALEATORIO.VALOR_INICIAL, CONST_ACOPIO.NUMERO_ALEATORIO.VALOR_FINAL);
             int[] arreglo = generaListInt(cantidad, cursor);
             int[] nuevoarreglo = new int[cantidad];
 

@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using MediatR;
-using Newtonsoft.Json;
-using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Common;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
@@ -36,9 +34,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             if (!string.IsNullOrEmpty(loteCodigoNomenclatura?.EmpresaNomenclatura) && !string.IsNullOrEmpty(loteCodigoNomenclatura?.TipoLoteCodigoNomenclatura))
                 separador = "-";
 
-            if(request.IdLoteCodigoTipo.Equals(Constants.LoteCodigo.Tipo.MUESTRA_REFERENCIAL))
+            if(request.IdLoteCodigoTipo.Equals(CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA_REFERENCIAL))
             {
-                var codeResponse = await _mediator?.Send(new CreateCodeCommand(Constants.CodigoCorrelativoTipo.LOTE_REFERENCIAL, request.Serie, request.IdEmpresa, request.IdSucursal))!;
+                var codeResponse = await _mediator?.Send(new CreateCodeCommand(CONST_ACOPIO.CODIGOCORRELATIVO_TIPO.LOTE_REFERENCIAL, request.Serie, request.IdEmpresa, request.IdSucursal))!;
                 request.CodigoLote = codeResponse?.Data.Numero ?? string.Empty;
 
                 createCodeDto.IdCorrelativo = codeResponse!.Data!.IdCorrelativo;
