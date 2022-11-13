@@ -281,7 +281,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdLoteLiquidacionEstado = CONST_LIQUIDACION.ESTADO_LOTELIQUIDACION.PENDIENTE,
                 FechaIngreso = DateTimeOffset.Now,
                 Tmh100 = loteBalanzaDto.Tmh100,
-                Tmh = loteBalanzaDto.Tmh,
+                Tmh = loteBalanzaDto.Tmh
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)
