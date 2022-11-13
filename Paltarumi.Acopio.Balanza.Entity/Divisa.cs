@@ -9,7 +9,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         {
             Asignacions = new HashSet<Asignacion>();
             Comprobantes = new HashSet<Comprobante>();
-            ConceptoCostos = new HashSet<ConceptoCosto>();
             Consumos = new HashSet<Consumo>();
             Costos = new HashSet<Costo>();
             LoteLiquidacionComisions = new HashSet<LoteLiquidacionComision>();
@@ -22,7 +21,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual ICollection<Asignacion> Asignacions { get; set; }
         public virtual ICollection<Comprobante> Comprobantes { get; set; }
-        public virtual ICollection<ConceptoCosto> ConceptoCostos { get; set; }
         public virtual ICollection<Consumo> Consumos { get; set; }
         public virtual ICollection<Costo> Costos { get; set; }
         public virtual ICollection<LoteLiquidacionComision> LoteLiquidacionComisions { get; set; }

@@ -8,6 +8,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public CostoConcepto()
         {
             Costos = new HashSet<Costo>();
+            LoteLiquidacionCostos = new HashSet<LoteLiquidacionCosto>();
         }
 
         public string IdCostoConcepto { get; set; } = null!;
@@ -16,5 +17,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public bool Activo { get; set; }
 
         public virtual ICollection<Costo> Costos { get; set; }
+        public virtual ICollection<LoteLiquidacionCosto> LoteLiquidacionCostos { get; set; }
     }
 }

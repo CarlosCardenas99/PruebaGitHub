@@ -5,6 +5,11 @@ namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class LoteCodigo
     {
+        public LoteCodigo()
+        {
+            LoteCodigoLiquidacions = new HashSet<LoteCodigoLiquidacion>();
+        }
+
         public int IdLoteCodigo { get; set; }
         public int? IdLote { get; set; }
         public int? IdProveedor { get; set; }
@@ -34,5 +39,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public virtual LoteCodigoTipo IdLoteCodigoTipoNavigation { get; set; } = null!;
         public virtual Lote? IdLoteNavigation { get; set; }
         public virtual Proveedor? IdProveedorNavigation { get; set; }
+        public virtual ICollection<LoteCodigoLiquidacion> LoteCodigoLiquidacions { get; set; }
     }
 }

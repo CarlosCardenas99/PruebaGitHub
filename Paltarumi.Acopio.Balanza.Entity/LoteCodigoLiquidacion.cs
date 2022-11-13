@@ -6,6 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     public partial class LoteCodigoLiquidacion
     {
         public int IdLoteCodigoLiquidacion { get; set; }
+        public int? IdLoteCodigo { get; set; }
         public int IdLoteLiquidacion { get; set; }
         public string IdLoteCodigoTipo { get; set; } = null!;
         public string CodigoPlanta { get; set; } = null!;
@@ -23,6 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string Observacion { get; set; } = null!;
         public bool Activo { get; set; }
 
+        public virtual LoteCodigo? IdLoteCodigoNavigation { get; set; }
         public virtual LoteCodigoTipo IdLoteCodigoTipoNavigation { get; set; } = null!;
         public virtual LoteLiquidacion IdLoteLiquidacionNavigation { get; set; } = null!;
         public virtual TipoMetal IdTipoMetalNavigation { get; set; } = null!;
