@@ -2483,22 +2483,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("codigoLote");
 
-                entity.Property(e => e.ConsumoCianuro)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("consumoCianuro");
-
-                entity.Property(e => e.ConsumoCianuro100)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("consumoCianuro100");
-
-                entity.Property(e => e.ConsumoSoda)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("consumoSoda");
-
-                entity.Property(e => e.ConsumoSoda100)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("consumoSoda100");
-
                 entity.Property(e => e.FactorConversion)
                     .HasColumnType("decimal(18, 4)")
                     .HasColumnName("factorConversion");
@@ -2549,6 +2533,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("igv");
 
+                entity.Property(e => e.Incremento)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("incremento");
+
                 entity.Property(e => e.InterDolarGr)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("interDolarGr");
@@ -2590,9 +2578,33 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalAdelantos");
 
+                entity.Property(e => e.SubTotalCconsumoSoda)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalCconsumoSoda");
+
                 entity.Property(e => e.SubTotalConPenalidad)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalConPenalidad");
+
+                entity.Property(e => e.SubTotalConsumoCianuro)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalConsumoCianuro");
+
+                entity.Property(e => e.SubTotalConsumoCianuro100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalConsumoCianuro100");
+
+                entity.Property(e => e.SubTotalConsumoSoda100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalConsumoSoda100");
+
+                entity.Property(e => e.SubTotalGastosEmpresa)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalGastosEmpresa");
+
+                entity.Property(e => e.SubTotalGastosProveedor)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalGastosProveedor");
 
                 entity.Property(e => e.SubTotalSinPenalidad)
                     .HasColumnType("decimal(18, 3)")
@@ -2641,6 +2653,35 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.ValorUnitarioUtilidadTm)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("valorUnitarioUtilidadTm");
+
+                entity.HasOne(d => d.IdCorrelativoNavigation)
+                    .WithMany(p => p.LoteLiquidacions)
+                    .HasForeignKey(d => d.IdCorrelativo)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_liquidaciones_LoteLiquidacion_idCorrelativo");
+
+                entity.HasOne(d => d.IdLoteLiquidacionEstadoNavigation)
+                    .WithMany(p => p.LoteLiquidacions)
+                    .HasForeignKey(d => d.IdLoteLiquidacionEstado)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_liquidaciones_LoteLiquidacion_idLoteLiquidacionEstado");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany(p => p.LoteLiquidacions)
+                    .HasForeignKey(d => d.IdProveedor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_liquidaciones_LoteLiquidacion_idProveedor");
+
+                entity.HasOne(d => d.IdTipoLiquidacionNavigation)
+                    .WithMany(p => p.LoteLiquidacions)
+                    .HasForeignKey(d => d.IdTipoLiquidacion)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_liquidaciones_LoteLiquidacion_idTipoLiquidacion");
+
+                entity.HasOne(d => d.IdTipoMineralNavigation)
+                    .WithMany(p => p.LoteLiquidacions)
+                    .HasForeignKey(d => d.IdTipoMineral)
+                    .HasConstraintName("fk_liquidaciones_LoteLiquidacion_idTipoMineral");
             });
 
             modelBuilder.Entity<LoteLiquidacionAdelanto>(entity =>

@@ -5,9 +5,16 @@ namespace Paltarumi.Acopio.Balanza.Entity
 {
     public partial class LoteLiquidacionEstado
     {
+        public LoteLiquidacionEstado()
+        {
+            LoteLiquidacions = new HashSet<LoteLiquidacion>();
+        }
+
         public string IdLoteLiquidacionEstado { get; set; } = null!;
         public string Nombre { get; set; } = null!;
         public byte Orden { get; set; }
         public bool Activo { get; set; }
+
+        public virtual ICollection<LoteLiquidacion> LoteLiquidacions { get; set; }
     }
 }
