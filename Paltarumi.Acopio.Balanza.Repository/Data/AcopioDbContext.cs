@@ -107,7 +107,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -1022,13 +1021,13 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .IsUnicode(false)
                     .HasColumnName("observacion");
 
-                entity.Property(e => e.Precio)
+                entity.Property(e => e.ValorUnitario)
                     .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("precio");
+                    .HasColumnName("valorUnitario");
 
-                entity.Property(e => e.Precio100)
+                entity.Property(e => e.ValorUnitario100)
                     .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("precio100");
+                    .HasColumnName("valorUnitario100");
 
                 entity.HasOne(d => d.IdCostoConceptoNavigation)
                     .WithMany(p => p.Costos)
@@ -2754,15 +2753,15 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnName("idUnidadMedida")
                     .IsFixedLength();
 
-                entity.Property(e => e.Precio)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("precio");
+                entity.Property(e => e.SubTotal).HasColumnType("decimal(18, 3)");
 
-                entity.Property(e => e.Precio100)
+                entity.Property(e => e.ValorUnitario)
                     .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("precio100");
+                    .HasColumnName("valorUnitario");
 
-                entity.Property(e => e.Total).HasColumnType("decimal(18, 3)");
+                entity.Property(e => e.ValorUnitario100)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("valorUnitario100");
 
                 entity.HasOne(d => d.IdCostoConceptoNavigation)
                     .WithMany(p => p.LoteLiquidacionCostos)

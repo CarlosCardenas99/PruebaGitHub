@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
@@ -22,7 +21,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
         protected override async Task<ResponseDto<IEnumerable<ListLoteCodigoDto>>> HandleQuery(ListLoteCodigoQuery request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<IEnumerable<ListLoteCodigoDto>>();
-            var list = await _repository.FindAll().ToListAsync(cancellationToken);
+            var list = await _repository.FindByAsync(
+                    x => x.IdLoteNavigation!.CodigoLote == request.CodigoLote && x.Activo,
+                    x => x.IdLoteNavigation!,
+                    x => x.IdLoteCodigoModuloNavigation,
+                    x => x.IdLoteCodigoEstadoNavigation,
+                    x => x.IdLoteCodigoTipoNavigation,
+                    x => x.IdProveedorNavigation!,
+                    x => x.IdDuenoMuestraNavigation!
+                    );
             var listDtos = _mapper?.Map<IEnumerable<ListLoteCodigoDto>>(list);
 
             response.UpdateData(listDtos ?? new List<ListLoteCodigoDto>());

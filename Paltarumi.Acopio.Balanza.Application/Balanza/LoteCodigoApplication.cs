@@ -27,8 +27,8 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
         public async Task<ResponseDto<GetLoteCodigoDto>> Get(int id)
             => await _mediator.Send(new GetLoteCodigoQuery(id));
 
-        public async Task<ResponseDto<IEnumerable<ListLoteCodigoDto>>> List()
-            => await _mediator.Send(new ListLoteCodigoQuery());
+        public async Task<ResponseDto<IEnumerable<ListLoteCodigoDto>>> List(string loteCodigo)
+            => await _mediator.Send(new ListLoteCodigoQuery(loteCodigo));
 
         public async Task<ResponseDto<SearchResultDto<SearchLoteCodigoDto>>> Search(SearchParamsDto<SearchLoteCodigoFilterDto> searchParams)
             => await _mediator.Send(new SearchLoteCodigoQuery(searchParams));

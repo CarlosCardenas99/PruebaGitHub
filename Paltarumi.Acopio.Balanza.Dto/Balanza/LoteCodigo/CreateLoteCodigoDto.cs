@@ -13,5 +13,6 @@
         public bool EnsayoConsumo { get; set; }
         public string? IdSucursal { get; set; }
         public string? Serie { get; set; }
+        public string IdLoteCodigoModulo { get; set; } = null!;
     }
 }

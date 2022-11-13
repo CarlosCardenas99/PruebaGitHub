@@ -55,9 +55,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
                     var newReg = new Entity.LoteLiquidacionCosto();
                     newReg.IdLoteLiquidacion = loteLiquidacion.IdLoteLiquidacion;
                     newReg.IdCostoConcepto = conceptoCosto.IdCostoConcepto;
-                    newReg.Precio100 = costo!.Precio100;
-                    newReg.Precio = costo!.Precio;
-                    newReg.Total = 0;
+                    newReg.ValorUnitario = costo!.ValorUnitario;
+                    newReg.ValorUnitario100 = costo!.ValorUnitario100;
+                    newReg.SubTotal = 0;
 
                     list.Add(newReg);
                 }
