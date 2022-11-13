@@ -6,7 +6,7 @@
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		
-		<Version>1.0.3.47</Version>
+		<Version>1.0.3.48</Version>
 		
 		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
 		<Authors>Paltarumi</Authors>
@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Paltarumi.Acopio.Dto.Base" Version="1.0.0.5" />
+		<PackageReference Include="Paltarumi.Acopio.Dto.Base" Version="1.0.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>

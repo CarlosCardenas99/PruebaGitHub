@@ -40,8 +40,8 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal ValorUnitarioConPenalidadTm { get; set; }
         public decimal SubTotalConPenalidad { get; set; }
         public decimal SubTotalAdelantos { get; set; }
-        public decimal ValorUnitarioTm { get; set; }
         public decimal SubTotal { get; set; }
+        public decimal Igv { get; set; }
         public decimal Total { get; set; }
         public decimal ValorUnitarioUtilidadTm { get; set; }
         public decimal SubTotalUtilidad { get; set; }
@@ -59,11 +59,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public byte[] RowVersion { get; set; } = null!;
         public int? IdCorrelativo { get; set; }
 
-        public virtual Correlativo? IdCorrelativoNavigation { get; set; }
-        public virtual LoteLiquidacionEstado IdLoteLiquidacionEstadoNavigation { get; set; } = null!;
-        public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
-        public virtual TipoLiquidacion IdTipoLiquidacionNavigation { get; set; } = null!;
-        public virtual TipoMineral? IdTipoMineralNavigation { get; set; }
         public virtual ICollection<LoteCodigoLiquidacion> LoteCodigoLiquidacions { get; set; }
         public virtual ICollection<LoteLiquidacionAsignacion> LoteLiquidacionAsignacions { get; set; }
         public virtual ICollection<LoteLiquidacionComision> LoteLiquidacionComisions { get; set; }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Dto;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
@@ -44,6 +45,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
             CreateMap<Entity.LoteBalanza, SearchLoteBalanzaChecklistDto>()
                 .ForMember(x => x.Estado, opt => opt.MapFrom(x => x.IdLoteEstadoNavigation != null ? x.IdLoteEstadoNavigation.Nombre : string.Empty))
                 .ReverseMap();
+
+            CreateMap<Entity.LoteBalanza, SearchLoteBalanzaRalationDto>()
+                .ReverseMap();
+            
         }
     }
 }

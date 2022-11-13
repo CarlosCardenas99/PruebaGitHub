@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.13" />
+    <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.14" />
   </ItemGroup>
 
 </Project>
