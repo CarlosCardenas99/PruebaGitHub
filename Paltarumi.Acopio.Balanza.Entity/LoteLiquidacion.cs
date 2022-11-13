@@ -17,6 +17,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public int IdLoteLiquidacion { get; set; }
         public string IdTipoLiquidacion { get; set; } = null!;
         public string IdLoteLiquidacionEstado { get; set; } = null!;
+        public int IdCorrelativo { get; set; }
         public string CodigoLote { get; set; } = null!;
         public string? IdTipoMineral { get; set; }
         public int IdProveedor { get; set; }
@@ -46,19 +47,26 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal ValorUnitarioUtilidadTm { get; set; }
         public decimal SubTotalUtilidad { get; set; }
         public decimal PorcentajeUtilidad { get; set; }
-        public decimal? FactorConversion100 { get; set; }
-        public decimal? FactorConversion { get; set; }
+        public decimal FactorConversion100 { get; set; }
+        public decimal FactorConversion { get; set; }
         public decimal Maquila100 { get; set; }
         public decimal Maquila { get; set; }
-        public decimal ConsumoCianuro100 { get; set; }
-        public decimal ConsumoSoda100 { get; set; }
-        public decimal ConsumoCianuro { get; set; }
-        public decimal ConsumoSoda { get; set; }
-        public decimal? AjusteOculto { get; set; }
+        public decimal SubTotalConsumoCianuro100 { get; set; }
+        public decimal SubTotalConsumoSoda100 { get; set; }
+        public decimal SubTotalConsumoCianuro { get; set; }
+        public decimal SubTotalCconsumoSoda { get; set; }
+        public decimal SubTotalGastosEmpresa { get; set; }
+        public decimal SubTotalGastosProveedor { get; set; }
+        public decimal AjusteOculto { get; set; }
+        public decimal Incremento { get; set; }
         public bool Activo { get; set; }
         public byte[] RowVersion { get; set; } = null!;
-        public int? IdCorrelativo { get; set; }
 
+        public virtual Correlativo IdCorrelativoNavigation { get; set; } = null!;
+        public virtual LoteLiquidacionEstado IdLoteLiquidacionEstadoNavigation { get; set; } = null!;
+        public virtual Proveedor IdProveedorNavigation { get; set; } = null!;
+        public virtual TipoLiquidacion IdTipoLiquidacionNavigation { get; set; } = null!;
+        public virtual TipoMineral? IdTipoMineralNavigation { get; set; }
         public virtual ICollection<LoteCodigoLiquidacion> LoteCodigoLiquidacions { get; set; }
         public virtual ICollection<LoteLiquidacionAsignacion> LoteLiquidacionAsignacions { get; set; }
         public virtual ICollection<LoteLiquidacionComision> LoteLiquidacionComisions { get; set; }
