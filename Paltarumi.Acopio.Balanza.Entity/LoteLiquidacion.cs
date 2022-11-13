@@ -54,7 +54,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public decimal SubTotalConsumoCianuro100 { get; set; }
         public decimal SubTotalConsumoSoda100 { get; set; }
         public decimal SubTotalConsumoCianuro { get; set; }
-        public decimal SubTotalCconsumoSoda { get; set; }
+        public decimal SubTotalConsumoSoda { get; set; }
         public decimal SubTotalGastosEmpresa { get; set; }
         public decimal SubTotalGastosProveedor { get; set; }
         public decimal AjusteOculto { get; set; }

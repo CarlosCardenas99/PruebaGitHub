@@ -2578,10 +2578,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalAdelantos");
 
-                entity.Property(e => e.SubTotalCconsumoSoda)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("subTotalCconsumoSoda");
-
                 entity.Property(e => e.SubTotalConPenalidad)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalConPenalidad");
@@ -2593,6 +2589,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                 entity.Property(e => e.SubTotalConsumoCianuro100)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalConsumoCianuro100");
+
+                entity.Property(e => e.SubTotalConsumoSoda)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("subTotalConsumoSoda");
 
                 entity.Property(e => e.SubTotalConsumoSoda100)
                     .HasColumnType("decimal(18, 3)")
