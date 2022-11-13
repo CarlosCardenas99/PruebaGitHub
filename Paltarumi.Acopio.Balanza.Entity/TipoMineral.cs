@@ -7,7 +7,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public TipoMineral()
         {
-            LoteLiquidacions = new HashSet<LoteLiquidacion>();
             LoteMuestreos = new HashSet<LoteMuestreo>();
         }
 
@@ -16,7 +15,6 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public byte Orden { get; set; }
         public bool Activo { get; set; }
 
-        public virtual ICollection<LoteLiquidacion> LoteLiquidacions { get; set; }
         public virtual ICollection<LoteMuestreo> LoteMuestreos { get; set; }
     }
 }

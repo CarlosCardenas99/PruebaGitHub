@@ -63,6 +63,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 
                     var loteBalanza = await _loteBalanzaRepository.GetByAsNoTrackingAsync(x => x.CodigoLote == codigoLote);
                     idCorrelativo = loteBalanza!.IdCorrelativo;
+                    lotecodigo.IdProveedor = loteBalanza.IdProveedor;
                 }
 
                 lotecodigo.CodigoPlantaRandom = (await _mediator!.Send(new CreateCodeRandomCorrelativeCommand()))?.Data ?? string.Empty;

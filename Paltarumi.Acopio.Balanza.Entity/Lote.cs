@@ -7,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
     {
         public Lote()
         {
+            BlendingLotes = new HashSet<BlendingLote>();
             LoteCodigos = new HashSet<LoteCodigo>();
             LoteOperacions = new HashSet<LoteOperacion>();
         }
@@ -22,6 +23,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
 
         public virtual Empresa IdEmpresaNavigation { get; set; } = null!;
         public virtual Maestro IdEstadoNavigation { get; set; } = null!;
+        public virtual ICollection<BlendingLote> BlendingLotes { get; set; }
         public virtual ICollection<LoteCodigo> LoteCodigos { get; set; }
         public virtual ICollection<LoteOperacion> LoteOperacions { get; set; }
     }

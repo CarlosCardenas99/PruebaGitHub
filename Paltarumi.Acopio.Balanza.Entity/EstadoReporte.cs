@@ -3,11 +3,10 @@ using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Entity
 {
-    public partial class TipoLiquidacion
+    public partial class EstadoReporte
     {
-        public string IdTipoLiquidacion { get; set; } = null!;
+        public string IdEstadoReporte { get; set; } = null!;
         public string Nombre { get; set; } = null!;
-        public byte Orden { get; set; }
         public bool Activo { get; set; }
     }
 }
