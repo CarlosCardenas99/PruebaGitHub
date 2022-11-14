@@ -51,18 +51,25 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
             {
                 foreach (var conceptoCosto in costoConceptos)
                 {
-                    var costo = (await _costoRepository.GetByAsNoTrackingAsync(x => x.IdCostoConcepto == conceptoCosto.IdCostoConcepto && x.Activo == true)) ?? new Entity.Costo();
-                    var newReg = new Entity.LoteLiquidacionCosto();
-                    newReg.IdLoteLiquidacion = loteLiquidacion.IdLoteLiquidacion;
-                    newReg.IdCostoConcepto = conceptoCosto.IdCostoConcepto;
-                    newReg.ValorUnitario = costo!.ValorUnitario;
-                    newReg.ValorUnitario100 = costo!.ValorUnitario100;
-                    newReg.SubTotal = 0;
+                    var costo = await _costoRepository.GetByAsNoTrackingAsync(x => x.IdCostoConcepto == conceptoCosto.IdCostoConcepto && x.Activo == true);
+                    if(costo != null)
+                    {
+                        var newReg = new Entity.LoteLiquidacionCosto();
+                        newReg.IdLoteLiquidacion = loteLiquidacion.IdLoteLiquidacion;
+                        newReg.IdCostoConcepto = conceptoCosto.IdCostoConcepto;
+                        newReg.IdUnidadMedida = costo.IdUnidadMedida;
+                        newReg.ValorUnitario = costo!.ValorUnitario;
+                        newReg.ValorUnitario100 = costo!.ValorUnitario100;
+                        newReg.SubTotal = 0;
 
-                    list.Add(newReg);
+                        list.Add(newReg);
+                    }
                 }
-                await _loteLiquidacionCostoRepository.AddAsync(list.ToArray());
-                await _loteLiquidacionCostoRepository.SaveAsync();
+                if(list.Count > 0)
+                {
+                    await _loteLiquidacionCostoRepository.AddAsync(list.ToArray());
+                    await _loteLiquidacionCostoRepository.SaveAsync();
+                }
             }
 
             var lotechancadoDto = _mapper?.Map<GetLoteLiquidacionDto>(loteLiquidacion);
