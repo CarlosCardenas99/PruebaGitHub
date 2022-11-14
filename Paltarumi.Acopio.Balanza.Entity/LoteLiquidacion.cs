@@ -21,6 +21,7 @@ namespace Paltarumi.Acopio.Balanza.Entity
         public string CodigoLote { get; set; } = null!;
         public string? IdTipoMineral { get; set; }
         public int IdProveedor { get; set; }
+        public decimal TipoCambio { get; set; }
         public decimal InterDolarOz { get; set; }
         public decimal InterDolarGr { get; set; }
         public decimal PipDolarOz { get; set; }

@@ -2606,6 +2606,10 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalUtilidad");
 
+                entity.Property(e => e.TipoCambio)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("tipoCambio");
+
                 entity.Property(e => e.Tmh)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("tmh");
