@@ -38,10 +38,8 @@
         public decimal FactorConversion { get; set; }
         public decimal Maquila100 { get; set; }
         public decimal Maquila { get; set; }
-        public decimal SubTotalConsumoCianuro100 { get; set; }
-        public decimal SubTotalConsumoSoda100 { get; set; }
-        public decimal SubTotalConsumoCianuro { get; set; }
-        public decimal SubTotalConsumoSoda { get; set; }
+        public decimal SubTotalConsumo100 { get; set; }
+        public decimal SubTotalConsumo { get; set; }
         public decimal SubTotalGastosEmpresa { get; set; }
         public decimal SubTotalGastosProveedor { get; set; }
         public decimal AjusteOculto { get; set; }
