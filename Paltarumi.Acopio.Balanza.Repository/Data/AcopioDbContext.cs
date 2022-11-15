@@ -86,6 +86,7 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
         public virtual DbSet<Modulo> Modulos { get; set; } = null!;
         public virtual DbSet<MuestraCondicion> MuestraCondicions { get; set; } = null!;
         public virtual DbSet<Operacion> Operacions { get; set; } = null!;
+        public virtual DbSet<ParametroComercial> ParametroComercials { get; set; } = null!;
         public virtual DbSet<PropiedadCalculo> PropiedadCalculos { get; set; } = null!;
         public virtual DbSet<Proveedor> Proveedors { get; set; } = null!;
         public virtual DbSet<ProveedorConcesion> ProveedorConcesions { get; set; } = null!;
@@ -2582,22 +2583,6 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalConPenalidad");
 
-                entity.Property(e => e.SubTotalConsumo)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("subTotalConsumo");
-
-                entity.Property(e => e.SubTotalConsumo100)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("subTotalConsumo100");
-
-                entity.Property(e => e.SubTotalGastosEmpresa)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("subTotalGastosEmpresa");
-
-                entity.Property(e => e.SubTotalGastosProveedor)
-                    .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("subTotalGastosProveedor");
-
                 entity.Property(e => e.SubTotalSinPenalidad)
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("subTotalSinPenalidad");
@@ -2638,17 +2623,33 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasColumnType("decimal(18, 3)")
                     .HasColumnName("total");
 
-                entity.Property(e => e.ValorUnitarioConPenalidadTm)
+                entity.Property(e => e.ValorUnitarioConPenalidad)
                     .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("valorUnitarioConPenalidadTm");
+                    .HasColumnName("valorUnitarioConPenalidad");
 
-                entity.Property(e => e.ValorUnitarioSinPenalidadTm)
+                entity.Property(e => e.ValorUnitarioConsumo)
                     .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("valorUnitarioSinPenalidadTm");
+                    .HasColumnName("valorUnitarioConsumo");
 
-                entity.Property(e => e.ValorUnitarioUtilidadTm)
+                entity.Property(e => e.ValorUnitarioConsumo100)
                     .HasColumnType("decimal(18, 3)")
-                    .HasColumnName("valorUnitarioUtilidadTm");
+                    .HasColumnName("valorUnitarioConsumo100");
+
+                entity.Property(e => e.ValorUnitarioGastoEmpresa)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("valorUnitarioGastoEmpresa");
+
+                entity.Property(e => e.ValorUnitarioGastoProveedor)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("valorUnitarioGastoProveedor");
+
+                entity.Property(e => e.ValorUnitarioSinPenalidad)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("valorUnitarioSinPenalidad");
+
+                entity.Property(e => e.ValorUnitarioUtilidad)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("valorUnitarioUtilidad");
 
                 entity.HasOne(d => d.IdCorrelativoNavigation)
                     .WithMany(p => p.LoteLiquidacions)
@@ -3509,6 +3510,58 @@ namespace Paltarumi.Acopio.Balanza.Repository.Data
                     .HasForeignKey(d => d.IdModulo)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_acopio_Operacion_idModulo");
+            });
+
+            modelBuilder.Entity<ParametroComercial>(entity =>
+            {
+                entity.HasKey(e => e.IdParametroComercial)
+                    .HasName("PK_fiscalizacion_ParametroComercial_idParametroComercial");
+
+                entity.ToTable("ParametroComercial", "fiscalizacion");
+
+                entity.Property(e => e.IdParametroComercial).HasColumnName("idParametroComercial");
+
+                entity.Property(e => e.Activo).HasColumnName("activo");
+
+                entity.Property(e => e.IdProveedor).HasColumnName("idProveedor");
+
+                entity.Property(e => e.IdTipoMetal)
+                    .HasMaxLength(2)
+                    .IsUnicode(false)
+                    .HasColumnName("idTipoMetal")
+                    .IsFixedLength();
+
+                entity.Property(e => e.LeyOzFinal)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("leyOzFinal");
+
+                entity.Property(e => e.LeyOzInicial)
+                    .HasColumnType("decimal(18, 3)")
+                    .HasColumnName("leyOzInicial");
+
+                entity.Property(e => e.Maquila)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("maquila");
+
+                entity.Property(e => e.PorcentajeRecuperacion)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("porcentajeRecuperacion");
+
+                entity.Property(e => e.RiesgoComercial)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasColumnName("riesgoComercial");
+
+                entity.HasOne(d => d.IdProveedorNavigation)
+                    .WithMany(p => p.ParametroComercials)
+                    .HasForeignKey(d => d.IdProveedor)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_fiscalizacion_ParametroComercial_idProveedor");
+
+                entity.HasOne(d => d.IdTipoMetalNavigation)
+                    .WithMany(p => p.ParametroComercials)
+                    .HasForeignKey(d => d.IdTipoMetal)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_fiscalizacion_ParametroComercial_idTipoMetal");
             });
 
             modelBuilder.Entity<PropiedadCalculo>(entity =>

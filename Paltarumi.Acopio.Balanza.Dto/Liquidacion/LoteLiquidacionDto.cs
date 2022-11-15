@@ -24,25 +24,25 @@
         public decimal TmhMerma { get; set; }
         public decimal HumedadMerma { get; set; }
         public decimal TmsMerma { get; set; }
-        public decimal ValorUnitarioSinPenalidadTm { get; set; }
+        public decimal ValorUnitarioSinPenalidad { get; set; }
         public decimal SubTotalSinPenalidad { get; set; }
-        public decimal ValorUnitarioConPenalidadTm { get; set; }
+        public decimal ValorUnitarioConPenalidad { get; set; }
         public decimal SubTotalConPenalidad { get; set; }
         public decimal SubTotalAdelantos { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Igv { get; set; }
         public decimal Total { get; set; }
-        public decimal ValorUnitarioUtilidadTm { get; set; }
+        public decimal ValorUnitarioUtilidad { get; set; }
         public decimal SubTotalUtilidad { get; set; }
         public decimal PorcentajeUtilidad { get; set; }
         public decimal FactorConversion100 { get; set; }
         public decimal FactorConversion { get; set; }
         public decimal Maquila100 { get; set; }
         public decimal Maquila { get; set; }
-        public decimal SubTotalConsumo100 { get; set; }
-        public decimal SubTotalConsumo { get; set; }
-        public decimal SubTotalGastosEmpresa { get; set; }
-        public decimal SubTotalGastosProveedor { get; set; }
+        public decimal ValorUnitarioConsumo100 { get; set; }
+        public decimal ValorUnitarioConsumo { get; set; }
+        public decimal ValorUnitarioGastoEmpresa { get; set; }
+        public decimal ValorUnitarioGastoProveedor { get; set; }
         public decimal AjusteOculto { get; set; }
         public decimal Incremento { get; set; }
     }
