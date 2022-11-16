@@ -25,8 +25,8 @@ builder.Services.UseSwaggerDocumentation(configuration);
 
 // Repositories
 builder.Services.UseRepositories(
-    configuration.GetConnectionString("DefaultConnection"),
-    configuration.GetValue<string>("AuditOptions:ApiUrl"),
+     Environment.GetEnvironmentVariable("CN_ACOPIO_BALANZA") ?? configuration.GetConnectionString("DefaultConnection"),
+    Environment.GetEnvironmentVariable("URL_SERVICE_AUDIT") ?? configuration.GetValue<string>("AuditOptions:ApiUrl"),
     typeof(Program).Assembly.GetName().Name!
 );
 
