@@ -14,7 +14,7 @@
 
         public string? Conductor { get; set; }
         public bool ConductorVacio { get; set; }
-        
+
         public string? Transporte { get; set; }
         public bool TransporteVacio { get; set; }
 

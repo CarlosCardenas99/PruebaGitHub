@@ -4,11 +4,12 @@ using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
-using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Repository.Security;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 {
@@ -16,9 +17,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entity.Lote> _loteRepository;
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entities.Lote> _loteRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteCodigo> _lotecodigoRepository;
         private readonly IUserIdentity _userIdentity;
 
         public CreateLoteCodigoCommandHandler(
@@ -27,15 +28,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             IMapper mapper,
             IUserIdentity userIdentity,
             CreateLoteCodigoCommandValidator validator,
-            IRepository<Entity.Lote> loteRepository,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.LoteCodigo> lotecodigoRepository
+            IRepository<Entities.Lote> loteRepository,
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.LoteCodigo> lotecodigoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteRepository = loteRepository;
             _lotecodigoRepository = lotecodigoRepository;
             _userIdentity = userIdentity;
-            _loteBalanzaRepository=loteBalanzaRepository;
+            _loteBalanzaRepository = loteBalanzaRepository;
         }
 
         public override async Task<ResponseDto<GetLoteCodigoDto>> HandleCommand(CreateLoteCodigoCommand request, CancellationToken cancellationToken)
@@ -43,7 +44,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
             var idSucursal = _userIdentity.GetIdSucursal();
 
             var response = new ResponseDto<GetLoteCodigoDto>();
-            var lotecodigo = _mapper?.Map<Entity.LoteCodigo>(request.CreateDto);
+            var lotecodigo = _mapper?.Map<Entities.LoteCodigo>(request.CreateDto);
 
             if (lotecodigo != null)
             {
@@ -71,7 +72,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
                 var codeAndCorrelativo = await _mediator.Send(new CreateCodePlantaCommand(idEmpresa, codigoLote, request.CreateDto.IdLoteCodigoTipo, request.CreateDto.IdSucursal, request.CreateDto.Serie));
                 lotecodigo.CodigoPlanta = codeAndCorrelativo.Data!.Numero;
 
-                if(idCorrelativo  == 0) lotecodigo.IdCorrelativo = codeAndCorrelativo.Data!.IdCorrelativo;
+                if (idCorrelativo == 0) lotecodigo.IdCorrelativo = codeAndCorrelativo.Data!.IdCorrelativo;
                 else lotecodigo.IdCorrelativo = idCorrelativo;
 
                 await _lotecodigoRepository.AddAsync(lotecodigo);

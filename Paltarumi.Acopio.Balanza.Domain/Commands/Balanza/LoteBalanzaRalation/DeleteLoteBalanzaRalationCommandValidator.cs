@@ -1,14 +1,15 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 {
     public class DeleteLoteBalanzaRalationCommandValidator : CommandValidatorBase<DeleteLoteBalanzaRalationCommand>
     {
-        private readonly IRepository<Entity.LoteBalanzaRalation> _repositoryBase;
-        public DeleteLoteBalanzaRalationCommandValidator(IRepository<Entity.LoteBalanzaRalation> repositoryBase)
+        private readonly IRepository<Entities.LoteBalanzaRalation> _repositoryBase;
+        public DeleteLoteBalanzaRalationCommandValidator(IRepository<Entities.LoteBalanzaRalation> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

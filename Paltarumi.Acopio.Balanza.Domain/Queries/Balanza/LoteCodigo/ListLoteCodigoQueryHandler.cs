@@ -1,18 +1,19 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
 {
     public class ListLoteCodigoQueryHandler : QueryHandlerBase<ListLoteCodigoQuery, IEnumerable<ListLoteCodigoDto>>
     {
-        private readonly IRepository<Entity.LoteCodigo> _repository;
+        private readonly IRepository<Entities.LoteCodigo> _repository;
 
         public ListLoteCodigoQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteCodigo> repository
+            IRepository<Entities.LoteCodigo> repository
         ) : base(mapper)
         {
             _repository = repository;

@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Extensions;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 using System.Collections;
 using Telerik.Reporting;
 

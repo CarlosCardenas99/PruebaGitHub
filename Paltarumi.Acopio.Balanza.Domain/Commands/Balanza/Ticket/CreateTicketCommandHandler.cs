@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 {
@@ -11,13 +12,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
 
         public CreateTicketCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateTicketCommandValidator validator,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entities.Ticket> ticketRepository
 
         ) : base(unitOfWork, mapper, validator)
         {
@@ -27,7 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
         public override async Task<ResponseDto<GetTicketDto>> HandleCommand(CreateTicketCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetTicketDto>();
-            var ticket = _mapper?.Map<Entity.Ticket>(request.CreateDto);
+            var ticket = _mapper?.Map<Entities.Ticket>(request.CreateDto);
 
             if (ticket != null)
             {

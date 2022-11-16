@@ -1,23 +1,23 @@
-﻿// TO DO : PRUEBA
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
 {
     public class UpdateEstadoLoteChancadoCommandHandler : CommandHandlerBase<UpdateEstadoLoteChancadoCommand, GetLoteChancadoDto>
     {
-        private readonly IRepository<Entity.LoteChancado> _loteChancadoRepository;
+        private readonly IRepository<Entities.LoteChancado> _loteChancadoRepository;
 
         public UpdateEstadoLoteChancadoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
-            IRepository<Entity.LoteChancado> loteChancadoRepository
+            IRepository<Entities.LoteChancado> loteChancadoRepository
         ) : base(unitOfWork, mapper, mediator)
         {
             _loteChancadoRepository = loteChancadoRepository;

@@ -5,22 +5,23 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Dto;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
 {
     public class UpdateLoteMuestreoCommandHandler : CommandHandlerBase<UpdateLoteMuestreoCommand, GetLoteMuestreoDto>
     {
-        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
+        private readonly IRepository<Entities.LoteMuestreo> _loteMuestreoRepository;
 
         public UpdateLoteMuestreoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             UpdateLoteMuestreoCommandValidator validator,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository
+            IRepository<Paltarumi.Acopio.Entity.LoteMuestreo> loteMuestreoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteMuestreoRepository = loteMuestreoRepository;
@@ -64,7 +65,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
             return await Task.FromResult(response);
         }
 
-        private async Task CalculoCamposLoteMuestreo(UpdateLoteMuestreoCommand request, Entity.LoteMuestreo lotemuestreo)
+        private async Task CalculoCamposLoteMuestreo(UpdateLoteMuestreoCommand request, Entities.LoteMuestreo lotemuestreo)
         {
             if (lotemuestreo.PesoSeco != null || lotemuestreo.PesoSeco > 0)
             {

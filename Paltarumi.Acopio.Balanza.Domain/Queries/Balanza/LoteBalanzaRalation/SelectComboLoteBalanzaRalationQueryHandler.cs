@@ -1,19 +1,20 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanzaRalation
 {
     public class SelectComboLoteBalanzaRalationQueryHandler : QueryHandlerBase<SelectComboLoteBalanzaRalationQuery, IEnumerable<SelectComboLoteBalanzaRalationDto>>
     {
-        private readonly IRepository<Entity.LoteBalanzaRalation> _repository;
+        private readonly IRepository<Entities.LoteBalanzaRalation> _repository;
 
         public SelectComboLoteBalanzaRalationQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteBalanzaRalation> repository
+            IRepository<Entities.LoteBalanzaRalation> repository
         ) : base(mapper)
         {
             _repository = repository;

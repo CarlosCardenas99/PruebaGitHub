@@ -7,7 +7,7 @@ using Paltarumi.Acopio.Balanza.Apis.Security;
 using Paltarumi.Acopio.Balanza.Application.Extensions;
 using Paltarumi.Acopio.Balanza.Domain.Extensions;
 using Paltarumi.Acopio.Balanza.EmailClient;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
+using Paltarumi.Acopio.Repository.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -24,7 +24,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.UseSwaggerDocumentation(configuration);
 
 // Repositories
-builder.Services.UseRepositories(configuration);
+builder.Services.UseRepositories(
+    configuration.GetConnectionString("DefaultConnection"),
+    typeof(Program).Assembly.GetName().Name!,
+    configuration.GetValue<string>("AuditOptions:ApiUrl")
+);
 
 // Domain Services
 builder.Services.UseDomainServices();

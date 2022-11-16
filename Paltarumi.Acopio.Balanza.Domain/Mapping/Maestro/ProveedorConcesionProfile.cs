@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Entity;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.ProveedorConcesion;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
@@ -7,18 +8,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public ProveedorConcesionProfile()
         {
-            CreateMap<Entity.ProveedorConcesion, ProveedorConcesionDto>()
+            CreateMap<ProveedorConcesion, ProveedorConcesionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.ProveedorConcesion, GetProveedorConcesionDto>()
+            CreateMap<ProveedorConcesion, GetProveedorConcesionDto>()
                 .ReverseMap();
 
-
-            CreateMap<Entity.ProveedorConcesion, ListProveedorConcesionDto>()
+            CreateMap<ProveedorConcesion, ListProveedorConcesionDto>()
                 .ForMember(x => x.Concesion, opt => opt.MapFrom(x => x.IdConcesionNavigation != null ? x.IdConcesionNavigation.CodigoUnico + " - " + x.IdConcesionNavigation.Nombre : string.Empty))
-                .ForMember(x => x.CodigoUbigeo, opt => opt.MapFrom(x => x.IdConcesionNavigation!= null ? x.IdConcesionNavigation.CodigoUbigeo : string.Empty))
+                .ForMember(x => x.CodigoUbigeo, opt => opt.MapFrom(x => x.IdConcesionNavigation != null ? x.IdConcesionNavigation.CodigoUbigeo : string.Empty))
                 .ReverseMap();
-
         }
     }
 }

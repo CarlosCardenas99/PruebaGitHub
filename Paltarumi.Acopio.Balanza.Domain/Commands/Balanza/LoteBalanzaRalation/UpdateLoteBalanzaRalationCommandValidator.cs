@@ -1,14 +1,15 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 {
     public class UpdateLoteBalanzaRalationCommandValidator : CommandValidatorBase<UpdateLoteBalanzaRalationCommand>
     {
-        private readonly IRepository<Entity.LoteBalanzaRalation> _repositoryBase;
-        public UpdateLoteBalanzaRalationCommandValidator(IRepository<Entity.LoteBalanzaRalation> repositoryBase)
+        private readonly IRepository<Entities.LoteBalanzaRalation> _repositoryBase;
+        public UpdateLoteBalanzaRalationCommandValidator(IRepository<Entities.LoteBalanzaRalation> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 
@@ -21,8 +22,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
                             .MustAsync(ValidateExistenceAsync)
                             .WithCustomValidationMessage();
                     });
-                //RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.LoteBalanzaRalation.Codigo, 5, 10);
-                //RequiredField(x => x.UpdateDto.FechaIngreso, Resources.Balanza.LoteBalanzaRalation.FechaIngreso);
             });
         }
 

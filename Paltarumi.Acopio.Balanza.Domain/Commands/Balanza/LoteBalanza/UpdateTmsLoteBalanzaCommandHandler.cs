@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateTmsLoteBalanzaCommandHandler : CommandHandlerBase<UpdateTmsLoteBalanzaCommand>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
 
         public UpdateTmsLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository
         ) : base(unitOfWork, mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

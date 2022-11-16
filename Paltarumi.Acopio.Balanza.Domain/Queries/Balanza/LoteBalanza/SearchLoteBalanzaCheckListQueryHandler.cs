@@ -1,25 +1,27 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Entity;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 {
     public class SearchLoteBalanzaCheckListQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaCheckListQuery, SearchLoteBalanzaChecklistFilterDto, SearchLoteBalanzaChecklistDto>
     {
 
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.ItemCheck> _itemCheckRepository;
-        private readonly IRepository<Entity.Vehiculo> _vehiculoRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.ItemCheck> _itemCheckRepository;
+        private readonly IRepository<Entities.Vehiculo> _vehiculoRepository;
 
         public SearchLoteBalanzaCheckListQueryHandler(
            IMapper mapper,
-           IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-           IRepository<Entity.ItemCheck> itemCheckRepository,
-             IRepository<Entity.Vehiculo> vehiculoRepository
+           IRepository<Entities.LoteBalanza> loteBalanzaRepository,
+           IRepository<Entities.ItemCheck> itemCheckRepository,
+             IRepository<Entities.Vehiculo> vehiculoRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
@@ -30,7 +32,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
         {
             var response = new ResponseDto<SearchResultDto<SearchLoteBalanzaChecklistDto>>();
 
-            Expression<Func<Entity.LoteBalanza, bool>> filter = x => true;
+            Expression<Func<Entities.LoteBalanza, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
 
@@ -62,15 +64,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 x => x.IdLoteEstadoNavigation
             );
 
-            var checkLists = new List<Entity.CheckList>();
-
-            /*if (lotes.Items != null)
-                lotes.Items.ToList().ForEach(x => checkLists.AddRange(x.CheckLists));*/
-
+            var checkLists = new List<CheckList>();
             var itemcheckIds = checkLists.Select(x => x.IdItemCheckNavigation.IdItemCheck);
             var itemchecks = await _itemCheckRepository.FindByAsNoTrackingAsync(x => itemcheckIds.Contains(x.IdItemCheck));
 
-            var tickets = new List<Entity.Ticket>();
+            var tickets = new List<Entities.Ticket>();
 
             if (lotes.Items != null)
                 lotes.Items.ToList().ForEach(x => tickets.AddRange(x.Tickets));

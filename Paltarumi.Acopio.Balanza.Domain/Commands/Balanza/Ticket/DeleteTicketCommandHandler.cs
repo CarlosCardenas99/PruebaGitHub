@@ -1,20 +1,21 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 {
     public class DeleteTicketCommandHandler : CommandHandlerBase<DeleteTicketCommand>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
 
         public DeleteTicketCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteTicketCommandValidator validator,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entities.Ticket> ticketRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _ticketRepository = ticketRepository;

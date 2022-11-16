@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
 namespace Paltarumi.Acopio.Balanza.Application.Base
 {

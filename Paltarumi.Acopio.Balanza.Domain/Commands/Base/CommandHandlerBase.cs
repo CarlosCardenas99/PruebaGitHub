@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CA2208 // Instantiate argument exceptions correctly
@@ -42,7 +42,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Base
         {
             var attempts = 0;
 
-            while(attempts < ConcurrencyAttempts)
+            while (attempts < ConcurrencyAttempts)
             {
                 try
                 {
@@ -51,7 +51,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Base
                 catch (DbUpdateConcurrencyException)
                 {
                     attempts++;
-                    if(ConcurrencyThrowException || attempts == ConcurrencyAttempts) throw;
+                    if (ConcurrencyThrowException || attempts == ConcurrencyAttempts) throw;
                     continue;
                 }
                 catch (ResultException<TResponse> rex)

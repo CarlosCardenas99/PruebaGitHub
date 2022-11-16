@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LeyReferencial
 {
     public class UpdateLeyReferencialCommandValidator : CommandValidatorBase<UpdateLeyReferencialCommand>
     {
-        private readonly IRepository<Entity.LeyReferencial> _repositoryBase;
-        public UpdateLeyReferencialCommandValidator(IRepository<Entity.LeyReferencial> repositoryBase)
+        private readonly IRepository<Entities.LeyReferencial> _repositoryBase;
+        public UpdateLeyReferencialCommandValidator(IRepository<Entities.LeyReferencial> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

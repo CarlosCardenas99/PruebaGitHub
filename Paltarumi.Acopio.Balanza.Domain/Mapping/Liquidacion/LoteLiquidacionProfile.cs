@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Liquidacion
 {
@@ -7,16 +8,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Liquidacion
     {
         public LoteLiquidacionProfile()
         {
-            CreateMap<Entity.LoteLiquidacion, LoteLiquidacionDto>()
+            CreateMap<LoteLiquidacion, LoteLiquidacionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteLiquidacion, CreateLoteLiquidacionDto>()
+            CreateMap<LoteLiquidacion, CreateLoteLiquidacionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteLiquidacion, UpdateLoteLiquidacionDto>()
+            CreateMap<LoteLiquidacion, UpdateLoteLiquidacionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteLiquidacion, GetLoteLiquidacionDto>()
+            CreateMap<LoteLiquidacion, GetLoteLiquidacionDto>()
                 .ReverseMap();
         }
     }

@@ -1,9 +1,10 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 {
@@ -11,13 +12,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entity.LoteBalanzaRalation> _lotebalanzaralationRepository;
+        private readonly IRepository<Entities.LoteBalanzaRalation> _lotebalanzaralationRepository;
 
         public CreateLoteBalanzaRalationCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLoteBalanzaRalationCommandValidator validator,
-            IRepository<Entity.LoteBalanzaRalation> lotebalanzaralationRepository
+            IRepository<Entities.LoteBalanzaRalation> lotebalanzaralationRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _lotebalanzaralationRepository = lotebalanzaralationRepository;
@@ -26,7 +27,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
         public override async Task<ResponseDto<GetLoteBalanzaRalationDto>> HandleCommand(CreateLoteBalanzaRalationCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaRalationDto>();
-            var lotebalanzaralation = _mapper?.Map<Entity.LoteBalanzaRalation>(request.CreateDto);
+            var lotebalanzaralation = _mapper?.Map<Entities.LoteBalanzaRalation>(request.CreateDto);
 
             if (lotebalanzaralation != null)
             {

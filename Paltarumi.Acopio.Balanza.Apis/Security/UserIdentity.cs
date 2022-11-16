@@ -1,5 +1,5 @@
 ﻿using Paltarumi.Acopio.Balanza.Common;
-using Paltarumi.Acopio.Balanza.Repository.Security;
+using Paltarumi.Acopio.Repository.Security;
 using System.Security.Claims;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Security

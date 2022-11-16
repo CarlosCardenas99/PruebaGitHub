@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LeyReferencial;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LeyReferencial
 {
@@ -11,13 +12,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LeyReferencial
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entities.LeyReferencial> _leyreferencialRepository;
 
         public CreateLeyReferencialCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLeyReferencialCommandValidator validator,
-            IRepository<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entities.LeyReferencial> leyreferencialRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _leyreferencialRepository = leyreferencialRepository;
@@ -26,7 +27,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LeyReferencial
         public override async Task<ResponseDto<GetLeyReferencialDto>> HandleCommand(CreateLeyReferencialCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLeyReferencialDto>();
-            var leyreferencial = _mapper?.Map<Entity.LeyReferencial>(request.CreateDto);
+            var leyreferencial = _mapper?.Map<Entities.LeyReferencial>(request.CreateDto);
 
             if (leyreferencial != null)
             {

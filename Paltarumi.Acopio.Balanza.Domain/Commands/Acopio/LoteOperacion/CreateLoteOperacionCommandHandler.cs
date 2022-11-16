@@ -2,9 +2,10 @@ using AutoMapper;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
 {
@@ -12,17 +13,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entity.LoteOperacion> _loteoperacionRepository;
-        private readonly IRepository<Entity.Operacion> _operacionRepository;
-        private readonly IRepository<Entity.Lote> _loteRepository;
+        private readonly IRepository<Entities.LoteOperacion> _loteoperacionRepository;
+        private readonly IRepository<Entities.Operacion> _operacionRepository;
+        private readonly IRepository<Entities.Lote> _loteRepository;
 
         public CreateLoteOperacionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLoteOperacionCommandValidator validator,
-            IRepository<Entity.LoteOperacion> loteoperacionRepository,
-            IRepository<Entity.Operacion> operacionRepository,
-            IRepository<Entity.Lote> loteRepository
+            IRepository<Entities.LoteOperacion> loteoperacionRepository,
+            IRepository<Entities.Operacion> operacionRepository,
+            IRepository<Entities.Lote> loteRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _loteoperacionRepository = loteoperacionRepository;
@@ -44,7 +45,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
                 request.CreateDto.UserNameCreate = "";
                 request.CreateDto.Message = "";
 
-                var loteoperacion = _mapper?.Map<Entity.LoteOperacion>(request.CreateDto);
+                var loteoperacion = _mapper?.Map<Entities.LoteOperacion>(request.CreateDto);
                 if (loteoperacion != null)
                 {
                     await _loteoperacionRepository.AddAsync(loteoperacion);

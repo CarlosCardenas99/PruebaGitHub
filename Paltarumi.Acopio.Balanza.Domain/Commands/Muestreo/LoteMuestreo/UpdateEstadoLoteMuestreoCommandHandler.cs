@@ -1,25 +1,25 @@
-﻿// TO DO : PRUEBA
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
 {
     public class UpdateEstadoLoteMuestreoCommandHandler : CommandHandlerBase<UpdateEstadoLoteMuestreoCommand, GetLoteMuestreoDto>
     {
-        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
-        private readonly IRepository<Entity.LoteCodigoMuestreo> _loteCodigoMuestreoRepository;
+        private readonly IRepository<Entities.LoteMuestreo> _loteMuestreoRepository;
+        private readonly IRepository<Entities.LoteCodigoMuestreo> _loteCodigoMuestreoRepository;
 
         public UpdateEstadoLoteMuestreoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
-            IRepository<Entity.LoteCodigoMuestreo> loteCodigoMuestreoRepository
+            IRepository<Entities.LoteMuestreo> loteMuestreoRepository,
+            IRepository<Entities.LoteCodigoMuestreo> loteCodigoMuestreoRepository
         ) : base(unitOfWork, mapper, mediator)
         {
             _loteMuestreoRepository = loteMuestreoRepository;
@@ -48,7 +48,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
             //________________UPDATE ESTADO LOTECODIGOMUESTREO_________________________
             //var loteCodigoMuestreos = await _loteCodigoMuestreoRepository.FindByAsNoTrackingAsync(x => x.IdLoteMuestreo == loteMuestreo.IdLoteMuestreo);
 
-            //foreach (var loteCodigoMuestreo in (loteCodigoMuestreos ?? new List<Entity.LoteCodigoMuestreo>()))
+            //foreach (var loteCodigoMuestreo in (loteCodigoMuestreos ?? new List<Entities.LoteCodigoMuestreo>()))
             //{
             //    var loteCodigoMuestreoDto = loteMuestreo.LoteCodigoMuestreos?.FirstOrDefault(x => x.IdLoteCodigoMuestreo == loteCodigoMuestreo.IdLoteCodigoMuestreo);
 

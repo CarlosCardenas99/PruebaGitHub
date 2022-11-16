@@ -2,24 +2,25 @@
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 {
     public class GetLoteBalanzaByCodigoQueryHandler : QueryHandlerBase<GetLoteBalanzaByCodigoQuery, GetLoteBalanzaCodigoDto>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
         public GetLoteBalanzaByCodigoQueryHandler(
             IMapper mapper,
             GetLoteBalanzaByCodigoQueryValidator validator,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.Ticket> ticketRepository
         ) : base(mapper, validator)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
@@ -31,7 +32,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(
                 x => x.CodigoLote == request.CodigoLote,
-                x => x.Tickets.Where(x =>x.Activo==true),
+                x => x.Tickets.Where(x => x.Activo == true),
                 x => x.IdLoteEstadoNavigation,
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
@@ -51,7 +52,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 var tickets = await _ticketRepository.FindByAsNoTrackingAsync(
                     x => idTickets.Contains(x.IdTicket),
                     x => x.IdConductorNavigation!,
-                    x => x.IdTransporteNavigation!, 
+                    x => x.IdTransporteNavigation!,
                     x => x.IdEstadoTmhNavigation,
                     x => x.IdUnidadMedidaNavigation,
                     x => x.IdVehiculoNavigation

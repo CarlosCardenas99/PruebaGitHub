@@ -1,9 +1,10 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Operacion;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Operacion
 {
@@ -11,13 +12,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Operacion
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entity.Operacion> _operacionRepository;
+        private readonly IRepository<Entities.Operacion> _operacionRepository;
 
         public CreateOperacionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateOperacionCommandValidator validator,
-            IRepository<Entity.Operacion> operacionRepository
+            IRepository<Entities.Operacion> operacionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _operacionRepository = operacionRepository;
@@ -26,7 +27,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Operacion
         public override async Task<ResponseDto<GetOperacionDto>> HandleCommand(CreateOperacionCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetOperacionDto>();
-            var operacion = _mapper?.Map<Entity.Operacion>(request.CreateDto);
+            var operacion = _mapper?.Map<Entities.Operacion>(request.CreateDto);
 
             if (operacion != null)
             {

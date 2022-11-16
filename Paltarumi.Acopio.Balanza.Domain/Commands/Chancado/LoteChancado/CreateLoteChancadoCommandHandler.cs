@@ -4,25 +4,26 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
 {
     public class CreateLoteChancadoCommandHandler : CommandHandlerBase<CreateLoteChancadoCommand, GetLoteChancadoDto>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
-        private readonly IRepository<Entity.LoteChancado> _loteChancadoRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.LoteChancado> _loteChancadoRepository;
 
         public CreateLoteChancadoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             CreateLoteChancadoCommandValidator validator,
-            IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.LoteChancado> loteChancadoRepository
+            IRepository<Entities.Ticket> ticketRepository,
+            IRepository<Entities.LoteChancado> loteChancadoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _ticketRepository = ticketRepository;
@@ -33,7 +34,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
         {
             var response = new ResponseDto<GetLoteChancadoDto>();
 
-            var loteChancado = _mapper?.Map<Entity.LoteChancado>(request.CreateDto);
+            var loteChancado = _mapper?.Map<Entities.LoteChancado>(request.CreateDto);
             if (loteChancado == null)
             {
                 response.AddErrorResult(Resources.Chancado.LoteChancado.LoteChancadoRequired);
@@ -43,10 +44,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             await _loteChancadoRepository.AddAsync(loteChancado);
             await _loteChancadoRepository.SaveAsync();
 
-            var createMapaDto = new CreateMapaDto 
-            { 
-                IdLoteChancado = loteChancado.IdLoteChancado, 
-                Tmh = loteChancado.Tmh, 
+            var createMapaDto = new CreateMapaDto
+            {
+                IdLoteChancado = loteChancado.IdLoteChancado,
+                Tmh = loteChancado.Tmh,
                 IdLoteChancadoGrupo = CONST_CHANCADO.LOTECHANCADO_GRUPO.LOTE
             };
             var createMapaResponse = await _mediator?.Send(new CreateMapaCommand(createMapaDto), cancellationToken)!;

@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 {
     public class GetTicketQueryValidator : QueryValidatorBase<GetTicketQuery>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
 
-        public GetTicketQueryValidator(IRepository<Entity.Ticket> ticketRepository)
+        public GetTicketQueryValidator(IRepository<Entities.Ticket> ticketRepository)
         {
             _ticketRepository = ticketRepository;
 

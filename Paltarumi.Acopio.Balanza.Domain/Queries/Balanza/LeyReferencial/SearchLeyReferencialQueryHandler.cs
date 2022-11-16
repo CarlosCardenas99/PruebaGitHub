@@ -1,20 +1,21 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LeyReferencial;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LeyReferencial
 {
     public class SearchLeyReferencialQueryHandler : SearchQueryHandlerBase<SearchLeyReferencialQuery, SearchLeyReferencialFilterDto, SearchLeyReferencialDto>
     {
-        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entities.LeyReferencial> _leyreferencialRepository;
 
         public SearchLeyReferencialQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entities.LeyReferencial> leyreferencialRepository
         ) : base(mapper)
         {
             _leyreferencialRepository = leyreferencialRepository;
@@ -24,7 +25,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LeyReferencial
         {
             var response = new ResponseDto<SearchResultDto<SearchLeyReferencialDto>>();
 
-            Expression<Func<Entity.LeyReferencial, bool>> filter = x => true;
+            Expression<Func<Entities.LeyReferencial, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
 

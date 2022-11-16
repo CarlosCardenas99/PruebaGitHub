@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Entity;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.DuenoMuestra;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
@@ -7,11 +8,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public DuenoMuestraProfile()
         {
-            CreateMap<Entity.DuenoMuestra, DuenoMuestraDto>()
+            CreateMap<DuenoMuestra, DuenoMuestraDto>()
                 .ReverseMap();
 
 
-            CreateMap<Entity.DuenoMuestra, GetDuenoMuestraDto>()
+            CreateMap<DuenoMuestra, GetDuenoMuestraDto>()
                 .ReverseMap();
 
         }

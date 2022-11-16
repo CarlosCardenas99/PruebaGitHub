@@ -1,5 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Chancado
 {
@@ -7,19 +8,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Chancado
     {
         public LoteChancadoProfile()
         {
-            CreateMap<Entity.LoteChancado, LoteChancadoDto>()
+            CreateMap<LoteChancado, LoteChancadoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteChancado, CreateLoteChancadoDto>()
+            CreateMap<LoteChancado, CreateLoteChancadoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteChancado, GetLoteChancadoDto>()
+            CreateMap<LoteChancado, GetLoteChancadoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteChancado, UpdateLoteChancadoDto>()
+            CreateMap<LoteChancado, UpdateLoteChancadoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteChancado, UpdateEstadoLoteChancadoDto>()
+            CreateMap<LoteChancado, UpdateEstadoLoteChancadoDto>()
                .ReverseMap();
         }
     }

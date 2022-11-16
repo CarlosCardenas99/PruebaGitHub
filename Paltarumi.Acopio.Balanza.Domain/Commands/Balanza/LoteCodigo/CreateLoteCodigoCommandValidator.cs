@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Constantes;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 {
     public class CreateLoteCodigoCommandValidator : CommandValidatorBase<CreateLoteCodigoCommand>
     {
-        private readonly IRepository<Entity.LoteCodigo> _repositoryBase;
-        public CreateLoteCodigoCommandValidator(IRepository<Entity.LoteCodigo> repositoryBase)
+        private readonly IRepository<Entities.LoteCodigo> _repositoryBase;
+        public CreateLoteCodigoCommandValidator(IRepository<Entities.LoteCodigo> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 
@@ -18,8 +19,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
                     RuleFor(x => x.CreateDto)
                         .Must(ValidateExistenceIdLoteAsync)
                         .WithCustomValidationMessage();
-                    //RequiredString(x => x.CreateDto.IdLoteCodigoTipo, Resources.Balanza.LoteCodigo.IdLoteCodigoTipo,2,2);
-                    //RequiredField(x => x.CreateDto.IdLote, Resources.Balanza.LoteCodigo.IdLote);
                 });
         }
 

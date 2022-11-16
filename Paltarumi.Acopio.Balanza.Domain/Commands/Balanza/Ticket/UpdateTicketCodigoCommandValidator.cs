@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 {
     public class UpdateTicketCodigoCommandValidator : CommandValidatorBase<UpdateTicketCodigoCommand>
     {
-        private readonly IRepository<Entity.Ticket> _repositoryBase;
-        public UpdateTicketCodigoCommandValidator(IRepository<Entity.Ticket> repositoryBase)
+        private readonly IRepository<Entities.Ticket> _repositoryBase;
+        public UpdateTicketCodigoCommandValidator(IRepository<Entities.Ticket> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 
@@ -22,15 +23,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
                             .MustAsync(ValidateExistenceNumberAsync)
                             .WithCustomValidationMessage();
                     });
-                //RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.Ticket.Codigo, 5, 10);
-                //RequiredField(x => x.UpdateDto.FechaIngreso, Resources.Balanza.Ticket.FechaIngreso);
             });
         }
 
         protected async Task<bool> ValidateExistenceAsync(UpdateTicketCodigoCommand command, int id, ValidationContext<UpdateTicketCodigoCommand> context, CancellationToken cancellationToken)
         {
             var exists = await _repositoryBase.FindAll().Where(x => x.IdTicket == id).AnyAsync(cancellationToken);
-            
+
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
 
             return true;

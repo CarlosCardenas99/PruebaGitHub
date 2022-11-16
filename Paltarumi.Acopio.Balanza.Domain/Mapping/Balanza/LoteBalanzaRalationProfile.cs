@@ -1,5 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
 {
@@ -7,19 +8,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
     {
         public LoteBalanzaRalationProfile()
         {
-            CreateMap<Entity.LoteBalanzaRalation, LoteBalanzaRalationDto>()
+            CreateMap<LoteBalanzaRalation, LoteBalanzaRalationDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteBalanzaRalation, CreateLoteBalanzaRalationDto>()
+            CreateMap<LoteBalanzaRalation, CreateLoteBalanzaRalationDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteBalanzaRalation, UpdateLoteBalanzaRalationDto>()
+            CreateMap<LoteBalanzaRalation, UpdateLoteBalanzaRalationDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteBalanzaRalation, GetLoteBalanzaRalationDto>()
+            CreateMap<LoteBalanzaRalation, GetLoteBalanzaRalationDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteBalanzaRalation, SearchLoteBalanzaRalationDto>()
+            CreateMap<LoteBalanzaRalation, SearchLoteBalanzaRalationDto>()
                 .ForMember(x => x.CodigoLote, opt => opt.MapFrom(x => x.IdLoteBalanzaDestinationNavigation.CodigoLote))
                 .ForMember(x => x.FechaAcopio, opt => opt.MapFrom(x => x.IdLoteBalanzaDestinationNavigation.FechaAcopio))
                 .ForMember(x => x.FechaIngreso, opt => opt.MapFrom(x => x.IdLoteBalanzaDestinationNavigation.FechaIngreso))

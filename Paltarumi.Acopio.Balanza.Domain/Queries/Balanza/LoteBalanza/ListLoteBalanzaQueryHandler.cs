@@ -2,18 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 {
     public class ListLoteBalanzaQueryHandler : QueryHandlerBase<ListLoteBalanzaQuery, IEnumerable<ListLoteBalanzaDto>>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
 
         public ListLoteBalanzaQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository
         ) : base(mapper)
         {
             _loteBalanzaRepository = loteBalanzaRepository;

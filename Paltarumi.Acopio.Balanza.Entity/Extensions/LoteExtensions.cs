@@ -1,4 +1,4 @@
-﻿using Paltarumi.Acopio.Balanza.Common;
+﻿using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Entity.Extensions
 {

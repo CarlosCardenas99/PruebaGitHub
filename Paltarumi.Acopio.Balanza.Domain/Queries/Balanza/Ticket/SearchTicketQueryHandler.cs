@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Entity.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Entity.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 {
     public class SearchTicketQueryHandler : SearchQueryHandlerBase<SearchTicketQuery, SearchTicketFilterDto, SearchTicketDto>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
 
         public SearchTicketQueryHandler(
             IMapper mapper,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entities.Ticket> ticketRepository
         ) : base(mapper)
         {
             _ticketRepository = ticketRepository;
@@ -25,7 +26,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
         {
             var response = new ResponseDto<SearchResultDto<SearchTicketDto>>();
 
-            Expression<Func<Entity.Ticket, bool>> filter = x => true;
+            Expression<Func<Entities.Ticket, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
 
@@ -35,13 +36,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             if (filters?.IdLoteBalanza != null)
                 filter = filter.And(x => x.IdLoteBalanza == filters.IdLoteBalanza);
 
-            var sorts = new List<SortExpression<Entity.Ticket>>();
+            var sorts = new List<SortExpression<Entities.Ticket>>();
 
             if (request.SearchParams?.Sort != null)
             {
                 foreach (var srt in request.SearchParams.Sort)
                 {
-                    var property = IQueryableExtensions.GetSortExpression<Entity.Ticket>(srt.Direction, srt.Property);
+                    var property = IQueryableExtensions.GetSortExpression<Entities.Ticket>(srt.Direction, srt.Property);
                     if (property != null) sorts.Add(property);
                 }
             }

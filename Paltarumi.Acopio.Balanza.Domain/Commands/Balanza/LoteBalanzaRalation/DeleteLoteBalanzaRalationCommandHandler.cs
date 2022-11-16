@@ -1,20 +1,21 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 {
     public class DeleteLoteBalanzaRalationCommandHandler : CommandHandlerBase<DeleteLoteBalanzaRalationCommand>
     {
-        private readonly IRepository<Entity.LoteBalanzaRalation> _lotebalanzaralationRepository;
+        private readonly IRepository<Entities.LoteBalanzaRalation> _lotebalanzaralationRepository;
 
         public DeleteLoteBalanzaRalationCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteLoteBalanzaRalationCommandValidator validator,
-            IRepository<Entity.LoteBalanzaRalation> lotebalanzaralationRepository
+            IRepository<Entities.LoteBalanzaRalation> lotebalanzaralationRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _lotebalanzaralationRepository = lotebalanzaralationRepository;

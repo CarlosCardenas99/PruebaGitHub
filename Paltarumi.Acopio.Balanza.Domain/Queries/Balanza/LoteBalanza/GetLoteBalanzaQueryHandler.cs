@@ -1,33 +1,33 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Maestros.Dto.Acopio.Empresa;
 using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Proveedor;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 {
     public class GetLoteBalanzaQueryHandler : QueryHandlerBase<GetLoteBalanzaQuery, GetLoteBalanzaDto>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
-        private readonly IRepository<Entity.Maestro> _maestroRepository;
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.LoteMuestreo> _loteMuestreoRepository;
-        private readonly IRepository<Entity.Lote> _loteRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Maestro> _maestroRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteMuestreo> _loteMuestreoRepository;
+        private readonly IRepository<Entities.Lote> _loteRepository;
 
         public GetLoteBalanzaQueryHandler(
             IMapper mapper,
             GetLoteBalanzaQueryValidator validator,
-            IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.Maestro> maestroRepository,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.LoteMuestreo> loteMuestreoRepository,
-            IRepository<Entity.Lote> loteRepository
+            IRepository<Entities.Ticket> ticketRepository,
+            IRepository<Entities.Maestro> maestroRepository,
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.LoteMuestreo> loteMuestreoRepository,
+            IRepository<Entities.Lote> loteRepository
         ) : base(mapper, validator)
         {
             _ticketRepository = ticketRepository;
@@ -52,7 +52,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             var lote = await _loteRepository.GetByAsNoTrackingAsync(
                     x => x.CodigoLote == loteBalanza!.CodigoLote,
-                    x => x.IdEmpresaNavigation    
+                    x => x.IdEmpresaNavigation
                 );
 
             var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);

@@ -2,24 +2,25 @@
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCheckListCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCheckListCommand, GetLoteBalanzaCheckListDto>
     {
-        private readonly IRepository<Entity.Lote> _loteRepository;
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.LoteCheckList> _loteCheckListRepository;
+        private readonly IRepository<Entities.Lote> _loteRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteCheckList> _loteCheckListRepository;
 
         public UpdateLoteBalanzaCheckListCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            IRepository<Entity.Lote> loteRepository,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.LoteCheckList> loteCheckListRepository
+            IRepository<Entities.Lote> loteRepository,
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.LoteCheckList> loteCheckListRepository
         ) : base(unitOfWork, mapper)
         {
             _loteRepository = loteRepository;
@@ -49,7 +50,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 #region Update / Disable Existing
 
-                foreach (var check in (checkList ?? new List<Entity.LoteCheckList>()))
+                foreach (var check in (checkList ?? new List<Entities.LoteCheckList>()))
                 {
                     var ticketDto = request.UpdateDto?.CheckListDetails?.FirstOrDefault(x => x.IdLoteCheckList == check.IdLoteCheckList);
 
@@ -70,8 +71,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var newCheckListDtos =
                     request.UpdateDto?.CheckListDetails?.Where(x => !checkIds.Contains(x.IdLoteCheckList)).ToList();
 
-                var newCheckLists = _mapper?.Map<IEnumerable<Entity.LoteCheckList>>(newCheckListDtos) ??
-                    new List<Entity.LoteCheckList>();
+                var newCheckLists = _mapper?.Map<IEnumerable<Entities.LoteCheckList>>(newCheckListDtos) ??
+                    new List<Entities.LoteCheckList>();
 
                 newCheckLists.ToList().ForEach(t =>
                 {

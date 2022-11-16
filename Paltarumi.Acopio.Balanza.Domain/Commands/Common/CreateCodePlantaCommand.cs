@@ -10,7 +10,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
             IdEmpresa = idEmpresa;
             CodigoLote = codigoLote;
             IdLoteCodigoTipo = idLoteCodigoTipo;
-            IdSucursal = idSucursal;        
+            IdSucursal = idSucursal;
             Serie = serie;
         }
         public int IdEmpresa { get; set; }

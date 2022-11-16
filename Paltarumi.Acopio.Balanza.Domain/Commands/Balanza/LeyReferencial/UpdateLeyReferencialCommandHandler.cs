@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LeyReferencial;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LeyReferencial
 {
     public class UpdateLeyReferencialCommandHandler : CommandHandlerBase<UpdateLeyReferencialCommand, GetLeyReferencialDto>
     {
-        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entities.LeyReferencial> _leyreferencialRepository;
 
         public UpdateLeyReferencialCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateLeyReferencialCommandValidator validator,
-            IRepository<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entities.LeyReferencial> leyreferencialRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _leyreferencialRepository = leyreferencialRepository;

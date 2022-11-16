@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Entity;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Concesion;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
@@ -7,10 +8,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public ConcesionProfile()
         {
-            CreateMap<Entity.Concesion, ConcesionDto>()
+            CreateMap<Concesion, ConcesionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Concesion, GetConcesionDto>()
+            CreateMap<Concesion, GetConcesionDto>()
                 .ReverseMap();
         }
     }

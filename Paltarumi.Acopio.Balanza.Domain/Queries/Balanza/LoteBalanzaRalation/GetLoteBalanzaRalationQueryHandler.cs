@@ -1,19 +1,20 @@
 using AutoMapper;
+using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
 using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanzaRalation
 {
     public class GetLoteBalanzaRalationQueryHandler : QueryHandlerBase<GetLoteBalanzaRalationQuery, GetLoteBalanzaRalationDto>
     {
-        private readonly IRepository<Entity.LoteBalanzaRalation> _lotebalanzaralationRepository;
+        private readonly IRepository<Entities.LoteBalanzaRalation> _lotebalanzaralationRepository;
 
         public GetLoteBalanzaRalationQueryHandler(
             IMapper mapper,
             GetLoteBalanzaRalationQueryValidator validator,
-            IRepository<Entity.LoteBalanzaRalation> lotebalanzaralationRepository
+            IRepository<Entities.LoteBalanzaRalation> lotebalanzaralationRepository
         ) : base(mapper, validator)
         {
             _lotebalanzaralationRepository = lotebalanzaralationRepository;

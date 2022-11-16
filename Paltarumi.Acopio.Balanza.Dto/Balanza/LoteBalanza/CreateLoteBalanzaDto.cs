@@ -10,11 +10,10 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteBalanza
         public int? IdProveedor { get; set; }
         public int? IdEstadoTipoMaterial { get; set; }
         public string? Observacion { get; set; }
-        //public bool EsPartido { get; set; }
         public IEnumerable<CreateTicketDto>? TicketDetails { get; set; }
         public int IdEmpresa { get; set; }
         public string IdLoteEstado { get; set; } = null!;
-        public string IdSucursal { get; set; }
-        public string Serie { get; set; }
+        public string IdSucursal { get; set; } = null!;
+        public string Serie { get; set; } = null!;
     }
 }

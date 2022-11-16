@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteCodigoMuestreo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
 {
     public class CreateLoteCodigoMuestreoCommandHandler : CommandHandlerBase<CreateLoteCodigoMuestreoCommand, CreateLoteCodigoMuestreoDto>
     {
-        private readonly IRepository<Entity.LoteCodigoMuestreo> _muestraRepository;
+        private readonly IRepository<Entities.LoteCodigoMuestreo> _muestraRepository;
 
         public CreateLoteCodigoMuestreoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLoteCodigoMuestreoCommandValidator validator,
-            IRepository<Entity.LoteCodigoMuestreo> muestraRepository
+            IRepository<Entities.LoteCodigoMuestreo> muestraRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _muestraRepository = muestraRepository;
@@ -25,7 +26,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo
         {
             var response = new ResponseDto<CreateLoteCodigoMuestreoDto>();
 
-            var loteCodigoMuestreo = _mapper?.Map<Entity.LoteCodigoMuestreo>(request.CreateDto);
+            var loteCodigoMuestreo = _mapper?.Map<Entities.LoteCodigoMuestreo>(request.CreateDto);
             if (loteCodigoMuestreo == null)
             {
                 response.AddErrorResult(Resources.Muestreo.LoteMuestreo.LoteCodigoMuestreoRequired);

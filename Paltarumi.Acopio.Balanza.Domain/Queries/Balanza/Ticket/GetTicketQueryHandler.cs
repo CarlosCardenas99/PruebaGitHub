@@ -1,23 +1,24 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Conductor;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Maestro;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Transporte;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Vehiculo;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 {
     public class GetTicketQueryHandler : QueryHandlerBase<GetTicketQuery, GetTicketDto>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
 
         public GetTicketQueryHandler(
             IMapper mapper,
             GetTicketQueryValidator validator,
-            IRepository<Entity.Ticket> ticketRepository
+            IRepository<Entities.Ticket> ticketRepository
         ) : base(mapper, validator)
         {
             _ticketRepository = ticketRepository;

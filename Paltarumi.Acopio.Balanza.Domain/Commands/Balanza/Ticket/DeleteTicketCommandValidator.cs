@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 {
     public class DeleteTicketCommandValidator : CommandValidatorBase<DeleteTicketCommand>
     {
-        private readonly IRepository<Entity.Ticket> _repositoryBase;
-        public DeleteTicketCommandValidator(IRepository<Entity.Ticket> repositoryBase)
+        private readonly IRepository<Entities.Ticket> _repositoryBase;
+        public DeleteTicketCommandValidator(IRepository<Entities.Ticket> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 

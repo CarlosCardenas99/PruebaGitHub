@@ -2,27 +2,26 @@
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Entity;
-using Paltarumi.Acopio.Balanza.Entity.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
-using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Entity.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
+using Paltarumi.Acopio.Repository.Security;
 using System.Linq.Expressions;
-using Telerik.Reporting.Processing;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
 {
     public class SearchLoteCodigoQueryHandler : SearchQueryHandlerBase<SearchLoteCodigoQuery, SearchLoteCodigoFilterDto, SearchLoteCodigoDto>
     {
-        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
         private readonly IUserIdentity _userIdentity;
 
         public SearchLoteCodigoQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteCodigo> lotecodigoRepository,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.LoteCodigo> lotecodigoRepository,
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
             IUserIdentity userIdentity
         ) : base(mapper)
         {
@@ -36,7 +35,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
             var idSucursal = _userIdentity.GetIdSucursal();
             var response = new ResponseDto<SearchResultDto<SearchLoteCodigoDto>>();
 
-            Expression<Func<Entity.LoteCodigo, bool>> filter = x => true;
+            Expression<Func<Entities.LoteCodigo, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
 
@@ -72,13 +71,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
             if (!string.IsNullOrEmpty(idSucursal))
                 filter = filter.And(x => x.IdCorrelativoNavigation!.IdSucursal == idSucursal);
 
-            var sorts = new List<SortExpression<Entity.LoteCodigo>>();
+            var sorts = new List<SortExpression<Entities.LoteCodigo>>();
 
             if (request.SearchParams?.Sort != null)
             {
                 foreach (var srt in request.SearchParams.Sort)
                 {
-                    var property = IQueryableExtensions.GetSortExpression<Entity.LoteCodigo>(srt.Direction, srt.Property);
+                    var property = IQueryableExtensions.GetSortExpression<Entities.LoteCodigo>(srt.Direction, srt.Property);
                     if (property != null) sorts.Add(property);
                 }
             }

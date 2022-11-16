@@ -1,12 +1,13 @@
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
 {
     public class CreateOrUpdateLoteOperacionCommandValidator : CommandValidatorBase<CreateOrUpdateLoteOperacionCommand>
     {
-        private readonly IRepository<Entity.LoteOperacion> _operacionRepository;
-        public CreateOrUpdateLoteOperacionCommandValidator(IRepository<Entity.LoteOperacion> operacionRepository)
+        private readonly IRepository<Entities.LoteOperacion> _operacionRepository;
+        public CreateOrUpdateLoteOperacionCommandValidator(IRepository<Entities.LoteOperacion> operacionRepository)
         {
             _operacionRepository = operacionRepository;
 

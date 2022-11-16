@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Entity;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.TipoDocumento;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
@@ -7,13 +8,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public TipoDocumentoProfile()
         {
-            CreateMap<Entity.TipoDocumento, TipoDocumentoDto>()
+            CreateMap<TipoDocumento, TipoDocumentoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.TipoDocumento, GetTipoDocumentoDto>()
+            CreateMap<TipoDocumento, GetTipoDocumentoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.TipoDocumento, ListTipoDocumentoDto>()
+            CreateMap<TipoDocumento, ListTipoDocumentoDto>()
                 .ReverseMap();
 
         }

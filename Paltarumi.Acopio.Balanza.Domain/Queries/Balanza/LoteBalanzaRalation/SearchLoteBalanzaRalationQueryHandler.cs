@@ -1,20 +1,21 @@
 using AutoMapper;
-using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
 using System.Linq.Expressions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanzaRalation
 {
     public class SearchLoteBalanzaRalationQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaRalationQuery, SearchLoteBalanzaRalationFilterDto, SearchLoteBalanzaRalationDto>
     {
-        private readonly IRepository<Entity.LoteBalanzaRalation> _lotebalanzaralationRepository;
+        private readonly IRepository<Entities.LoteBalanzaRalation> _lotebalanzaralationRepository;
 
         public SearchLoteBalanzaRalationQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteBalanzaRalation> lotebalanzaralationRepository
+            IRepository<Entities.LoteBalanzaRalation> lotebalanzaralationRepository
         ) : base(mapper)
         {
             _lotebalanzaralationRepository = lotebalanzaralationRepository;
@@ -24,14 +25,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanzaRalation
         {
             var response = new ResponseDto<SearchResultDto<SearchLoteBalanzaRalationDto>>();
 
-            Expression<Func<Entity.LoteBalanzaRalation, bool>> filter = x => true;
+            Expression<Func<Entities.LoteBalanzaRalation, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
 
             if (filters?.IdLoteBalanzaOrigin.HasValue == true)
                 filter = filter.And(x => x.IdLoteBalanzaOrigin == filters.IdLoteBalanzaOrigin.Value);
 
-                filter = filter.And(x => x.Activo);
+            filter = filter.And(x => x.Activo);
 
             var lotebalanzaralations = await _lotebalanzaralationRepository.SearchByAsNoTrackingAsync(
                 request.SearchParams?.Page?.Page ?? 1,

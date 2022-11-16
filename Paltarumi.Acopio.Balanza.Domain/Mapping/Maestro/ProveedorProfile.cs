@@ -7,11 +7,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public ProveedorProfile()
         {
-            CreateMap<Entity.Proveedor, ProveedorDto>()
+            CreateMap<Paltarumi.Acopio.Entity.Proveedor, ProveedorDto>()
                 .ReverseMap();
 
-
-            CreateMap<Entity.Proveedor, GetProveedorDto>()
+            CreateMap<Paltarumi.Acopio.Entity.Proveedor, GetProveedorDto>()
                 .ReverseMap();
 
         }

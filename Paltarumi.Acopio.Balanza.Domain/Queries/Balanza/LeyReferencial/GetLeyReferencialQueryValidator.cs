@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LeyReferencial
 {
     public class GetLeyReferencialQueryValidator : QueryValidatorBase<GetLeyReferencialQuery>
     {
-        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entities.LeyReferencial> _leyreferencialRepository;
 
-        public GetLeyReferencialQueryValidator(IRepository<Entity.LeyReferencial> leyreferencialRepository)
+        public GetLeyReferencialQueryValidator(IRepository<Entities.LeyReferencial> leyreferencialRepository)
         {
             _leyreferencialRepository = leyreferencialRepository;
 

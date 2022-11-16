@@ -5,27 +5,28 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
 {
     public class CreateLoteCommandHandler : CommandHandlerBase<CreateLoteCommand, GetLoteDto>
     {
-        private readonly IRepository<Entity.Lote> _loteRepository;
-        private readonly IRepository<Entity.Maestro> _maestroRepository;
-        private readonly IRepository<Entity.Operacion> _operacionRepository;
+        private readonly IRepository<Entities.Lote> _loteRepository;
+        private readonly IRepository<Entities.Maestro> _maestroRepository;
+        private readonly IRepository<Entities.Operacion> _operacionRepository;
 
         public CreateLoteCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             CreateLoteCommandValidator validator,
-            IRepository<Entity.Lote> loteRepository,
-            IRepository<Entity.Maestro> maestroRepository,
-            IRepository<Entity.Operacion> operacionRepository
+            IRepository<Entities.Lote> loteRepository,
+            IRepository<Entities.Maestro> maestroRepository,
+            IRepository<Entities.Operacion> operacionRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteRepository = loteRepository;
@@ -37,7 +38,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
         {
             var response = new ResponseDto<GetLoteDto>();
 
-            var lote = _mapper?.Map<Entity.Lote>(request.CreateDto)!;
+            var lote = _mapper?.Map<Entities.Lote>(request.CreateDto)!;
             if (lote == null)
             {
                 response.AddErrorResult(Resources.Acopio.Lote.LoteRequired);
@@ -55,14 +56,14 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote
                 return response;
             }
 
-            var loteOperaciones = new List<Entity.LoteOperacion>();
+            var loteOperaciones = new List<Entities.LoteOperacion>();
             var operaciones = await _operacionRepository.FindByAsNoTrackingAsync(x =>
                 x.Codigo.Equals(Constants.Operaciones.Operacion.CREATE)
             );
 
             foreach (var operacion in operaciones)
             {
-                loteOperaciones.Add(new Entity.LoteOperacion
+                loteOperaciones.Add(new Entities.LoteOperacion
                 {
                     IdOperacionNavigation = null!,
                     IdOperacion = operacion.IdOperacion,

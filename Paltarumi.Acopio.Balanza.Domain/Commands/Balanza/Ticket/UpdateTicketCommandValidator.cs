@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
 {
     public class UpdateTicketCommandValidator : CommandValidatorBase<UpdateTicketCommand>
     {
-        private readonly IRepository<Entity.Ticket> _repositoryBase;
-        public UpdateTicketCommandValidator(IRepository<Entity.Ticket> repositoryBase)
+        private readonly IRepository<Entities.Ticket> _repositoryBase;
+        public UpdateTicketCommandValidator(IRepository<Entities.Ticket> repositoryBase)
         {
             _repositoryBase = repositoryBase;
 
@@ -21,8 +22,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Ticket
                             .MustAsync(ValidateExistenceAsync)
                             .WithCustomValidationMessage();
                     });
-                //RequiredString(x => x.UpdateDto.Codigo, Resources.Balanza.Ticket.Codigo, 5, 10);
-                //RequiredField(x => x.UpdateDto.FechaIngreso, Resources.Balanza.Ticket.FechaIngreso);
             });
         }
 

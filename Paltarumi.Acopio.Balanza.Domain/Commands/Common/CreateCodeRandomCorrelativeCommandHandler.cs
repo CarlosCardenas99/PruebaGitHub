@@ -3,23 +3,24 @@ using MediatR;
 using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
 {
     public class CreateCodeRandomCorrelativeCommandHandler : CommandHandlerBase<CreateCodeRandomCorrelativeCommand, string>
     {
 
-        private readonly IRepository<Entity.LoteCodigoControl> _loteCodigoControlRepository;
-    
+        private readonly IRepository<Entities.LoteCodigoControl> _loteCodigoControlRepository;
+
         public CreateCodeRandomCorrelativeCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
-            IRepository<Entity.LoteCodigoControl> loteCodigoControlRepository
+            IRepository<Entities.LoteCodigoControl> loteCodigoControlRepository
         ) : base(unitOfWork, mapper, mediator)
         {
             _loteCodigoControlRepository = loteCodigoControlRepository;

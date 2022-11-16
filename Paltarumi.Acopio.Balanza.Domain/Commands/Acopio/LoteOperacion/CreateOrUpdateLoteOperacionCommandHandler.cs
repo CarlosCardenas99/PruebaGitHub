@@ -1,27 +1,28 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
 {
     public class CreateOrUpdateLoteOperacionCommandHandler : CommandHandlerBase<CreateOrUpdateLoteOperacionCommand>
     {
-        private readonly IRepository<Entity.Lote> _loteRepository;
-        private readonly IRepository<Entity.Modulo> _moduloRepository;
-        private readonly IRepository<Entity.Operacion> _operacionRepository;
-        private readonly IRepository<Entity.LoteOperacion> _loteOperacionRepository;
+        private readonly IRepository<Entities.Lote> _loteRepository;
+        private readonly IRepository<Entities.Modulo> _moduloRepository;
+        private readonly IRepository<Entities.Operacion> _operacionRepository;
+        private readonly IRepository<Entities.LoteOperacion> _loteOperacionRepository;
 
         public CreateOrUpdateLoteOperacionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateOrUpdateLoteOperacionCommandValidator validator,
-            IRepository<Entity.Lote> loteRepository,
-            IRepository<Entity.Modulo> moduloRepository,
-            IRepository<Entity.Operacion> operacionRepository,
-            IRepository<Entity.LoteOperacion> loteOperacionRepository
+            IRepository<Entities.Lote> loteRepository,
+            IRepository<Entities.Modulo> moduloRepository,
+            IRepository<Entities.Operacion> operacionRepository,
+            IRepository<Entities.LoteOperacion> loteOperacionRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _loteRepository = loteRepository;
@@ -63,7 +64,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion
 
             var existe = loteOperacion != null;
 
-            loteOperacion ??= new Entity.LoteOperacion();
+            loteOperacion ??= new Entities.LoteOperacion();
             loteOperacion.IdLote = lote.IdLote;
             loteOperacion.Body = request.LoteOperacionDto.Body;
             loteOperacion.Attempts++;

@@ -1,5 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Muestreo
 {
@@ -7,21 +8,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Muestreo
     {
         public LoteMuestreoProfile()
         {
-            CreateMap<Entity.LoteMuestreo, LoteMuestreoDto>()
+            CreateMap<LoteMuestreo, LoteMuestreoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteMuestreo, CreateLoteMuestreoDto>()
+            CreateMap<LoteMuestreo, CreateLoteMuestreoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteMuestreo, GetLoteMuestreoDto>()
+            CreateMap<LoteMuestreo, GetLoteMuestreoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteMuestreo, UpdateLoteMuestreoDto>()
+            CreateMap<LoteMuestreo, UpdateLoteMuestreoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteMuestreo, UpdateEstadoLoteMuestreoDto>()
+            CreateMap<LoteMuestreo, UpdateEstadoLoteMuestreoDto>()
                .ReverseMap();
-
         }
     }
 }

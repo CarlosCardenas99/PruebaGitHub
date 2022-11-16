@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-using Paltarumi.Acopio.Balanza.Repository.Security;
+using Paltarumi.Acopio.Repository.Security;
 using System.Text;
 
 namespace Paltarumi.Acopio.Balanza.Apis.Security

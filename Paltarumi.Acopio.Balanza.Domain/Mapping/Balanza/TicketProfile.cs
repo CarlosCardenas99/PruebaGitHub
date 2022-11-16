@@ -1,6 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
-using Paltarumi.Acopio.Balanza.Entity;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
 {
@@ -8,23 +8,22 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
     {
         public TicketProfile()
         {
-            CreateMap<Entity.Ticket, TicketDto>()
+            CreateMap<Ticket, TicketDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, CreateTicketDto>()
+            CreateMap<Ticket, CreateTicketDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, UpdateTicketDto>()
+            CreateMap<Ticket, UpdateTicketDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, TicketBackup>()
+            CreateMap<Ticket, TicketBackup>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, GetTicketDto>()
-                //.ForMember(x =>x.Vehiculo, opt => opt.MapFrom(x =>x.IdVehiculoNavigation))
+            CreateMap<Ticket, GetTicketDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, ListTicketDto>()
+            CreateMap<Ticket, ListTicketDto>()
                 .ForMember(x => x.Conductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
                 .ForMember(x => x.ConductorLicencia, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Licencia : string.Empty))
                 .ForMember(x => x.ConductorDni, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Numero : string.Empty))
@@ -47,7 +46,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.EstadoTmhTaraCarreta, opt => opt.MapFrom(x => x.IdEstadoTmhTaraCarretaNavigation != null ? x.IdEstadoTmhTaraCarretaNavigation.Descripcion : string.Empty))
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, SearchTicketDto>()
+            CreateMap<Ticket, SearchTicketDto>()
 
                 .ForMember(x => x.Conductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
                 .ForMember(x => x.Licencia, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Licencia : string.Empty))
@@ -59,7 +58,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.EstadoTmh, opt => opt.MapFrom(x => x.IdEstadoTmhNavigation != null ? x.IdEstadoTmhNavigation.Descripcion : string.Empty))
                 .ReverseMap();
 
-            CreateMap<Entity.Ticket, SearchConsultaTicketDto>()
+            CreateMap<Ticket, SearchConsultaTicketDto>()
                 .ForMember(x => x.Concesion, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdConcesionNavigation != null ? x.IdLoteBalanzaNavigation.IdConcesionNavigation.Nombre : string.Empty))
                 .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ForMember(x => x.IdLoteEstado, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdLoteEstadoNavigation != null ? x.IdLoteBalanzaNavigation.IdLoteEstadoNavigation.IdLoteEstado : string.Empty))

@@ -2,22 +2,23 @@ using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
 {
     public class UpdateLoteLiquidacionCommandHandler : CommandHandlerBase<UpdateLoteLiquidacionCommand, GetLoteLiquidacionDto>
     {
-        private readonly IRepository<Entity.LoteLiquidacion> _loteLiquidacionRepository;
+        private readonly IRepository<Entities.LoteLiquidacion> _loteLiquidacionRepository;
 
         public UpdateLoteLiquidacionCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             UpdateLoteLiquidacionCommandValidator validator,
-            IRepository<Entity.LoteLiquidacion> loteLiquidacionRepository
+            IRepository<Entities.LoteLiquidacion> loteLiquidacionRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _loteLiquidacionRepository = loteLiquidacionRepository;

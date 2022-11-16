@@ -19,22 +19,23 @@ using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
-using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Paltarumi.Acopio.Repository.Security;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class CreateLoteBalanzaCommandHandler : CommandHandlerBase<CreateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
-        private readonly IRepository<Entity.Maestro> _maestroRepository;
-        private readonly IRepository<Entity.Proveedor> _proveedorRepository;
-        private readonly IRepository<Entity.LoteCodigo> _loteCodigoRepository;
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        private readonly IRepository<Entity.DuenoMuestra> _duenoMuestraRepository;
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.Maestro> _maestroRepository;
+        private readonly IRepository<Entities.Proveedor> _proveedorRepository;
+        private readonly IRepository<Entities.LoteCodigo> _loteCodigoRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.DuenoMuestra> _duenoMuestraRepository;
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
 
         private readonly IUserIdentity _userIdentity;
 
@@ -44,12 +45,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IMediator mediator,
             IUserIdentity userIdentity,
             CreateLoteBalanzaCommandValidator validator,
-            IRepository<Entity.Ticket> ticketRepository,
-            IRepository<Entity.Maestro> maestroRepository,
-            IRepository<Entity.Proveedor> proveedorRepository,
-            IRepository<Entity.LoteCodigo> loteCodigoRepository,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entity.DuenoMuestra> duenoMuestraRepository
+            IRepository<Entities.Ticket> ticketRepository,
+            IRepository<Entities.Maestro> maestroRepository,
+            IRepository<Entities.Proveedor> proveedorRepository,
+            IRepository<Entities.LoteCodigo> loteCodigoRepository,
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.DuenoMuestra> duenoMuestraRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _ticketRepository = ticketRepository;
@@ -145,9 +146,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var duenoMuestra = await GetOrCreateDuenoMuestra(request.CreateDto.IdProveedor);
             var codigoHash = (await _mediator?.Send(new CreateCodeRandomCorrelativeCommand(), cancellationToken)!)?.Data ?? string.Empty;
 
-            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote.CodigoLote!, Constantes.CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken)!;
+            var codeAndCorrelativo = await _mediator?.Send(new CreateCodePlantaCommand(request.CreateDto.IdEmpresa, lote!.CodigoLote!, CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA, request.CreateDto.IdSucursal, request.CreateDto.Serie), cancellationToken)!;
 
-            var loteCodigo = new Entity.LoteCodigo
+            var loteCodigo = new Entities.LoteCodigo
             {
                 IdLote = lote.IdLote,
                 IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
@@ -177,16 +178,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task CreateLoteBalanza(CreateLoteBalanzaCommand request, ResponseDto<GetLoteBalanzaDto> response, CreateCodeDto createCodeDto)
         {
-            var loteBalanza = _mapper?.Map<Entity.LoteBalanza>(request.CreateDto) ?? new Entity.LoteBalanza();
+            var loteBalanza = _mapper?.Map<Entities.LoteBalanza>(request.CreateDto) ?? new Entities.LoteBalanza();
             var ticketDetails = request.CreateDto?.TicketDetails;
 
             if (loteBalanza != null && _mediator != null && request.CreateDto != null)
             {
-                loteBalanza.Tickets = _mapper?.Map<List<Entity.Ticket>>(ticketDetails) ?? new List<Entity.Ticket>();
+                loteBalanza.Tickets = _mapper?.Map<List<Entities.Ticket>>(ticketDetails) ?? new List<Entities.Ticket>();
 
                 foreach (var ticket in loteBalanza.Tickets)
                 {
-                    ticket.Numero = (await _mediator.Send(new CreateCodeCommand(CONST_ACOPIO.CODIGOCORRELATIVO_TIPO.TICKET, request.CreateDto.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
+                    ticket.Numero = (await _mediator!.Send(new CreateCodeCommand(CONST_ACOPIO.CODIGOCORRELATIVO_TIPO.TICKET, request.CreateDto!.Serie, request.CreateDto.IdEmpresa, request.CreateDto.IdSucursal)))?.Data?.Numero ?? string.Empty;
                     ticket.Activo = true;
                 }
 
@@ -238,7 +239,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 PlacasTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.Placa).Distinct()),
                 PlacasCarretaTicket = String.Join(",", loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).Distinct()),
                 Placa = placa,
-                IdCorrelativo= createCodeDto.IdCorrelativo,
+                IdCorrelativo = createCodeDto.IdCorrelativo,
                 PlacaCarreta = placaCarreta,
                 ObservacionBalanza = loteBalanzaDto.Observacion!,
                 IdLoteEstado = loteBalanzaDto.IdLoteEstado
@@ -303,9 +304,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 response.AttachResults(createResponse);
         }
 
-        private async Task<Entity.DuenoMuestra> GetOrCreateDuenoMuestra(int? idProveedor)
+        private async Task<Entities.DuenoMuestra> GetOrCreateDuenoMuestra(int? idProveedor)
         {
-            var duenoMuestra = default(Entity.DuenoMuestra);
+            var duenoMuestra = default(Entities.DuenoMuestra);
             var proveedor = await _proveedorRepository.GetByAsNoTrackingAsync(x => x.IdProveedor == idProveedor);
 
             if (proveedor != null)
@@ -316,7 +317,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (duenoMuestra != null)
                 return duenoMuestra;
 
-            duenoMuestra = new Entity.DuenoMuestra
+            duenoMuestra = new Entities.DuenoMuestra
             {
                 CodigoTipoDocumento = CONST_MAESTRO.TIPO_DOCUMENTO.CODIGO_RUC,
                 Numero = proveedor?.Ruc ?? string.Empty,

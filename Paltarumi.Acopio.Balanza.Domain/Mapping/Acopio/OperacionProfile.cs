@@ -1,5 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Operacion;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
 {
@@ -7,13 +8,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
     {
         public OperacionProfile()
         {
-            CreateMap<Entity.Operacion, OperacionDto>()
+            CreateMap<Operacion, OperacionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Operacion, CreateOperacionDto>()
+            CreateMap<Operacion, CreateOperacionDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Operacion, GetOperacionDto>()
+            CreateMap<Operacion, GetOperacionDto>()
                 .ReverseMap();
         }
     }

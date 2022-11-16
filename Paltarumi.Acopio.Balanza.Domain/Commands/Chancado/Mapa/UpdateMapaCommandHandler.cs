@@ -2,22 +2,23 @@
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.Mapa
 {
     public class UpdateMapaCommandHandler : CommandHandlerBase<UpdateMapaCommand, GetMapaDto>
     {
-        private readonly IRepository<Entity.Mapa> _mapaRepository;
+        private readonly IRepository<Entities.Mapa> _mapaRepository;
 
         public UpdateMapaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             UpdateMapaCommandValidator validator,
-            IRepository<Entity.Mapa> mapaRepository
+            IRepository<Entities.Mapa> mapaRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _mapaRepository = mapaRepository;

@@ -4,7 +4,6 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket
     public class ListTicketDto : TicketDto
     {
         public int IdTicket { get; set; }
-        public string? Numero { get; set; }
         public bool Activo { get; set; }
         public string Conductor { get; set; } = null!;
         public string ConductorTipoLicencia { get; set; } = null!;

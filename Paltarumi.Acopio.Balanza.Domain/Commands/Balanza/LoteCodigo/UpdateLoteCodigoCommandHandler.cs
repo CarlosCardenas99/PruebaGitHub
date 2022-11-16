@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo
 {
     public class UpdateLoteCodigoCommandHandler : CommandHandlerBase<UpdateLoteCodigoCommand, GetLoteCodigoDto>
     {
-        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entities.LoteCodigo> _lotecodigoRepository;
 
         public UpdateLoteCodigoCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             UpdateLoteCodigoCommandValidator validator,
-            IRepository<Entity.LoteCodigo> lotecodigoRepository
+            IRepository<Entities.LoteCodigo> lotecodigoRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _lotecodigoRepository = lotecodigoRepository;

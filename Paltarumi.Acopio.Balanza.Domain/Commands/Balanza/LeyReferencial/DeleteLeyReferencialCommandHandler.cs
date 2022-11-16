@@ -1,20 +1,21 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Transactions;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Transactions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LeyReferencial
 {
     public class DeleteLeyReferencialCommandHandler : CommandHandlerBase<DeleteLeyReferencialCommand>
     {
-        private readonly IRepository<Entity.LeyReferencial> _leyreferencialRepository;
+        private readonly IRepository<Entities.LeyReferencial> _leyreferencialRepository;
 
         public DeleteLeyReferencialCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             DeleteLeyReferencialCommandValidator validator,
-            IRepository<Entity.LeyReferencial> leyreferencialRepository
+            IRepository<Entities.LeyReferencial> leyreferencialRepository
         ) : base(unitOfWork, mapper, validator)
         {
             _leyreferencialRepository = leyreferencialRepository;

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.LeyReferencial;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
 {
@@ -7,20 +8,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
     {
         public LeyReferencialProfile()
         {
-            CreateMap<Entity.LeyReferencial, LeyReferencialDto>()
+            CreateMap<LeyReferencial, LeyReferencialDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LeyReferencial, CreateLeyReferencialDto>()
+            CreateMap<LeyReferencial, CreateLeyReferencialDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LeyReferencial, UpdateLeyReferencialDto>()
+            CreateMap<LeyReferencial, UpdateLeyReferencialDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LeyReferencial, GetLeyReferencialDto>()
+            CreateMap<LeyReferencial, GetLeyReferencialDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LeyReferencial, SearchLeyReferencialDto>()
-                //.ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdDuenoMuestraNavigation.IdProveedorNavigation != null ? x.IdDuenoMuestraNavigation.IdProveedorNavigation.RazonSocial : string.Empty))
+            CreateMap<LeyReferencial, SearchLeyReferencialDto>()
                 .ForMember(x => x.DuenoMuestra, opt => opt.MapFrom(x => x.IdDuenoMuestraNavigation != null ? x.IdDuenoMuestraNavigation.Nombres : string.Empty))
                 .ForMember(x => x.TipoMineral, opt => opt.MapFrom(x => x.IdTipoMineralNavigation != null ? x.IdTipoMineralNavigation.Descripcion : string.Empty))
                 .ReverseMap();

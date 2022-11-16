@@ -1,5 +1,6 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Chancado
 {
@@ -7,19 +8,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Chancado
     {
         public MapaProfile()
         {
-            CreateMap<Entity.Mapa, MapaDto>()
+            CreateMap<Mapa, MapaDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Mapa, CreateMapaDto>()
+            CreateMap<Mapa, CreateMapaDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Mapa, GetMapaDto>()
+            CreateMap<Mapa, GetMapaDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Mapa, UpdateMapaDto>()
+            CreateMap<Mapa, UpdateMapaDto>()
                .ReverseMap();
 
-            CreateMap<Entity.Mapa, UpdateMapaEstadoDto>()
+            CreateMap<Mapa, UpdateMapaEstadoDto>()
                .ReverseMap();
         }
     }

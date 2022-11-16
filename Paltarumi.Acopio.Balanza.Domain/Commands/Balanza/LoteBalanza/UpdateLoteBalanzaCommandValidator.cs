@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class UpdateLoteBalanzaCommandValidator : CommandValidatorBase<UpdateLoteBalanzaCommand>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
 
-        public UpdateLoteBalanzaCommandValidator(IRepository<Entity.LoteBalanza> loteBalanzaRepository)
+        public UpdateLoteBalanzaCommandValidator(IRepository<Entities.LoteBalanza> loteBalanzaRepository)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
 
@@ -27,20 +28,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         protected async Task<bool> ValidateExistenceAsync(UpdateLoteBalanzaCommand command, int id, ValidationContext<UpdateLoteBalanzaCommand> context, CancellationToken cancellationToken)
         {
-            //if (command.UpdateDto.EsPartido)
-            //{
-            //    var loteBalanza = _loteBalanzaRepository.GetByAsNoTrackingAsync(x => x.IdLoteBalanza == id);
-
-            //    var sumaPeso =
-            //        command.UpdateDto.TicketDetails?.Where(y => y.Activo == true).Sum(x => x.PesoNeto100)
-            //        +
-            //        command.UpdateDto.TicketDetails?.Where(y => y.Activo == true).Sum(x => x.PesoNetoCarreta100);
-
-            //    if (sumaPeso != loteBalanza.Result?.Tmh100)
-            //        return CustomValidationMessage(context, Resources.Balanza.LoteBalanza.PesoTicketNoConcideConOriginal);
-
-            //}
-
             var exists = await _loteBalanzaRepository.FindAll().Where(x => x.IdLoteBalanza == id).AnyAsync(cancellationToken);
             if (!exists) return CustomValidationMessage(context, Resources.Common.UpdateRecordNotFound);
 

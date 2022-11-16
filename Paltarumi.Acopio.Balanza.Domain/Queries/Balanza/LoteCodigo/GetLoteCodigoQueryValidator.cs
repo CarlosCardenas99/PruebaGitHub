@@ -1,15 +1,16 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
 {
     public class GetLoteCodigoQueryValidator : QueryValidatorBase<GetLoteCodigoQuery>
     {
-        private readonly IRepository<Entity.LoteCodigo> _lotecodigoRepository;
+        private readonly IRepository<Entities.LoteCodigo> _lotecodigoRepository;
 
-        public GetLoteCodigoQueryValidator(IRepository<Entity.LoteCodigo> lotecodigoRepository)
+        public GetLoteCodigoQueryValidator(IRepository<Entities.LoteCodigo> lotecodigoRepository)
         {
             _lotecodigoRepository = lotecodigoRepository;
 

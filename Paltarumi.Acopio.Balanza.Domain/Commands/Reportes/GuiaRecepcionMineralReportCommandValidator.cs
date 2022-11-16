@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Reportes
 {
     public class GuiaRecepcionMineralReportCommandValidator : CommandValidatorBase<GuiaRecepcionMineralReportCommand>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
-        public GuiaRecepcionMineralReportCommandValidator(IRepository<Entity.LoteBalanza> loteBalanzaRepository)
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
+        public GuiaRecepcionMineralReportCommandValidator(IRepository<Entities.LoteBalanza> loteBalanzaRepository)
         {
             _loteBalanzaRepository = loteBalanzaRepository;
 

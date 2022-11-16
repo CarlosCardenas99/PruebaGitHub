@@ -1,6 +1,6 @@
 ﻿namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
 {
-    public class UpdateLoteCodigoDto 
+    public class UpdateLoteCodigoDto
     {
         public int? IdLote { get; set; }
         public int IdLoteCodigo { get; set; }

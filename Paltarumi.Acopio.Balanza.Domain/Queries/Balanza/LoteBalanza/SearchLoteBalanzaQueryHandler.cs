@@ -2,24 +2,25 @@
 using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Entity.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
-using Paltarumi.Acopio.Balanza.Repository.Extensions;
-using Paltarumi.Acopio.Balanza.Repository.Security;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Entity.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Extensions;
+using Paltarumi.Acopio.Repository.Security;
 using System.Linq.Expressions;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 {
     public class SearchLoteBalanzaQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaQuery, SearchLoteBalanzaFilterDto, SearchLoteBalanzaDto>
     {
-        private readonly IRepository<Entity.LoteBalanza> _loteBalanzaRepository;
+        private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
 
         private readonly IUserIdentity _userIdentity;
 
         public SearchLoteBalanzaQueryHandler(
             IMapper mapper,
-            IRepository<Entity.LoteBalanza> loteBalanzaRepository,
+            IRepository<Entities.LoteBalanza> loteBalanzaRepository,
             IUserIdentity userIdentity
         ) : base(mapper)
         {
@@ -33,7 +34,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             var response = new ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>();
 
-            Expression<Func<Entity.LoteBalanza, bool>> filter = x => true;
+            Expression<Func<Entities.LoteBalanza, bool>> filter = x => true;
 
             var filters = request.SearchParams?.Filter;
 
@@ -77,13 +78,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
             if (!string.IsNullOrEmpty(idSucursal))
                 filter = filter.And(x => x.IdCorrelativoNavigation.IdSucursal == idSucursal);
 
-            var sorts = new List<SortExpression<Entity.LoteBalanza>>();
+            var sorts = new List<SortExpression<Entities.LoteBalanza>>();
 
             if (request.SearchParams?.Sort != null)
             {
                 foreach (var srt in request.SearchParams.Sort)
                 {
-                    var property = IQueryableExtensions.GetSortExpression<Entity.LoteBalanza>(srt.Direction, srt.Property);
+                    var property = IQueryableExtensions.GetSortExpression<Entities.LoteBalanza>(srt.Direction, srt.Property);
                     if (property != null) sorts.Add(property);
                 }
             }
@@ -96,7 +97,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
                 x => x.IdConcesionNavigation,
                 x => x.IdProveedorNavigation,
                 x => x.IdEstadoTipoMaterialNavigation,
-                x => x.Tickets.Where(x =>x.Activo==true),
+                x => x.Tickets.Where(x => x.Activo == true),
                 x => x.IdLoteEstadoNavigation,
                 x => x.IdCorrelativoNavigation
             );

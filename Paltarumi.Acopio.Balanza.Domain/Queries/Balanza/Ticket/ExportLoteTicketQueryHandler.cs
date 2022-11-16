@@ -30,9 +30,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
 
             excelPackage.Workbook.Properties.Title = Resources.Balanza.Ticket.ExcelReportTitle;
             excelPackage.Workbook.Properties.Author = Resources.Common.ExcelReportAuthor;
-  
+
             #region Estilos del EXCEL
-            
+
             //color fondo gris
             ExcelNamedStyleXml styleHeader = excelPackage.Workbook.Styles.CreateNamedStyle("StyleHeader");
             styleHeader.Style.Font.Bold = true;
@@ -125,7 +125,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket
             ExcelNamedStyleXml styleCellTextCenter = excelPackage.Workbook.Styles.CreateNamedStyle("styleCellTextCenter");
             styleCellTextCenter.Style.Numberformat.Format = "@";
             styleCellTextCenter.Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            styleCellTextCenter.Style.HorizontalAlignment =ExcelHorizontalAlignment.Center;
+            styleCellTextCenter.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             styleCellTextCenter.Style.Border.Top.Color.SetColor(System.Drawing.Color.Black);
             styleCellTextCenter.Style.Border.Right.Style = ExcelBorderStyle.Thin;
             styleCellTextCenter.Style.Border.Right.Color.SetColor(System.Drawing.Color.Black);

@@ -48,7 +48,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Sunat
             {
                 try
                 {
-                    var url = $"{sunatServicesRuc?.Url}{ sunatServicesRuc?.PathRuc}";
+                    var url = $"{sunatServicesRuc?.Url}{sunatServicesRuc?.PathRuc}";
 
                     url = url?.Replace("{ruc}", ruc);
                     url = url?.Replace("{token}", sunatServicesRuc?.Token);
@@ -137,7 +137,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Sunat
             {
                 try
                 {
-                    var url = $"{sunatServicesRuc?.Url}{ sunatServicesRuc?.PathDni}";
+                    var url = $"{sunatServicesRuc?.Url}{sunatServicesRuc?.PathDni}";
 
                     url = url?.Replace("{dni}", dni);
                     url = url?.Replace("{token}", sunatServicesRuc?.Token);

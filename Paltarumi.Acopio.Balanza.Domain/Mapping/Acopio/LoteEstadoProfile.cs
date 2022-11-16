@@ -1,4 +1,5 @@
 using AutoMapper;
+using Paltarumi.Acopio.Entity;
 using Paltarumi.Acopio.Maestros.Dto.Acopio.LoteEstado;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
@@ -7,10 +8,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
     {
         public LoteEstadoProfile()
         {
-            CreateMap<Entity.LoteEstado, LoteEstadoDto>()
+            CreateMap<LoteEstado, LoteEstadoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.LoteEstado, GetLoteEstadoDto>()
+            CreateMap<LoteEstado, GetLoteEstadoDto>()
                 .ReverseMap();
         }
     }

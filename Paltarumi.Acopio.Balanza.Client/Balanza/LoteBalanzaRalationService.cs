@@ -1,6 +1,5 @@
 using Paltarumi.Acopio.Balanza.Client.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
-using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Client.Balanza

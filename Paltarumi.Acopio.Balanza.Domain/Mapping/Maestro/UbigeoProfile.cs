@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Entity;
 using Paltarumi.Acopio.Maestros.Dto.Maestro.Ubigeo;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
@@ -7,10 +8,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public UbigeoProfile()
         {
-            CreateMap<Entity.Ubigeo, UbigeoDto>()
+            CreateMap<Ubigeo, UbigeoDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Ubigeo, GetUbigeoDto>()
+            CreateMap<Ubigeo, GetUbigeoDto>()
                 .ReverseMap();
         }
     }

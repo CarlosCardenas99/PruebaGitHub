@@ -1,14 +1,15 @@
 ﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class ExportLoteBalanzaReportCommandValidator : CommandValidatorBase<ExportLoteBalanzaReportCommand>
     {
-        private readonly IRepository<Entity.Ticket> _ticketRepository;
-        public ExportLoteBalanzaReportCommandValidator(IRepository<Entity.Ticket> ticketRepository)
+        private readonly IRepository<Entities.Ticket> _ticketRepository;
+        public ExportLoteBalanzaReportCommandValidator(IRepository<Entities.Ticket> ticketRepository)
         {
             _ticketRepository = ticketRepository;
 

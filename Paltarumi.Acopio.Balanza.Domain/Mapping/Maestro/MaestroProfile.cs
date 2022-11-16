@@ -7,13 +7,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Maestro
     {
         public MaestroProfile()
         {
-            CreateMap<Entity.Maestro, MaestroDto>()
+            CreateMap<Paltarumi.Acopio.Entity.Maestro, MaestroDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Maestro, GetMaestroDto>()
+            CreateMap<Paltarumi.Acopio.Entity.Maestro, GetMaestroDto>()
                 .ReverseMap();
 
-            CreateMap<Entity.Maestro, ListMaestroDto>()
+            CreateMap<Paltarumi.Acopio.Entity.Maestro, ListMaestroDto>()
                 .ReverseMap();
         }
     }
