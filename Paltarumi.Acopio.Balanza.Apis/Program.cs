@@ -26,8 +26,8 @@ builder.Services.UseSwaggerDocumentation(configuration);
 // Repositories
 builder.Services.UseRepositories(
     configuration.GetConnectionString("DefaultConnection"),
-    typeof(Program).Assembly.GetName().Name!,
-    configuration.GetValue<string>("AuditOptions:ApiUrl")
+    configuration.GetValue<string>("AuditOptions:ApiUrl"),
+    typeof(Program).Assembly.GetName().Name!
 );
 
 // Domain Services

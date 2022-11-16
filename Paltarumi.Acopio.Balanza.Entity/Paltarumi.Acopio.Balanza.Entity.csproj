@@ -13,7 +13,7 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.5" />
-		<PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.8" />
+		<PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>
