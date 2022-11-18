@@ -7,6 +7,7 @@ using Paltarumi.Acopio.Balanza.Apis.Security;
 using Paltarumi.Acopio.Balanza.Application.Extensions;
 using Paltarumi.Acopio.Balanza.Domain.Extensions;
 using Paltarumi.Acopio.Balanza.EmailClient;
+using Paltarumi.Acopio.Liquidacion.Update.Extensions;
 using Paltarumi.Acopio.Repository.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,7 @@ builder.Services.UseRepositories(
 
 // Domain Services
 builder.Services.UseDomainServices();
+builder.Services.UseDomainServicesUpdate();
 
 // Application Services
 builder.Services.UseApplicationServices();

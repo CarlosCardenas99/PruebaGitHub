@@ -7,7 +7,7 @@ using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 using Entities = Paltarumi.Acopio.Entity;
 
-namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
+namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidaciones
 {
     public class UpdateLoteLiquidacionCommandHandler : CommandHandlerBase<UpdateLoteLiquidacionCommand, GetLoteLiquidacionDto>
     {

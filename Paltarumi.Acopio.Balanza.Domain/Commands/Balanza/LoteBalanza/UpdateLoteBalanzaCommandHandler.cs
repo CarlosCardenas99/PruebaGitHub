@@ -6,17 +6,17 @@ using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
-using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Liquidacion.Dto.Liquidaciones.LoteLiquidacion;
+using Paltarumi.Acopio.Liquidacion.Update.Commands.Liquidaciones.LoteLiquidacion;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 using Entities = Paltarumi.Acopio.Entity;
@@ -267,12 +267,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         private async Task UpdateLoteLiquidacion(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto)
         {
-            var updateResponse = await _mediator?.Send(new UpdateLoteLiquidacionCommand(new UpdateLoteLiquidacionDto
+            var updateResponse = await _mediator?.Send(new UpdateLoteLiquidacionCommand(new UpdateLoteLiquidacionUpdateDto
             {
-                CodigoLote = loteBalanzaDto.CodigoLote!,
-                IdProveedor = loteBalanzaDto.IdProveedor,
-                Tmh100 = loteBalanzaDto.Tmh100,
-                Tmh = loteBalanzaDto.Tmh,
+                CodigoLote = loteBalanzaDto.CodigoLote!
             }), cancellationToken)!;
 
             if (updateResponse?.IsValid == false)

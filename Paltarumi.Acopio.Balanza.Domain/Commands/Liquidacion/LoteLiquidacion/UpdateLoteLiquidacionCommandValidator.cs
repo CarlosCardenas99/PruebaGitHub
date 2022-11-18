@@ -1,6 +1,6 @@
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 
-namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
+namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidaciones
 {
     public class UpdateLoteLiquidacionCommandValidator : CommandValidatorBase<UpdateLoteLiquidacionCommand>
     {
