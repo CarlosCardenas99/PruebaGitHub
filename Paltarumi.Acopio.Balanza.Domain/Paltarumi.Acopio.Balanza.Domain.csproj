@@ -17,8 +17,9 @@
     <PackageReference Include="Paltarumi.Acopio.Constantes" Version="1.0.0.16" />
     <PackageReference Include="Paltarumi.Acopio.Dto.Base" Version="1.0.0.6" />
     <PackageReference Include="Paltarumi.Acopio.Export" Version="1.0.0.25" />
-    <PackageReference Include="Paltarumi.Acopio.Liquidacion.Update" Version="1.0.0.10" />
+    <PackageReference Include="Paltarumi.Acopio.Liquidacion.Update" Version="1.0.0.12" />
     <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.15" />
+    <PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.10" />
     <PackageReference Include="RandomStringCreator" Version="2.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
     <PackageReference Include="Telerik.Reporting.Trial" Version="16.1.22.622" />
@@ -28,8 +29,6 @@
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Common\Paltarumi.Acopio.Balanza.Common.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Dto\Paltarumi.Acopio.Balanza.Dto.csproj" />
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.EmailClient\Paltarumi.Acopio.Balanza.EmailClient.csproj" />
-    <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Repository.Abstractions\Paltarumi.Acopio.Balanza.Repository.Abstractions.csproj" />
-    <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Repository\Paltarumi.Acopio.Balanza.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>

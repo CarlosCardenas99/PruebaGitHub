@@ -30,13 +30,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
-    <PackageReference Include="Paltarumi.Acopio.Liquidacion.Update" Version="1.0.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Application\Paltarumi.Acopio.Balanza.Application.csproj" />
-    <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Repository\Paltarumi.Acopio.Balanza.Repository.csproj" />
   </ItemGroup>
 
   <ItemGroup>
