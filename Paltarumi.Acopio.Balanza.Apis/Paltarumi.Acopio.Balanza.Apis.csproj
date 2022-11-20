@@ -16,20 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Report\Balanza\LoteReport.trdp" />
-	<None Remove="Report\Balanza\RecepcionMineralReport.trdp" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Report\Balanza\LoteReport.trdp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-	<Content Include="Report\Balanza\RecepcionMineralReport.trdp">
-		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	</Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
       <PrivateAssets>all</PrivateAssets>
