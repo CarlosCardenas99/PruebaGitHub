@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Resources", "1. Resource
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Application", "2. Application", "{86E88C41-F989-4710-9678-8BC7F6239F21}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Common", "4. Common", "{3AEB12B2-3EEF-40D5-8B81-FEA7B145DF52}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Common", "3. Common", "{3AEB12B2-3EEF-40D5-8B81-FEA7B145DF52}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6. Test", "6. Test", "{28BCB9CE-CF64-420C-8E19-F3EBEF899410}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Test", "5. Test", "{28BCB9CE-CF64-420C-8E19-F3EBEF899410}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.Balanza.Common", "Paltarumi.Acopio.Balanza.Common\Paltarumi.Acopio.Balanza.Common.csproj", "{23B792D7-90E8-44DC-A530-5032F70BCE29}"
 EndProject
@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.Balanza.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.Balanza.Apis", "Paltarumi.Acopio.Balanza.Apis\Paltarumi.Acopio.Balanza.Apis.csproj", "{51198792-9354-46D6-AB18-A3B2F480E7BF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Client", "5. Client", "{BA3B44F3-4519-4558-9F40-FBDBD69A6EF5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Client", "4. Client", "{BA3B44F3-4519-4558-9F40-FBDBD69A6EF5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Paltarumi.Acopio.Balanza.EmailClient", "Paltarumi.Acopio.Balanza.EmailClient\Paltarumi.Acopio.Balanza.EmailClient.csproj", "{532DAF31-7DC7-44E2-BC0C-6D6E35E86C16}"
 EndProject

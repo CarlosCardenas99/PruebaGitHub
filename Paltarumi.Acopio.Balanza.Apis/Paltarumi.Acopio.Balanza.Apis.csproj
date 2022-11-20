@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Report\Balanza\LoteReport.trdp" />
 	<None Remove="Report\Balanza\RecepcionMineralReport.trdp" />
   </ItemGroup>
@@ -35,10 +42,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Paltarumi.Acopio.Balanza.Application\Paltarumi.Acopio.Balanza.Application.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

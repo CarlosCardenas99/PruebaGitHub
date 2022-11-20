@@ -43,9 +43,6 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaChecklistDto>>> SearchWithCheckList(SearchParamsDto<SearchLoteBalanzaChecklistFilterDto> searchParams)
             => await _mediator.Send(new SearchLoteBalanzaCheckListQuery(searchParams));
 
-        public async Task<ResponseDto<byte[]>> ExportReport(string reportPath, int idTicket)
-            => await _mediator.Send(new ExportLoteBalanzaReportCommand(reportPath, idTicket));
-
         public async Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto)
             => await _mediator.Send(new UpdateLoteBalanzaCheckListCommand(updateDto));
 

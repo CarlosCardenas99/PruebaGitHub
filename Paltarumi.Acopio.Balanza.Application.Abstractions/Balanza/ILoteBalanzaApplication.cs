@@ -16,6 +16,5 @@ namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
         Task<ResponseDto<SearchResultDto<byte>>> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams);
         Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams);
         Task<ResponseDto<SearchResultDto<SearchLoteBalanzaChecklistDto>>> SearchWithCheckList(SearchParamsDto<SearchLoteBalanzaChecklistFilterDto> searchParams);
-        Task<ResponseDto<byte[]>> ExportReport(string reportPath, int idTicket);
     }
 }
