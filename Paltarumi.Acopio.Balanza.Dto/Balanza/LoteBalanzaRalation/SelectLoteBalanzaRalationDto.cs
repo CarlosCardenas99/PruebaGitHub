@@ -1,7 +1,7 @@
 
 namespace Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation
 {
-    public class SearchLoteBalanzaRalationDto
+    public class SelectLoteBalanzaRalationDto
     {
         public int? IdLoteBalanzaRalation { get; set; }
         public int IdLoteBalanza { get; set; }

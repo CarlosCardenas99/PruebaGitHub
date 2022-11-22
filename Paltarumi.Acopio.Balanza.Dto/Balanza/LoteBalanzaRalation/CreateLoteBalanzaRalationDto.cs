@@ -2,7 +2,8 @@
 
 namespace Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation
 {
-    public class CreateLoteBalanzaRalationDto : LoteBalanzaRalationDto
+    public class CreateLoteBalanzaRalationDto
     {
+        public IEnumerable<ItemLoteBalanzaRalationDto>? ItemLoteBalanzaRalation { get; set; }
     }
 }

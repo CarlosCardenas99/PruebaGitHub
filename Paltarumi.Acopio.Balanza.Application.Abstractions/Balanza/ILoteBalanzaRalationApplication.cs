@@ -11,5 +11,6 @@ namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
         Task<ResponseDto<GetLoteBalanzaRalationDto>> Get(int id);
         Task<ResponseDto<IEnumerable<ListLoteBalanzaRalationDto>>> List();
         Task<ResponseDto<SearchResultDto<SearchLoteBalanzaRalationDto>>> Search(SearchParamsDto<SearchLoteBalanzaRalationFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SelectLoteBalanzaRalationDto>>> Select(SearchParamsDto<SelectLoteBalanzaRalationFilterDto> searchParams);
     }
 }

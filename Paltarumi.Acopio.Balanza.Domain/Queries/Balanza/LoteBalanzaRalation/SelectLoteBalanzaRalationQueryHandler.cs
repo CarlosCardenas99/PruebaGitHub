@@ -14,13 +14,13 @@ using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
 {
-    public class SearchLoteBalanzaRalationQueryHandler : SearchQueryHandlerBase<SearchLoteBalanzaRalationQuery, SearchLoteBalanzaRalationFilterDto, SearchLoteBalanzaRalationDto>
+    public class SelectLoteBalanzaRalationQueryHandler : SearchQueryHandlerBase<SelectLoteBalanzaRalationQuery, SelectLoteBalanzaRalationFilterDto, SelectLoteBalanzaRalationDto>
     {
         private readonly IRepository<Entities.LoteBalanza> _lotebalanzaralationRepository;
 
         private readonly IUserIdentity _userIdentity;
 
-        public SearchLoteBalanzaRalationQueryHandler(
+        public SelectLoteBalanzaRalationQueryHandler(
             IMapper mapper,
             IRepository<Entities.LoteBalanza> lotebalanzaralationRepository,
             IUserIdentity userIdentity
@@ -31,10 +31,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
             _userIdentity = userIdentity;
         }
 
-        protected override async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaRalationDto>>> HandleQuery(SearchLoteBalanzaRalationQuery request, CancellationToken cancellationToken)
+        protected override async Task<ResponseDto<SearchResultDto<SelectLoteBalanzaRalationDto>>> HandleQuery(SelectLoteBalanzaRalationQuery request, CancellationToken cancellationToken)
         {
-            var idSucursal = _userIdentity.GetIdSucursal();
-            var response = new ResponseDto<SearchResultDto<SearchLoteBalanzaRalationDto>>();
+            var response = new ResponseDto<SearchResultDto<SelectLoteBalanzaRalationDto>>();
 
             Expression<Func<Entities.LoteBalanza, bool>> filter = x => true;
 
@@ -55,17 +54,24 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 }
             }
 
+            if (!string.IsNullOrEmpty(filters?.Proveedor))
+            {
+                var proveedores = filters.Proveedor.Split(" ");
+                proveedores.ToList().ForEach(p =>
+                {
+                    filter = filter.And(x =>
+                    (x.IdProveedorNavigation.Ruc.Contains(p) || x.IdProveedorNavigation.RazonSocial.Contains(p)));
+                });
+            }
+
             if (!string.IsNullOrEmpty(filters?.CodigoLote))
                 filter = filter.And(x => x.CodigoLote.Contains(filters.CodigoLote));
 
-            if (!string.IsNullOrEmpty(idSucursal))
-                filter = filter.And(x => x.IdCorrelativoNavigation.IdSucursal == idSucursal);
+            if (!string.IsNullOrEmpty(filters?.IdSucursal))
+                filter = filter.And(x => x.IdCorrelativoNavigation.IdSucursal.Contains(filters.IdSucursal));
 
-            if (filters!.Relacionado)
-            {
-                filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaNavigations.Count > 0);
-                filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaNavigations.Where(x => x.Activo).Any());
-            }
+            filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaOriginNavigations.Where(x =>x.Activo).Count()==0);
+
             filter = filter.And(x => x.Activo);
 
             var sorts = new List<SortExpression<Entities.LoteBalanza>>();
@@ -88,10 +94,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 x => x.IdConcesionNavigation
             );
 
-            var lotebalanzaralationDtos = _mapper?.Map<IEnumerable<SearchLoteBalanzaRalationDto>>(lotebalanzaralations.Items);
+            var lotebalanzaralationDtos = _mapper?.Map<IEnumerable<SelectLoteBalanzaRalationDto>>(lotebalanzaralations.Items);
 
-            var searchResult = new SearchResultDto<SearchLoteBalanzaRalationDto>(
-                lotebalanzaralationDtos ?? new List<SearchLoteBalanzaRalationDto>(),
+            var searchResult = new SearchResultDto<SelectLoteBalanzaRalationDto>(
+                lotebalanzaralationDtos ?? new List<SelectLoteBalanzaRalationDto>(),
                 lotebalanzaralations.Total,
                 request.SearchParams
             );

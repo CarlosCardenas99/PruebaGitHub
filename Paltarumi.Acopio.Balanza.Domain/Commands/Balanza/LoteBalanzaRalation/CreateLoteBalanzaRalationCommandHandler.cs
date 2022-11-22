@@ -12,33 +12,38 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
     {
         protected override bool UseTransaction => false;
 
-        private readonly IRepository<Entities.LoteBalanzaRalation> _lotebalanzaralationRepository;
+        private readonly IRepository<Entities.LoteBalanzaRalation> _lotebalanzaRalationRepository;
 
         public CreateLoteBalanzaRalationCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             CreateLoteBalanzaRalationCommandValidator validator,
-            IRepository<Entities.LoteBalanzaRalation> lotebalanzaralationRepository
+            IRepository<Entities.LoteBalanzaRalation> lotebalanzaRalationRepository
         ) : base(unitOfWork, mapper, validator)
         {
-            _lotebalanzaralationRepository = lotebalanzaralationRepository;
+            _lotebalanzaRalationRepository = lotebalanzaRalationRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaRalationDto>> HandleCommand(CreateLoteBalanzaRalationCommand request, CancellationToken cancellationToken)
         {
             var response = new ResponseDto<GetLoteBalanzaRalationDto>();
-            var lotebalanzaralation = _mapper?.Map<Entities.LoteBalanzaRalation>(request.CreateDto);
+            List<Entities.LoteBalanzaRalation> list = new List<Entities.LoteBalanzaRalation>();
 
-            if (lotebalanzaralation != null)
+            var createDtos = request.CreateDto.ItemLoteBalanzaRalation!.ToList();
+
+            foreach (var createDto in createDtos)
             {
-                lotebalanzaralation.Activo = true;
+                Entities.LoteBalanzaRalation newReg = new Entities.LoteBalanzaRalation();
+                newReg.IdLoteBalanzaOrigin = createDto.IdLoteBalanzaOrigin;
+                newReg.IdLoteBalanza = createDto.IdLoteBalanza;
 
-
-                await _lotebalanzaralationRepository.AddAsync(lotebalanzaralation);
-                await _lotebalanzaralationRepository.SaveAsync();
+                list.Add(newReg);
             }
 
-            var lotebalanzaralationDto = _mapper?.Map<GetLoteBalanzaRalationDto>(lotebalanzaralation);
+            await _lotebalanzaRalationRepository.AddAsync(list.ToArray());
+            await _lotebalanzaRalationRepository.SaveAsync();
+
+            var lotebalanzaralationDto = _mapper?.Map<GetLoteBalanzaRalationDto>(list.ToArray().FirstOrDefault(new Entities.LoteBalanzaRalation()));
             if (lotebalanzaralationDto != null) response.UpdateData(lotebalanzaralationDto);
 
             response.AddOkResult(Resources.Common.CreateSuccessMessage);

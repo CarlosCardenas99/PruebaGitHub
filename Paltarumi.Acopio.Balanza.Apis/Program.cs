@@ -9,7 +9,6 @@ using Paltarumi.Acopio.Balanza.Domain.Extensions;
 using Paltarumi.Acopio.Balanza.EmailClient;
 using Paltarumi.Acopio.Liquidacion.Update.Extensions;
 using Paltarumi.Acopio.Repository.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
