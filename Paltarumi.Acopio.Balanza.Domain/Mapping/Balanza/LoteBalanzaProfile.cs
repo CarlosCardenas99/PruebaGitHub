@@ -54,7 +54,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
 
             CreateMap<LoteBalanza, SelectLoteBalanzaRalationDto>()
                 .ForMember(x => x.NombreProveedor, opt => opt.MapFrom(x => x.IdProveedorNavigation.RazonSocial))
-                .ForMember(x => x.NombreConcesion, opt => opt.MapFrom(x => x.IdConcesionNavigation.Nombre))
                 .ReverseMap();
         }
     }
