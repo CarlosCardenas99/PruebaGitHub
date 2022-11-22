@@ -5,6 +5,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanzaRalation
 {
     public class ListLoteBalanzaRalationQuery : QueryBase<IEnumerable<ListLoteBalanzaRalationDto>>
     {
-
+        public ListLoteBalanzaRalationQuery(int idLoteBalanza) => IdLoteBalanza = idLoteBalanza;
+        public int IdLoteBalanza { get; set; }
     }
 }
