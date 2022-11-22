@@ -30,7 +30,7 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetLoteBalanzaRalationDto>> Get(int id)
             => await _lotebalanzaralationApplication.Get(id);
 
-        [HttpGet("list")]
+        [HttpGet("list/{idLoteBalanza}")]
         public async Task<ResponseDto<IEnumerable<ListLoteBalanzaRalationDto>>> List(int idLoteBalanza)
             => await _lotebalanzaralationApplication.List(idLoteBalanza);
 
