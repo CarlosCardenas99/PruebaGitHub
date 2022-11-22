@@ -3,9 +3,9 @@ namespace Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation
 {
     public class ListLoteBalanzaRalationDto
     {
-        public int? IdLoteBalanzaRalation { get; set; }
+        public int IdLoteBalanzaRalation { get; set; }
         public int IdLoteBalanza { get; set; }
-        public DateTimeOffset? FechaIngreso { get; set; }
+        public DateTimeOffset FechaIngreso { get; set; }
         public DateTimeOffset? FechaAcopio { get; set; }
         public string CodigoLote { get; set; } = null!;
         public string? CodigoTrujillo { get; set; }
