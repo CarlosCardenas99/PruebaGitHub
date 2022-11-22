@@ -62,10 +62,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
                 filter = filter.And(x => x.IdCorrelativoNavigation.IdSucursal == idSucursal);
 
             if (filters!.Relacionado)
-            {
-                filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaNavigations.Count > 0);
-                filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaNavigations.Where(x => x.Activo).Any());
-            }
+                filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaNavigations.Where(x => x.Activo).Count() > 0);
+
             filter = filter.And(x => x.Activo);
 
             var sorts = new List<SortExpression<Entities.LoteBalanza>>();
