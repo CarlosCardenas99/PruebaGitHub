@@ -28,8 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 
             if (lotebalanzaralation != null)
             {
-                lotebalanzaralation.Activo = false;
-                await _lotebalanzaralationRepository.UpdateAsync(lotebalanzaralation);
+                await _lotebalanzaralationRepository.DeleteAsync(lotebalanzaralation);
                 response.AddOkResult(Resources.Common.DeleteSuccessMessage);
             }
 
