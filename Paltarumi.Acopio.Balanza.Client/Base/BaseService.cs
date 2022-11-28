@@ -185,7 +185,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
         {
             try
             {
-                return await DeleteEntity<ResponseDto>()!;
+                return await DeleteEntity<ResponseDto>(resource)!;
             }
             catch (Exception ex)
             {
@@ -198,7 +198,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Base
         {
             try
             {
-                return await DeleteEntity<ResponseDto<TResponse>>()!;
+                return await DeleteEntity<ResponseDto<TResponse>>(resource)!;
             }
             catch (Exception ex)
             {
