@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CreateLoteRelacionExiste" xml:space="preserve">
+    <value>Los lotes {0} ya estas relacionados</value>
+    <comment>0: Field</comment>
+  </data>
   <data name="CreateSuccessMessage" xml:space="preserve">
     <value>El registro fue creado correctamente</value>
   </data>

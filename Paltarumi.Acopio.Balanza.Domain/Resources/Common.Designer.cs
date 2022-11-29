@@ -61,6 +61,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Los lotes {0} ya estas relacionados.
+        /// </summary>
+        internal static string CreateLoteRelacionExiste {
+            get {
+                return ResourceManager.GetString("CreateLoteRelacionExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El registro fue creado correctamente.
         /// </summary>
         internal static string CreateSuccessMessage {
