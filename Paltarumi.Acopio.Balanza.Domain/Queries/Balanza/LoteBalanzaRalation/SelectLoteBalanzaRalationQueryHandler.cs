@@ -70,7 +70,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteBalanza
             if (!string.IsNullOrEmpty(filters?.IdSucursal))
                 filter = filter.And(x => x.IdCorrelativoNavigation.IdSucursal.Contains(filters.IdSucursal));
 
-            filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaOriginNavigations.Where(x =>x.Activo).Count()==0);
+            filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaOriginNavigation == null);
+            //filter = filter.And(x => x.LoteBalanzaRalationIdLoteBalanzaOriginNavigations.Where(x =>x.Activo).Count()==0);
 
             filter = filter.And(x => x.Activo);
 
