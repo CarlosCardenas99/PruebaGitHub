@@ -74,19 +74,19 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var loteResponse = await CreateLote(request, cancellationToken, response, codigoLote);
             if (!response.IsValid) return response;
 
-            var codigoLoteResponse = await CreateCodigoLote(request, cancellationToken, response, loteResponse?.Data, loteCodigoResponse.Data);
+            var codigoLoteResponse = await CreateCodigoLote(request, cancellationToken, response, loteResponse?.Data, loteCodigoResponse.Data!);
             if (!response.IsValid) return response;
 
-            await CreateLoteBalanza(request, response, loteCodigoResponse.Data);
+            await CreateLoteBalanza(request, response, loteCodigoResponse.Data!);
             if (!response.IsValid) return response;
 
-            await CreateLoteChancado(cancellationToken, response, response.Data!, loteCodigoResponse.Data);
+            await CreateLoteChancado(cancellationToken, response, response.Data!, loteCodigoResponse.Data!);
             if (!response.IsValid) return response;
 
-            await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!, loteCodigoResponse.Data);
+            await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!, loteCodigoResponse.Data!);
             if (!response.IsValid) return response;
 
-            await CreateLoteLiquidacion(cancellationToken, response, response.Data!, loteCodigoResponse.Data);
+            await CreateLoteLiquidacion(cancellationToken, response, response.Data!, loteCodigoResponse.Data!);
             if (!response.IsValid) return response;
 
             await CreateLoteOperacion(request, cancellationToken, response, codigoLote);
@@ -150,7 +150,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var loteCodigo = new Entities.LoteCodigo
             {
-                IdLote = lote.IdLote,
+                IdLote = lote!.IdLote,
                 IdDuenoMuestra = duenoMuestra.IdDuenoMuestra,
                 IdLoteCodigoTipo = CONST_ACOPIO.LOTECODIGO_TIPO.MUESTRA,
                 FechaRecepcion = DateTimeOffset.Now,
@@ -171,7 +171,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             await _loteCodigoRepository.SaveAsync();
 
             var lotecod = _mapper?.Map<GetLoteCodigoDto>(loteCodigo);
-            loteCodigoRegistrado.UpdateData(lotecod);
+            loteCodigoRegistrado.UpdateData(lotecod!);
 
             return loteCodigoRegistrado;
         }
@@ -282,7 +282,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdLoteLiquidacionEstado = CONST_LIQUIDACION.ESTADO_LOTELIQUIDACION.PENDIENTE,
                 FechaIngreso = DateTimeOffset.Now,
                 Tmh100 = loteBalanzaDto.Tmh100,
-                Tmh = loteBalanzaDto.Tmh
+                Tmh = loteBalanzaDto.Tmh,
+                IdConcesion = loteBalanzaDto.IdConcesion
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)

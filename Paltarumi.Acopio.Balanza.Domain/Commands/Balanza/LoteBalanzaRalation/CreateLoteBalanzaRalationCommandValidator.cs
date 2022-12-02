@@ -15,10 +15,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 
             RequiredInformation(x => x.CreateDto).DependentRules(() =>
             {
-                RequiredField(x => x.CreateDto.ItemLoteBalanzaRalation.FirstOrDefault().IdLoteBalanzaOrigin.ToString(),Resources.Balanza.LoteBalanzaRalation.IdLoteBalanzaRalation)
+                RequiredField(x => x.CreateDto.ItemLoteBalanzaRalation!.FirstOrDefault()!.IdLoteBalanzaOrigin.ToString(),Resources.Balanza.LoteBalanzaRalation.IdLoteBalanzaRalation)
                     .DependentRules(() =>
                     {
-                        RuleFor(x => x.CreateDto.ItemLoteBalanzaRalation.FirstOrDefault().IdLoteBalanzaOrigin)
+                        RuleFor(x => x.CreateDto.ItemLoteBalanzaRalation!.FirstOrDefault()!.IdLoteBalanzaOrigin)
                             .MustAsync(ValidateExistenceAsync)
                             .WithCustomValidationMessage();
                     });

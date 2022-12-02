@@ -14,12 +14,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Paltarumi.Acopio.Constantes" Version="1.0.0.22" />
+    <PackageReference Include="Paltarumi.Acopio.Constantes" Version="1.0.0.32" />
     <PackageReference Include="Paltarumi.Acopio.Dto.Base" Version="1.0.0.6" />
     <PackageReference Include="Paltarumi.Acopio.Export" Version="1.0.0.25" />
     <PackageReference Include="Paltarumi.Acopio.Liquidacion.Update" Version="1.0.0.14" />
-    <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.16" />
-    <PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.25" />
+    <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.18" />
+    <PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.28" />
     <PackageReference Include="RandomStringCreator" Version="2.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
   </ItemGroup>
