@@ -60,15 +60,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
             await _lotebalanzaRalationRepository.AddAsync(list.ToArray());
             await _lotebalanzaRalationRepository.SaveAsync();
 
-            var updateCodigoTrujilloLoteBalanza = await _mediator?.Send(new UpdateCodigoTrujilloLoteBalanzaCommand(
-                new UpdateCodigoTrujilloLoteBalanzaDto
-                {
-                    IdLoteBalanza = idLoteBalanza,
-                    CodigoTrujillo = lotesTrujillo != null ? string.Join(",", lotesTrujillo.Select(x => x.CodigoLote)) : String.Empty
-                }), cancellationToken)!;
+            //var updateCodigoTrujilloLoteBalanza = await _mediator?.Send(new UpdateCodigoTrujilloLoteBalanzaCommand(
+            //    new UpdateCodigoTrujilloLoteBalanzaDto
+            //    {
+            //        IdLoteBalanza = idLoteBalanza,
+            //        CodigoTrujillo = lotesTrujillo != null ? string.Join(",", lotesTrujillo.Select(x => x.CodigoLote)) : String.Empty
+            //    }), cancellationToken)!;
 
-            if (updateCodigoTrujilloLoteBalanza?.IsValid == false)
-                response.AttachResults(updateCodigoTrujilloLoteBalanza);
+            //if (updateCodigoTrujilloLoteBalanza?.IsValid == false)
+            //    response.AttachResults(updateCodigoTrujilloLoteBalanza);
 
             var lotebalanzaralationDto = _mapper?.Map<GetLoteBalanzaRalationDto>(list.ToArray().FirstOrDefault(new Entities.LoteBalanzaRalation()));
             if (lotebalanzaralationDto != null) response.UpdateData(lotebalanzaralationDto);

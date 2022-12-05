@@ -41,20 +41,20 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
                 await _lotebalanzaralationRepository.DeleteAsync(lotebalanzaralation);
                 await _lotebalanzaralationRepository.SaveAsync();
 
-                var lotesRelacion = await _lotebalanzaralationRepository.FindByAsync(x => x.IdLoteBalanza == lotebalanzaralation.IdLoteBalanza);
+                //var lotesRelacion = await _lotebalanzaralationRepository.FindByAsync(x => x.IdLoteBalanza == lotebalanzaralation.IdLoteBalanza);
 
-                var idLotesTrujillo = lotesRelacion.Select(x => x.IdLoteBalanzaOrigin) ?? new List<int>();
-                var lotesTrujillo = await _lotebalanzaRepository.FindByAsNoTrackingAsync(x => idLotesTrujillo.Contains(x.IdLoteBalanza));
+                //var idLotesTrujillo = lotesRelacion.Select(x => x.IdLoteBalanzaOrigin) ?? new List<int>();
+                //var lotesTrujillo = await _lotebalanzaRepository.FindByAsNoTrackingAsync(x => idLotesTrujillo.Contains(x.IdLoteBalanza));
 
-                var updateCodigoTrujilloLoteBalanza = await _mediator?.Send(new UpdateCodigoTrujilloLoteBalanzaCommand(
-                    new UpdateCodigoTrujilloLoteBalanzaDto
-                    {
-                        IdLoteBalanza = lotebalanzaralation.IdLoteBalanza,
-                        CodigoTrujillo = lotesTrujillo != null ? string.Join(",", lotesTrujillo.Select(x => x.CodigoLote)) : String.Empty
-                    }), cancellationToken)!;
+                //var updateCodigoTrujilloLoteBalanza = await _mediator?.Send(new UpdateCodigoTrujilloLoteBalanzaCommand(
+                //    new UpdateCodigoTrujilloLoteBalanzaDto
+                //    {
+                //        IdLoteBalanza = lotebalanzaralation.IdLoteBalanza,
+                //        CodigoTrujillo = lotesTrujillo != null ? string.Join(",", lotesTrujillo.Select(x => x.CodigoLote)) : String.Empty
+                //    }), cancellationToken)!;
 
-                if (updateCodigoTrujilloLoteBalanza?.IsValid == false)
-                    response.AttachResults(updateCodigoTrujilloLoteBalanza);
+                //if (updateCodigoTrujilloLoteBalanza?.IsValid == false)
+                //    response.AttachResults(updateCodigoTrujilloLoteBalanza);
 
                 response.AddOkResult(Resources.Common.DeleteSuccessMessage);
             }
