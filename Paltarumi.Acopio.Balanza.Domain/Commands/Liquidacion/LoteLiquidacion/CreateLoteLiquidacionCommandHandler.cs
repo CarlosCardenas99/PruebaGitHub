@@ -51,40 +51,37 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
             var costoConceptos = await _costoConceptoRepository.FindByAsync(x => x.Activo == true);
 
             var costosFiscalizacion = await _costoRepository.FindByAsync(x => costoConceptos.Select(x=>x.IdCostoConcepto).Contains(x.IdCostoConcepto) &&
-                                                                         x.FechaInicioVigencia!.Value <= DateTime.Now &&
-                                                                         x.FechaFinVigencia!.Value >= DateTime.Now &&
+                                                                         x.FechaInicioVigencia!.Value <= loteLiquidacion.FechaIngreso &&
+                                                                         x.FechaFinVigencia!.Value >= loteLiquidacion.FechaIngreso  &&
                                                                          x.Activo == true);
 
-            //if (costoConceptos != null)
-            //{
-            //    foreach (var conceptoCosto in costoConceptos)
-            //    {
-            //        var costo = costosFiscalizacion.Where(x =>x.IdCostoConcepto == conceptoCosto.IdCostoConcepto).FirstOrDefault();
-            //        //var costo = await _costoRepository.GetByAsNoTrackingAsync(x => x.IdCostoConcepto == conceptoCosto.IdCostoConcepto &&
-            //        //                                                          x.FechaInicioVigencia!.Value <= DateTime.Now &&
-            //        //                                                          x.FechaFinVigencia!.Value >= DateTime.Now &&
-            //        //                                                          x.Activo == true);
-            //        if (costo != null)
-            //        {
-            //            var newReg = new Entities.LoteLiquidacionCosto();
-            //            newReg.IdLoteLiquidacion = loteLiquidacion.IdLoteLiquidacion;
-            //            newReg.IdCostoConcepto = conceptoCosto.IdCostoConcepto;
-            //            newReg.IdUnidadMedida = costo.IdUnidadMedida;
-            //            newReg.ValorUnitario = costo!.ValorUnitario;
-            //            newReg.ValorUnitario100 = costo!.ValorUnitario100;
-            //            newReg.SubTotal = 0;
+            if (costoConceptos != null)
+            {
+                foreach (var conceptoCosto in costoConceptos)
+                {
+                    var costo = costosFiscalizacion.Where(x => x.IdCostoConcepto == conceptoCosto.IdCostoConcepto).FirstOrDefault();
+                    
+                    if (costo != null)
+                    {
+                        var newReg = new Entities.LoteLiquidacionCosto();
+                        newReg.IdLoteLiquidacion = loteLiquidacion.IdLoteLiquidacion;
+                        newReg.IdCostoConcepto = conceptoCosto.IdCostoConcepto;
+                        newReg.IdUnidadMedida = costo.IdUnidadMedida;
+                        newReg.ValorUnitario = costo!.ValorUnitario;
+                        newReg.ValorUnitario100 = costo!.ValorUnitario100;
+                        newReg.SubTotal = 0;
 
-            //            list.Add(newReg);
-            //        }
-            //    }
-            //    if (list.Count > 0)
-            //    {
-            //        await _loteLiquidacionCostoRepository.AddAsync(list.ToArray());
-            //        await _loteLiquidacionCostoRepository.SaveAsync();
-            //    }
-            //}
+                        list.Add(newReg);
+                    }
+                }
+                if (list.Count > 0)
+                {
+                    await _loteLiquidacionCostoRepository.AddAsync(list.ToArray());
+                    await _loteLiquidacionCostoRepository.SaveAsync();
+                }
+            }
 
-            var lotechancadoDto = _mapper?.Map<GetLoteLiquidacionDto>(loteLiquidacion);
+             var lotechancadoDto = _mapper?.Map<GetLoteLiquidacionDto>(loteLiquidacion);
             if (lotechancadoDto != null) response.UpdateData(lotechancadoDto);
 
             response.AddOkResult(Resources.Common.CreateSuccessMessage);
