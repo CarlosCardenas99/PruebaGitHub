@@ -16,6 +16,9 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Insert(CreateLoteBalanzaDto createDto)
             => await Post<CreateLoteBalanzaDto, GetLoteBalanzaDto>(string.Empty, createDto)!;
 
+        public async Task<ResponseDto> Validate(ValidateLoteBalanzaDto validateDto)
+            => await Post("/validar", validateDto)!;
+
         public async Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto)
             => await Put<UpdateLoteBalanzaDto, GetLoteBalanzaDto>(string.Empty, updateDto)!;
 

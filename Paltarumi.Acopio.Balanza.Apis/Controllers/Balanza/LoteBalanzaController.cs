@@ -20,6 +20,10 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         public async Task<ResponseDto<GetLoteBalanzaDto>> Create(CreateLoteBalanzaDto createDto)
             => await _loteBalanzaApplication.Create(createDto);
 
+        [HttpPost("validar")]
+        public async Task<ResponseDto> Validate(ValidateLoteBalanzaDto validateDto)
+            => await _loteBalanzaApplication.Validate(validateDto);
+
         [HttpPut]
         public async Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto)
             => await _loteBalanzaApplication.Update(updateDto);

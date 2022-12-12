@@ -6,6 +6,7 @@ namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
     public interface ILoteBalanzaApplication
     {
         Task<ResponseDto<GetLoteBalanzaDto>> Create(CreateLoteBalanzaDto createDto);
+        Task<ResponseDto> Validate(ValidateLoteBalanzaDto validateDto);
         Task<ResponseDto<GetLoteBalanzaDto>> Update(UpdateLoteBalanzaDto updateDto);
         Task<ResponseDto<GetLoteBalanzaDto>> UpdateStatus(UpdateStatusLoteBalanzaDto updateDto);
         Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto);
