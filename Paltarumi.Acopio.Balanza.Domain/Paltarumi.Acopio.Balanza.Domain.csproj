@@ -19,7 +19,7 @@
     <PackageReference Include="Paltarumi.Acopio.Export" Version="1.0.0.25" />
     <PackageReference Include="Paltarumi.Acopio.Liquidacion.Update" Version="1.0.0.15" />
     <PackageReference Include="Paltarumi.Acopio.Maestros.Client" Version="1.0.0.18" />
-    <PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.33" />
+    <PackageReference Include="Paltarumi.Acopio.Repository" Version="1.0.0.36" />
     <PackageReference Include="RandomStringCreator" Version="2.0.0" />
     <PackageReference Include="Scrutor" Version="4.2.0" />
   </ItemGroup>

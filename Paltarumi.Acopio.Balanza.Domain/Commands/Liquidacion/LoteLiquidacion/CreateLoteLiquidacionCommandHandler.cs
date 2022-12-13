@@ -69,6 +69,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
                         newReg.IdUnidadMedida = costo.IdUnidadMedida;
                         newReg.ValorUnitario = costo!.ValorUnitario;
                         newReg.ValorUnitario100 = costo!.ValorUnitario100;
+                        newReg.IdDivisa = costo.IdDivisa;
                         newReg.SubTotal = 0;
 
                         list.Add(newReg);
