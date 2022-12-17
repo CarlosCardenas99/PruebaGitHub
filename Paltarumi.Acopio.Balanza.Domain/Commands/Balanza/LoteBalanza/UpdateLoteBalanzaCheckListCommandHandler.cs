@@ -34,13 +34,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var lote = await _loteRepository.GetByAsNoTrackingAsync(x => x.CodigoLote == loteBalanza.CodigoLote);
-            var checkList = await _loteCheckListRepository.FindByAsync(x => x.IdLote == lote.IdLote);
+            var checkList = await _loteCheckListRepository.FindByAsync(x => x.IdLoteBalanza == loteBalanza.IdLoteBalanza);
             var ticketDetails = request.UpdateDto?.CheckListDetails?.Where(x => x.Activo == true).ToList();
 
             if (loteBalanza != null)
             {
                 int total = ticketDetails?.Where(x => x.Habilitado == true).ToList().Count ?? 0;
-                int revisados = ticketDetails?.Where(x => x.Habilitado == true && x.IdCheckListEstado == Constants.EstadoCheckList.Revisado).ToList().Count ?? 0;
+                int revisados = ticketDetails?.Where(x => x.Habilitado == true && x.Verificado == true).ToList().Count ?? 0;
                 int porcentajeAvance = (revisados * 100) / total;
 
                 loteBalanza.PorcentajeCheckList = porcentajeAvance;
@@ -76,7 +76,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 newCheckLists.ToList().ForEach(t =>
                 {
-                    t.IdLote = lote.IdLote;
+                    t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                     t.Activo = true;
                 });
 

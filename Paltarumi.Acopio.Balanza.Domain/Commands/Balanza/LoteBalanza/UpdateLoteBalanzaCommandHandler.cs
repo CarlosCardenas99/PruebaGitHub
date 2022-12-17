@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
-using Newtonsoft.Json;
-using Paltarumi.Acopio.Balanza.Common;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
+using Paltarumi.Acopio.Balanza.Domain.Extensions;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Liquidacion.Dto.Liquidaciones.LoteLiquidacion;
@@ -26,34 +22,25 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
     public class UpdateLoteBalanzaCommandHandler : CommandHandlerBase<UpdateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
         private readonly IRepository<Entities.Correlativo> _correlativoRepository;
-        private readonly IRepository<Entities.Lote> _loteRepository;
         private readonly IRepository<Entities.Ticket> _ticketRepository;
-        private readonly IRepository<Entities.Operacion> _operacionRepository;
         private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepository<Entities.TicketBackup> _ticketBackupRepository;
-        private readonly IRepository<Entities.LoteOperacion> _loteOperacionRepository;
 
         public UpdateLoteBalanzaCommandHandler(
             IUnitOfWork unitOfWork,
             IMapper mapper,
             IMediator mediator,
             UpdateLoteBalanzaCommandValidator validator,
-            IRepository<Entities.Lote> loteRepository,
             IRepository<Entities.Ticket> ticketRepository,
-            IRepository<Entities.Operacion> operacionRepository,
             IRepository<Entities.LoteBalanza> loteBalanzaRepository,
             IRepository<Entities.TicketBackup> ticketBackupRepository,
-            IRepository<Entities.LoteOperacion> loteOperacionRepository,
             IRepository<Entities.Correlativo> correlativoRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _correlativoRepository = correlativoRepository;
-            _loteRepository = loteRepository;
             _ticketRepository = ticketRepository;
-            _operacionRepository = operacionRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
             _ticketBackupRepository = ticketBackupRepository;
-            _loteOperacionRepository = loteOperacionRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -62,11 +49,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
 
-            var lote = await CreateLoteOperations(loteBalanza?.CodigoLote!);
-
             await CreateBackupTickets(request);
 
-            await UpdateLoteBalanza(request, cancellationToken, response, lote, loteBalanza!);
+            await UpdateLoteBalanza(request, cancellationToken, response, loteBalanza!);
             if (!response.IsValid) return response;
 
             await UpdateLoteChancado(cancellationToken, response, response.Data!);
@@ -77,8 +62,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             await UpdateLoteLiquidacion(cancellationToken, response, response.Data!);
             if (!response.IsValid) return response;
-
-            await CheckStatusOperacion(request, response, loteBalanza?.CodigoLote!);
 
             return response;
         }
@@ -99,37 +82,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             }
         }
 
-        private async Task<Entities.Lote> CreateLoteOperations(string codigoLote)
-        {
-            var lote = await _loteRepository.GetByAsync(x => x.CodigoLote == codigoLote);
-            if (lote == null) return null!;
-
-            var operacions = await _operacionRepository.FindByAsNoTrackingAsync(x => x.Codigo.Equals(Constants.Operaciones.Operacion.UPDATE));
-            var existingLoteOperacions = await _loteOperacionRepository.FindByAsNoTrackingAsync(x => x.IdLote == lote.IdLote);
-            var existingOperacionIds = existingLoteOperacions.Select(x => x.IdOperacion);
-            var loteOperacions = new List<Entities.LoteOperacion>();
-
-            foreach (var operacion in operacions.Where(x => !existingOperacionIds.Contains(x.IdOperacion)))
-            {
-                loteOperacions.Add(new Entities.LoteOperacion
-                {
-                    IdLote = lote.IdLote,
-                    IdOperacionNavigation = null!,
-                    IdOperacion = operacion.IdOperacion,
-                    Status = Constants.Operaciones.Status.PENDING,
-                    Attempts = 0,
-                    Body = "",
-                    Message = ""
-                });
-            }
-
-            await _loteOperacionRepository.AddAsync(loteOperacions.ToArray());
-            await _loteOperacionRepository.SaveAsync();
-
-            return lote;
-        }
-
-        public async Task<ResponseDto<GetLoteBalanzaDto>> UpdateLoteBalanza(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, Entities.Lote lote, Entities.LoteBalanza loteBalanza)
+        public async Task<ResponseDto<GetLoteBalanzaDto>> UpdateLoteBalanza(UpdateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, Entities.LoteBalanza loteBalanza)
         {
             var tickets = await _ticketRepository.FindByAsNoTrackingAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
             var ticketDetails = request.UpdateDto.TicketDetails?.Where(x => x.Activo).ToList();
@@ -276,16 +229,5 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 response.AttachResults(updateResponse);
         }
 
-        private async Task CheckStatusOperacion(UpdateLoteBalanzaCommand request, ResponseDto<GetLoteBalanzaDto> response, string codigoLote)
-        {
-            await _mediator?.Send(new CreateOrUpdateLoteOperacionCommand(new CreateOrUpdateLoteOperacionDto
-            {
-                CodigoLote = codigoLote,
-                Modulo = Constants.Operaciones.Modulo.BALANZA,
-                Operacion = Constants.Operaciones.Operacion.UPDATE,
-                Body = JsonConvert.SerializeObject(request.UpdateDto),
-                Exception = response.IsValid ? null! : new Exception(response.GetFormattedApiResponse())
-            }))!;
-        }
     }
 }

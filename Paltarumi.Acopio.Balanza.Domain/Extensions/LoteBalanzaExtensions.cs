@@ -1,6 +1,6 @@
 ﻿using Paltarumi.Acopio.Entity;
 
-namespace Paltarumi.Acopio.Balanza.Entity.Extensions
+namespace Paltarumi.Acopio.Balanza.Domain.Extensions
 {
     public static class LoteBalanzaExtensions
     {

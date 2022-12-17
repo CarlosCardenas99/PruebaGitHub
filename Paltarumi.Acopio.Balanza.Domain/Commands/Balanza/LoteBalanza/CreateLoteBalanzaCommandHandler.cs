@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
-using Newtonsoft.Json;
-using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.Lote;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
+using Paltarumi.Acopio.Balanza.Domain.Extensions;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.Lote;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteOperacion;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.Common;
@@ -18,7 +15,6 @@ using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Entity.Extensions;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
@@ -87,9 +83,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             if (!response.IsValid) return response;
 
             await CreateLoteLiquidacion(cancellationToken, response, response.Data!, loteCodigoResponse.Data!);
-            if (!response.IsValid) return response;
-
-            await CreateLoteOperacion(request, cancellationToken, response, codigoLote);
             if (!response.IsValid) return response;
 
             return response;
@@ -164,7 +157,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 EnsayoPorcentajeRecuperacion = true,
                 EnsayoConsumo = true,
                 IdLoteCodigoEstado = CONST_ACOPIO.LOTECODIGO_ESTADO.PENDIENTE,
-                IdLoteCodigoModulo = CONST_ACOPIO.LOTECODIGO_MODULO.BALANZA
+                IdModulo = CONST_ACOPIO.LOTECODIGO_MODULO.BALANZA
             };
 
             await _loteCodigoRepository.AddAsync(loteCodigo);
@@ -284,21 +277,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 Tmh100 = loteBalanzaDto.Tmh100,
                 Tmh = loteBalanzaDto.Tmh,
                 IdConcesion = loteBalanzaDto.IdConcesion
-            }), cancellationToken)!;
-
-            if (createResponse?.IsValid == false)
-                response.AttachResults(createResponse);
-        }
-
-        private async Task CreateLoteOperacion(CreateLoteBalanzaCommand request, CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, string codigoLote)
-        {
-            var createResponse = await _mediator?.Send(new CreateOrUpdateLoteOperacionCommand(new CreateOrUpdateLoteOperacionDto
-            {
-                CodigoLote = codigoLote,
-                Modulo = Constants.Operaciones.Modulo.BALANZA,
-                Operacion = Constants.Operaciones.Operacion.CREATE,
-                Body = JsonConvert.SerializeObject(request.CreateDto),
-                Exception = response.IsValid ? null! : new Exception(response.GetFormattedApiResponse())
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)

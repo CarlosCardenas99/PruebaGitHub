@@ -25,7 +25,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
             var list = await _repository.FindByAsync(
                     x => x.IdLoteNavigation!.CodigoLote == request.CodigoLote && x.Activo,
                     x => x.IdLoteNavigation!,
-                    x => x.IdLoteCodigoModuloNavigation,
+                    x => x.IdModuloNavigation,
                     x => x.IdLoteCodigoEstadoNavigation,
                     x => x.IdLoteCodigoTipoNavigation,
                     x => x.IdProveedorNavigation!,
