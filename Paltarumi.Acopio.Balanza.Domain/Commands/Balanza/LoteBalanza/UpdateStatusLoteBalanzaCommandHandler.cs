@@ -39,8 +39,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
             if (loteBalanza != null)
             {
-                loteBalanza.UserNameUpdate = "";
-                loteBalanza.UpdateDate = DateTimeOffset.Now;
+                //loteBalanza.UserNameUpdate = "";
+                //loteBalanza.UpdateDate = DateTimeOffset.Now;
                 loteBalanza.IdLoteEstado = request.UpdateDto.CodigoEstado!;
 
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);

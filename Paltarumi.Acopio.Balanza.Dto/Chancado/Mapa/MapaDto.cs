@@ -5,6 +5,8 @@ namespace Paltarumi.Acopio.Balanza.Dto.Chancado.Mapa
     {
         public int? IdMapaPadre { get; set; }
         public int IdLoteChancado { get; set; }
+        public string Leyenda { get; set; }
+        public string IdMapaEstado { get; set; }
         public string? IdLoteChancadoGrupo { get; set; }
         public string? Numero { get; set; }
         public string? IdCancha { get; set; }

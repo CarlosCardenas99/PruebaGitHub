@@ -48,7 +48,11 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             {
                 IdLoteChancado = loteChancado.IdLoteChancado,
                 Tmh = loteChancado.Tmh,
-                IdLoteChancadoGrupo = CONST_CHANCADO.LOTECHANCADO_GRUPO.LOTE
+                IdLoteChancadoGrupo = CONST_CHANCADO.LOTECHANCADO_GRUPO.LOTE,
+                //NEW FIELDS
+                IdMapaEstado = CONST_CHANCADO.MAPA_ESTADO.PENDIENTE,
+                Leyenda = String.Empty,
+                Numero = loteChancado.CodigoLote
             };
             var createMapaResponse = await _mediator?.Send(new CreateMapaCommand(createMapaDto), cancellationToken)!;
 
