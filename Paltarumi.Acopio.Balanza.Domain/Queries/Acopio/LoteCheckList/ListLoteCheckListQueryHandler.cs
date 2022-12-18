@@ -1,9 +1,9 @@
 using AutoMapper;
-using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
-using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
 using Paltarumi.Acopio.Constantes;
+using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Repository.Abstractions.Base;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Acopio.LoteCheckList
 {
@@ -25,7 +25,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Acopio.LoteCheckList
             var list = await _repository.FindByAsNoTrackingAsync(
                     x => x.IdLoteBalanza == request.IdLoteBalanza &&
                     x.IdItemCheckNavigation.IdModulo == CONST_ACOPIO.LOTECODIGO_MODULO.BALANZA,
-                    x => x.IdItemCheckNavigation
+                    x => x.IdItemCheckNavigation,
+                    x => x.IdItemCheckNavigation.IdModuloNavigation
             );
 
             var listDtos = _mapper?.Map<IEnumerable<ListLoteCheckListDto>>(list);

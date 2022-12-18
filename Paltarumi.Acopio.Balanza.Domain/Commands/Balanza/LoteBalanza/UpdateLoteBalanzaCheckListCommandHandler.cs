@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Paltarumi.Acopio.Balanza.Common;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
@@ -33,8 +32,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var response = new ResponseDto<GetLoteBalanzaCheckListDto>();
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
-            var lote = await _loteRepository.GetByAsNoTrackingAsync(x => x.CodigoLote == loteBalanza.CodigoLote);
-            var checkList = await _loteCheckListRepository.FindByAsync(x => x.IdLoteBalanza == loteBalanza.IdLoteBalanza);
+            var lote = await _loteRepository.GetByAsNoTrackingAsync(x => x.CodigoLote == loteBalanza!.CodigoLote);
+            var checkList = await _loteCheckListRepository.FindByAsync(x => x.IdLoteBalanza == loteBalanza!.IdLoteBalanza);
             var ticketDetails = request.UpdateDto?.CheckListDetails?.Where(x => x.Activo == true).ToList();
 
             if (loteBalanza != null)
@@ -44,7 +43,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 int porcentajeAvance = (revisados * 100) / total;
 
                 loteBalanza.PorcentajeCheckList = porcentajeAvance;
-                loteBalanza.UpdateDate = DateTimeOffset.Now;
 
                 await _loteBalanzaRepository.UpdateAsync(loteBalanza);
 
@@ -74,13 +72,16 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var newCheckLists = _mapper?.Map<IEnumerable<Entities.LoteCheckList>>(newCheckListDtos) ??
                     new List<Entities.LoteCheckList>();
 
-                newCheckLists.ToList().ForEach(t =>
-                {
-                    t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
-                    t.Activo = true;
-                });
+                if (newCheckLists.Count() > 0) {
+                    newCheckLists.ToList().ForEach(t =>
+                    {
+                        t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
+                        t.Activo = true;
+                    });
 
                 await _loteCheckListRepository.AddAsync(newCheckLists.ToArray());
+                }
+
                 await _loteBalanzaRepository.SaveAsync();
                 await _loteCheckListRepository.SaveAsync();
 
