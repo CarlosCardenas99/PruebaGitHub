@@ -18,10 +18,15 @@ namespace Paltarumi.Acopio.Balanza.Test
                 UnicodeEncoding ByteConverter = new UnicodeEncoding();
 
                 //Create byte arrays to hold original, encrypted, and decrypted data.
-                var dataToEncrypt =  "Data to Encrypt";
+                var dataToEncrypt =  "0123456789";
 
+                var data = Encoding.UTF8.GetBytes(dataToEncrypt);
+                var salt = new byte[] { 0, 1, 3};
+                var iv = new byte[] { 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4 };
 
                 var en = encript(dataToEncrypt);
+                var enc = Encrypt(data, "V3CTor", salt, iv);
+                var verenc = Convert.ToBase64String(enc);
 
                 Console.WriteLine("Decrypted plaintext: {0}", en);
 
@@ -35,20 +40,20 @@ namespace Paltarumi.Acopio.Balanza.Test
         }
         private string encript(String plainText)
         {
-            var key = UTF8Encoding.UTF8.GetBytes("1.4M.Joy3r0.N3t");
+            var key = UTF8Encoding.UTF8.GetBytes("N3t");
             var iv = UTF8Encoding.UTF8.GetBytes("V3CTor");
 
-            Array.Resize(ref key, 32);
+            Array.Resize(ref key, 16);
             Array.Resize(ref iv, 16);
 
             // Crear una instancia del algoritmo de Rijndael
             Rijndael rijndael = Rijndael.Create();
-
+            rijndael.KeySize = 128;
             // Establecer un flujo en memoria para el cifrado
             MemoryStream memoryStream = new MemoryStream();
 
             // Crear un flujo de cifrado basado en el flujo de los datos
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, rijndael.CreateEncryptor(key, iv), CryptoStreamMode.Write);
+            CryptoStream cryptoStream = new CryptoStream(memoryStream, rijndael.CreateEncryptor(), CryptoStreamMode.Write);
 
             // Obtener la representación en bytes de la información a cifrar
             byte[] plainMessageBytes = UTF8Encoding.UTF8.GetBytes(plainText);
@@ -66,6 +71,32 @@ namespace Paltarumi.Acopio.Balanza.Test
 
             // Retornar la representación de texto de los datos cifrados
             return Convert.ToBase64String(cipherTextBytes);
+        }
+
+        public static byte[] Encrypt(byte[] data, string password, byte[] salt, byte[] iv)
+        {
+            var KEYSIZE = 256;
+
+            using var rij = new RijndaelManaged()
+            {
+                KeySize = KEYSIZE,
+                Mode = CipherMode.CBC,
+                Padding = PaddingMode.PKCS7
+            };
+
+            using var rfc = new Rfc2898DeriveBytes(password, salt);
+            rij.Key = rfc.GetBytes(KEYSIZE / 8);
+            rij.IV = iv;
+
+            using var ms = new MemoryStream();
+            using var cs = new CryptoStream(ms, rij.CreateEncryptor(), CryptoStreamMode.Write);
+
+            using (var bw = new BinaryWriter(cs))
+            {
+                bw.Write(data);
+            }
+
+            return ms.ToArray();
         }
     }
 }

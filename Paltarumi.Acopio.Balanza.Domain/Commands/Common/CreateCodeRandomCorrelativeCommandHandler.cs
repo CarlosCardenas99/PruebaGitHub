@@ -63,7 +63,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
                 await _loteCodigoControlRepository.UpdateAsync(control);
                 await _loteCodigoControlRepository.SaveAsync();
 
-                var encryp = encript(numero);
+                var bytes = System.Text.Encoding.UTF8.GetBytes(numero);
+                var encryp = Convert.ToBase64String(bytes);
 
                 response.UpdateData(encryp);
             }
@@ -97,41 +98,6 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common
                 listInt[ctr] = cursor + ctr + 1;
 
             return listInt;
-        }
-
-        private string encript(String plainText)
-        {
-            var key = UTF8Encoding.UTF8.GetBytes("1.4M.Joy3r0.N3t");
-            var iv = UTF8Encoding.UTF8.GetBytes("V3CTor");
-
-            Array.Resize(ref key, 32);
-            Array.Resize(ref iv, 16);
-
-            // Crear una instancia del algoritmo de Rijndael
-            Rijndael rijndael = Rijndael.Create();
-
-            // Establecer un flujo en memoria para el cifrado
-            MemoryStream memoryStream = new MemoryStream();
-
-            // Crear un flujo de cifrado basado en el flujo de los datos
-            CryptoStream cryptoStream = new CryptoStream(memoryStream, rijndael.CreateEncryptor(key, iv), CryptoStreamMode.Write);
-
-            // Obtener la representación en bytes de la información a cifrar
-            byte[] plainMessageBytes = UTF8Encoding.UTF8.GetBytes(plainText);
-
-            // Cifrar los datos enviándolos al flujo de cifrado
-            cryptoStream.Write(plainMessageBytes, 0, plainMessageBytes.Length);
-            cryptoStream.FlushFinalBlock();
-
-            // Obtener los datos datos cifrados como un arreglo de bytes
-            byte[] cipherTextBytes = memoryStream.ToArray();
-
-            // Cerrar los flujos utilizados
-            memoryStream.Close();
-            cryptoStream.Close();
-
-            // Retornar la representación de texto de los datos cifrados
-            return Convert.ToBase64String(cipherTextBytes);
         }
     }
 }
