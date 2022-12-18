@@ -18,6 +18,10 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Acopio
 
             CreateMap<Entity.LoteCheckList, GetLoteCheckListDto>()
                 .ReverseMap();
+
+            CreateMap<Entity.LoteCheckList, ListLoteCheckListDto>()
+                .ForMember(x => x.Nombre, opt => opt.MapFrom(x => x.IdItemCheckNavigation != null ? x.IdItemCheckNavigation.Nombre : string.Empty))
+                .ReverseMap();
         }
     }
 }
