@@ -60,6 +60,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
         {
+            var idSucursal = _userIdentity.GetIdSucursal();
             var response = new ResponseDto<GetLoteBalanzaDto>();
 
             var loteCodigoResponse = await CreateLoteCodigo(request, cancellationToken, response);
@@ -76,7 +77,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             await CreateLoteBalanza(request, response, loteCodigoResponse.Data!);
             if (!response.IsValid) return response;
 
-            await CreateLoteChancado(cancellationToken, response, response.Data!, loteCodigoResponse.Data!);
+            await CreateLoteChancado(cancellationToken, response, response.Data!, loteCodigoResponse.Data!, idSucursal);
             if (!response.IsValid) return response;
 
             await CreateLoteMuestreo(cancellationToken, response, response.Data!, codigoLoteResponse.Data!, loteCodigoResponse.Data!);
@@ -219,7 +220,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             }
         }
 
-        private async Task CreateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, CreateCodeDto createCodeDto)
+        private async Task CreateLoteChancado(CancellationToken cancellationToken, ResponseDto<GetLoteBalanzaDto> response, GetLoteBalanzaDto loteBalanzaDto, CreateCodeDto createCodeDto, string idSucursal)
         {
             var placa = loteBalanzaDto.TicketDetails!.Select(x => x.Placa).FirstOrDefault(string.Empty);
             var placaCarreta = loteBalanzaDto.TicketDetails!.Select(x => x.PlacaCarreta).FirstOrDefault(string.Empty);
@@ -235,7 +236,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 IdCorrelativo = createCodeDto.IdCorrelativo,
                 PlacaCarreta = placaCarreta,
                 ObservacionBalanza = loteBalanzaDto.Observacion!,
-                IdLoteEstado = loteBalanzaDto.IdLoteEstado
+                IdLoteEstado = loteBalanzaDto.IdLoteEstado,
+                IdSucursal = idSucursal
             }), cancellationToken)!;
 
             if (createResponse?.IsValid == false)
