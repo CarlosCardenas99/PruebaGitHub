@@ -1,6 +1,6 @@
 namespace Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList
 {
-    public class UpdateLoteCheckListDto
+    public class ItemsLoteCheckListDto
     {
         public int IdLoteCheckList { get; set; }
         public int IdLoteBalanza { get; set; }
