@@ -5,7 +5,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Acopio.LoteCheckList
 {
     public class ListLoteCheckListQuery : QueryBase<IEnumerable<ListLoteCheckListDto>>
     {
-        public ListLoteCheckListQuery(int idLoteBalanza) => IdLoteBalanza = idLoteBalanza;
+        public ListLoteCheckListQuery(int idLoteBalanza,string modulo)
+        {
+            IdLoteBalanza = idLoteBalanza;
+            Modulo = modulo;
+        }
+
         public int IdLoteBalanza { get; set; }
+        public string Modulo { get; set; }
     }
 }

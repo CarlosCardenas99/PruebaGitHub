@@ -26,9 +26,9 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Acopio
         public async Task<ResponseDto<GetLoteCheckListDto>> Get(int id)
             => await _lotechecklistApplication.Get(id);
 
-        [HttpGet("list/{idLoteBalanza}")]
-        public async Task<ResponseDto<IEnumerable<ListLoteCheckListDto>>> List(int idLoteBalanza)
-            => await _lotechecklistApplication.List(idLoteBalanza);
+        [HttpGet("list/{idLoteBalanza}/{modulo}")]
+        public async Task<ResponseDto<IEnumerable<ListLoteCheckListDto>>> List(int idLoteBalanza, string modulo)
+            => await _lotechecklistApplication.List(idLoteBalanza,modulo);
 
     }
 }

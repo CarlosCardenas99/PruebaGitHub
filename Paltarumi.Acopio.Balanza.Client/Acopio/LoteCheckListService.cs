@@ -22,7 +22,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Acopio
         public async Task<ResponseDto<GetLoteCheckListDto>> Get(int id)
             => await Get<GetLoteCheckListDto>($"/{id}")!;
 
-        public async Task<ResponseDto<IEnumerable<ListLoteCheckListDto>>> List(int idLoteBalanza)
-            => await Get<IEnumerable<ListLoteCheckListDto>>($"/list/{idLoteBalanza}")!;
+        public async Task<ResponseDto<IEnumerable<ListLoteCheckListDto>>> List(int idLoteBalanza, string modulo)
+            => await Get<IEnumerable<ListLoteCheckListDto>>($"/list/{idLoteBalanza}/{modulo}")!;
     }
 }
