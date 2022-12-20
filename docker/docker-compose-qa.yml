@@ -2,6 +2,7 @@ version: "3"
 services:
   paltarumi-balanza-service:
     image: paltarumi-balanza-service
+    restart: always
     environment:
       ASPNETCORE_URLS: http://+:80
       DOTNET_USE_POLLING_FILE_WATCHER: 1
