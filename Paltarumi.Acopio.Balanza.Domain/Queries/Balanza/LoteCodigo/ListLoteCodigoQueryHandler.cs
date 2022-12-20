@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Base;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
+using Paltarumi.Utilitary;
 using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
@@ -32,6 +34,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo
                     x => x.IdDuenoMuestraNavigation!
                     );
             var listDtos = _mapper?.Map<IEnumerable<ListLoteCodigoDto>>(list);
+
+            if (listDtos != null)
+                listDtos.ToList().ForEach(item =>
+                {
+                    item.CodigoPlantaRandom = Commons.base64Decode(item.CodigoPlantaRandom);
+                });
 
             response.UpdateData(listDtos ?? new List<ListLoteCodigoDto>());
 

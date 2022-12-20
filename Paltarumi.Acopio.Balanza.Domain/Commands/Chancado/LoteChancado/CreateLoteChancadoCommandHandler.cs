@@ -48,8 +48,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado
             {
                 IdLoteChancado = loteChancado.IdLoteChancado,
                 Tmh = loteChancado.Tmh,
-                IdMapaGrupo = CONST_CHANCADO.LOTECHANCADO_GRUPO.LOTE,
-                IdSucursal = request.CreateDto.IdSucursal,
+                IdMapaGrupo = CONST_CHANCADO.MAPA_GRUPO.LOTE,
+                IdSucursal = request.CreateDto.IdSucursal!,
                 IdMapaEstado = CONST_CHANCADO.MAPA_ESTADO.PENDIENTE,
                 Leyenda = String.Empty,
                 Numero = loteChancado.CodigoLote
