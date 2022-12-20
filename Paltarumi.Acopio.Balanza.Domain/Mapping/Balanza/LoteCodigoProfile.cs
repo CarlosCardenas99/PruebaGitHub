@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Entity;
 
@@ -17,6 +18,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
             CreateMap<LoteCodigo, UpdateLoteCodigoDto>()
                 .ReverseMap();
 
+            CreateMap<LoteCodigo, SaveVerificadoLoteCodigoDto>()
+                .ReverseMap();
+            
             CreateMap<LoteCodigo, GetLoteCodigoDto>()
                 .ForMember(x => x.Proveedor, opt => opt.MapFrom(x => x.IdProveedorNavigation != null ? x.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ForMember(x => x.loteCodigo, opt => opt.MapFrom(x => x.IdLoteNavigation != null ? x.IdLoteNavigation.CodigoLote : string.Empty))
