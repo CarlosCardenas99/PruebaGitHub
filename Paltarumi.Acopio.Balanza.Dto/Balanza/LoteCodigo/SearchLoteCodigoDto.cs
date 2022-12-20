@@ -17,6 +17,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
         public bool EnsayoConsumo { get; set; }
         public string? UserNameCreate { get; set; }
         public string Estado { get; set; } = null!;
+        public bool Verificado { get; set; }
 
     }
 }

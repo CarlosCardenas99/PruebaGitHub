@@ -3,6 +3,7 @@ using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
 using Paltarumi.Acopio.Balanza.Application.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 
@@ -17,6 +18,9 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
 
         public async Task<ResponseDto<GetLoteCodigoDto>> Create(CreateLoteCodigoDto createDto)
             => await _mediator.Send(new CreateLoteCodigoCommand(createDto));
+
+        public async Task<ResponseDto<GetLoteCodigoDto>> SaveVerificado(SaveVerificadoLoteCodigoDto saveVerificadoDto)
+            => await _mediator.Send(new SaveVerificadoLoteCodigoCommand(saveVerificadoDto));
 
         public async Task<ResponseDto<GetLoteCodigoDto>> Update(UpdateLoteCodigoDto updateDto)
             => await _mediator.Send(new UpdateLoteCodigoCommand(updateDto));

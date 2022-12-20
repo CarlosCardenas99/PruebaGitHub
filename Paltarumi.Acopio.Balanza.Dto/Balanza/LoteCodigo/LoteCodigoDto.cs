@@ -16,6 +16,7 @@ namespace Paltarumi.Acopio.Balanza.Dto.LoteCodigo
         public bool EnsayoPorcentajeRecuperacion { get; set; }
         public bool EnsayoConsumo { get; set; }
         public string IdLoteCodigoEstado { get; set; } = null!;
+        public bool Verificado { get; set; }
         public string UserNameCreate { get; set; } = null!;
         public DateTimeOffset CreateDate { get; set; }
         public string? UserNameUpdate { get; set; }

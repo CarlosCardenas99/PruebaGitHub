@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 
@@ -18,6 +19,10 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
         [HttpPost]
         public async Task<ResponseDto<GetLoteCodigoDto>> Create(CreateLoteCodigoDto createDto)
             => await _lotecodigoApplication.Create(createDto);
+
+        [HttpPost("verificar")]
+        public async Task<ResponseDto<GetLoteCodigoDto>> SaveVerificado(SaveVerificadoLoteCodigoDto SaveVerificadoDto)
+            => await _lotecodigoApplication.SaveVerificado(SaveVerificadoDto);
 
         [HttpPut]
         public async Task<ResponseDto<GetLoteCodigoDto>> Update(UpdateLoteCodigoDto updateDto)

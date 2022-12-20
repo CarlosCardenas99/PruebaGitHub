@@ -1,4 +1,5 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
+﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
+using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
@@ -6,6 +7,7 @@ namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
     public interface ILoteCodigoApplication
     {
         Task<ResponseDto<GetLoteCodigoDto>> Create(CreateLoteCodigoDto createDto);
+        Task<ResponseDto<GetLoteCodigoDto>> SaveVerificado(SaveVerificadoLoteCodigoDto createDto);
         Task<ResponseDto<GetLoteCodigoDto>> Update(UpdateLoteCodigoDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetLoteCodigoDto>> Get(int id);

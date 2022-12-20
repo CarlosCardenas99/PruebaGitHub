@@ -1,4 +1,5 @@
 ﻿using Paltarumi.Acopio.Balanza.Client.Base;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
 using Paltarumi.Acopio.Balanza.Dto.LoteCodigo;
 using Paltarumi.Acopio.Dto.Base;
 
@@ -15,6 +16,9 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         public async Task<ResponseDto<GetLoteCodigoDto>> Insert(CreateLoteCodigoDto createDto)
             => await Post<CreateLoteCodigoDto, GetLoteCodigoDto>(string.Empty, createDto)!;
+
+        public async Task<ResponseDto<GetLoteCodigoDto>> SaveVerificado(SaveVerificadoLoteCodigoDto createDto)
+            => await Post<SaveVerificadoLoteCodigoDto, GetLoteCodigoDto>("/verificar", createDto)!;
 
         public async Task<ResponseDto<GetLoteCodigoDto>> Update(UpdateLoteCodigoDto updateDto)
             => await Put<UpdateLoteCodigoDto, GetLoteCodigoDto>(string.Empty, updateDto)!;
