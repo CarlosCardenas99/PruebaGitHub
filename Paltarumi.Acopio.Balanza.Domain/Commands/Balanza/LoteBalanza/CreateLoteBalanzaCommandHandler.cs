@@ -26,12 +26,13 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 {
     public class CreateLoteBalanzaCommandHandler : CommandHandlerBase<CreateLoteBalanzaCommand, GetLoteBalanzaDto>
     {
-        private readonly IRepository<Entities.Maestro> _maestroRepository;
         private readonly IRepository<Entities.Proveedor> _proveedorRepository;
         private readonly IRepository<Entities.LoteCodigo> _loteCodigoRepository;
         private readonly IRepository<Entities.LoteBalanza> _loteBalanzaRepository;
         private readonly IRepository<Entities.DuenoMuestra> _duenoMuestraRepository;
         private readonly IRepository<Entities.Ticket> _ticketRepository;
+        private readonly IRepository<Entities.LoteCheckList> _loteCheckListRepository;
+        private readonly IRepository<Entities.ItemCheck> _itemCheckRepository;
 
         private readonly IUserIdentity _userIdentity;
 
@@ -42,20 +43,22 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             IUserIdentity userIdentity,
             CreateLoteBalanzaCommandValidator validator,
             IRepository<Entities.Ticket> ticketRepository,
-            IRepository<Entities.Maestro> maestroRepository,
             IRepository<Entities.Proveedor> proveedorRepository,
             IRepository<Entities.LoteCodigo> loteCodigoRepository,
             IRepository<Entities.LoteBalanza> loteBalanzaRepository,
-            IRepository<Entities.DuenoMuestra> duenoMuestraRepository
+            IRepository<Entities.DuenoMuestra> duenoMuestraRepository,
+            IRepository<Entities.LoteCheckList> loteCheckListRepository,
+            IRepository<Entities.ItemCheck> itemCheckRepository
         ) : base(unitOfWork, mapper, mediator, validator)
         {
             _ticketRepository = ticketRepository;
-            _maestroRepository = maestroRepository;
             _proveedorRepository = proveedorRepository;
             _loteCodigoRepository = loteCodigoRepository;
             _loteBalanzaRepository = loteBalanzaRepository;
             _duenoMuestraRepository = duenoMuestraRepository;
             _userIdentity = userIdentity;
+            _loteCheckListRepository = loteCheckListRepository;
+            _itemCheckRepository = itemCheckRepository;
         }
 
         public override async Task<ResponseDto<GetLoteBalanzaDto>> HandleCommand(CreateLoteBalanzaCommand request, CancellationToken cancellationToken)
@@ -199,6 +202,32 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
 
                 await _loteBalanzaRepository.AddAsync(loteBalanza);
                 await _loteBalanzaRepository.SaveAsync();
+
+                var listLoteCheckList = new List<Entities.LoteCheckList>();
+                var itemsCheck = await _itemCheckRepository.FindByAsync(x => x.Activo == true);
+
+                if (itemsCheck != null)
+                {
+                    foreach (var itemCheck in itemsCheck)
+                    {
+                        var newReg = new Entities.LoteCheckList();
+                        newReg.IdLoteBalanza = loteBalanza.IdLoteBalanza;
+                        newReg.IdItemCheck = itemCheck.IdItemCheck;
+                        newReg.Habilitado = false;
+                        newReg.Verificado = false;
+                        newReg.Observacion = string.Empty;
+                        newReg.Activo = true;
+
+                        listLoteCheckList.Add(newReg);
+                    }
+                    if (listLoteCheckList.Count > 0)
+                    {
+                        await _loteCheckListRepository.AddAsync(listLoteCheckList.ToArray());
+                        await _loteCheckListRepository.SaveAsync();
+                    }
+                }
+
+
 
                 var loteDto = _mapper?.Map<GetLoteBalanzaDto>(loteBalanza);
 
