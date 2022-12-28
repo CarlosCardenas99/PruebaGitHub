@@ -1,18 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Domain.Queries.Sunat;
-using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
-using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 using Paltarumi.DataType.Extension;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
@@ -40,7 +33,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             {
                 await validarPlacaCreateDto(request.ValidateDto.CreateDto, response);
             }
-            if(request.ValidateDto.UpdateDto != null)
+            if (request.ValidateDto.UpdateDto != null)
             {
                 await validarPlacaUpdateDto(request.ValidateDto.UpdateDto, response);
             }

@@ -2,9 +2,9 @@ using MediatR;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Acopio;
 using Paltarumi.Acopio.Balanza.Application.Base;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Acopio.LoteCheckList;
-using Paltarumi.Acopio.Dto.Base;
-using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Acopio.LoteCheckList;
+using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Application.Acopio
 {
@@ -25,6 +25,6 @@ namespace Paltarumi.Acopio.Balanza.Application.Acopio
             => await _mediator.Send(new GetLoteCheckListQuery(id));
 
         public async Task<ResponseDto<IEnumerable<ListLoteCheckListDto>>> List(int idLoteBalanza, string modulo)
-            => await _mediator.Send(new ListLoteCheckListQuery(idLoteBalanza,modulo));
+            => await _mediator.Send(new ListLoteCheckListQuery(idLoteBalanza, modulo));
     }
 }

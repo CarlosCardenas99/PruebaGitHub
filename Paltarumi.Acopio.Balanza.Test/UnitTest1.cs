@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Security.Cryptography;
-using System.Text;
 using System;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Paltarumi.Acopio.Balanza.Test
 {
@@ -18,10 +18,10 @@ namespace Paltarumi.Acopio.Balanza.Test
                 UnicodeEncoding ByteConverter = new UnicodeEncoding();
 
                 //Create byte arrays to hold original, encrypted, and decrypted data.
-                var dataToEncrypt =  "0123456789";
+                var dataToEncrypt = "0123456789";
 
                 var data = Encoding.UTF8.GetBytes(dataToEncrypt);
-                var salt = new byte[] { 0, 1, 3};
+                var salt = new byte[] { 0, 1, 3 };
                 var iv = new byte[] { 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4, 0, 1, 3, 4 };
 
                 var en = encript(dataToEncrypt);

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteCodigo;
@@ -8,8 +7,6 @@ using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
-using System.Security.Cryptography;
-using System.Text;
 using Entities = Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Commands.Common

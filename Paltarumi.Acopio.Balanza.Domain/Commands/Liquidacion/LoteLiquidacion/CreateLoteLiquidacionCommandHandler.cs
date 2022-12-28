@@ -1,6 +1,5 @@
 using AutoMapper;
 using MediatR;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Math;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
 using Paltarumi.Acopio.Balanza.Dto.Liquidacion;
 using Paltarumi.Acopio.Dto.Base;
@@ -50,9 +49,9 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
             var list = new List<Entities.LoteLiquidacionCosto>();
             var costoConceptos = await _costoConceptoRepository.FindByAsync(x => x.Activo == true);
 
-            var costosFiscalizacion = await _costoRepository.FindByAsync(x => costoConceptos.Select(x=>x.IdCostoConcepto).Contains(x.IdCostoConcepto) &&
+            var costosFiscalizacion = await _costoRepository.FindByAsync(x => costoConceptos.Select(x => x.IdCostoConcepto).Contains(x.IdCostoConcepto) &&
                                                                          x.FechaInicioVigencia!.Value <= loteLiquidacion.FechaIngreso &&
-                                                                         x.FechaFinVigencia!.Value >= loteLiquidacion.FechaIngreso  &&
+                                                                         x.FechaFinVigencia!.Value >= loteLiquidacion.FechaIngreso &&
                                                                          x.Activo == true);
 
             if (costoConceptos != null)
@@ -60,7 +59,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
                 foreach (var conceptoCosto in costoConceptos)
                 {
                     var costo = costosFiscalizacion.Where(x => x.IdCostoConcepto == conceptoCosto.IdCostoConcepto).FirstOrDefault();
-                    
+
                     if (costo != null)
                     {
                         var newReg = new Entities.LoteLiquidacionCosto();
@@ -82,7 +81,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Liquidacion.LoteLiquidacion
                 }
             }
 
-             var lotechancadoDto = _mapper?.Map<GetLoteLiquidacionDto>(loteLiquidacion);
+            var lotechancadoDto = _mapper?.Map<GetLoteLiquidacionDto>(loteLiquidacion);
             if (lotechancadoDto != null) response.UpdateData(lotechancadoDto);
 
             response.AddOkResult(Resources.Common.CreateSuccessMessage);

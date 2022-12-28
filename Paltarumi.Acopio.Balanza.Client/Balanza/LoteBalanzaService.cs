@@ -24,7 +24,7 @@ namespace Paltarumi.Acopio.Balanza.Client.Balanza
 
         public async Task<ResponseDto<GetLoteBalanzaDto>> UpdateStatus(UpdateStatusLoteBalanzaDto updateDto)
             => await Put<UpdateStatusLoteBalanzaDto, GetLoteBalanzaDto>("/updatestatus", updateDto)!;
-        
+
         public async Task<ResponseDto<GetLoteBalanzaCheckListDto>> UpdateLoteBalanzaCheckList(UpdateLoteBalanzaCheckListDto updateDto)
             => await Put<UpdateLoteBalanzaCheckListDto, GetLoteBalanzaCheckListDto>("/updatechecklist", updateDto)!;
 

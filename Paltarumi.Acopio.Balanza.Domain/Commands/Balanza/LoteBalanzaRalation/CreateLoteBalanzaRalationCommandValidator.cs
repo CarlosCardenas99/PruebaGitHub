@@ -15,7 +15,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
 
             RequiredInformation(x => x.CreateDto).DependentRules(() =>
             {
-                RequiredField(x => x.CreateDto.ItemLoteBalanzaRalation!.FirstOrDefault()!.IdLoteBalanzaOrigin.ToString(),Resources.Balanza.LoteBalanzaRalation.IdLoteBalanzaRalation)
+                RequiredField(x => x.CreateDto.ItemLoteBalanzaRalation!.FirstOrDefault()!.IdLoteBalanzaOrigin.ToString(), Resources.Balanza.LoteBalanzaRalation.IdLoteBalanzaRalation)
                     .DependentRules(() =>
                     {
                         RuleFor(x => x.CreateDto.ItemLoteBalanzaRalation!.FirstOrDefault()!.IdLoteBalanzaOrigin)
@@ -28,7 +28,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanzaRalation
         }
         protected async Task<bool> ValidateExistenceAsync(CreateLoteBalanzaRalationCommand command, int id, ValidationContext<CreateLoteBalanzaRalationCommand> context, CancellationToken cancellationToken)
         {
-            var idLotes = command.CreateDto.ItemLoteBalanzaRalation!.Select(x=>x.IdLoteBalanzaOrigin);
+            var idLotes = command.CreateDto.ItemLoteBalanzaRalation!.Select(x => x.IdLoteBalanzaOrigin);
 
             var existe = await _loteBalanzaRepository.FindByAsNoTrackingAsync(x => idLotes.Contains(x.IdLoteBalanzaOrigin), x => x.IdLoteBalanzaOriginNavigation);
 

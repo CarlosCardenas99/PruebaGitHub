@@ -72,14 +72,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
                 var newCheckLists = _mapper?.Map<IEnumerable<Entities.LoteCheckList>>(newCheckListDtos) ??
                     new List<Entities.LoteCheckList>();
 
-                if (newCheckLists.Count() > 0) {
+                if (newCheckLists.Count() > 0)
+                {
                     newCheckLists.ToList().ForEach(t =>
                     {
                         t.IdLoteBalanza = loteBalanza.IdLoteBalanza;
                         t.Activo = true;
                     });
 
-                await _loteCheckListRepository.AddAsync(newCheckLists.ToArray());
+                    await _loteCheckListRepository.AddAsync(newCheckLists.ToArray());
                 }
 
                 await _loteBalanzaRepository.SaveAsync();

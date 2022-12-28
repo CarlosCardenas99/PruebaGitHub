@@ -1,7 +1,7 @@
 using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
+using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Transactions;
 

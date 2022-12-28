@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Base;
-using Paltarumi.Acopio.Balanza.Domain.Commands.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Muestreo.LoteMuestreo;
-using Paltarumi.Acopio.Balanza.Dto.Chancado.LoteChancado;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.Muestreo.LoteMuestreo;
 using Paltarumi.Acopio.Dto.Base;
@@ -32,7 +30,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.LoteBalanza
             var response = new ResponseDto<GetLoteBalanzaDto>();
 
             var loteBalanza = await _loteBalanzaRepository.GetByAsync(x => x.IdLoteBalanza == request.UpdateDto.IdLoteBalanza);
-  
+
 
             if (loteBalanza != null)
             {

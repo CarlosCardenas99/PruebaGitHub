@@ -27,8 +27,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             var app = new ExportApp();
             var lista = (IEnumerable<object>)itemsToExport;
-            var InfoHeaders = request.SearchParams.InfoHeaders != null ? request.SearchParams.InfoHeaders.ToList() : new List<InfoHeader>();
-            var ext = app.Export(lista.ToList(), InfoHeaders);
+            //var InfoHeaders = request.SearchParams.InfoHeaders != null ? request.SearchParams.InfoHeaders.ToList() : new List<InfoHeader>();
+            var ext = app.Export(lista.ToList(), new List<InfoHeader>()/*InfoHeaders*/);
 
             response.UpdateData(new SearchResultDto<byte>
             {
@@ -37,7 +37,5 @@ namespace Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza
 
             return await Task.FromResult(response);
         }
-
-
     }
 }

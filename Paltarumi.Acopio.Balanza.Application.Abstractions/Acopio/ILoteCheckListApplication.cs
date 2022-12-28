@@ -1,5 +1,5 @@
-using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
+using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Acopio
 {

@@ -4,7 +4,6 @@ using Paltarumi.Acopio.Balanza.Dto.Acopio.LoteCheckList;
 using Paltarumi.Acopio.Constantes;
 using Paltarumi.Acopio.Dto.Base;
 using Paltarumi.Acopio.Repository.Abstractions.Base;
-using System.Collections.Generic;
 
 namespace Paltarumi.Acopio.Balanza.Domain.Queries.Acopio.LoteCheckList
 {
