@@ -10,6 +10,8 @@ namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
         Task<ResponseDto<GetTicketDto>> UpdateNumero(UpdateTicketCodigoDto updateDto);
         Task<ResponseDto> Delete(int id);
         Task<ResponseDto<GetTicketDto>> Get(int id);
+        Task<ResponseDto<GetTicketByIdDto>> GetById(int id);
+        Task<ResponseDto<GetTicketByCodigoDto>> GetByCodigo(int IdVehiculo);
         Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLoteBalanza);
         Task<ResponseDto<ListTicketDto>> ListItem(int idTicket);
         Task<ResponseDto<SearchResultDto<byte>>> Export(SearchParamsDto<SearchConsultaTicketFilterDto> searchParams);

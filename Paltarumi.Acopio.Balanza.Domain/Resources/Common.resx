@@ -172,6 +172,9 @@
   <data name="GetRecordNotFound" xml:space="preserve">
     <value>El registro no fue encontrado</value>
   </data>
+  <data name="IdNoEncontrado" xml:space="preserve">
+    <value>El Id no existe </value>
+  </data>
   <data name="InformationRequired" xml:space="preserve">
     <value>La información a procesar es requerida</value>
   </data>

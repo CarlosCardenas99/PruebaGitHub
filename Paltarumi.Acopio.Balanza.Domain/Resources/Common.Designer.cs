@@ -214,6 +214,15 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El Id no existe .
+        /// </summary>
+        internal static string IdNoEncontrado {
+            get {
+                return ResourceManager.GetString("IdNoEncontrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La información a procesar es requerida.
         /// </summary>
         internal static string InformationRequired {

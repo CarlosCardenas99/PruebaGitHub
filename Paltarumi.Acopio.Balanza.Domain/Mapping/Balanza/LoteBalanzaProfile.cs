@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Paltarumi.Acopio.Balanza.Domain.Commands.Balanza.Dto;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanzaRalation;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Entity;
@@ -28,6 +29,8 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
             CreateMap<LoteBalanza, GetLoteBalanzaDto>()
                 .ReverseMap();
 
+
+
             CreateMap<LoteBalanza, GetLoteBalanzaCodigoDto>()
                 .ReverseMap();
 
@@ -44,6 +47,12 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
                 .ForMember(x => x.NombreProveedor, opt => opt.MapFrom(x => x.IdProveedorNavigation != null ? x.IdProveedorNavigation.RazonSocial : string.Empty))
                 .ForMember(x => x.NombreEstadoTipoMaterial, opt => opt.MapFrom(x => x.IdEstadoTipoMaterialNavigation != null ? x.IdEstadoTipoMaterialNavigation.Descripcion : string.Empty))
                 .ForMember(x => x.NumeroTickets, opt => opt.MapFrom(x => x.Tickets != null ? string.Join(", ", x.Tickets.Select(x => x.Numero)) : string.Empty))
+                .ReverseMap();
+
+            CreateMap<LoteBalanza, SearchLoteBalanzaPruebaDto>()
+                .ForMember(x => x.NombreProveedor, opt => opt.MapFrom(x => x.IdProveedorNavigation != null ? x.IdProveedorNavigation.RazonSocial : string.Empty))
+                .ForMember(x => x.NombreConcesion, opt => opt.MapFrom(x => x.IdConcesionNavigation != null ? x.IdConcesionNavigation.Nombre : string.Empty))
+
                 .ReverseMap();
 
             CreateMap<LoteBalanza, SearchLoteBalanzaChecklistDto>()

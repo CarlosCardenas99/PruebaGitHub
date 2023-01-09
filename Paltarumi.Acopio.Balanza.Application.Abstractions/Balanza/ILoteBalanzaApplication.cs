@@ -1,4 +1,5 @@
-﻿using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
+﻿using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanza;
+using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
 
 namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
@@ -16,6 +17,8 @@ namespace Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza
         Task<ResponseDto<IEnumerable<ListLoteBalanzaDto>>> List();
         Task<ResponseDto<SearchResultDto<byte>>> Export(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams);
         Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams);
+        Task<ResponseDto<SearchResultDto<SearchLoteBalanzaPruebaDto>>> Search(SearchParamsDto<SearchLoteBalanzaPruebaFilterDto> searchParams);
+
         Task<ResponseDto<SearchResultDto<SearchLoteBalanzaChecklistDto>>> SearchWithCheckList(SearchParamsDto<SearchLoteBalanzaChecklistFilterDto> searchParams);
     }
 }

@@ -33,7 +33,11 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 
         [HttpGet("{id}")]
         public async Task<ResponseDto<GetTicketDto>> Get(int id)
-            => await _ticketApplication.Get(id);
+            => await _ticketApplication.Get(id); 
+        
+        [HttpGet("byid/{id}")]
+        public async Task<ResponseDto<GetTicketByIdDto>> GetById(int id)
+            => await _ticketApplication.GetById(id);
 
         [HttpGet("list/{idLoteBalanza}")]
         public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLoteBalanza)

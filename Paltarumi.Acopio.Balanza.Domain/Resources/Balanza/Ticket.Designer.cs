@@ -95,5 +95,7 @@ namespace Paltarumi.Acopio.Balanza.Domain.Resources.Balanza {
                 return ResourceManager.GetString("UpdateTicketNumberFailed", resourceCulture);
             }
         }
+
+        public static object CodigoPlanta { get; internal set; }
     }
 }

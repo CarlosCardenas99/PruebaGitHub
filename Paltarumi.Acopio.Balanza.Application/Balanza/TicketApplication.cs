@@ -6,6 +6,7 @@ using Paltarumi.Acopio.Balanza.Domain.Queries.Balanza.Ticket;
 using Paltarumi.Acopio.Balanza.Domain.Queries.Maestro.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.Balanza.Ticket;
 using Paltarumi.Acopio.Dto.Base;
+using Paltarumi.Acopio.Entity;
 
 namespace Paltarumi.Acopio.Balanza.Application.Balanza
 {
@@ -30,6 +31,10 @@ namespace Paltarumi.Acopio.Balanza.Application.Balanza
 
         public async Task<ResponseDto<GetTicketDto>> Get(int id)
             => await _mediator.Send(new GetTicketQuery(id));
+        public async Task<ResponseDto<GetTicketByIdDto>> GetById(int id)
+            => await _mediator.Send(new GetTicketByIdQuery(id));
+        public async Task<ResponseDto<GetTicketByCodigoDto>> GetByCodigo(int IdVehiculo)
+            => await _mediator.Send(new GetTicketByCodigoQuery(IdVehiculo));
 
         public async Task<ResponseDto<IEnumerable<ListTicketDto>>> List(int idLoteBalanza)
             => await _mediator.Send(new ListTicketQuery(idLoteBalanza));

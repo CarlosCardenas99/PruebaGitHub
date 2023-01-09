@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Paltarumi.Acopio.Balanza.Apis.Controllers.Base;
 using Paltarumi.Acopio.Balanza.Application.Abstractions.Balanza;
+using Paltarumi.Acopio.Balanza.Dto.Balanza.LoteBalanza;
 using Paltarumi.Acopio.Balanza.Dto.LoteBalanza;
 using Paltarumi.Acopio.Dto.Base;
 
@@ -62,6 +63,10 @@ namespace Paltarumi.Acopio.Balanza.Apis.Controllers.Balanza
 
         [HttpPost("search")]
         public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaDto>>> Search(SearchParamsDto<SearchLoteBalanzaFilterDto> searchParams)
+            => await _loteBalanzaApplication.Search(searchParams);       
+        
+        [HttpPost("searchPrueba")]
+        public async Task<ResponseDto<SearchResultDto<SearchLoteBalanzaPruebaDto>>> Search(SearchParamsDto<SearchLoteBalanzaPruebaFilterDto> searchParams)
             => await _loteBalanzaApplication.Search(searchParams);
 
         [HttpPost("search/checklist")]

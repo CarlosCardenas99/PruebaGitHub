@@ -20,7 +20,17 @@ namespace Paltarumi.Acopio.Balanza.Domain.Mapping.Balanza
             CreateMap<Ticket, TicketBackup>()
                 .ReverseMap();
 
+            CreateMap<Ticket, GetTicketByIdDto>()
+                .ForMember(x => x.NombreConductor, opt => opt.MapFrom(x => x.IdConductorNavigation != null ? x.IdConductorNavigation.Nombres : string.Empty))
+                .ForMember(x => x.NombreProveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.RazonSocial : string.Empty ))
+                .ForMember(x => x.RucProveedor, opt => opt.MapFrom(x => x.IdLoteBalanzaNavigation.IdProveedorNavigation != null ? x.IdLoteBalanzaNavigation.IdProveedorNavigation.Ruc : string.Empty))
+
+                .ReverseMap();
+
             CreateMap<Ticket, GetTicketDto>()
+                .ReverseMap();
+            
+            CreateMap<Ticket, GetTicketByCodigoDto>()
                 .ReverseMap();
 
             CreateMap<Ticket, ListTicketDto>()
